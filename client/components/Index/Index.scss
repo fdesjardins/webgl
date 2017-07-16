@@ -1,8 +1,11 @@
 .index .section .title {
   font-weight: bold;
+  display: block;
+  margin-bottom: 7px!important;
 }
 
 .index .section {
   line-height: 165%;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  list-style: none;
 }

@@ -6,6 +6,7 @@ import './Index.scss'
 const Index = () => {
   return (
     <ul class='index'>
+
       <li class='section'>
         <span class='title'>Basics</span>
         <ul>
@@ -18,6 +19,7 @@ const Index = () => {
           <li>scene graphs</li>
         </ul>
       </li>
+
       <li class='section'>
         <span class='title'>Advanced WebGL</span>
         <ul>
@@ -29,6 +31,16 @@ const Index = () => {
           <li>geometry shaders</li>
         </ul>
       </li>
+
+      <li class='section'>
+        <span class='title'>Three.js</span>
+        <ul>
+          <li>hello three.js</li>
+          <li>...</li>
+          <li>particle systems</li>
+        </ul>
+      </li>
+
       <li class='section'>
         <span class='title'>Using gpu.js</span>
         <ul>
