@@ -2,6 +2,14 @@
 
 Examples, tutorials, mini-projects, ...
 
+Built with
+
+- Inferno Functional Components
+- Baobab Store
+- Express
+- Webpack
+- WebGL2
+
 ## Installation
 
 ```
