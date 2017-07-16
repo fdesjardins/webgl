@@ -1,11 +1,13 @@
 import Inferno from 'inferno'
 import { Link } from 'inferno-router'
 
+import './Index.scss'
+
 const Index = () => {
   return (
-    <ul>
-      <li>
-        <h2>Basics</h2>
+    <ul class='index'>
+      <li class='section'>
+        <span class='title'>Basics</span>
         <ul>
           <li><Link to='/01'>hello world</Link></li>
           <li><Link to='/02'>hello 2d world</Link></li>
@@ -16,8 +18,8 @@ const Index = () => {
           <li>scene graphs</li>
         </ul>
       </li>
-      <li>
-        <h2>Advanced WebGL</h2>
+      <li class='section'>
+        <span class='title'>Advanced WebGL</span>
         <ul>
           <li>shadows</li>
           <li>stencil testing</li>
@@ -27,8 +29,8 @@ const Index = () => {
           <li>geometry shaders</li>
         </ul>
       </li>
-      <li>
-        <h2>Using gpu.js</h2>
+      <li class='section'>
+        <span class='title'>Using gpu.js</span>
         <ul>
           <li>matrix multiplication</li>
           <li>...</li>
