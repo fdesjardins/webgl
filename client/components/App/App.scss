@@ -1,4 +1,30 @@
+@import "~bootstrap/scss/bootstrap";
+
 body {
   background: white;
   margin: 0;
+}
+
+button {
+  @extend .btn;
+  @extend .btn-secondary;
+}
+
+nav {
+  @extend .nav-pills;
+  padding: 15px!important;
+}
+
+nav a {
+  @extend .nav-link;
+}
+
+.flash-message {
+  @extend .alert;
+  @extend .alert-info;
+  display: block;
+}
+
+.content {
+  padding: 25px;
 }

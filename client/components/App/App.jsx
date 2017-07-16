@@ -2,6 +2,8 @@ import Inferno from 'inferno'
 import { Link } from 'inferno-router'
 import Component from 'inferno-component'
 
+import './App.scss'
+
 class App extends Component {
   constructor (props, context) {
     super(props, context)
@@ -13,10 +15,19 @@ class App extends Component {
   render () {
     const appCursor = this.store.select('app')
     return (
-      <div>
-        <Link to='/'>Home</Link>
-        <h2>{ appCursor.get('message') }</h2>
-        <div>{ this.props.children || null }</div>
+      <div class='app'>
+
+        <nav class='nav'>
+          <Link to='/'>Home</Link>
+        </nav>
+
+        <span class='flash-message'>
+          { appCursor.get('message') }
+        </span>
+
+        <div class='content'>
+          { this.props.children || null }
+        </div>
       </div>
     )
   }

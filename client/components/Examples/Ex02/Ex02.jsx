@@ -1,7 +1,7 @@
 import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
-
+import './Ex02.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 
