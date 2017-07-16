@@ -14,7 +14,7 @@ module.exports = async (config) => {
   app.all('*', cors())
 
   const layout = (await fs.readFileSync(path.join(__dirname, 'layout.html'))).toString()
-  app.get('/', (req, res, next) => {
+  app.get('*', (req, res, next) => {
     res.send(layout)
   })
 

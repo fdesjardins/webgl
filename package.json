@@ -23,7 +23,9 @@
   "dependencies": {
     "compression": "^1.7.0",
     "cors": "^2.8.4",
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "history": "^4.6.3",
+    "inferno-router": "^3.6.4"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

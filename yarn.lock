@@ -2600,6 +2600,16 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
+history@^4.6.1, history@^4.6.3:
+  version "4.6.3"
+  resolved "http://18.220.27.71:4873/history/-/history-4.6.3.tgz#6d723a8712c581d6bef37e8c26f4aedc6eb86967"
+  dependencies:
+    invariant "^2.2.1"
+    loose-envify "^1.2.0"
+    resolve-pathname "^2.0.0"
+    value-equal "^0.2.0"
+    warning "^3.0.0"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "http://18.220.27.71:4873/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -2741,6 +2751,36 @@ indexof@0.0.1:
   version "0.0.1"
   resolved "http://18.220.27.71:4873/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
 
+inferno-component@3.6.4:
+  version "3.6.4"
+  resolved "http://18.220.27.71:4873/inferno-component/-/inferno-component-3.6.4.tgz#8645383bac1965559a37d493e142295ac11731e7"
+  dependencies:
+    inferno "3.6.4"
+    inferno-shared "3.6.4"
+    inferno-vnode-flags "3.6.4"
+
+inferno-create-element@3.6.4:
+  version "3.6.4"
+  resolved "http://18.220.27.71:4873/inferno-create-element/-/inferno-create-element-3.6.4.tgz#8f53d5c7e5a74fbac0c3dac3f3eb3826fb862e96"
+  dependencies:
+    inferno "3.6.4"
+    inferno-component "3.6.4"
+    inferno-shared "3.6.4"
+    inferno-vnode-flags "3.6.4"
+
+inferno-router@^3.6.4:
+  version "3.6.4"
+  resolved "http://18.220.27.71:4873/inferno-router/-/inferno-router-3.6.4.tgz#e7fa2b70552bc747232b363d27f9255c634f853c"
+  dependencies:
+    history "^4.6.1"
+    inferno "3.6.4"
+    inferno-component "3.6.4"
+    inferno-create-element "3.6.4"
+    inferno-shared "3.6.4"
+    inferno-vnode-flags "3.6.4"
+    path-to-regexp "^1.7.0"
+    path-to-regexp-es6 "0.0.2"
+
 inferno-shared@3.6.4:
   version "3.6.4"
   resolved "http://18.220.27.71:4873/inferno-shared/-/inferno-shared-3.6.4.tgz#0a13e89ed45c527172d59747b31329487d5f3d7f"
@@ -2753,7 +2793,7 @@ inferno-vnode-flags@3.6.4:
   version "3.6.4"
   resolved "http://18.220.27.71:4873/inferno-vnode-flags/-/inferno-vnode-flags-3.6.4.tgz#1237612232e22fc2de0346bcb3f802edbd347cae"
 
-inferno@^3.6.4:
+inferno@3.6.4, inferno@^3.6.4:
   version "3.6.4"
   resolved "http://18.220.27.71:4873/inferno/-/inferno-3.6.4.tgz#d36dee9c895530dca0e4a03648b2530531a7aa32"
   dependencies:
@@ -2802,7 +2842,7 @@ interpret@^1.0.0:
   version "1.0.3"
   resolved "http://18.220.27.71:4873/interpret/-/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
 
-invariant@^2.2.0, invariant@^2.2.2:
+invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "http://18.220.27.71:4873/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -3444,7 +3484,7 @@ longest@^1.0.0, longest@^1.0.1:
   version "1.0.1"
   resolved "http://18.220.27.71:4873/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0:
+loose-envify@^1.0.0, loose-envify@^1.2.0:
   version "1.3.1"
   resolved "http://18.220.27.71:4873/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -4073,6 +4113,18 @@ path-parse@^1.0.5:
   version "1.0.5"
   resolved "http://18.220.27.71:4873/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
 
+path-to-regexp-es6@0.0.2:
+  version "0.0.2"
+  resolved "http://18.220.27.71:4873/path-to-regexp-es6/-/path-to-regexp-es6-0.0.2.tgz#80cf615ce3220a29af9fe54f8862c730d9b56e0b"
+  dependencies:
+    path-to-regexp "*"
+
+path-to-regexp@*, path-to-regexp@^1.7.0:
+  version "1.7.0"
+  resolved "http://18.220.27.71:4873/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
+  dependencies:
+    isarray "0.0.1"
+
 path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "http://18.220.27.71:4873/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
@@ -4490,6 +4542,10 @@ resolve-from@^1.0.0:
 resolve-from@^2.0.0:
   version "2.0.0"
   resolved "http://18.220.27.71:4873/resolve-from/-/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
+
+resolve-pathname@^2.0.0:
+  version "2.1.0"
+  resolved "http://18.220.27.71:4873/resolve-pathname/-/resolve-pathname-2.1.0.tgz#e8358801b86b83b17560d4e3c382d7aef2100944"
 
 resolve@^1.2.0, resolve@^1.3.3:
   version "1.3.3"
@@ -5245,6 +5301,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
+value-equal@^0.2.0:
+  version "0.2.1"
+  resolved "http://18.220.27.71:4873/value-equal/-/value-equal-0.2.1.tgz#c220a304361fce6994dbbedaa3c7e1a1b895871d"
+
 vary@^1, vary@~1.1.1:
   version "1.1.1"
   resolved "http://18.220.27.71:4873/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
@@ -5318,6 +5378,12 @@ ware@^1.2.0:
   resolved "http://18.220.27.71:4873/ware/-/ware-1.3.0.tgz#d1b14f39d2e2cb4ab8c4098f756fe4b164e473d4"
   dependencies:
     wrap-fn "^0.1.0"
+
+warning@^3.0.0:
+  version "3.0.0"
+  resolved "http://18.220.27.71:4873/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
+  dependencies:
+    loose-envify "^1.0.0"
 
 watchpack@^1.4.0:
   version "1.4.0"
