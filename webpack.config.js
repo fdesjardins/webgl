@@ -50,9 +50,9 @@ module.exports = {
         ]
       },
       {
-        test: /\.(gltf|glb)$/i,
+        test: /\.(glsl)$/i,
         loaders: [
-          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]'
+          'raw-loader'
         ]
       }
     ],

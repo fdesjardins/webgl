@@ -10,7 +10,7 @@ const Canvas = () => {
   )
 }
 
-const Ex01 = ({ subscribe }) => {
+const Ex03 = ({ subscribe }) => {
   return (
     <div>
       <Canvas onComponentDidMount={ didMount(subscribe) }/>
@@ -23,7 +23,7 @@ export default ({ children }, { store }) => {
     store.select(sq('ex1.scene')).on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Ex01
+    <Ex03
       subscribe={ subscribe }
       onComponentShouldUpdate={ utils.shouldUpdate }
     />

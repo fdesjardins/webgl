@@ -15,8 +15,8 @@ state.set('ex1', {
       y: 20
     },
     color: [ Math.random(), Math.random(), Math.random(), 1 ],
-    width: 50,
-    height: 50
+    width: 25,
+    height: 25
   },
   controls: {
     moveLeft: d => {
