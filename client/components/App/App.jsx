@@ -21,9 +21,9 @@ class App extends Component {
           <Link to='/'>Home</Link>
         </nav>
 
-        <span class='flash-message'>
+        {/* <span class='flash-message'>
           { appCursor.get('message') }
-        </span>
+        </span> */}
 
         <div class='content'>
           { this.props.children || null }
