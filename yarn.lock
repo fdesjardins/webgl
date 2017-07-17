@@ -179,6 +179,10 @@ arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "http://18.220.27.71:4873/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
+asciimath-to-latex@^0.3.1:
+  version "0.3.2"
+  resolved "http://18.220.27.71:4873/asciimath-to-latex/-/asciimath-to-latex-0.3.2.tgz#1f6e6b36ccc11e3de0ceeffa3dce16483ec28b4e"
+
 asn1.js@^4.0.0:
   version "4.9.1"
   resolved "http://18.220.27.71:4873/asn1.js/-/asn1.js-4.9.1.tgz#48ba240b45a9280e94748990ba597d216617fd40"
@@ -3426,6 +3430,12 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+katex@^0.7.1:
+  version "0.7.1"
+  resolved "http://18.220.27.71:4873/katex/-/katex-0.7.1.tgz#06bb5298efad05e1e7228035ba8e1591f3061b8f"
+  dependencies:
+    match-at "^0.1.0"
+
 kind-of@^2.0.1:
   version "2.0.1"
   resolved "http://18.220.27.71:4873/kind-of/-/kind-of-2.0.1.tgz#018ec7a4ce7e3a86cb9141be519d24c8faa981b5"
@@ -3735,6 +3745,13 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "http://18.220.27.71:4873/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
+markdown-it-latex@^0.1.3:
+  version "0.1.3"
+  resolved "http://18.220.27.71:4873/markdown-it-latex/-/markdown-it-latex-0.1.3.tgz#cf40b03b75489efa46852ff3673926e19e4de928"
+  dependencies:
+    asciimath-to-latex "^0.3.1"
+    katex "^0.7.1"
+
 markdown-it@^8.3.1:
   version "8.3.1"
   resolved "http://18.220.27.71:4873/markdown-it/-/markdown-it-8.3.1.tgz#2f4b622948ccdc193d66f3ca2d43125ac4ac7323"
@@ -3744,6 +3761,10 @@ markdown-it@^8.3.1:
     linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.3"
+
+match-at@^0.1.0:
+  version "0.1.0"
+  resolved "http://18.220.27.71:4873/match-at/-/match-at-0.1.0.tgz#f561e7709ff9a105b85cc62c6b8ee7c15bf24f31"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
