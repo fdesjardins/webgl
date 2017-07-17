@@ -30,6 +30,8 @@ const Threejs01 = ({ init}) => {
     renderer.render(scene, camera);
   };
 
+  animate();
+  
   return(
 
     <h1> Hello World </h1>
