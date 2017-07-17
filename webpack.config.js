@@ -50,7 +50,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(glsl)$/i,
+        test: /\.(glsl|md)$/i,
         loaders: [
           'raw-loader'
         ]

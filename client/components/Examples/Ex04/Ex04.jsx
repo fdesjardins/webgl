@@ -1,12 +1,16 @@
 import Inferno from 'inferno'
 import twgl from 'twgl.js'
+import MarkdownIt from 'markdown-it'
 
 import { default as utils, sq } from '-/utils'
 import cube from '-/components/Examples/cube-object'
 
-import './Ex03.scss'
+import notes from './Ex04.md'
+import './Ex04.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
+
+const md = new MarkdownIt()
 
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl2')
@@ -52,22 +56,23 @@ const didMount = ({ canvas, register }) => {
     twgl.drawBufferInfo(gl, bufferInfo)
     register(requestAnimationFrame(render))
   }
-  // register(requestAnimationFrame(render))
+  register(requestAnimationFrame(render))
 }
 
 const Canvas = () => {
   return (
-    <canvas id='ex03' />
+    <canvas id='ex04' />
   )
 }
 
-const Ex03 = ({ subscribe }) => {
+const Ex04 = ({ subscribe }) => {
   let requestAnimationFrameId
   return (
     <div>
+      <div class='notes' dangerouslySetInnerHTML={ { __html: md.render(notes) } } />
       <Canvas
         onComponentDidMount={ () => didMount({
-          canvas: document.querySelector('#ex03'),
+          canvas: document.querySelector('#ex04'),
           register: id => { requestAnimationFrameId = id }
         }) }
         onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
@@ -81,7 +86,7 @@ export default ({ children }, { store }) => {
     store.select(sq('ex1.scene')).on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Ex03
+    <Ex04
       subscribe={ subscribe }
       onComponentShouldUpdate={ utils.shouldUpdate }
     />

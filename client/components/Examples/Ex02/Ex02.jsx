@@ -1,13 +1,12 @@
 import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
-import { quad } from '-/components/Examples/vertex-arrays'
 import './Ex02.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 
 const didMount = (scene, subscribe) => () => {
-  const canvas = document.querySelector('#scene')
+  const canvas = document.querySelector('#ex02')
   const gl = canvas.getContext('webgl2')
   const program = webglUtils.createProgramFromSources(gl, [
     vtxShader,
@@ -65,7 +64,7 @@ const didMount = (scene, subscribe) => () => {
 
 const Canvas = () => {
   return (
-    <canvas id='scene' />
+    <canvas id='ex02' />
   )
 }
 

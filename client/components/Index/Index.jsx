@@ -13,6 +13,7 @@ const Index = () => {
           <li><Link to='/01'>hello world</Link></li>
           <li><Link to='/02'>hello 2d world</Link></li>
           <li><Link to='/03'>hello 3d world</Link></li>
+          <li><Link to='/04'>twgl.js</Link></li>
           <li>lighting</li>
           <li>objects and textures</li>
           <li>custom shaders</li>
