@@ -12,6 +12,7 @@ import Ex03 from '-/components/Examples/Ex03/Ex03'
 import Ex04 from '-/components/Examples/Ex04/Ex04'
 
 import Threejs01 from '-/components/Threejs/Threejs01/Threejs01'
+import Threejs02 from '-/components/Threejs/Threejs02/Threejs02'
 
 const Routes = ({ store, browserHistory }) => (
   <Provider store={ store }>
@@ -25,6 +26,7 @@ const Routes = ({ store, browserHistory }) => (
         <Route path='04' component={ Ex04 }/>
 
         <Route path='Threejs01' component={ Threejs01 }/>
+        <Route path='Threejs02' component={ Threejs02 }/>
 
         <Route path='*' component={ NotFound }/>
       </Route>

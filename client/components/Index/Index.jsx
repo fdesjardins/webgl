@@ -37,6 +37,7 @@ const Index = () => {
         <span class='title'>Three.js</span>
         <ul>
           <li><Link to='/Threejs01'>hello three.js</Link></li>
+          <li><Link to='/Threejs02'>Point Light</Link></li>
           <li>...</li>
           <li>particle systems</li>
         </ul>
