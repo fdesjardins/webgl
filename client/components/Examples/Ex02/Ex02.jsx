@@ -43,6 +43,14 @@ const didMount = (scene, subscribe) => () => {
     const x2 = x1 + width
     const y1 = pos.y
     const y2 = y1 + height
+    const quad = [
+      x1, y1,
+      x2, y1,
+      x1, y2,
+      x1, y2,
+      x2, y1,
+      x2, y2
+    ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quad), gl.STATIC_DRAW)
     gl.uniform4fv(colorLocation, color)
     const primitiveType = gl.TRIANGLES
