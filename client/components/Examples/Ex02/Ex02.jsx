@@ -1,6 +1,7 @@
 import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
+import { quad } from '-/components/Examples/vertex-arrays'
 import './Ex02.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
@@ -42,14 +43,7 @@ const didMount = (scene, subscribe) => () => {
     const x2 = x1 + width
     const y1 = pos.y
     const y2 = y1 + height
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      x1, y1,
-      x2, y1,
-      x1, y2,
-      x1, y2,
-      x2, y1,
-      x2, y2
-    ]), gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quad), gl.STATIC_DRAW)
     gl.uniform4fv(colorLocation, color)
     const primitiveType = gl.TRIANGLES
     const offset = 0
