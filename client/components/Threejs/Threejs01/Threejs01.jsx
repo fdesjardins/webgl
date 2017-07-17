@@ -1,15 +1,15 @@
 import Inferno from 'inferno'
 import { default as utils, sq } from '-/utils'
 import './Threejs01.scss'
-// import THREE from 'threejs'
 
 const didMount = (subscribe) => {
   console.log('didMount')
   const scene = new THREE.Scene()
+
   const camera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000)
   camera.position.z = 5
 
-  const renderer = new THREE.WebGLRenderer()
+  const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#threejs') })
   renderer.setSize(400, 400)
 
   const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -22,19 +22,16 @@ const didMount = (subscribe) => {
 
     cube.rotation.x += 0.1
     cube.rotation.y += 0.1
-    console.log('animate')
 
     renderer.render(scene, camera)
   }
-
-  document.querySelector('#threejs').appendChild(renderer.domElement)
 
   animate()
 }
 
 const Threejs = () => {
   return (
-    <div id='threejs'></div>
+    <canvas id='threejs'></canvas>
   )
 }
 
