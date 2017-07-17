@@ -1,7 +1,10 @@
 import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
+import Markdown from '-/components/Markdown/Markdown'
+import UpDownLeftRight from '-/components/Controls/UpDownLeftRight/UpDownLeftRight'
 import './Ex02.scss'
+import notes from './Ex02.md'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 
@@ -68,27 +71,17 @@ const Canvas = () => {
   )
 }
 
-const Controls = ({ moveLeft, moveRight, moveUp, moveDown }) => {
-  return (
-    <div class='controls'>
-      <button onClick={ () => moveLeft(15) }>left</button>
-      <button onClick={ () => moveRight(15) }>right</button>
-      <button onClick={ () => moveUp(15) }>up</button>
-      <button onClick={ () => moveDown(15) }>down</button>
-    </div>
-  )
-}
-
 const Ex02 = ({ scene, controls, subscribe }) => {
   return (
-    <div>
-      <Canvas onComponentDidMount={ didMount(scene, subscribe) }/>
-      <Controls
-        moveLeft={ controls.moveLeft }
-        moveRight={ controls.moveRight }
-        moveUp={ controls.moveUp }
-        moveDown={ controls.moveDown }
+    <div class='ex02'>
+      <Markdown text={ notes } />
+      <UpDownLeftRight
+        onLeft={ () => controls.moveLeft(25) }
+        onRight={ () => controls.moveRight(25) }
+        onUp={ () => controls.moveUp(25) }
+        onDown={ () => controls.moveDown(25) }
       />
+      <Canvas onComponentDidMount={ didMount(scene, subscribe) }/>
     </div>
   )
 }

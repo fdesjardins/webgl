@@ -1,5 +1,11 @@
-canvas#ex02 {
-  width: 640px;
-  height: 480px;
-  border: 1px solid #999;
+@import "../Examples.scss";
+
+.ex02 {
+  @extend .example
+}
+
+.ex02 .controls {
+  button {
+    margin-right: 10px;
+  }
 }

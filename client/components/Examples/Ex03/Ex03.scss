@@ -1,4 +1,11 @@
+.ex03 .controls {
+  margin-bottom: 10px;
+  button {
+    margin-right: 10px;
+  }
+}
+
 canvas#ex03 {
   width: 100%;
-  height: 100%;
+  border: 1px solid #ddd;
 }

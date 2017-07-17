@@ -1,6 +1,8 @@
 import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
+import Markdown from '-/components/Markdown/Markdown'
+import notes from './Ex01.md'
 
 const didMount = () => {}
 
@@ -13,6 +15,7 @@ const Canvas = () => {
 const Ex01 = ({ subscribe }) => {
   return (
     <div>
+      <Markdown text={ notes } />
       <Canvas onComponentDidMount={ didMount(subscribe) }/>
     </div>
   )

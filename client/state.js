@@ -11,12 +11,12 @@ const state = new Baobab({
 state.set('ex1', {
   scene: {
     pos: {
-      x: 20,
-      y: 20
+      x: 50,
+      y: 50
     },
     color: [ Math.random(), Math.random(), Math.random(), 1 ],
-    width: 25,
-    height: 25
+    width: 75,
+    height: 75
   },
   controls: {
     moveLeft: d => {
