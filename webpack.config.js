@@ -10,7 +10,7 @@ module.exports = {
     filename: 'bundle.js',
     sourcePrefix: ''
   },
-  // devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   resolve: {
     modules: ['node_modules'],
     extensions: ['*', '.json', '.jsx', '.js'],
