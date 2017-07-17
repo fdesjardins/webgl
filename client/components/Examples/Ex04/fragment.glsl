@@ -15,5 +15,5 @@ void main() {
   color += sin( uv.x * sin( time / 1.0 ) * 10.0 ) + sin( uv.y * sin( time / 3.50 ) * 80.0 );
   color *= sin( time / 10.0 ) * 0.5;
 
-  outColor = vec4( vec3( color * 0.5, sin( color + time / 2.5 ) * 0.75, color ), 1.0 );
+  outColor = vec4( vec3( color, color * .5, tan( color + time / 2.5 ) * 0.25), 1.0 );
 }
