@@ -6,11 +6,11 @@ const didMount = (subscribe) => {
   console.log('didMount')
   const scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(75, 640/ 480, 0.1, 1000)
   camera.position.z = 5
 
   const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#threejs') })
-  renderer.setSize(400, 400)
+  renderer.setSize(680, 480)
 
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
@@ -44,10 +44,10 @@ const Threejs = () => {
 const Controls = ({ moveLeft, moveRight, moveUp, moveDown }) => {
   return (
     <div class='controls'>
-      <button onClick={ () => moveLeft(.2) }>left</button>
-      <button onClick={ () => moveRight(.2) }>right</button>
-      <button onClick={ () => moveUp(.2) }>up</button>
-      <button onClick={ () => moveDown(.2) }>down</button>
+      <button onClick={ () => moveLeft(1) }>left</button>
+      <button onClick={ () => moveRight(1) }>right</button>
+      <button onClick={ () => moveUp(1) }>up</button>
+      <button onClick={ () => moveDown(1) }>down</button>
     </div>
   )
 }
