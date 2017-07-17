@@ -22,7 +22,8 @@ const Routes = ({ store, browserHistory }) => (
         <Route path='02' component={ Ex02 }/>
         <Route path='03' component={ Ex03 }/>
 
-        <Route path='Threejs01' component={Threejs01}/>
+        <Route path='Threejs01' component={ Threejs01 }/>
+
         <Route path='*' component={ NotFound }/>
       </Route>
     </Router>
