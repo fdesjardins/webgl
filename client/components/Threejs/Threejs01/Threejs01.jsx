@@ -1,9 +1,10 @@
 import Inferno from 'inferno'
 import { default as utils, sq } from '-/utils'
+import * as THREE from 'three'
+
 import './Threejs01.scss'
 
 const didMount = (subscribe) => {
-  console.log('didMount')
   const scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)//new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000)

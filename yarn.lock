@@ -5591,6 +5591,10 @@ text-table@~0.2.0:
   version "0.2.0"
   resolved "http://18.220.27.71:4873/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
+three@^0.86.0:
+  version "0.86.0"
+  resolved "http://18.220.27.71:4873/three/-/three-0.86.0.tgz#1c33e476a1537e9a8a18f5792d024b1046cd2000"
+
 through2-filter@^2.0.0:
   version "2.0.0"
   resolved "http://18.220.27.71:4873/through2-filter/-/through2-filter-2.0.0.tgz#60bc55a0dacb76085db1f9dae99ab43f83d622ec"

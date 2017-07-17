@@ -27,7 +27,8 @@
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
     "history": "^4.6.3",
-    "inferno-router": "^3.6.4"
+    "inferno-router": "^3.6.4",
+    "three": "^0.86.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
