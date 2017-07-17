@@ -26,6 +26,12 @@ const didMount = (subscribe) => {
     renderer.render(scene, camera)
   }
 
+  const updateCubePos = ({ pos, width, height, color }) => {
+    cube.position.x = pos.x
+    cube.position.y = pos.y
+  }
+  subscribe(updateCubePos)
+
   animate()
 }
 
@@ -35,12 +41,29 @@ const Threejs = () => {
   )
 }
 
-const Threejs01 = ({ subscribe }) => {
+const Controls = ({ moveLeft, moveRight, moveUp, moveDown }) => {
+  return (
+    <div class='controls'>
+      <button onClick={ () => moveLeft(.2) }>left</button>
+      <button onClick={ () => moveRight(.2) }>right</button>
+      <button onClick={ () => moveUp(.2) }>up</button>
+      <button onClick={ () => moveDown(.2) }>down</button>
+    </div>
+  )
+}
+
+const Threejs01 = ({ subscribe, controls }) => {
   return (
     <div id="threejs01">
       <h1> Hello World </h1>
       <Threejs
         onComponentDidMount={ () => didMount(subscribe) }
+      />
+      <Controls
+        moveLeft={ controls.moveLeft }
+        moveRight={ controls.moveRight }
+        moveUp={ controls.moveUp }
+        moveDown={ controls.moveDown }
       />
     </div>
   )
@@ -53,6 +76,7 @@ export default ({ children }, { store }) => {
   return (
     <Threejs01
       subscribe={ subscribe }
+      controls={ store.select(sq('Threejs01.controls')).get() }
       onComponentShouldUpdate={ utils.shouldUpdate }
     />
   )
