@@ -10,7 +10,7 @@ const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientWidth, 0.1, 1000)
-  camera.position.z = 5
+  camera.position.z = 3
 
   const renderer = new THREE.WebGLRenderer({ canvas })
 
@@ -23,38 +23,23 @@ const didMount = ({ canvas, container }) => {
   const animate = () => {
     requestAnimationFrame(animate)
 
-    cube.rotation.x += 0.1
-    cube.rotation.y += 0.1
+    cube.rotation.x += 0.01
+    cube.rotation.y += 0.01
 
     renderer.render(scene, camera)
   }
   animate()
 }
 
-const Threejs01 = ({ subscribe }) => {
-  const components = { Canvas: () => <canvas/> }
-  return (
-    <div id="threejs01">
-      <Example
-        notes={ notes }
-        components={ components }
-        onComponentDidMount={ () => didMount({
-          canvas: document.querySelector('#threejs01 canvas'),
-          container: document.querySelector('#threejs01')
-        }) }
-      />
-    </div>
-  )
-}
-
-export default ({ children }, { store }) => {
-  const subscribe = callback => {
-    store.select(sq('Threejs01.scene')).on('update', ({ data }) => callback(data.currentData))
-  }
-  return (
-    <Threejs01
-      subscribe={ subscribe }
+export default ({ children }, { store }) => (
+  <div id="threejs01">
+    <Example
+      notes={ notes }
       onComponentShouldUpdate={ utils.shouldUpdate }
+      onComponentDidMount={ () => didMount({
+        canvas: document.querySelector('#threejs01 canvas'),
+        container: document.querySelector('#threejs01')
+      }) }
     />
-  )
-}
+  </div>
+)
