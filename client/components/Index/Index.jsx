@@ -10,10 +10,10 @@ const Index = () => {
       <li class='section'>
         <span class='title'>Basics</span>
         <ul>
-          <li><Link to='/01'>Hello World</Link></li>
-          <li><Link to='/02'>Hello 2D World</Link></li>
-          <li><Link to='/03'>Hello 3D World</Link></li>
-          <li><Link to='/04'>twgl.js</Link></li>
+          <li><Link to='/basics/01'>Hello World</Link></li>
+          <li><Link to='/basics/02'>Hello 2D World</Link></li>
+          <li><Link to='/basics/03'>Hello 3D World</Link></li>
+          <li><Link to='/basics/04'>twgl.js</Link></li>
           <li>Lighting</li>
           <li>Objects and Textures</li>
           <li>Custom Shaders</li>
@@ -36,8 +36,8 @@ const Index = () => {
       <li class='section'>
         <span class='title'>Three.js</span>
         <ul>
-          <li><Link to='/Threejs01'>Hello three.js</Link></li>
-          <li><Link to='/Threejs02'>Point Light</Link></li>
+          <li><Link to='/threejs/01'>Hello three.js</Link></li>
+          <li><Link to='/threejs/02'>Point Light</Link></li>
           <li>...</li>
           <li>particle systems</li>
         </ul>

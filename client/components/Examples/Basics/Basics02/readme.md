@@ -4,3 +4,9 @@ Here's an example of how we can mesh the application state with the WebGL contex
 and influence objects within the scene.
 
 Try to move the square using the buttons at below.
+
+<Controls />
+
+<Canvas />
+
+In the next example we'll see how to set up a three-dimensional scene.

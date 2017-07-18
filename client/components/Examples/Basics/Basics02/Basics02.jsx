@@ -1,15 +1,17 @@
-import Inferno from 'inferno'
+import Inferno, { createElement } from 'inferno'
 
 import { default as utils, sq } from '-/utils'
-import Markdown from '-/components/Markdown/Markdown'
 import UpDownLeftRight from '-/components/Controls/UpDownLeftRight/UpDownLeftRight'
-import './Ex03.scss'
-import notes from './Ex03.md'
+
+import Example from '-/components/Examples/Example/Example'
+import './Basics02.scss'
+import notes from './readme.md'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 
-const didMount = (scene, subscribe) => () => {
-  const canvas = document.querySelector('#ex03')
+const didMount = (selector, scene, subscribe) => () => {
+  console.log('mount')
+  const canvas = document.querySelector(selector)
   const gl = canvas.getContext('webgl2')
   const program = webglUtils.createProgramFromSources(gl, [
     vtxShader,
@@ -65,23 +67,26 @@ const didMount = (scene, subscribe) => () => {
   drawScene(scene)
 }
 
-const Canvas = () => {
-  return (
-    <canvas id='ex03' />
+const Basics02 = ({ scene, controls, subscribe }) => {
+  const Controls = () => (
+    <UpDownLeftRight
+      onLeft={ () => controls.moveLeft(25) }
+      onRight={ () => controls.moveRight(25) }
+      onUp={ () => controls.moveUp(25) }
+      onDown={ () => controls.moveDown(25) }
+    />
   )
-}
-
-const Ex02 = ({ scene, controls, subscribe }) => {
+  const components = {
+    Canvas: () => <canvas id='canvas'/>,
+    Controls
+  }
   return (
-    <div class='ex03'>
-      <Markdown text={ notes } />
-      <UpDownLeftRight
-        onLeft={ () => controls.moveLeft(25) }
-        onRight={ () => controls.moveRight(25) }
-        onUp={ () => controls.moveUp(25) }
-        onDown={ () => controls.moveDown(25) }
-      />
-      <Canvas onComponentDidMount={ didMount(scene, subscribe) }/>
+    <div class='basics02'>
+      <Example
+        notes={ notes }
+        components={ components }
+        onComponentDidMount={ didMount('#canvas', scene, subscribe) }
+        onComponentShouldUpdate={ utils.shouldUpdate } />
     </div>
   )
 }
@@ -91,7 +96,7 @@ export default ({ children }, { store }) => {
     store.select(sq('ex1.scene')).on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Ex02
+    <Basics02
       scene={ store.select(sq('ex1.scene')).get() }
       controls={ store.select(sq('ex1.controls')).get() }
       subscribe={ subscribe }

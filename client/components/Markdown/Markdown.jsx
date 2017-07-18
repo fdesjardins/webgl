@@ -1,13 +1,19 @@
 import Inferno from 'inferno'
-import MarkdownIt from 'markdown-it'
-import dompurify from 'dompurify'
-import markdownItLatex from 'markdown-it-latex'
-
-const md = new MarkdownIt()
-md.use(markdownItLatex)
+import createElement from 'inferno-create-element'
+import marksy from 'marksy/components'
+import hljs from 'highlight.js/lib/highlight'
+import hljsJavascript from 'highlight.js/lib/languages/javascript'
 
 import './Markdown.scss'
 
-export default ({ text }) => {
-  return <div class='markdown' dangerouslySetInnerHTML={ { __html: dompurify.sanitize(md.render(text)) } } />
+hljs.registerLanguage('javascript', hljsJavascript)
+
+export default ({ text, components }) => {
+  const compile = marksy({
+    createElement,
+    components
+  })
+  return (
+    <div class='marksy markdown'>{ compile(text).tree }</div>
+  )
 }

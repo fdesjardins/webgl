@@ -2,7 +2,7 @@ import Inferno from 'inferno'
 
 import { default as utils, sq } from '-/utils'
 import Markdown from '-/components/Markdown/Markdown'
-import notes from './Ex01.md'
+import notes from './readme.md'
 
 const didMount = () => {}
 

@@ -3,13 +3,13 @@ import Inferno from 'inferno'
 import { default as utils, sq } from '-/utils'
 import Markdown from '-/components/Markdown/Markdown'
 import UpDownLeftRight from '-/components/Controls/UpDownLeftRight/UpDownLeftRight'
-import './Ex02.scss'
-import notes from './Ex02.md'
+import './Basics03.scss'
+import notes from './readme.md'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 
 const didMount = (scene, subscribe) => () => {
-  const canvas = document.querySelector('#ex02')
+  const canvas = document.querySelector('#ex03')
   const gl = canvas.getContext('webgl2')
   const program = webglUtils.createProgramFromSources(gl, [
     vtxShader,
@@ -67,13 +67,13 @@ const didMount = (scene, subscribe) => () => {
 
 const Canvas = () => {
   return (
-    <canvas id='ex02' />
+    <canvas id='ex03' />
   )
 }
 
 const Ex02 = ({ scene, controls, subscribe }) => {
   return (
-    <div class='ex02'>
+    <div class='ex03'>
       <Markdown text={ notes } />
       <UpDownLeftRight
         onLeft={ () => controls.moveLeft(25) }
