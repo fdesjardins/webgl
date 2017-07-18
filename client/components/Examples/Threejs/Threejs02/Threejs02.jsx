@@ -15,8 +15,8 @@ const didMount = ({ canvas, container }) => {
   const renderer = new THREE.WebGLRenderer({ canvas })
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshLambertMaterial({ color: 0x666666 })
+  const geometry = new THREE.IcosahedronBufferGeometry(1)
+  const material = new THREE.MeshPhongMaterial({ color: 0x666666 })
   const cube = new THREE.Mesh(geometry, material)
   const light = new THREE.PointLight( 0xffffff, 1, 100)
   light.position.set(1,4,2)
