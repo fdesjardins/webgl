@@ -3,7 +3,6 @@ import twgl from 'twgl.js'
 
 import { default as utils, sq } from '-/utils'
 import Example from '-Example'
-import cube from '-/components/Examples/Basics/cube-object'
 
 import notes from './readme.md'
 import './Basics04.scss'
@@ -57,34 +56,16 @@ const didMount = ({ canvas, register }) => {
   register(requestAnimationFrame(render))
 }
 
-const Canvas = () => {
-  return (
-    <canvas id='ex04' />
-  )
-}
-
 const Basics04 = ({ subscribe }) => {
   let requestAnimationFrameId
-  // return (
-  //   <div>
-  //     <Markdown text={ notes } />
-  //     <Canvas
-  //       onComponentDidMount={ () => didMount({
-  //         canvas: document.querySelector('#ex04'),
-  //         register: id => { requestAnimationFrameId = id }
-  //       }) }
-  //       onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
-  //     />
-  //   </div>
-  // )
-  const components = { Canvas: () => <Canvas/> }
+  const components = { Canvas: () => <canvas/> }
   return (
     <div class='basics02'>
       <Example
         notes={ notes }
         components={ components }
         onComponentDidMount={ () => didMount({
-          canvas: document.querySelector('#ex04'),
+          canvas: document.querySelector('.basics02 canvas'),
           register: id => { requestAnimationFrameId = id }
         }) }
         onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }

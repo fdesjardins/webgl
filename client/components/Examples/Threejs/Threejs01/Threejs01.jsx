@@ -2,17 +2,19 @@ import Inferno from 'inferno'
 import { default as utils, sq } from '-/utils'
 import * as THREE from 'three'
 
+import Example from '-Example'
 import './Threejs01.scss'
+import notes from './readme.md'
 
-const didMount = (subscribe) => {
+const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)//new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientWidth, 0.1, 1000)
   camera.position.z = 5
 
-  const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#threejs') })
-  //renderer.setSize(400, 400)
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  const renderer = new THREE.WebGLRenderer({ canvas })
+
+  renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
   const cube = new THREE.Mesh(geometry, material)
@@ -26,22 +28,20 @@ const didMount = (subscribe) => {
 
     renderer.render(scene, camera)
   }
-
   animate()
 }
 
-const Threejs = () => {
-  return (
-    <canvas id='threejs'></canvas>
-  )
-}
-
 const Threejs01 = ({ subscribe }) => {
+  const components = { Canvas: () => <canvas/> }
   return (
     <div id="threejs01">
-      <h1> Hello World </h1>
-      <Threejs
-        onComponentDidMount={ () => didMount(subscribe) }
+      <Example
+        notes={ notes }
+        components={ components }
+        onComponentDidMount={ () => didMount({
+          canvas: document.querySelector('#threejs01 canvas'),
+          container: document.querySelector('#threejs01')
+        }) }
       />
     </div>
   )
