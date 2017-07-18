@@ -38,4 +38,8 @@ state.select(sq('ex1.scene.pos')).on('update', ({ target }) => {
   state.select('app').set('message', `pos: ${JSON.stringify(target)}`)
 })
 
+window.baobabLog = []
+
+state.on('update', e => baobabLog.push(e))
+
 export default state
