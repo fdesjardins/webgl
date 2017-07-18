@@ -1,4 +1,4 @@
 # Point Light
 ----
 
-<Canvas />
+<canvas />

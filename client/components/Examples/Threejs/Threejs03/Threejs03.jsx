@@ -40,31 +40,15 @@ const didMount = ({ canvas, container }) => {
   }
   animate()
 }
-
-const Threejs03 = ({ subscribe }) => {
-  const components = { Canvas: () => <canvas/> }
-  return (
-    <div id="Threejs03">
-      <Example
-        notes={ notes }
-        components={ components }
-        onComponentDidMount={ () => didMount({
-          canvas: document.querySelector('#Threejs03 canvas'),
-          container: document.querySelector('#Threejs03')
-        }) }
-      />
-    </div>
-  )
-}
-
-export default ({ children }, { store }) => {
-  const subscribe = callback => {
-    store.select(sq('Threejs03.scene')).on('update', ({ data }) => callback(data.currentData))
-  }
-  return (
-    <Threejs03
-      subscribe={ subscribe }
+export default ({ children }, { store }) => (
+  <div id="threejs03">
+    <Example
+      notes={ notes }
       onComponentShouldUpdate={ utils.shouldUpdate }
+      onComponentDidMount={ () => didMount({
+        canvas: document.querySelector('#threejs03 canvas'),
+        container: document.querySelector('#threejs03')
+      }) }
     />
-  )
-}
+  </div>
+)
