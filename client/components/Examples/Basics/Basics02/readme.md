@@ -9,4 +9,4 @@ Try to move the square using the buttons at below.
 
 <Canvas />
 
-In the next example we'll see how to set up a three-dimensional scene.
+<p>In the next example we'll see how to set up a three-dimensional scene.<I>beer</I></p>

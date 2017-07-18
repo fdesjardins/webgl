@@ -4,6 +4,11 @@
   margin-bottom: 25px;
 }
 
+.markdown i.em {
+  font-size: 125%;
+  margin: 0 2px;
+}
+
 .markdown blockquote {
   @extend .blockquote;
   color: #777;

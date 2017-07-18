@@ -78,7 +78,11 @@ const Basics02 = ({ scene, controls, subscribe }) => {
   )
   const components = {
     Canvas: () => <canvas id='canvas'/>,
-    Controls
+    Controls,
+    I: ({ children }) => {
+      // console.log(children)
+      return <i class={ `em em-${children[0].children}` }></i>
+    }
   }
   return (
     <div class='basics02'>
