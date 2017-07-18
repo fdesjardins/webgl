@@ -3,7 +3,7 @@ import Inferno, { createElement } from 'inferno'
 import { default as utils, sq } from '-/utils'
 import UpDownLeftRight from '-/components/Controls/UpDownLeftRight/UpDownLeftRight'
 
-import Example from '-/components/Examples/Example/Example'
+import Example from '-Example'
 import './Basics02.scss'
 import notes from './readme.md'
 import vtxShader from './vertex.glsl'

@@ -16,7 +16,7 @@ module.exports = {
     extensions: ['*', '.json', '.jsx', '.js'],
     alias: {
       '-': resolve('client'),
-      '-Example': resolve('client/components/Examples/Example/Example')
+      '-Example': resolve('client/components/Example/Example')
     }
   },
   module: {
