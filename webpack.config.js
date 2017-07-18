@@ -15,7 +15,8 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['*', '.json', '.jsx', '.js'],
     alias: {
-      '-': resolve('client')
+      '-': resolve('client'),
+      '-Example': resolve('client/components/Examples/Example/Example')
     }
   },
   module: {

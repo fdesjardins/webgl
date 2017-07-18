@@ -2,7 +2,7 @@ import Inferno from 'inferno'
 import twgl from 'twgl.js'
 
 import { default as utils, sq } from '-/utils'
-import Markdown from '-/components/Markdown/Markdown'
+import Example from '-Example'
 import cube from '-/components/Examples/Basics/cube-object'
 
 import notes from './readme.md'
@@ -63,18 +63,32 @@ const Canvas = () => {
   )
 }
 
-const Ex04 = ({ subscribe }) => {
+const Basics04 = ({ subscribe }) => {
   let requestAnimationFrameId
+  // return (
+  //   <div>
+  //     <Markdown text={ notes } />
+  //     <Canvas
+  //       onComponentDidMount={ () => didMount({
+  //         canvas: document.querySelector('#ex04'),
+  //         register: id => { requestAnimationFrameId = id }
+  //       }) }
+  //       onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
+  //     />
+  //   </div>
+  // )
+  const components = { Canvas: () => <Canvas/> }
   return (
-    <div>
-      <Markdown text={ notes } />
-      <Canvas
+    <div class='basics02'>
+      <Example
+        notes={ notes }
+        components={ components }
         onComponentDidMount={ () => didMount({
           canvas: document.querySelector('#ex04'),
           register: id => { requestAnimationFrameId = id }
         }) }
         onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
-      />
+        onComponentShouldUpdate={ utils.shouldUpdate } />
     </div>
   )
 }
@@ -84,7 +98,7 @@ export default ({ children }, { store }) => {
     store.select(sq('ex1.scene')).on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Ex04
+    <Basics04
       subscribe={ subscribe }
       onComponentShouldUpdate={ utils.shouldUpdate }
     />

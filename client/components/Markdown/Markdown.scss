@@ -1,11 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+
 .markdown {
   margin-bottom: 25px;
 }
 
 .markdown blockquote {
-  padding: 15px;
+  @extend .blockquote;
   color: #777;
-  border-left: 5px solid #ddd;
+  font-size: 100%;
 }
 
 .markdown pre {
