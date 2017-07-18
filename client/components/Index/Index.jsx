@@ -38,6 +38,7 @@ const Index = () => {
         <ul>
           <li><Link to='/threejs/01'>Hello three.js</Link></li>
           <li><Link to='/threejs/02'>Point Light</Link></li>
+          <li><Link to='/threejs/03'>Physics</Link></li>
           <li>...</li>
           <li>particle systems</li>
         </ul>
