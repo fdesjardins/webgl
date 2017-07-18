@@ -27,7 +27,7 @@ module.exports = async (config) => {
     proxy: 'localhost:1137',
     reloadDelay: 100
   })
-  bs.watch(path.join(__dirname, '../dist/*.css')).on('change', bs.reload)
+  bs.watch(path.join(__dirname, '../dist/**/*.*')).on('change', bs.reload)
 
   return { app, server }
 }
