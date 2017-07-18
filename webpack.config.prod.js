@@ -6,6 +6,7 @@ const resolve = d => path.join(__dirname, d)
 
 const extractSass = new ExtractTextPlugin({
     filename: "[name].css",
+    allChunks: true
     // disable: process.env.NODE_ENV === "development"
 })
 
@@ -19,7 +20,7 @@ module.exports = {
     filename: '[name].js',
 
     // chunkFilename: '[id].js',
-    sourcePrefix: ''
+    // sourcePrefix: ''
   },
   devtool: 'cheap-module-source-map',
   resolve: {

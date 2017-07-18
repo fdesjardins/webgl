@@ -4,6 +4,7 @@ const express = require('express')
 const livereload = require('livereload')
 const compression = require('compression')
 const cors = require('cors')
+const browserSync = require('browser-sync')
 
 module.exports = async (config) => {
   const app = express()
@@ -21,10 +22,12 @@ module.exports = async (config) => {
   const server = app.listen(1137)
   console.log('listening on 1137...')
 
-  const livereloadServer = livereload.createServer({
-    delay: 100
+  const bs = browserSync.create()
+  bs.init({
+    proxy: 'localhost:1137',
+    reloadDelay: 100
   })
-  livereloadServer.watch(path.join(__dirname, '../dist'))
+  bs.watch(path.join(__dirname, '../dist/*.css')).on('change', bs.reload)
 
   return { app, server }
 }
