@@ -18,7 +18,7 @@ import Threejs03 from '-/components/Examples/Threejs/Threejs03/Threejs03'
 const Routes = ({ store, browserHistory }) => (
   <Provider store={ store }>
     <Router history={ browserHistory }>
-      <Route component={ App }>
+      <Route component={ App } onEnter={ App.registerRouter }>
         <IndexRoute component={ Index }/>
 
         <Route path='basics/01' component={ Basics01 }/>

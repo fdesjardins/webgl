@@ -23,7 +23,6 @@
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "browser-sync": "^2.18.12",
-    "browsersync": "^0.0.1-security",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
     "css-loader": "^0.28.4",
@@ -33,8 +32,10 @@
     "inferno-create-element": "^3.6.4",
     "inferno-router": "^3.6.4",
     "marksy": "^4.0.0",
+    "mousetrap": "^1.6.1",
     "three": "^0.86.0",
-    "twgl.js": "^3.4.0"
+    "twgl.js": "^3.4.0",
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

@@ -2,6 +2,8 @@ import Inferno from 'inferno'
 import { Link } from 'inferno-router'
 import Component from 'inferno-component'
 
+import CommandPalette from '-/components/Controls/CommandPalette/CommandPalette'
+
 import './App.scss'
 
 class App extends Component {
@@ -13,7 +15,7 @@ class App extends Component {
     this.store.on('update', () => this.setState())
   }
   render () {
-    const appCursor = this.store.select('app')
+    // const appCursor = this.store.select('app')
     return (
       <div class='app'>
 
@@ -28,8 +30,13 @@ class App extends Component {
         <div class='content'>
           { this.props.children || null }
         </div>
+
+        <CommandPalette />
       </div>
     )
+  }
+  registerRouter (props, router) {
+    this.router = router
   }
 }
 
