@@ -27,6 +27,7 @@
     "cors": "^2.8.4",
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
+    "fuse": "^0.4.0",
     "highlight.js": "^9.12.0",
     "history": "^4.6.3",
     "inferno-create-element": "^3.7.0",

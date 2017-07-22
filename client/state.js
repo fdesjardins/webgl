@@ -4,7 +4,9 @@ import { sq } from '-/utils'
 
 const state = new Baobab({
   app: {
-    message: ''
+    message: '',
+    query: '',
+    querySelectedIndex: 0
   }
 })
 
