@@ -15,9 +15,7 @@ const Index = () => {
           <li><Link to='/basics/03'>Hello 3D World</Link></li>
           <li><Link to='/basics/04'>twgl.js</Link></li>
           <li><Link to='/basics/05'>Lighting</Link></li>
-          <li>Objects and Textures</li>
-          <li>Custom Shaders</li>
-          <li>Scene Graphs</li>
+          <li>Textures and Blending</li>
         </ul>
       </li>
 
