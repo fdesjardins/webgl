@@ -16,18 +16,27 @@ const Index = () => {
           <li><Link to='/basics/04'>twgl.js</Link></li>
           <li><Link to='/basics/05'>Lighting</Link></li>
           <li><Link to='/basics/06'>Textures and Blending</Link></li>
+          <li>JSON Objects</li>
+          <li>Mouse Events</li>
+          <li>Shadows</li>
+          <li>Geometry Shaders</li>
         </ul>
       </li>
 
       <li class='section'>
         <span class='title'>Advanced WebGL</span>
         <ul>
-          <li>Shadows</li>
           <li>Stencil Testing</li>
           <li>Blending</li>
           <li>Framebuffers</li>
           <li>Cubemaps</li>
-          <li>Geometry Shaders</li>
+          <li>Instancing</li>
+          <li>Deferred Shading</li>
+          <li>SSAO</li>
+          <li>Metaballs</li>
+          <li>Summed-Area Variance Shadow Maps</li>
+          <li>Motion Blur</li>
+          <li>Fluid Simulation</li>
         </ul>
       </li>
 
