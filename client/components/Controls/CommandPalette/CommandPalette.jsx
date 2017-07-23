@@ -12,28 +12,43 @@ const commands = [
   },
   {
     namespace: 'navigation',
-    text: 'Navigate to /basics/01',
+    text: 'Navigate to /basics/01 (hello world)',
     action: router => router.push('/basics/01')
   },
   {
     namespace: 'navigation',
-    text: 'Navigate to /basics/02',
+    text: 'Navigate to /basics/02 (2D)',
     action: router => router.push('/basics/02')
   },
   {
     namespace: 'navigation',
-    text: 'Navigate to /basics/03',
+    text: 'Navigate to /basics/03 (3D)',
     action: router => router.push('/basics/03')
   },
   {
     namespace: 'navigation',
-    text: 'Navigate to /basics/04',
+    text: 'Navigate to /basics/04 (twgl.js)',
     action: router => router.push('/basics/04')
   },
   {
     namespace: 'navigation',
-    text: 'Navigate to /basics/05',
+    text: 'Navigate to /basics/05 (lighting)',
     action: router => router.push('/basics/05')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /threejs/01 (hello three.js)',
+    action: router => router.push('/threejs/01')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /threejs/02 (lighting)',
+    action: router => router.push('/threejs/02')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /threejs/03 (physics)',
+    action: router => router.push('/threejs/03')
   }
 ]
 
