@@ -8,7 +8,7 @@ const browserSync = require('browser-sync')
 module.exports = async (config) => {
   const app = express()
   app.use(compression())
-  app.use(express.static(path.join(__dirname, '../dist')))
+  app.use('/dist', express.static(path.join(__dirname, '../dist')))
 
   app.use(cors())
   app.all('*', cors())

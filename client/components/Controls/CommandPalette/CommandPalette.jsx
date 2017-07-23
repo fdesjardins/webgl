@@ -37,6 +37,11 @@ const commands = [
   },
   {
     namespace: 'navigation',
+    text: 'Navigate to /basics/06 (textures & blending)',
+    action: router => router.push('/basics/06')
+  },
+  {
+    namespace: 'navigation',
     text: 'Navigate to /threejs/01 (hello three.js)',
     action: router => router.push('/threejs/01')
   },
