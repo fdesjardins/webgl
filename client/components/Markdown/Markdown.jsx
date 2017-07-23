@@ -4,7 +4,7 @@ import marksy from 'marksy/components'
 import hljs from 'highlight.js/lib/highlight'
 import hljsJavascript from 'highlight.js/lib/languages/javascript'
 
-// import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github.css'
 import './Markdown.scss'
 
 hljs.registerLanguage('javascript', hljsJavascript)

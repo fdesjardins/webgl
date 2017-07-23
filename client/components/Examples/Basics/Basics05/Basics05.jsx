@@ -96,34 +96,40 @@ const didMount = ({ canvas, register, uniforms }) => {
   register(requestAnimationFrame(render))
 }
 
-const Basics05 = ({ subscribe, uniforms }) => {
+const Canvas = ({ id }) => {
+  return <canvas id={ id }/>
+}
+
+const Basics0501 = ({ color, id }, { store }) => {
+  const uniforms = store.get(sq('ex5.scene.uniforms'))
   let requestAnimationFrameId
-  const components = { Canvas: () => <canvas/> }
+  return (
+    <Canvas
+      id={ id }
+      onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
+      onComponentDidMount={ () => didMount({
+        canvas: document.querySelector(`#${id}`),
+        register: animId => { requestAnimationFrameId = animId },
+        uniforms: _.merge({}, uniforms, { u_lightColor: color })
+      }) }
+    />
+  )
+}
+
+const Basics05 = ({ uniforms }) => {
+  const components = { Basics0501: ({ color, id }) => <Basics0501 color={ color } id={ id }/> }
   return (
     <div class='basics05'>
       <Example
         notes={ notes }
         components={ components }
-        onComponentDidMount={ () => didMount({
-          canvas: document.querySelector('.basics05 canvas'),
-          register: id => { requestAnimationFrameId = id },
-          uniforms
-        }) }
-        onComponentWillUnmount={ () => cancelAnimationFrame(requestAnimationFrameId) }
         onComponentShouldUpdate={ utils.shouldUpdate } />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  const subscribe = callback => {
-    store.select(sq('ex5.scene.uniforms')).on('update', ({ data }) => callback(data.currentData))
-  }
   return (
-    <Basics05
-      subscribe={ subscribe }
-      uniforms={ store.get(sq('ex5.scene.uniforms')) }
-      onComponentShouldUpdate={ utils.shouldUpdate }
-    />
+    <Basics05 onComponentShouldUpdate={ utils.shouldUpdate }/>
   )
 }

@@ -6,16 +6,34 @@ import './CommandPalette.scss'
 
 const commands = [
   {
-    name: 'home',
+    namespace: 'navigation',
     text: 'Navigate home',
-    keywords: [ 'h', 'home' ],
     action: router => router.push('/')
   },
   {
-    name: 'basics1',
+    namespace: 'navigation',
     text: 'Navigate to /basics/01',
-    keywords: [ 'b1' ],
     action: router => router.push('/basics/01')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /basics/02',
+    action: router => router.push('/basics/02')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /basics/03',
+    action: router => router.push('/basics/03')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /basics/04',
+    action: router => router.push('/basics/04')
+  },
+  {
+    namespace: 'navigation',
+    text: 'Navigate to /basics/05',
+    action: router => router.push('/basics/05')
   }
 ]
 
@@ -24,7 +42,7 @@ const getCmd = () => document.querySelector('.command-palette')
 const execute = router => {
   const cmd = getCmd().querySelector('.command-palette-search-results .selected').id
   commands.map(c => {
-    if (c.name === cmd) {
+    if (c.text.replace(/ /g, '-').toLowerCase() === cmd) {
       c.action(router)
       return hidePalette()
     }
@@ -51,7 +69,7 @@ const handleCmdInput = (setQuery, selectNext, selectPrevious, execute) => e => {
     return execute()
   }
   const cmd = getCmd()
-  const query = cmd.querySelector('input').value
+  const query = cmd.querySelector('input').value + e.key
 
   setQuery(query)
 }
@@ -77,7 +95,7 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
     const resultsLis = results.map((r, i) => {
       const className = i === selectedIndex ? 'selected' : ''
       return (
-        <li class={ className } id={ r.name }>{ r.text }</li>
+        <li class={ className } id={ r.text.replace(/ /g, '-').toLowerCase() }>{ r.text }</li>
       )
     })
     return (
@@ -114,7 +132,7 @@ const CommandPaletteControls = ({ query, setQuery, selectedIndex, setIndex, rout
 }
 
 const findCommands = query => commands.filter(c => {
-  return (new RegExp(query, 'g')).test(c.name)
+  return c.text.toLowerCase().indexOf(query) !== -1
 })
 
 const CommandPalette = ({ children }, { store, router }) => {
@@ -124,7 +142,7 @@ const CommandPalette = ({ children }, { store, router }) => {
     <div class='command-palette hidden'>
       <CommandPaletteControls
         query={ queryCursor.get() }
-        setQuery={ query => queryCursor.set(query) }
+        setQuery={ query => { queryCursor.set(query) }}
         selectedIndex={ selectedIndex.get() }
         setIndex={ index => selectedIndex.set(index) }
         router={ router }
