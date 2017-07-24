@@ -69,6 +69,12 @@ module.exports = {
         loaders: [
           'raw-loader'
         ]
+      },
+      {
+        test: /\.(obj)$/,
+        loaders: [
+          'file-loader'
+        ]
       }
     ],
     unknownContextCritical: false,

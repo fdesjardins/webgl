@@ -20,7 +20,12 @@
 
 ## OBJ
 
-TODO
+<Basics0601 id='sw45'
+  model={ 'sw45' }
+  color={ [1, 1, 1, 1] }
+  texture={ 'carbonFiber' }
+  alpha={ 1 }
+/>
 
 ## STL
 

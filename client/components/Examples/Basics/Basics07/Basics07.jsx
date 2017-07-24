@@ -18,6 +18,7 @@ import carbonFiberTexture from './carbon-fiber.jpg'
 import amberGlassTexture from './amber-glass.jpg'
 import infinityTexture from './infinity.jpg'
 import teapot from './teapot.json'
+import sw45 from './sw45.obj'
 
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl2')
