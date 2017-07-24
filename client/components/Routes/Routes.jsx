@@ -12,6 +12,7 @@ import Basics03 from '-/components/Examples/Basics/Basics03/Basics03'
 import Basics04 from '-/components/Examples/Basics/Basics04/Basics04'
 import Basics05 from '-/components/Examples/Basics/Basics05/Basics05'
 import Basics06 from '-/components/Examples/Basics/Basics06/Basics06'
+import Basics07 from '-/components/Examples/Basics/Basics07/Basics07'
 
 import Threejs01 from '-/components/Examples/Threejs/Threejs01/Threejs01'
 import Threejs02 from '-/components/Examples/Threejs/Threejs02/Threejs02'
@@ -31,6 +32,7 @@ const Routes = ({ store, browserHistory }) => (
         <Route path='basics/04' component={ Basics04 }/>
         <Route path='basics/05' component={ Basics05 }/>
         <Route path='basics/06' component={ Basics06 }/>
+        <Route path='basics/07' component={ Basics07 }/>
 
         <Route path='threejs/01' component={ Threejs01 }/>
         <Route path='threejs/02' component={ Threejs02 }/>

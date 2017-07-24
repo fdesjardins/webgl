@@ -16,7 +16,7 @@ const Index = () => {
           <li><Link to='/basics/04'>twgl.js</Link></li>
           <li><Link to='/basics/05'>Lighting</Link></li>
           <li><Link to='/basics/06'>Textures and Blending</Link></li>
-          <li>JSON Objects</li>
+          <li><Link to='/basics/07'>Loading Objects</Link></li>
           <li>Mouse Events</li>
           <li>Shadows</li>
           <li>Geometry Shaders</li>
