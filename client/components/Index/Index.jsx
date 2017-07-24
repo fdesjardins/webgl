@@ -54,7 +54,7 @@ const Index = () => {
       <li class='section'>
         <span class='title'>gpu.js</span>
         <ul>
-          <li>Matrix Multiplication</li>
+          <li><Link to='/gpujs/01'>Matrix Multiplication</Link></li>
           <li>...</li>
           <li>N-body Simulation</li>
         </ul>

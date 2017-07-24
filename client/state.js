@@ -55,8 +55,8 @@ state.set('ex5', {
   }
 })
 
-window.baobabLog = []
-
-state.on('update', e => baobabLog.push(e))
+state.set('gpujs01', {
+  result: null
+})
 
 export default state

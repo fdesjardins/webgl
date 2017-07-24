@@ -17,6 +17,8 @@ import Threejs01 from '-/components/Examples/Threejs/Threejs01/Threejs01'
 import Threejs02 from '-/components/Examples/Threejs/Threejs02/Threejs02'
 import Threejs03 from '-/components/Examples/Threejs/Threejs03/Threejs03'
 
+import Gpujs01 from '-/components/Examples/Gpujs/Gpujs01/Gpujs01'
+
 const Routes = ({ store, browserHistory }) => (
   <Provider store={ store }>
     <Router history={ browserHistory }>
@@ -33,6 +35,8 @@ const Routes = ({ store, browserHistory }) => (
         <Route path='threejs/01' component={ Threejs01 }/>
         <Route path='threejs/02' component={ Threejs02 }/>
         <Route path='threejs/03' component={ Threejs03 }/>
+
+        <Route path='gpujs/01' component={ Gpujs01 }/>
 
         <Route path='*' component={ NotFound }/>
       </Route>
