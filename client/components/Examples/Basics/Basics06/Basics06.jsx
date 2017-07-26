@@ -101,6 +101,8 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
+    console.log('render')
+
     if (uniforms.u_alpha < 1) {
       gl.disable(gl.DEPTH_TEST)
       gl.enable(gl.BLEND)

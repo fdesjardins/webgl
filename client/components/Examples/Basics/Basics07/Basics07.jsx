@@ -19,6 +19,7 @@ import amberGlassTexture from './amber-glass.jpg'
 import infinityTexture from './infinity.jpg'
 import teapot from './teapot.json'
 import sw45 from './sw45.obj'
+import sw45tex from './sw45tex.png'
 
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl2')
@@ -27,36 +28,22 @@ const initGL = (canvas, config) => {
     fragShader
   ])
 
-  const bufferInfo = twgl.createBufferInfoFromArrays(gl, {
+  const cubeBufferInfo = twgl.createBufferInfoFromArrays(gl, cube)
+
+  const teapotBufferInfo = twgl.createBufferInfoFromArrays(gl, {
     position: teapot.vertexPositions,
     normal: teapot.vertexNormals,
     texcoord: teapot.vertexTextureCoords,
     indices: teapot.indices
   })
 
-  return {
-    gl,
-    programInfo,
-    bufferInfo
-  }
-}
-
-// update scene based on time elapsed
-const animateScene = updateFns => {
-  let then = 0
-  return () => {
-    const now = new Date().getTime()
-    if (then !== 0) {
-      const elapsed = now - then
-      updateFns.map(f => f(elapsed))
-    }
-    then = now
-  }
-}
-
-const didMount = ({ canvas, register, uniforms, texture }) => {
-  const { gl, programInfo, bufferInfo } = initGL(canvas)
-  const m4 = twgl.m4
+  const sw45Mesh = new OBJ.Mesh(sw45)
+  const sw45BufferInfo = twgl.createBufferInfoFromArrays(gl, {
+    position: sw45Mesh.vertices,
+    normal: sw45Mesh.vertexNormals,
+    texcoord: sw45Mesh.textures,
+    indices: sw45Mesh.indices
+  })
 
   const textures = twgl.createTextures(gl, {
     stainedGlass: {
@@ -93,13 +80,49 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
       src: infinityTexture,
       mag: gl.NEAREST,
       min: gl.LINEAR
+    },
+    sw45: {
+      src: sw45tex,
+      mag: gl.NEAREST,
+      min: gl.LINEAR
     }
   })
+
+  return {
+    gl,
+    programInfo,
+    bufferInfo: {
+      cube: cubeBufferInfo,
+      teapot: teapotBufferInfo,
+      sw45: sw45BufferInfo
+    },
+    textures
+  }
+}
+
+// update scene based on time elapsed
+const animateScene = updateFns => {
+  let then = 0
+  return () => {
+    const now = new Date().getTime()
+    if (then !== 0) {
+      const elapsed = now - then
+      updateFns.map(f => f(elapsed))
+    }
+    then = now
+  }
+}
+
+const didMount = ({ canvas, register, uniforms, texture, model }) => {
+  const { gl, programInfo, bufferInfo, textures } = initGL(canvas)
+  const m4 = twgl.m4
 
   let worldRotationY = 0
   const animate = animateScene([
     time => { worldRotationY += time * .001 }
   ])
+
+  console.log(model)
 
   const render = time => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
@@ -120,11 +143,11 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     const fov = 30 * Math.PI / 180
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight
     const zNear = 0.5
-    const zFar = 100
+    const zFar = 200
     const projection = m4.perspective(fov, aspect, zNear, zFar)
-    const eye = [1, 20, -50]
+    const eye = [1, 30, 32]
     const target = [0, 0, 0]
-    const up = [0, 1, 0]
+    const up = [0, 2, 1]
     const camera = m4.lookAt(eye, target, up)
     const view = m4.inverse(camera)
     const viewProjection = m4.multiply(projection, view)
@@ -136,9 +159,9 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     uniforms.u_worldViewProjection = m4.multiply(viewProjection, world)
 
     gl.useProgram(programInfo.program)
-    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)
+    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[model])
     twgl.setUniforms(programInfo, uniforms)
-    gl.drawElements(gl.TRIANGLES, bufferInfo.numElements, gl.UNSIGNED_SHORT, 0)
+    gl.drawElements(gl.TRIANGLES, bufferInfo[model].numElements, gl.UNSIGNED_SHORT, 0)
 
     animate()
     register(requestAnimationFrame(render))
@@ -150,7 +173,7 @@ const Canvas = ({ id }) => {
   return <canvas id={ id }/>
 }
 
-const Basics0601 = ({ color, id, texture, alpha }, { store }) => {
+const Basics0601 = ({ color, id, texture, alpha, model }, { store }) => {
   const uniforms = store.get(sq('ex7.scene.uniforms'))
   let requestAnimationFrameId
   return (
@@ -161,7 +184,8 @@ const Basics0601 = ({ color, id, texture, alpha }, { store }) => {
         canvas: document.querySelector(`#${id}`),
         register: animId => { requestAnimationFrameId = animId },
         uniforms: _.merge({}, uniforms, { u_lightColor: color, u_alpha: alpha }),
-        texture
+        texture,
+        model
       }) }
     />
   )
@@ -169,8 +193,8 @@ const Basics0601 = ({ color, id, texture, alpha }, { store }) => {
 
 const Basics06 = ({ uniforms }) => {
   const components = {
-    Basics0601: ({ color, id, texture, alpha }) => (
-      <Basics0601 color={ color } id={ id } texture={ texture } alpha={ alpha }/>
+    Basics0601: ({ color, id, texture, alpha, model }) => (
+      <Basics0601 color={ color } id={ id } texture={ texture } alpha={ alpha } model={ model }/>
     )
   }
   return (

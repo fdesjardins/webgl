@@ -51,43 +51,43 @@ const Computation = ({ id }) => {
   )
 }
 
-const Gpujs0101 = ({ id, result, displayResult }, { store }) => {
+const Gpujs0101 = ({ id, displayResult }, { store }) => {
   console.log('render 0101')
   return (
     <div>
       <Computation id={ id } onComponentShouldUpdate={ utils.shouldUpdate } onComponentDidMount={ () => didMount(displayResult) }/>
-      <Output id={ id } result={ result }/>
     </div>
   )
 }
 
 let lastResult = null
-const Gpujs01 = ({ id }, { store }) => {
+const Gpujs01 = (props, { store }) => {
   console.log('render')
-  const displayResult = result => {
-    console.log('displayResult')
-    store.select(sq('gpujs01.result')).set(result)
-  }
-  const result = JSON.stringify(store.select(sq('gpujs01.result')).get(), null, 2)
-  const components = {
-    Gpujs0101: ({ id }) => {
-      console.log('id', id)
-      return (
-        <Gpujs0101 id={ id }
-          displayResult={ displayResult }
-          onComponentShouldUpdate={ utils.shouldUpdate }
-        />
-      )
-    }
-  }
-  // const shouldUpdate = (lastProps, nextProps) => uti
-  console.log(store.select(sq('gpujs01.result')).get())
+
+  // const displayResult = result => {
+  //   console.log('displayResult')
+  //   store.select(sq('gpujs01.result')).set(result)
+  // }
+
+  // const result = JSON.stringify(store.select(sq('gpujs01.result')).get(), null, 2)
+  // const components = {
+  //   Gpujs0101: ({ id }) => {
+  //     console.log('id', id)
+  //     return (
+  //       <Gpujs0101 id={ id }
+  //         displayResult={ displayResult }
+  //         onComponentShouldUpdate={ utils.shouldUpdate }
+  //       />
+  //     )
+  //   },
+  //   Gpujs0101Output: ({ id }) => {}
+  // }
   return (
     <div class='gpujs01'>
       <Example
         notes={ notes }
         components={ components }
-        onComponentShouldUpdate={ () => lastResult !== result } />
+        onComponentShouldUpdate={ utils.shouldUpdate } />
     </div>
   )
 }

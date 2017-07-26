@@ -11,19 +11,14 @@
   alpha={ 1 }
 />
 ```
-<Basics0601 id='mario'
-  model={ 'teapot' }
-  color={ [1, 1, 1, 1] }
-  texture={ 'stainedGlass' }
-  alpha={ 1 }
-/>
+
 
 ## OBJ
 
 <Basics0601 id='sw45'
-  model={ 'sw45' }
+  model={ 'teapot' }
   color={ [1, 1, 1, 1] }
-  texture={ 'carbonFiber' }
+  texture={ 'sw45' }
   alpha={ 1 }
 />
 

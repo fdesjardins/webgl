@@ -65,15 +65,9 @@ module.exports = {
         ]
       },
       {
-        test: /\.(glsl|md)$/i,
+        test: /\.(glsl|md|obj)$/i,
         loaders: [
           'raw-loader'
-        ]
-      },
-      {
-        test: /\.(obj)$/,
-        loaders: [
-          'file-loader'
         ]
       }
     ],
@@ -82,7 +76,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'common',
       minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
     }),
     new webpack.optimize.CommonsChunkPlugin({

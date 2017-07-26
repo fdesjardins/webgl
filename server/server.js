@@ -9,6 +9,7 @@ module.exports = async (config) => {
   const app = express()
   app.use(compression())
   app.use('/dist', express.static(path.join(__dirname, '../dist')))
+  app.use('/lib', express.static(path.join(__dirname, '../lib')))
 
   app.use(cors())
   app.all('*', cors())
