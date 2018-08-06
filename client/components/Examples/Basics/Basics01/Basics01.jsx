@@ -7,28 +7,25 @@ import notes from './readme.md'
 const didMount = () => {}
 
 const Canvas = () => {
-  return (
-    <canvas id='scene' />
-  )
+  return <canvas id="scene" />
 }
 
 const Ex01 = ({ subscribe }) => {
   return (
     <div>
-      <Markdown text={ notes } />
-      <Canvas onComponentDidMount={ didMount(subscribe) }/>
+      <Markdown text={notes} />
+      <Canvas onComponentDidMount={didMount(subscribe)} />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
   const subscribe = callback => {
-    store.select(sq('ex1.scene')).on('update', ({ data }) => callback(data.currentData))
+    store
+      .select(sq('ex1.scene'))
+      .on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Ex01
-      subscribe={ subscribe }
-      onComponentShouldUpdate={ utils.shouldUpdate }
-    />
+    <Ex01 subscribe={subscribe} onComponentShouldUpdate={utils.shouldUpdate} />
   )
 }

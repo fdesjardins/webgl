@@ -1,18 +1,17 @@
-import Inferno from 'inferno'
-import Component from 'inferno-component'
+import Inferno, { Component } from 'inferno'
 
 export default class Provider extends Component {
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
     this.store = props.store
   }
-  componentDidMount () {
+  componentDidMount() {
     this.store.on('update', () => this.setState())
   }
-  render () {
+  render() {
     return this.props.children
   }
-  getChildContext () {
+  getChildContext() {
     return {
       store: this.props.store
     }

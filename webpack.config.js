@@ -4,22 +4,20 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const resolve = d => path.join(__dirname, d)
 
-const extractSass = new ExtractTextPlugin({
-  filename: '[name].css',
-  allChunks: true,
-  disable: process.env.NODE_ENV !== 'production'
-})
-
 module.exports = {
   entry: {
     app: resolve('client/index')
   },
-  devtool: 'cheap-eval-source-map',
+  mode: 'development',
+
+  devtool: 'inline-source-map',
+
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',
     filename: '[name].js'
   },
+
   resolve: {
     modules: ['node_modules'],
     extensions: ['*', '.json', '.jsx', '.js'],
@@ -28,34 +26,33 @@ module.exports = {
       '-Example': resolve('client/components/Example/Example')
     }
   },
+
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel-loader'
-        ]
+        loaders: ['babel-loader']
       },
       {
-        test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          }, {
-            loader: 'sass-loader',
-            options: { sourceMap: true }
-          }],
+        test: /\.(scss|css)$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ],
           fallback: 'style-loader'
         })
-      },
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader'
-        ]
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -66,23 +63,22 @@ module.exports = {
       },
       {
         test: /\.(glsl|md|obj)$/i,
-        loaders: [
-          'raw-loader'
-        ]
+        loaders: ['raw-loader']
       }
     ],
     unknownContextCritical: false,
     unknownContextRegExp: /^.\/.*$/
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      minChunks: Infinity
-    }),
-    extractSass
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'common',
+    //   minChunks: module =>
+    //     module.context && module.context.indexOf('node_modules') !== -1
+    // }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   minChunks: Infinity
+    // }),
+    new ExtractTextPlugin('app.css')
   ]
 }

@@ -60,7 +60,9 @@ const commands = [
 const getCmd = () => document.querySelector('.command-palette')
 
 const execute = router => {
-  const cmd = getCmd().querySelector('.command-palette-search-results .selected').id
+  const cmd = getCmd().querySelector(
+    '.command-palette-search-results .selected'
+  ).id
   commands.map(c => {
     if (c.text.replace(/ /g, '-').toLowerCase() === cmd) {
       c.action(router)
@@ -115,23 +117,31 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
     const resultsLis = results.map((r, i) => {
       const className = i === selectedIndex ? 'selected' : ''
       return (
-        <li class={ className } id={ r.text.replace(/ /g, '-').toLowerCase() }>{ r.text }</li>
+        <li class={className} id={r.text.replace(/ /g, '-').toLowerCase()}>
+          {r.text}
+        </li>
       )
     })
-    return (
-      <ul class='command-palette-search-results'>{ resultsLis }</ul>
-    )
+    return <ul class="command-palette-search-results">{resultsLis}</ul>
   }
-  return (
-    <span>No matches found</span>
-  )
+  return <span>No matches found</span>
 }
 
-const CommandPaletteControls = ({ query, setQuery, selectedIndex, setIndex, router }) => {
+const CommandPaletteControls = ({
+  query,
+  setQuery,
+  selectedIndex,
+  setIndex,
+  router
+}) => {
   Mousetrap.bind('ctrl+shift+p', togglePalette)
   let results = findCommands(query)
-  const selectNext = () => { setIndex(Math.min(results.length - 1, selectedIndex + 1)) }
-  const selectPrevious = () => { setIndex(Math.max(0, selectedIndex - 1)) }
+  const selectNext = () => {
+    setIndex(Math.min(results.length - 1, selectedIndex + 1))
+  }
+  const selectPrevious = () => {
+    setIndex(Math.max(0, selectedIndex - 1))
+  }
 
   const setQueryAndIndex = query => {
     setIndex(0)
@@ -144,29 +154,44 @@ const CommandPaletteControls = ({ query, setQuery, selectedIndex, setIndex, rout
   }
 
   return (
-    <div class='command-palette-controls'>
-      <input type='text' placeholder='' onKeyDown={ handleCmdInput(setQueryAndIndex, selectNext, selectPrevious, executeAndSetIndex) }/>
-      <CommandPaletteSearchResults results={ results } selectedIndex={ selectedIndex }/>
+    <div class="command-palette-controls">
+      <input
+        type="text"
+        placeholder=""
+        onKeyDown={handleCmdInput(
+          setQueryAndIndex,
+          selectNext,
+          selectPrevious,
+          executeAndSetIndex
+        )}
+      />
+      <CommandPaletteSearchResults
+        results={results}
+        selectedIndex={selectedIndex}
+      />
     </div>
   )
 }
 
-const findCommands = query => commands.filter(c => {
-  return c.text.toLowerCase().indexOf(query) !== -1
-})
+const findCommands = query =>
+  commands.filter(c => {
+    return c.text.toLowerCase().indexOf(query) !== -1
+  })
 
 const CommandPalette = ({ children }, { store, router }) => {
   const queryCursor = store.select(sq('app.query'))
   const selectedIndex = store.select(sq('app.querySelectedIndex'))
   return (
-    <div class='command-palette hidden'>
+    <div class="command-palette hidden">
       <CommandPaletteControls
-        query={ queryCursor.get() }
-        setQuery={ query => { queryCursor.set(query) }}
-        selectedIndex={ selectedIndex.get() }
-        setIndex={ index => selectedIndex.set(index) }
-        router={ router }
-        onComponentShouldUpdate={ utils.shouldUpdate }
+        query={queryCursor.get()}
+        setQuery={query => {
+          queryCursor.set(query)
+        }}
+        selectedIndex={selectedIndex.get()}
+        setIndex={index => selectedIndex.set(index)}
+        router={router}
+        onComponentShouldUpdate={utils.shouldUpdate}
       />
     </div>
   )

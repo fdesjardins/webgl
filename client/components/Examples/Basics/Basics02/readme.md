@@ -1,5 +1,7 @@
 # Two Dimensions
-----
+
+---
+
 Here's an example of how we can mesh the application state with the WebGL context
 and influence objects within the scene.
 
