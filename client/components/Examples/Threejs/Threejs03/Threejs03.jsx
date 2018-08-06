@@ -7,9 +7,13 @@ import Example from '-Example'
 import './Threejs03.scss'
 import notes from './readme.md'
 import stationsData from './stations.json'
+import threeOrbitControls from 'three-orbit-controls'
 
 const globals = {
   stations: [],
+  particles: {
+    vertices: []
+  },
   fontLoader: new THREE.FontLoader(),
   font: null,
   colors: {
@@ -74,7 +78,28 @@ const loadStations = async scene => {
     scene.add(label)
     globals.stations.push(station)
   })
-  Promise.map(loadStations, x => x().delay(100), { concurrency: 15 })
+  Promise.map(loadStations, x => x().delay(100), { concurrency: 25 })
+}
+
+const loadParticles = async scene => {
+  const particleCount = 1800
+  const particleGeom = new THREE.Geometry()
+  const particleMat = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 0.5
+  })
+
+  Array.from(new Array(particleCount).keys()).map(() => {
+    const x = Math.random() * 150 - 75
+    const y = Math.random() * 100 - 50
+    const particle = new THREE.Vector3(x, y, 0)
+    particleGeom.vertices.push(particle)
+  })
+  globals.particles = particleGeom
+
+  const particles = new THREE.Points(particleGeom, particleMat)
+
+  scene.add(particles)
 }
 
 /**
@@ -94,9 +119,13 @@ const didMount = async () => {
     75,
     container.clientWidth / container.clientHeight,
     1,
-    1000
+    100000
   )
   camera.position.z = 50
+
+  const OrbitControls = threeOrbitControls(THREE)
+  const controls = new OrbitControls(camera)
+  controls.update()
 
   // Add the main light source
   const light = new THREE.PointLight(0xffffff, 2, 200)
@@ -110,10 +139,14 @@ const didMount = async () => {
     globals.stations.map((p, i) => {
       p.rotation.x += 0.01
     })
+    controls.update()
 
-    // camera.position.y = 15 * Math.sin(frame / 15) * 1
-    // camera.position.x = 15 * Math.cos(frame / 15) * 2
-    // camera.lookAt(new THREE.Vector3(0, 0, 0))
+    globals.particles.vertices.map((p, i) => {
+      const newPos = updateParticlePosition(p, frame)
+      p.x = newPos.x
+      p.y = newPos.y
+    })
+    globals.particles.verticesNeedUpdate = true
 
     renderer.render(scene, camera)
     frame += 0.1
@@ -121,6 +154,17 @@ const didMount = async () => {
   animate()
 
   loadStations(scene)
+  loadParticles(scene)
+}
+
+let grid = null
+const updateParticlePosition = (pos, frame) => {
+  const [x, y, z] = [
+    pos.x + (Math.random() - 0.5) * 0.2,
+    pos.y + (Math.random() - 0.5) * 0.2,
+    pos.z
+  ]
+  return new THREE.Vector3(x, y, z)
 }
 
 /**

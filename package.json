@@ -44,6 +44,7 @@
     "marksy": "^6.0.3",
     "mousetrap": "^1.6.2",
     "three": "^0.95.0",
+    "three-orbit-controls": "^82.1.0",
     "twgl.js": "^4.4.0",
     "yargs": "^12.0.1"
   },
