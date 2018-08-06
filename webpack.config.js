@@ -6,7 +6,7 @@ const resolve = d => path.join(__dirname, d)
 
 module.exports = {
   entry: {
-    app: resolve('client/index')
+    app: ['babel-polyfill', resolve('client/index')]
   },
   mode: 'development',
 

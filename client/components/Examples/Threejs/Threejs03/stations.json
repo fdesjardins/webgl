@@ -1,0 +1,5004 @@
+{
+  "stations": [
+    {
+      "stationId": "KTMH",
+      "stationName": "20 MILE HILL",
+      "wmoId": null,
+      "latitude": 43.12,
+      "longitude": -106.33,
+      "elevationM": 1743,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EHAK",
+      "stationName": "A12-CPP SEA",
+      "wmoId": 6205,
+      "latitude": 55.42,
+      "longitude": 3.82,
+      "elevationM": 50,
+      "country": "NL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "BGAA",
+      "stationName": "AASIAAT/EGEDESMI",
+      "wmoId": null,
+      "latitude": 68.7,
+      "longitude": -52.8,
+      "elevationM": 41,
+      "country": "GL",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OIAA",
+      "stationName": "ABADAN INTL AIRP",
+      "wmoId": 40831,
+      "latitude": 30.37,
+      "longitude": 48.25,
+      "elevationM": 11,
+      "country": "IR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OISA",
+      "stationName": "ABADEH",
+      "wmoId": 40818,
+      "latitude": 31.03,
+      "longitude": 52.78,
+      "elevationM": 2004,
+      "country": "IR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UNKA",
+      "stationName": "ABAKAN",
+      "wmoId": 29865,
+      "latitude": 53.75,
+      "longitude": 91.4,
+      "elevationM": 245,
+      "country": "RU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UNAA",
+      "stationName": "ABAKAN",
+      "wmoId": null,
+      "latitude": 53.75,
+      "longitude": 91.4,
+      "elevationM": 245,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LFOI",
+      "stationName": "ABBEVILLE (AUT)",
+      "wmoId": 7005,
+      "latitude": 50.13,
+      "longitude": 1.83,
+      "elevationM": 77,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KIYA",
+      "stationName": "ABBEVILLE CC MEM",
+      "wmoId": null,
+      "latitude": 29.98,
+      "longitude": -92.08,
+      "elevationM": 5,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYXX",
+      "stationName": "ABBOTSFORD AIRPO",
+      "wmoId": 71108,
+      "latitude": 49.03,
+      "longitude": -122.38,
+      "elevationM": 58,
+      "country": "CA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OYAS",
+      "stationName": "ABBS",
+      "wmoId": null,
+      "latitude": 16.02,
+      "longitude": 43.17,
+      "elevationM": 2000,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FTTC",
+      "stationName": "ABECHE",
+      "wmoId": 64756,
+      "latitude": 13.83,
+      "longitude": 20.85,
+      "elevationM": 549,
+      "country": "TD",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CXAF",
+      "stationName": "ABEE AGDM",
+      "wmoId": 71285,
+      "latitude": 54.28,
+      "longitude": -112.97,
+      "elevationM": 664,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KABR",
+      "stationName": "ABERDEEN",
+      "wmoId": 72659,
+      "latitude": 45.45,
+      "longitude": -98.42,
+      "elevationM": 397,
+      "country": "US",
+      "siteType": ["METAR", "NEXRAD", "rawinsonde", "WFO_office", "TAF"]
+    },
+    {
+      "stationId": "KM40",
+      "stationName": "ABERDEEN/AMORY",
+      "wmoId": null,
+      "latitude": 33.87,
+      "longitude": -88.48,
+      "elevationM": 69,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EGPD",
+      "stationName": "ABERDEEN/DYCE",
+      "wmoId": 3091,
+      "latitude": 57.2,
+      "longitude": -2.22,
+      "elevationM": 65,
+      "country": "GB",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAPG",
+      "stationName": "ABERDEEN/PHILLIP",
+      "wmoId": 74002,
+      "latitude": 39.47,
+      "longitude": -76.17,
+      "elevationM": 18,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EGUC",
+      "stationName": "ABERPORTH",
+      "wmoId": 3502,
+      "latitude": 52.12,
+      "longitude": -4.57,
+      "elevationM": 134,
+      "country": "GB",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OEAB",
+      "stationName": "ABHA",
+      "wmoId": 41112,
+      "latitude": 18.22,
+      "longitude": 42.63,
+      "elevationM": 2084,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DIAP",
+      "stationName": "ABIDJAN/PORT BOU",
+      "wmoId": 65578,
+      "latitude": 5.25,
+      "longitude": -3.92,
+      "elevationM": 8,
+      "country": "CI",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KK78",
+      "stationName": "ABILENE",
+      "wmoId": null,
+      "latitude": 38.9,
+      "longitude": -97.23,
+      "elevationM": 352,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KABI",
+      "stationName": "ABILENE",
+      "wmoId": 72266,
+      "latitude": 32.42,
+      "longitude": -99.68,
+      "elevationM": 548,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KVJI",
+      "stationName": "ABINGDON",
+      "wmoId": null,
+      "latitude": 36.67,
+      "longitude": -82.02,
+      "elevationM": 631,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FKAG",
+      "stationName": "ABONG-MBANG",
+      "wmoId": 64960,
+      "latitude": 3.97,
+      "longitude": 13.18,
+      "elevationM": 693,
+      "country": "CM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OMAD",
+      "stationName": "ABU DHABI/BATEEN",
+      "wmoId": 41216,
+      "latitude": 24.42,
+      "longitude": 54.47,
+      "elevationM": 3,
+      "country": "AE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OMAA",
+      "stationName": "ABU DHABI INTL",
+      "wmoId": 41217,
+      "latitude": 24.42,
+      "longitude": 54.63,
+      "elevationM": 27,
+      "country": "AE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DNAA",
+      "stationName": "ABUJA",
+      "wmoId": 65125,
+      "latitude": 9,
+      "longitude": 7.27,
+      "elevationM": 344,
+      "country": "NG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OIBA",
+      "stationName": "ABUMUSA ISLAND",
+      "wmoId": null,
+      "latitude": 25.88,
+      "longitude": 55.03,
+      "elevationM": 7,
+      "country": "IR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HEBL",
+      "stationName": "ABU SIMBEL (RUIN",
+      "wmoId": 62419,
+      "latitude": 22.38,
+      "longitude": 31.62,
+      "elevationM": 188,
+      "country": "EG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MSAC",
+      "stationName": "ACAJUTLA/SONSON",
+      "wmoId": 78650,
+      "latitude": 13.57,
+      "longitude": -89.83,
+      "elevationM": 15,
+      "country": "SV",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "MMAA",
+      "stationName": "ACAPULCO/G. ALVA",
+      "wmoId": null,
+      "latitude": 16.75,
+      "longitude": -99.75,
+      "elevationM": 5,
+      "country": "MX",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SVAC",
+      "stationName": "ACARIGUA/OSWALDO",
+      "wmoId": 80427,
+      "latitude": 9.55,
+      "longitude": -69.22,
+      "elevationM": 225,
+      "country": "VE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "DGAA",
+      "stationName": "ACCRA/KOTOKA INT",
+      "wmoId": 65472,
+      "latitude": 5.58,
+      "longitude": -0.17,
+      "elevationM": 69,
+      "country": "GH",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WARS",
+      "stationName": "ACHMAD YANI",
+      "wmoId": null,
+      "latitude": -6.97,
+      "longitude": 110.38,
+      "elevationM": 3,
+      "country": "ID",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WIIS",
+      "stationName": "ACHMAD YANI (ARM",
+      "wmoId": 96839,
+      "latitude": -6.97,
+      "longitude": 110.37,
+      "elevationM": 3,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "DGAD",
+      "stationName": "ADA",
+      "wmoId": 65475,
+      "latitude": 5.77,
+      "longitude": 0.62,
+      "elevationM": 7,
+      "country": "GH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KADH",
+      "stationName": "ADA",
+      "wmoId": null,
+      "latitude": 34.8,
+      "longitude": -96.67,
+      "elevationM": 308,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KCBX",
+      "stationName": "ADA COUNTY/BOISE",
+      "wmoId": null,
+      "latitude": 43.48,
+      "longitude": -116.23,
+      "elevationM": 933,
+      "country": "US",
+      "siteType": ["NEXRAD"]
+    },
+    {
+      "stationId": "PADK",
+      "stationName": "ADAK NAS",
+      "wmoId": 70454,
+      "latitude": 51.88,
+      "longitude": -176.65,
+      "elevationM": 4,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTAG",
+      "stationName": "ADANA/INCIRLIK A",
+      "wmoId": 17350,
+      "latitude": 37,
+      "longitude": 35.42,
+      "elevationM": 66,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTAF",
+      "stationName": "ADANA/SAKIRPASA",
+      "wmoId": 17352,
+      "latitude": 36.97,
+      "longitude": 35.28,
+      "elevationM": 20,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CWCZ",
+      "stationName": "ADDENBROKE ISL (",
+      "wmoId": null,
+      "latitude": 51.6,
+      "longitude": -127.87,
+      "elevationM": 21,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HAAB",
+      "stationName": "ADDIS ABABA/BOLE",
+      "wmoId": 63450,
+      "latitude": 8.97,
+      "longitude": 38.78,
+      "elevationM": 2355,
+      "country": "ET",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YPAD",
+      "stationName": "ADELAIDE INTL AR",
+      "wmoId": 94672,
+      "latitude": -34.95,
+      "longitude": 138.52,
+      "elevationM": 4,
+      "country": "AU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YPPF",
+      "stationName": "ADELAIDE/PARAFIE",
+      "wmoId": 95677,
+      "latitude": -34.77,
+      "longitude": 138.62,
+      "elevationM": 16,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OYAA",
+      "stationName": "ADEN INTL",
+      "wmoId": 41480,
+      "latitude": 12.83,
+      "longitude": 45.02,
+      "elevationM": 3,
+      "country": "YE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DIAD",
+      "stationName": "ADIAKE",
+      "wmoId": 65585,
+      "latitude": 5.28,
+      "longitude": -3.28,
+      "elevationM": 39,
+      "country": "CI",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "WAHQ",
+      "stationName": "ADI SOEMARMO",
+      "wmoId": null,
+      "latitude": -7.52,
+      "longitude": 110.75,
+      "elevationM": 126,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "WIIJ",
+      "stationName": "ADISUCIPTO/JOGYA",
+      "wmoId": null,
+      "latitude": -7.77,
+      "longitude": 110.42,
+      "elevationM": 107,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "WARQ",
+      "stationName": "ADI SUMARMO WIRY",
+      "wmoId": null,
+      "latitude": -7.52,
+      "longitude": 110.75,
+      "elevationM": 128,
+      "country": "ID",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WARJ",
+      "stationName": "ADI SUTJIPTO",
+      "wmoId": 96853,
+      "latitude": -7.78,
+      "longitude": 110.43,
+      "elevationM": 107,
+      "country": "ID",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTCP",
+      "stationName": "ADIYAMAN ARPT",
+      "wmoId": null,
+      "latitude": 37.73,
+      "longitude": 38.47,
+      "elevationM": 676,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DAUA",
+      "stationName": "ADRAR/TOUAT",
+      "wmoId": 60620,
+      "latitude": 27.83,
+      "longitude": -0.18,
+      "elevationM": 263,
+      "country": "DZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KADG",
+      "stationName": "ADRIAN",
+      "wmoId": null,
+      "latitude": 41.87,
+      "longitude": -84.08,
+      "elevationM": 241,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LIMA",
+      "stationName": "AERITALIA",
+      "wmoId": null,
+      "latitude": 45.08,
+      "longitude": 7.6,
+      "elevationM": 287,
+      "country": "IT",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SABE",
+      "stationName": "AEROPARQUE(CIV/M",
+      "wmoId": 87582,
+      "latitude": -34.57,
+      "longitude": -58.42,
+      "elevationM": 6,
+      "country": "AR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAF",
+      "stationName": "AFONSOS ARPT (MI",
+      "wmoId": 83748,
+      "latitude": -22.87,
+      "longitude": -43.37,
+      "elevationM": 34,
+      "country": "BR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAFO",
+      "stationName": "AFTON",
+      "wmoId": null,
+      "latitude": 42.72,
+      "longitude": -110.95,
+      "elevationM": 1897,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTAH",
+      "stationName": "AFYON (MIL)",
+      "wmoId": 17190,
+      "latitude": 38.75,
+      "longitude": 30.52,
+      "elevationM": 1034,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DRZA",
+      "stationName": "AGADEZ SOUTH (MI",
+      "wmoId": 61024,
+      "latitude": 16.97,
+      "longitude": 8,
+      "elevationM": 502,
+      "country": "NE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "GMAA",
+      "stationName": "AGADIR/INEZGANE",
+      "wmoId": 60250,
+      "latitude": 30.37,
+      "longitude": -9.57,
+      "elevationM": 23,
+      "country": "MA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PGUM",
+      "stationName": "AGANA",
+      "wmoId": null,
+      "latitude": 13.48,
+      "longitude": 144.8,
+      "elevationM": 91,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "VEAT",
+      "stationName": "AGARTALA",
+      "wmoId": 42724,
+      "latitude": 23.87,
+      "longitude": 91.25,
+      "elevationM": 16,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWZA",
+      "stationName": "AGASSIZ (AUTO)",
+      "wmoId": 71113,
+      "latitude": 49.25,
+      "longitude": -121.77,
+      "elevationM": 15,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFBA",
+      "stationName": "AGEN/LA GARENNE",
+      "wmoId": 7524,
+      "latitude": 44.17,
+      "longitude": 0.6,
+      "elevationM": 60,
+      "country": "FR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OIAG",
+      "stationName": "AGHA JARI",
+      "wmoId": 40833,
+      "latitude": 30.77,
+      "longitude": 49.67,
+      "elevationM": 29,
+      "country": "IR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HAAG",
+      "stationName": "AGORDAT",
+      "wmoId": null,
+      "latitude": 15.55,
+      "longitude": 37.87,
+      "elevationM": 626,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VIAG",
+      "stationName": "AGRA (IN-AFB)",
+      "wmoId": 42260,
+      "latitude": 27.13,
+      "longitude": 77.97,
+      "elevationM": 169,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTCB",
+      "stationName": "AGRI",
+      "wmoId": 17099,
+      "latitude": 39.72,
+      "longitude": 43.03,
+      "elevationM": 1632,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTCO",
+      "stationName": "AGRI AIRPORT",
+      "wmoId": null,
+      "latitude": 39.65,
+      "longitude": 43.03,
+      "elevationM": 1665,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "TJBQ",
+      "stationName": "AGUADILLA/BORINQ",
+      "wmoId": 78514,
+      "latitude": 18.5,
+      "longitude": -67.13,
+      "elevationM": 72,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MMAS",
+      "stationName": "AGUASCALIENTES",
+      "wmoId": 76571,
+      "latitude": 21.7,
+      "longitude": -102.32,
+      "elevationM": 1863,
+      "country": "MX",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RORA",
+      "stationName": "AGUNI ISLAND",
+      "wmoId": null,
+      "latitude": 26.6,
+      "longitude": 127.22,
+      "elevationM": 29,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VAAH",
+      "stationName": "AHMADABAD",
+      "wmoId": 42647,
+      "latitude": 23.07,
+      "longitude": 72.62,
+      "elevationM": 55,
+      "country": "IN",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WAHS",
+      "stationName": "AHMAD YANI",
+      "wmoId": null,
+      "latitude": -6.98,
+      "longitude": 110.38,
+      "elevationM": 5,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KASJ",
+      "stationName": "AHOSKIE/TRI COUN",
+      "wmoId": null,
+      "latitude": 36.28,
+      "longitude": -77.17,
+      "elevationM": 21,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EFHT",
+      "stationName": "AHTARI",
+      "wmoId": 2924,
+      "latitude": 62.52,
+      "longitude": 24.22,
+      "elevationM": 161,
+      "country": "FI",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OIAW",
+      "stationName": "AHWAZ",
+      "wmoId": 40811,
+      "latitude": 31.32,
+      "longitude": 48.77,
+      "elevationM": 22,
+      "country": "IR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LOXA",
+      "stationName": "AIGEN/ENNSTAL (M",
+      "wmoId": 11157,
+      "latitude": 47.52,
+      "longitude": 14.12,
+      "elevationM": 649,
+      "country": "AT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAIK",
+      "stationName": "AIKEN",
+      "wmoId": null,
+      "latitude": 33.65,
+      "longitude": -81.68,
+      "elevationM": 161,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KANW",
+      "stationName": "AINSWORTH MUNICI",
+      "wmoId": null,
+      "latitude": 42.57,
+      "longitude": -100,
+      "elevationM": 789,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "GQNA",
+      "stationName": "AIOUN EL ATROUSS",
+      "wmoId": 61499,
+      "latitude": 16.68,
+      "longitude": -9.58,
+      "elevationM": 223,
+      "country": "MR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAIT",
+      "stationName": "AITKIN NDB",
+      "wmoId": null,
+      "latitude": 46.53,
+      "longitude": -93.67,
+      "elevationM": 367,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFMA",
+      "stationName": "AIX LES MILLES F",
+      "wmoId": 7649,
+      "latitude": 43.5,
+      "longitude": 5.37,
+      "elevationM": 111,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFKJ",
+      "stationName": "AJACCIO/CAMPO OR",
+      "wmoId": 7761,
+      "latitude": 41.92,
+      "longitude": 8.8,
+      "elevationM": 9,
+      "country": "FR",
+      "siteType": ["METAR", "rawinsonde", "TAF"]
+    },
+    {
+      "stationId": "KA39",
+      "stationName": "AK-CHIN",
+      "wmoId": null,
+      "latitude": 32.98,
+      "longitude": -111.92,
+      "elevationM": 396,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RJOE",
+      "stationName": "AKENO (JASDF)",
+      "wmoId": 47730,
+      "latitude": 34.52,
+      "longitude": 136.67,
+      "elevationM": 9,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAKH",
+      "stationName": "AKHIOK",
+      "wmoId": 0,
+      "latitude": 56.93,
+      "longitude": -154.18,
+      "elevationM": 14,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTBT",
+      "stationName": "AKHISAR (TUR-AFB",
+      "wmoId": 17184,
+      "latitude": 38.92,
+      "longitude": 27.85,
+      "elevationM": 93,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DGKA",
+      "stationName": "AKIM ODA",
+      "wmoId": 65457,
+      "latitude": 5.92,
+      "longitude": -0.97,
+      "elevationM": 140,
+      "country": "GH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RJSK",
+      "stationName": "AKITA AIRPORT",
+      "wmoId": 47545,
+      "latitude": 39.62,
+      "longitude": 140.22,
+      "elevationM": 96,
+      "country": "JP",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "GQNJ",
+      "stationName": "AKJOUJT",
+      "wmoId": 61437,
+      "latitude": 19.75,
+      "longitude": -14.37,
+      "elevationM": 120,
+      "country": "MR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYKD",
+      "stationName": "AKLAVIK AIRPORT",
+      "wmoId": null,
+      "latitude": 68.22,
+      "longitude": -135,
+      "elevationM": 7,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HSAK",
+      "stationName": "AKOBO",
+      "wmoId": null,
+      "latitude": 7.77,
+      "longitude": 33.02,
+      "elevationM": 402,
+      "country": "SD",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "VAAK",
+      "stationName": "AKOLA AIRPORT",
+      "wmoId": 42934,
+      "latitude": 20.68,
+      "longitude": 77.07,
+      "elevationM": 309,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KCAK",
+      "stationName": "AKRON",
+      "wmoId": 72521,
+      "latitude": 40.92,
+      "longitude": -81.45,
+      "elevationM": 377,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAKO",
+      "stationName": "AKRON",
+      "wmoId": null,
+      "latitude": 40.17,
+      "longitude": -103.22,
+      "elevationM": 1421,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAKR",
+      "stationName": "AKRON (FULTON)",
+      "wmoId": null,
+      "latitude": 41.03,
+      "longitude": -81.47,
+      "elevationM": 363,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LCRA",
+      "stationName": "AKROTIRI (RAF)",
+      "wmoId": 17601,
+      "latitude": 34.57,
+      "longitude": 32.97,
+      "elevationM": 23,
+      "country": "CY",
+      "siteType": ["METAR", "rawinsonde", "TAF"]
+    },
+    {
+      "stationId": "UATE",
+      "stationName": "AKTAU KAZAKHSTAN",
+      "wmoId": null,
+      "latitude": 43.87,
+      "longitude": 51.1,
+      "elevationM": 22,
+      "country": "KZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "UATT",
+      "stationName": "AKTJUBINSK",
+      "wmoId": 35229,
+      "latitude": 50.25,
+      "longitude": 57.2,
+      "elevationM": 227,
+      "country": "KZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CYKO",
+      "stationName": "AKULIVIK AIRPORT",
+      "wmoId": null,
+      "latitude": 60.82,
+      "longitude": -78.15,
+      "elevationM": 9,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "DNAK",
+      "stationName": "AKURE AIRPORT",
+      "wmoId": null,
+      "latitude": 7.25,
+      "longitude": 5.3,
+      "elevationM": 336,
+      "country": "NG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "BIAR",
+      "stationName": "AKUREYRI",
+      "wmoId": 4063,
+      "latitude": 65.67,
+      "longitude": -18.07,
+      "elevationM": 27,
+      "country": "IS",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DGAK",
+      "stationName": "AKUSE",
+      "wmoId": 65460,
+      "latitude": 6.08,
+      "longitude": 0.12,
+      "elevationM": 19,
+      "country": "GH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAUT",
+      "stationName": "AKUTAN",
+      "wmoId": null,
+      "latitude": 54.15,
+      "longitude": -165.6,
+      "elevationM": 25,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VBRA",
+      "stationName": "AKYAB",
+      "wmoId": null,
+      "latitude": 20.12,
+      "longitude": 92.87,
+      "elevationM": 5,
+      "country": "MM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KEET",
+      "stationName": "ALABASTER",
+      "wmoId": null,
+      "latitude": 33.18,
+      "longitude": -86.78,
+      "elevationM": 173,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RPXT",
+      "stationName": "ALABAT ISLAND",
+      "wmoId": 98435,
+      "latitude": 14.23,
+      "longitude": 121.93,
+      "elevationM": 5,
+      "country": "PH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OEAH",
+      "stationName": "AL AHSA",
+      "wmoId": 40420,
+      "latitude": 25.27,
+      "longitude": 49.47,
+      "elevationM": 172,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OMAL",
+      "stationName": "AL AIN INTNL ARP",
+      "wmoId": 41218,
+      "latitude": 24.25,
+      "longitude": 55.6,
+      "elevationM": 262,
+      "country": "AE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KNGZ",
+      "stationName": "ALAMEDA NAS",
+      "wmoId": 74506,
+      "latitude": 37.77,
+      "longitude": -122.32,
+      "elevationM": 4,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KHHV",
+      "stationName": "ALAMINOS CANYON",
+      "wmoId": null,
+      "latitude": 26.93,
+      "longitude": -94.68,
+      "elevationM": 25,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KALM",
+      "stationName": "ALAMOGORDO WHITE",
+      "wmoId": 72269,
+      "latitude": 32.82,
+      "longitude": -105.97,
+      "elevationM": 1279,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KALS",
+      "stationName": "ALAMOSA",
+      "wmoId": 72462,
+      "latitude": 37.43,
+      "longitude": -105.87,
+      "elevationM": 2299,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "PZ76",
+      "stationName": "ALASKAN ARTCC",
+      "wmoId": null,
+      "latitude": 65.25,
+      "longitude": -134.65,
+      "elevationM": 647,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "PZ74",
+      "stationName": "ALASKAN ARTCC",
+      "wmoId": null,
+      "latitude": 60.15,
+      "longitude": -164.28,
+      "elevationM": 1,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "LEAB",
+      "stationName": "ALBACETE (CIV/MI",
+      "wmoId": 8280,
+      "latitude": 38.95,
+      "longitude": -1.85,
+      "elevationM": 704,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBLB",
+      "stationName": "ALBACORA P25 OIL",
+      "wmoId": null,
+      "latitude": -22.1,
+      "longitude": -39.92,
+      "elevationM": 10,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OEBA",
+      "stationName": "AL BAHA",
+      "wmoId": 41055,
+      "latitude": 20.3,
+      "longitude": 41.62,
+      "elevationM": 1656,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KALB",
+      "stationName": "ALBANY",
+      "wmoId": 72518,
+      "latitude": 42.75,
+      "longitude": -73.8,
+      "elevationM": 92,
+      "country": "US",
+      "siteType": ["METAR", "rawinsonde", "TAF"]
+    },
+    {
+      "stationId": "KABY",
+      "stationName": "ALBANY",
+      "wmoId": 72216,
+      "latitude": 31.53,
+      "longitude": -84.2,
+      "elevationM": 58,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YABA",
+      "stationName": "ALBANY AIRPORT",
+      "wmoId": 94802,
+      "latitude": -34.93,
+      "longitude": 117.8,
+      "elevationM": 69,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KENX",
+      "stationName": "ALBANY/E. BERNE",
+      "wmoId": null,
+      "latitude": 42.58,
+      "longitude": -74.07,
+      "elevationM": 557,
+      "country": "US",
+      "siteType": ["NEXRAD"]
+    },
+    {
+      "stationId": "KALY",
+      "stationName": "ALBANY/WFO",
+      "wmoId": null,
+      "latitude": 42.75,
+      "longitude": -73.8,
+      "elevationM": 88,
+      "country": "US",
+      "siteType": ["WFO_office"]
+    },
+    {
+      "stationId": "OYBI",
+      "stationName": "AL-BAYDA",
+      "wmoId": null,
+      "latitude": 13.97,
+      "longitude": 45.57,
+      "elevationM": 1011,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KVUJ",
+      "stationName": "ALBEMARLE STANLY",
+      "wmoId": null,
+      "latitude": 35.42,
+      "longitude": -80.15,
+      "elevationM": 186,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LIMG",
+      "stationName": "ALBENGA",
+      "wmoId": 16122,
+      "latitude": 44.03,
+      "longitude": 8.12,
+      "elevationM": 49,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAEL",
+      "stationName": "ALBERT LEA",
+      "wmoId": null,
+      "latitude": 43.68,
+      "longitude": -93.37,
+      "elevationM": 383,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "K8A0",
+      "stationName": "ALBERTVILLE MUNI",
+      "wmoId": null,
+      "latitude": 34.23,
+      "longitude": -86.25,
+      "elevationM": 315,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFCI",
+      "stationName": "ALBI/LE SEQUESTR",
+      "wmoId": 7632,
+      "latitude": 43.92,
+      "longitude": 2.12,
+      "elevationM": 178,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KBVN",
+      "stationName": "ALBION MUNI",
+      "wmoId": null,
+      "latitude": 41.73,
+      "longitude": -98.05,
+      "elevationM": 551,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EKYT",
+      "stationName": "ALBORG",
+      "wmoId": 6030,
+      "latitude": 57.1,
+      "longitude": 9.87,
+      "elevationM": 3,
+      "country": "DK",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MPLB",
+      "stationName": "ALBROOK AFS/BALB",
+      "wmoId": null,
+      "latitude": 8.97,
+      "longitude": -79.53,
+      "elevationM": 9,
+      "country": "PA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KZAB",
+      "stationName": "ALBUQUERQU/ARTCC",
+      "wmoId": null,
+      "latitude": 35.17,
+      "longitude": -106.57,
+      "elevationM": 1621,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "KABQ",
+      "stationName": "ALBUQUERQUE",
+      "wmoId": 72365,
+      "latitude": 35.05,
+      "longitude": -106.62,
+      "elevationM": 1618,
+      "country": "US",
+      "siteType": ["METAR", "rawinsonde", "WFO_office", "TAF"]
+    },
+    {
+      "stationId": "KABX",
+      "stationName": "ALBUQUERQUE/88D",
+      "wmoId": null,
+      "latitude": 35.15,
+      "longitude": -106.82,
+      "elevationM": 1789,
+      "country": "US",
+      "siteType": ["NEXRAD"]
+    },
+    {
+      "stationId": "YMAY",
+      "stationName": "ALBURY AIRPORT",
+      "wmoId": 94896,
+      "latitude": -36.07,
+      "longitude": 146.93,
+      "elevationM": 171,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LERI",
+      "stationName": "ALCANTARILLA(SP-",
+      "wmoId": 8429,
+      "latitude": 37.95,
+      "longitude": -1.22,
+      "elevationM": 75,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EGWZ",
+      "stationName": "ALCONBURY RAF",
+      "wmoId": 3562,
+      "latitude": 52.37,
+      "longitude": -0.22,
+      "elevationM": 49,
+      "country": "GB",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OEDM",
+      "stationName": "AL DAWADMI",
+      "wmoId": null,
+      "latitude": 24.45,
+      "longitude": 44.12,
+      "elevationM": 922,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EGJA",
+      "stationName": "ALDERNEY/CHANNEL",
+      "wmoId": null,
+      "latitude": 49.72,
+      "longitude": -2.2,
+      "elevationM": 71,
+      "country": "GB",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LFOF",
+      "stationName": "ALENCON/VALFRAMB",
+      "wmoId": 7139,
+      "latitude": 48.45,
+      "longitude": 0.12,
+      "elevationM": 141,
+      "country": "FR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OSAP",
+      "stationName": "ALEPPO (CIV/MIL)",
+      "wmoId": 40007,
+      "latitude": 36.17,
+      "longitude": 37.22,
+      "elevationM": 393,
+      "country": "SY",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CZLT",
+      "stationName": "ALERT",
+      "wmoId": 71355,
+      "latitude": 82.5,
+      "longitude": -62.33,
+      "elevationM": 65,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWLT",
+      "stationName": "ALERT",
+      "wmoId": 71082,
+      "latitude": 82.5,
+      "longitude": -62.32,
+      "elevationM": 63,
+      "country": "CA",
+      "siteType": ["METAR", "rawinsonde"]
+    },
+    {
+      "stationId": "CYLT",
+      "stationName": "ALERT AIRPORT",
+      "wmoId": null,
+      "latitude": 82.52,
+      "longitude": -62.27,
+      "elevationM": 31,
+      "country": "CA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ENAL",
+      "stationName": "ALESUND/VIGRA",
+      "wmoId": 1210,
+      "latitude": 62.57,
+      "longitude": 6.12,
+      "elevationM": 22,
+      "country": "NO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FAAB",
+      "stationName": "ALEXANDER BAY",
+      "wmoId": 68406,
+      "latitude": -28.57,
+      "longitude": 16.52,
+      "elevationM": 21,
+      "country": "ZA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KALX",
+      "stationName": "ALEXANDER/RUSSEL",
+      "wmoId": null,
+      "latitude": 32.92,
+      "longitude": -85.97,
+      "elevationM": 209,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAXN",
+      "stationName": "ALEXANDRIA",
+      "wmoId": null,
+      "latitude": 45.87,
+      "longitude": -95.4,
+      "elevationM": 433,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CTAL",
+      "stationName": "ALEXANDRIA",
+      "wmoId": 71393,
+      "latitude": 45.32,
+      "longitude": -74.62,
+      "elevationM": 77,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KN85",
+      "stationName": "ALEXANDRIA",
+      "wmoId": null,
+      "latitude": 40.58,
+      "longitude": -75.02,
+      "elevationM": 146,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KESF",
+      "stationName": "ALEXANDRIA",
+      "wmoId": null,
+      "latitude": 31.4,
+      "longitude": -92.28,
+      "elevationM": 28,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAEX",
+      "stationName": "ALEXANDRIA",
+      "wmoId": 74754,
+      "latitude": 31.33,
+      "longitude": -92.57,
+      "elevationM": 27,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HEBA",
+      "stationName": "ALEXANDRIA BORG",
+      "wmoId": null,
+      "latitude": 30.92,
+      "longitude": 29.7,
+      "elevationM": 54,
+      "country": "EG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HEAX",
+      "stationName": "ALEXANDRIA/NOUZH",
+      "wmoId": 62318,
+      "latitude": 31.18,
+      "longitude": 29.93,
+      "elevationM": 7,
+      "country": "EG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LGAL",
+      "stationName": "ALEXANDROUPOLIS",
+      "wmoId": 16627,
+      "latitude": 40.85,
+      "longitude": 25.95,
+      "elevationM": 3,
+      "country": "GR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CTAE",
+      "stationName": "ALFRED",
+      "wmoId": 71366,
+      "latitude": 45.55,
+      "longitude": -74.88,
+      "elevationM": 57,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OYAG",
+      "stationName": "AL GHAIDAH",
+      "wmoId": 41398,
+      "latitude": 16.08,
+      "longitude": 52.08,
+      "elevationM": 42,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OYGD",
+      "stationName": "AL-GHAIDAH",
+      "wmoId": null,
+      "latitude": 16.18,
+      "longitude": 52.17,
+      "elevationM": 41,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LIEA",
+      "stationName": "ALGHERO",
+      "wmoId": 16520,
+      "latitude": 40.62,
+      "longitude": 8.27,
+      "elevationM": 23,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAXA",
+      "stationName": "ALGONA",
+      "wmoId": null,
+      "latitude": 43.07,
+      "longitude": -94.27,
+      "elevationM": 372,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CTNK",
+      "stationName": "ALGONQUIN PARK",
+      "wmoId": 71581,
+      "latitude": 45.53,
+      "longitude": -78.27,
+      "elevationM": 410,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OMAH",
+      "stationName": "AL HAMRA AUX",
+      "wmoId": null,
+      "latitude": 24.08,
+      "longitude": 52.47,
+      "elevationM": 16,
+      "country": "AE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OYZM",
+      "stationName": "AL-HAZM",
+      "wmoId": 41326,
+      "latitude": 16.18,
+      "longitude": 44.77,
+      "elevationM": 1900,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "GMTA",
+      "stationName": "AL HOCEIMA/COTE",
+      "wmoId": 60107,
+      "latitude": 35.17,
+      "longitude": -3.85,
+      "elevationM": 14,
+      "country": "MA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LEAL",
+      "stationName": "ALICANTE/EL ALTE",
+      "wmoId": 8360,
+      "latitude": 38.27,
+      "longitude": -0.55,
+      "elevationM": 31,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KALI",
+      "stationName": "ALICE",
+      "wmoId": null,
+      "latitude": 27.73,
+      "longitude": -98.02,
+      "elevationM": 53,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YBAS",
+      "stationName": "ALICE SPRINGS AR",
+      "wmoId": 94326,
+      "latitude": -23.8,
+      "longitude": 133.9,
+      "elevationM": 541,
+      "country": "AU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MYBS",
+      "stationName": "ALICE TOWN/S BI",
+      "wmoId": 78070,
+      "latitude": 25.7,
+      "longitude": -79.27,
+      "elevationM": 3,
+      "country": "BS",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VIAH",
+      "stationName": "ALIGARH",
+      "wmoId": 42262,
+      "latitude": 27.87,
+      "longitude": 78.07,
+      "elevationM": 187,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FEFA",
+      "stationName": "ALINDAO",
+      "wmoId": 64662,
+      "latitude": 5.03,
+      "longitude": 21.18,
+      "elevationM": 449,
+      "country": "CF",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FAAN",
+      "stationName": "ALIWAL NORTH",
+      "wmoId": 68546,
+      "latitude": -30.72,
+      "longitude": 26.72,
+      "elevationM": 1351,
+      "country": "ZA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OESK",
+      "stationName": "AL-JOUF (CIV/MIL",
+      "wmoId": 40361,
+      "latitude": 29.77,
+      "longitude": 40.1,
+      "elevationM": 684,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OEJB",
+      "stationName": "AL JUBAIL",
+      "wmoId": null,
+      "latitude": 27.05,
+      "longitude": 49.38,
+      "elevationM": 8,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OEKJ",
+      "stationName": "AL KHARJ AB",
+      "wmoId": null,
+      "latitude": 24.07,
+      "longitude": 47.58,
+      "elevationM": 503,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EQBC",
+      "stationName": "AL KUT",
+      "wmoId": 99878,
+      "latitude": 32.47,
+      "longitude": 45.75,
+      "elevationM": 20,
+      "country": "IQ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VIAL",
+      "stationName": "ALLAHABAD (IN-AF",
+      "wmoId": 42475,
+      "latitude": 25.43,
+      "longitude": 81.72,
+      "elevationM": 98,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAQX",
+      "stationName": "ALLENDALE CNTY",
+      "wmoId": null,
+      "latitude": 32.98,
+      "longitude": -81.27,
+      "elevationM": 49,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KABE",
+      "stationName": "ALLENTOWN",
+      "wmoId": 72517,
+      "latitude": 40.65,
+      "longitude": -75.45,
+      "elevationM": 114,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KXLL",
+      "stationName": "ALLENTOWN QUEEN",
+      "wmoId": null,
+      "latitude": 40.57,
+      "longitude": -75.48,
+      "elevationM": 122,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAIA",
+      "stationName": "ALLIANCE",
+      "wmoId": null,
+      "latitude": 42.05,
+      "longitude": -102.8,
+      "elevationM": 1196,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAMN",
+      "stationName": "ALMA",
+      "wmoId": null,
+      "latitude": 43.32,
+      "longitude": -84.68,
+      "elevationM": 230,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAMG",
+      "stationName": "ALMA",
+      "wmoId": null,
+      "latitude": 31.53,
+      "longitude": -82.5,
+      "elevationM": 59,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UAAA",
+      "stationName": "ALMA-ATA",
+      "wmoId": 36870,
+      "latitude": 43.35,
+      "longitude": 77.03,
+      "elevationM": 681,
+      "country": "KZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "GMAD",
+      "stationName": "AL MASSIRA MC",
+      "wmoId": 60252,
+      "latitude": 30.32,
+      "longitude": -9.42,
+      "elevationM": 74,
+      "country": "MA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KTWX",
+      "stationName": "ALMA/TOPEKA",
+      "wmoId": null,
+      "latitude": 39,
+      "longitude": -96.23,
+      "elevationM": 417,
+      "country": "US",
+      "siteType": ["NEXRAD"]
+    },
+    {
+      "stationId": "LEAM",
+      "stationName": "ALMERIA AIRPORT",
+      "wmoId": 8487,
+      "latitude": 36.85,
+      "longitude": -2.37,
+      "elevationM": 21,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OMDM",
+      "stationName": "AL MINHAD AIRB",
+      "wmoId": null,
+      "latitude": 25.03,
+      "longitude": 55.37,
+      "elevationM": 51,
+      "country": "AE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ORNI",
+      "stationName": "AL NAJAF",
+      "wmoId": null,
+      "latitude": 31.98,
+      "longitude": 44.4,
+      "elevationM": 53,
+      "country": "IQ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "NIUE",
+      "stationName": "ALOFI COOK IS",
+      "wmoId": 91822,
+      "latitude": -19.07,
+      "longitude": -169.92,
+      "elevationM": 20,
+      "country": "WS",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WRKM",
+      "stationName": "ALOR/MALI/KALABA",
+      "wmoId": 97320,
+      "latitude": -8.22,
+      "longitude": 124.57,
+      "elevationM": 12,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "AYGN",
+      "stationName": "ALOTAU",
+      "wmoId": null,
+      "latitude": -10.32,
+      "longitude": 150.33,
+      "elevationM": 27,
+      "country": "PG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAPN",
+      "stationName": "ALPENA",
+      "wmoId": 72639,
+      "latitude": 45.07,
+      "longitude": -83.57,
+      "elevationM": 210,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "K46U",
+      "stationName": "ALPINE",
+      "wmoId": null,
+      "latitude": 43.18,
+      "longitude": -111.05,
+      "elevationM": 1717,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KE38",
+      "stationName": "ALPINE-CASPARIS",
+      "wmoId": null,
+      "latitude": 30.38,
+      "longitude": -103.68,
+      "elevationM": 1376,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LSMA",
+      "stationName": "ALPNACH",
+      "wmoId": null,
+      "latitude": 46.95,
+      "longitude": 8.28,
+      "elevationM": 444,
+      "country": "CH",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ORAQ",
+      "stationName": "AL QAIM",
+      "wmoId": 40627,
+      "latitude": 34.38,
+      "longitude": 41.02,
+      "elevationM": 178,
+      "country": "IQ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ENAT",
+      "stationName": "ALTA AIRPORT",
+      "wmoId": 1049,
+      "latitude": 69.97,
+      "longitude": 23.37,
+      "elevationM": 3,
+      "country": "NO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAT",
+      "stationName": "ALTA FLORESTA",
+      "wmoId": 82965,
+      "latitude": -9.87,
+      "longitude": -56.1,
+      "elevationM": 288,
+      "country": "BR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBHT",
+      "stationName": "ALTAMIRA",
+      "wmoId": 82353,
+      "latitude": -3.25,
+      "longitude": -52.27,
+      "elevationM": 74,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EDAC",
+      "stationName": "ALTENBURG-NOBITZ",
+      "wmoId": null,
+      "latitude": 50.98,
+      "longitude": 12.5,
+      "elevationM": 195,
+      "country": "DE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ETHA",
+      "stationName": "ALTENSTADT/SCHON",
+      "wmoId": 10954,
+      "latitude": 47.82,
+      "longitude": 10.87,
+      "elevationM": 760,
+      "country": "DE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KALN",
+      "stationName": "ALTON/ST LOUIS R",
+      "wmoId": null,
+      "latitude": 38.88,
+      "longitude": -90.03,
+      "elevationM": 166,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAOO",
+      "stationName": "ALTOONA",
+      "wmoId": null,
+      "latitude": 40.3,
+      "longitude": -78.32,
+      "elevationM": 455,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SCAP",
+      "stationName": "ALTO PALENA",
+      "wmoId": 85836,
+      "latitude": -43.62,
+      "longitude": -71.78,
+      "elevationM": 277,
+      "country": "CL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SAVR",
+      "stationName": "ALTO RIO SENGUER",
+      "wmoId": null,
+      "latitude": -45.02,
+      "longitude": -70.82,
+      "elevationM": 697,
+      "country": "AR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAAT",
+      "stationName": "ALTURAS",
+      "wmoId": null,
+      "latitude": 41.48,
+      "longitude": -120.57,
+      "elevationM": 1331,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KLTS",
+      "stationName": "ALTUS AFB",
+      "wmoId": 72352,
+      "latitude": 34.67,
+      "longitude": -99.27,
+      "elevationM": 420,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAXS",
+      "stationName": "ALTUS/QUARTZ MTN",
+      "wmoId": null,
+      "latitude": 34.7,
+      "longitude": -99.33,
+      "elevationM": 437,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HCMA",
+      "stationName": "ALULA",
+      "wmoId": 63200,
+      "latitude": 11.93,
+      "longitude": 50.72,
+      "elevationM": 2,
+      "country": "SO",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAVK",
+      "stationName": "ALVA",
+      "wmoId": null,
+      "latitude": 36.77,
+      "longitude": -98.67,
+      "elevationM": 449,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LPAR",
+      "stationName": "ALVERCA",
+      "wmoId": 8537,
+      "latitude": 38.88,
+      "longitude": -9.03,
+      "elevationM": 3,
+      "country": "PT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "UOOO",
+      "stationName": "ALYKEL",
+      "wmoId": null,
+      "latitude": 69.32,
+      "longitude": 87.33,
+      "elevationM": 175,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WAPA",
+      "stationName": "AMAHAI",
+      "wmoId": 97722,
+      "latitude": -3.35,
+      "longitude": 128.87,
+      "elevationM": 10,
+      "country": "ID",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RJKA",
+      "stationName": "AMAMI AIRPORT",
+      "wmoId": 47872,
+      "latitude": 28.42,
+      "longitude": 129.72,
+      "elevationM": 7,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SBAM",
+      "stationName": "AMAPA AIRPORT",
+      "wmoId": 82030,
+      "latitude": 2.07,
+      "longitude": -50.85,
+      "elevationM": 10,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "MHAM",
+      "stationName": "AMAPALA/LOS PEL",
+      "wmoId": 78700,
+      "latitude": 13.27,
+      "longitude": -87.65,
+      "elevationM": 5,
+      "country": "HN",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EEEI",
+      "stationName": "AMARI AIR BASE",
+      "wmoId": null,
+      "latitude": 59.27,
+      "longitude": 24.2,
+      "elevationM": 20,
+      "country": "EE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAMA",
+      "stationName": "AMARILLO",
+      "wmoId": 72363,
+      "latitude": 35.22,
+      "longitude": -101.72,
+      "elevationM": 1093,
+      "country": "US",
+      "siteType": ["METAR", "NEXRAD", "rawinsonde", "WFO_office", "TAF"]
+    },
+    {
+      "stationId": "SEAM",
+      "stationName": "AMBATO/CHACHOAN",
+      "wmoId": 84147,
+      "latitude": -1.18,
+      "longitude": -78.57,
+      "elevationM": 2520,
+      "country": "EC",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFXA",
+      "stationName": "AMBERIEU (FAFB/A",
+      "wmoId": 7482,
+      "latitude": 45.97,
+      "longitude": 5.32,
+      "elevationM": 257,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "YAMB",
+      "stationName": "AMBERLEY",
+      "wmoId": null,
+      "latitude": -27.63,
+      "longitude": 152.72,
+      "elevationM": 28,
+      "country": "AU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YBAM",
+      "stationName": "AMBERLEY (AUS-AF",
+      "wmoId": 94568,
+      "latitude": -27.62,
+      "longitude": 152.72,
+      "elevationM": 31,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAFM",
+      "stationName": "AMBLER",
+      "wmoId": null,
+      "latitude": 67.1,
+      "longitude": -157.85,
+      "elevationM": 88,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "WAPP",
+      "stationName": "AMBON/PATTIMURA",
+      "wmoId": 97724,
+      "latitude": -3.7,
+      "longitude": 128.07,
+      "elevationM": 12,
+      "country": "ID",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HDAM",
+      "stationName": "AMBOULI DJIBOUTI",
+      "wmoId": null,
+      "latitude": 11.55,
+      "longitude": 43.17,
+      "elevationM": 49,
+      "country": "DJ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ULDD",
+      "stationName": "AMDERMA",
+      "wmoId": 23022,
+      "latitude": 69.75,
+      "longitude": 61.57,
+      "elevationM": 49,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "K7R3",
+      "stationName": "AMELIA/LAKE PALO",
+      "wmoId": null,
+      "latitude": 29.68,
+      "longitude": -91.08,
+      "elevationM": 2,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LIBA",
+      "stationName": "AMENDOLA (IT-AFB",
+      "wmoId": 16261,
+      "latitude": 41.52,
+      "longitude": 15.72,
+      "elevationM": 60,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KACJ",
+      "stationName": "AMERICUS",
+      "wmoId": null,
+      "latitude": 32.12,
+      "longitude": -84.18,
+      "elevationM": 143,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAMW",
+      "stationName": "AMES",
+      "wmoId": null,
+      "latitude": 41.98,
+      "longitude": -93.62,
+      "elevationM": 279,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWAH",
+      "stationName": "AMHERST (MARS)",
+      "wmoId": 71410,
+      "latitude": 45.85,
+      "longitude": -64.27,
+      "elevationM": 23,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OJAM",
+      "stationName": "AMMAN/KING ABDUL",
+      "wmoId": 40270,
+      "latitude": 31.97,
+      "longitude": 35.97,
+      "elevationM": 773,
+      "country": "JO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "WRRA",
+      "stationName": "AMPENAN/SELAPARA",
+      "wmoId": 97240,
+      "latitude": -8.52,
+      "longitude": 116.07,
+      "elevationM": 3,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWAN",
+      "stationName": "AMPHITRITE POINT",
+      "wmoId": 71112,
+      "latitude": 48.92,
+      "longitude": -125.53,
+      "elevationM": 27,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWZS",
+      "stationName": "AMQUI",
+      "wmoId": 71386,
+      "latitude": 48.47,
+      "longitude": -67.43,
+      "elevationM": 166,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VIAR",
+      "stationName": "AMRITSAR",
+      "wmoId": 42071,
+      "latitude": 31.7,
+      "longitude": 74.8,
+      "elevationM": 234,
+      "country": "IN",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EHAM",
+      "stationName": "AMSTERDAM/SCHIPH",
+      "wmoId": 6240,
+      "latitude": 52.32,
+      "longitude": 4.78,
+      "elevationM": 9,
+      "country": "NL",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FTTN",
+      "stationName": "AM-TIMAN",
+      "wmoId": 64754,
+      "latitude": 11.02,
+      "longitude": 20.27,
+      "elevationM": 436,
+      "country": "TD",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NZSP",
+      "stationName": "AMUNDSEN-SCOTT",
+      "wmoId": 89009,
+      "latitude": -89.98,
+      "longitude": 179.98,
+      "elevationM": 2830,
+      "country": "AQ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "NCAI",
+      "stationName": "AMURI/AITUTAKI I",
+      "wmoId": 91830,
+      "latitude": -18.82,
+      "longitude": -159.77,
+      "elevationM": 6,
+      "country": "WS",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTBY",
+      "stationName": "ANADOLU",
+      "wmoId": null,
+      "latitude": 39.82,
+      "longitude": 30.52,
+      "elevationM": 789,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "UHMA",
+      "stationName": "ANADYR'",
+      "wmoId": 25563,
+      "latitude": 64.73,
+      "longitude": 177.73,
+      "elevationM": 62,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "PAKP",
+      "stationName": "ANAKTUVUK PASS",
+      "wmoId": null,
+      "latitude": 68.13,
+      "longitude": -151.73,
+      "elevationM": 642,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FMNL",
+      "stationName": "ANALALAVA",
+      "wmoId": 67019,
+      "latitude": -14.62,
+      "longitude": 47.77,
+      "elevationM": 57,
+      "country": "KM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "URKA",
+      "stationName": "ANAPA/VITIAZEVO",
+      "wmoId": null,
+      "latitude": 45,
+      "longitude": 37.35,
+      "elevationM": 53,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAN",
+      "stationName": "ANAPOLIS (BRAZ-A",
+      "wmoId": 83419,
+      "latitude": -16.22,
+      "longitude": -48.97,
+      "elevationM": 1137,
+      "country": "BR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "PZAN",
+      "stationName": "ANCHORAGE/ARTCC",
+      "wmoId": null,
+      "latitude": 61.17,
+      "longitude": -149.98,
+      "elevationM": 22,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "PANC",
+      "stationName": "ANCHORAGE INTL",
+      "wmoId": 70273,
+      "latitude": 61.17,
+      "longitude": -150,
+      "elevationM": 38,
+      "country": "US",
+      "siteType": ["METAR", "rawinsonde", "TAF"]
+    },
+    {
+      "stationId": "PALH",
+      "stationName": "ANCHORAGE/LAKE H",
+      "wmoId": null,
+      "latitude": 61.18,
+      "longitude": -149.97,
+      "elevationM": 22,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAMR",
+      "stationName": "ANCHORAGE/MERRIL",
+      "wmoId": null,
+      "latitude": 61.22,
+      "longitude": -149.85,
+      "elevationM": 41,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAFC",
+      "stationName": "ANCHORAGE/WFO",
+      "wmoId": null,
+      "latitude": 61.17,
+      "longitude": -150.03,
+      "elevationM": 48,
+      "country": "US",
+      "siteType": ["WFO_office"]
+    },
+    {
+      "stationId": "PAHG",
+      "stationName": "ANCHORAG/NIKISKI",
+      "wmoId": null,
+      "latitude": 60.73,
+      "longitude": -151.35,
+      "elevationM": 74,
+      "country": "US",
+      "siteType": ["NEXRAD"]
+    },
+    {
+      "stationId": "SCAC",
+      "stationName": "ANCUD/PUPELDE",
+      "wmoId": 85818,
+      "latitude": -41.88,
+      "longitude": -73.78,
+      "elevationM": 114,
+      "country": "CL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SPHY",
+      "stationName": "ANDAHUAYLA",
+      "wmoId": 84688,
+      "latitude": -13.7,
+      "longitude": -73.35,
+      "elevationM": 3548,
+      "country": "PE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "K79J",
+      "stationName": "ANDALUSIA/OPP AR",
+      "wmoId": null,
+      "latitude": 31.32,
+      "longitude": -86.4,
+      "elevationM": 94,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FMND",
+      "stationName": "ANDAPA",
+      "wmoId": 67022,
+      "latitude": -14.65,
+      "longitude": 49.62,
+      "elevationM": 474,
+      "country": "KM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAND",
+      "stationName": "ANDERSON",
+      "wmoId": null,
+      "latitude": 34.5,
+      "longitude": -82.72,
+      "elevationM": 239,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAID",
+      "stationName": "ANDERSON MUNICIP",
+      "wmoId": null,
+      "latitude": 40.12,
+      "longitude": -85.62,
+      "elevationM": 280,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UTFA",
+      "stationName": "ANDIZAN",
+      "wmoId": 38475,
+      "latitude": 40.73,
+      "longitude": 72.3,
+      "elevationM": 477,
+      "country": "UZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RKTA",
+      "stationName": "ANDONG",
+      "wmoId": 47136,
+      "latitude": 36.53,
+      "longitude": 128.72,
+      "elevationM": 142,
+      "country": "KR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KADR",
+      "stationName": "ANDOVER",
+      "wmoId": null,
+      "latitude": 45.43,
+      "longitude": -97.93,
+      "elevationM": 453,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "K12N",
+      "stationName": "ANDOVER",
+      "wmoId": null,
+      "latitude": 41.02,
+      "longitude": -74.73,
+      "elevationM": 177,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ENAN",
+      "stationName": "ANDOYA/ANDENES(A",
+      "wmoId": 1010,
+      "latitude": 69.28,
+      "longitude": 16.13,
+      "elevationM": 14,
+      "country": "NO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LGAD",
+      "stationName": "ANDRAVIDA (CIV/A",
+      "wmoId": 16682,
+      "latitude": 37.92,
+      "longitude": 21.27,
+      "elevationM": 12,
+      "country": "GR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CXAG",
+      "stationName": "ANDREW AGDM",
+      "wmoId": 71286,
+      "latitude": 53.92,
+      "longitude": -112.28,
+      "elevationM": 625,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KRHP",
+      "stationName": "ANDREWS",
+      "wmoId": null,
+      "latitude": 35.18,
+      "longitude": -83.85,
+      "elevationM": 518,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KE11",
+      "stationName": "ANDREWS",
+      "wmoId": null,
+      "latitude": 32.33,
+      "longitude": -102.53,
+      "elevationM": 967,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KADW",
+      "stationName": "ANDREWS AFB",
+      "wmoId": 74594,
+      "latitude": 38.82,
+      "longitude": -76.87,
+      "elevationM": 86,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MYAF",
+      "stationName": "ANDROS TOWN",
+      "wmoId": null,
+      "latitude": 24.68,
+      "longitude": -77.78,
+      "elevationM": 2,
+      "country": "BS",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NVVA",
+      "stationName": "ANELGHOWHAT ARPT",
+      "wmoId": null,
+      "latitude": -20.25,
+      "longitude": 169.77,
+      "elevationM": 3,
+      "country": "VU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RPLC",
+      "stationName": "ANGELES/PAMPANGA",
+      "wmoId": 98327,
+      "latitude": 15.17,
+      "longitude": 120.58,
+      "elevationM": 196,
+      "country": "PH",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAXX",
+      "stationName": "ANGEL FIRE",
+      "wmoId": null,
+      "latitude": 36.42,
+      "longitude": -105.28,
+      "elevationM": 2548,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ESTA",
+      "stationName": "ANGELHOLM (SWE-A",
+      "wmoId": 2607,
+      "latitude": 56.28,
+      "longitude": 12.83,
+      "elevationM": 47,
+      "country": "SE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LFRA",
+      "stationName": "ANGERS/AVRILLE(A",
+      "wmoId": 7230,
+      "latitude": 47.5,
+      "longitude": -0.57,
+      "elevationM": 58,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "BGAS",
+      "stationName": "ANGISSOQ (AUT)",
+      "wmoId": 4285,
+      "latitude": 59.97,
+      "longitude": -45.2,
+      "elevationM": 16,
+      "country": "GL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KLBX",
+      "stationName": "ANGLETON",
+      "wmoId": null,
+      "latitude": 29.12,
+      "longitude": -95.47,
+      "elevationM": 6,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "BGAM",
+      "stationName": "ANGMAGSSALIK",
+      "wmoId": 4360,
+      "latitude": 65.58,
+      "longitude": -37.62,
+      "elevationM": 52,
+      "country": "GL",
+      "siteType": ["METAR", "rawinsonde"]
+    },
+    {
+      "stationId": "FZKO",
+      "stationName": "ANGO",
+      "wmoId": null,
+      "latitude": 4.02,
+      "longitude": 25.87,
+      "elevationM": 650,
+      "country": "CD",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FQAG",
+      "stationName": "ANGOCHE",
+      "wmoId": 67273,
+      "latitude": -16.22,
+      "longitude": 39.88,
+      "elevationM": 62,
+      "country": "MZ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KANQ",
+      "stationName": "ANGOLA",
+      "wmoId": null,
+      "latitude": 41.63,
+      "longitude": -85.08,
+      "elevationM": 303,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAGN",
+      "stationName": "ANGOON SEAPLANE",
+      "wmoId": null,
+      "latitude": 57.5,
+      "longitude": -134.58,
+      "elevationM": 2,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EKAT",
+      "stationName": "ANHOLT ISLAND (A",
+      "wmoId": 6078,
+      "latitude": 56.7,
+      "longitude": 11.55,
+      "elevationM": 8,
+      "country": "DK",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PANI",
+      "stationName": "ANIAK",
+      "wmoId": 70232,
+      "latitude": 61.58,
+      "longitude": -159.53,
+      "elevationM": 26,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FMCV",
+      "stationName": "ANJOUAN/OUANI",
+      "wmoId": 67004,
+      "latitude": -12.12,
+      "longitude": 44.42,
+      "elevationM": 12,
+      "country": "KM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTAC",
+      "stationName": "ANKARA/ESENBOGA",
+      "wmoId": 17128,
+      "latitude": 40.12,
+      "longitude": 32.97,
+      "elevationM": 949,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTAD",
+      "stationName": "ANKARA/ETIMESGUT",
+      "wmoId": 17129,
+      "latitude": 39.95,
+      "longitude": 32.67,
+      "elevationM": 806,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTAB",
+      "stationName": "ANKARA/GUVERCIN",
+      "wmoId": null,
+      "latitude": 39.92,
+      "longitude": 32.75,
+      "elevationM": 819,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KIKV",
+      "stationName": "ANKENY",
+      "wmoId": null,
+      "latitude": 41.68,
+      "longitude": -93.57,
+      "elevationM": 275,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "DABB",
+      "stationName": "ANNABA/EL MELLAH",
+      "wmoId": 60360,
+      "latitude": 36.82,
+      "longitude": 7.82,
+      "elevationM": 4,
+      "country": "DZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KNAK",
+      "stationName": "ANNAPOLIS/NAVAL",
+      "wmoId": null,
+      "latitude": 38.98,
+      "longitude": -76.48,
+      "elevationM": 2,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KARB",
+      "stationName": "ANN ARBOR",
+      "wmoId": null,
+      "latitude": 42.22,
+      "longitude": -83.73,
+      "elevationM": 251,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFLP",
+      "stationName": "ANNECY/MEYTHET",
+      "wmoId": null,
+      "latitude": 45.92,
+      "longitude": 6.08,
+      "elevationM": 463,
+      "country": "FR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "PANT",
+      "stationName": "ANNETTE ISLAND",
+      "wmoId": 70398,
+      "latitude": 55.03,
+      "longitude": -131.57,
+      "elevationM": 36,
+      "country": "US",
+      "siteType": ["METAR", "rawinsonde"]
+    },
+    {
+      "stationId": "KANB",
+      "stationName": "ANNISTON",
+      "wmoId": null,
+      "latitude": 33.58,
+      "longitude": -85.85,
+      "elevationM": 183,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SPHZ",
+      "stationName": "ANTA/HUARAZ",
+      "wmoId": 84542,
+      "latitude": -9.33,
+      "longitude": -77.58,
+      "elevationM": 2760,
+      "country": "PE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FMNH",
+      "stationName": "ANTALAHA/ANTSIRA",
+      "wmoId": 67025,
+      "latitude": -14.87,
+      "longitude": 50.25,
+      "elevationM": 88,
+      "country": "KM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LTAI",
+      "stationName": "ANTALYA (CIV/MIL",
+      "wmoId": 17300,
+      "latitude": 36.9,
+      "longitude": 30.8,
+      "elevationM": 54,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FMMI",
+      "stationName": "ANTANANARIVO/IVA",
+      "wmoId": 67083,
+      "latitude": -18.8,
+      "longitude": 47.47,
+      "elevationM": 1276,
+      "country": "KM",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAIG",
+      "stationName": "ANTIGO/LANGLADE",
+      "wmoId": null,
+      "latitude": 45.15,
+      "longitude": -89.12,
+      "elevationM": 464,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SCFA",
+      "stationName": "ANTOFAGASTA/CERR",
+      "wmoId": 85442,
+      "latitude": -23.42,
+      "longitude": -70.42,
+      "elevationM": 120,
+      "country": "CL",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FMME",
+      "stationName": "ANTSIRABE",
+      "wmoId": 67107,
+      "latitude": -19.82,
+      "longitude": 47.07,
+      "elevationM": 1532,
+      "country": "KM",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EBAW",
+      "stationName": "ANTWERP/DEURNE",
+      "wmoId": 6450,
+      "latitude": 51.2,
+      "longitude": 4.47,
+      "elevationM": 14,
+      "country": "BE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "VCCA",
+      "stationName": "ANURADHAPURA (AF",
+      "wmoId": 43421,
+      "latitude": 8.32,
+      "longitude": 80.42,
+      "elevationM": 89,
+      "country": "LK",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PANV",
+      "stationName": "ANVIK",
+      "wmoId": null,
+      "latitude": 62.65,
+      "longitude": -160.18,
+      "elevationM": 99,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RJSA",
+      "stationName": "AOMORI AIRPORT",
+      "wmoId": 47542,
+      "latitude": 40.72,
+      "longitude": 140.68,
+      "elevationM": 201,
+      "country": "JP",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LIMW",
+      "stationName": "AOSTA ARPT",
+      "wmoId": null,
+      "latitude": 45.73,
+      "longitude": 7.37,
+      "elevationM": 546,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DAAF",
+      "stationName": "AOULEF",
+      "wmoId": null,
+      "latitude": 26.97,
+      "longitude": 1.07,
+      "elevationM": 309,
+      "country": "DZ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAAF",
+      "stationName": "APALACHICOLA",
+      "wmoId": 72220,
+      "latitude": 29.73,
+      "longitude": -85.03,
+      "elevationM": 5,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RPUA",
+      "stationName": "APARRI/LUZON ISL",
+      "wmoId": 98232,
+      "latitude": 18.37,
+      "longitude": 121.62,
+      "elevationM": 3,
+      "country": "PH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SKLC",
+      "stationName": "APARTADO/LOS CED",
+      "wmoId": 80084,
+      "latitude": 7.82,
+      "longitude": -76.7,
+      "elevationM": 30,
+      "country": "CO",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NSAP",
+      "stationName": "APIA/UPOLU ISLAN",
+      "wmoId": 91762,
+      "latitude": -13.82,
+      "longitude": -171.78,
+      "elevationM": 2,
+      "country": "WS",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SLAP",
+      "stationName": "APOLO",
+      "wmoId": 85151,
+      "latitude": -14.72,
+      "longitude": -68.42,
+      "elevationM": 1415,
+      "country": "BO",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAPE",
+      "stationName": "APPLETON",
+      "wmoId": null,
+      "latitude": 40.15,
+      "longitude": -82.58,
+      "elevationM": 453,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "KAQP",
+      "stationName": "APPLETON MUNICIP",
+      "wmoId": null,
+      "latitude": 45.22,
+      "longitude": -96,
+      "elevationM": 311,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KATW",
+      "stationName": "APPLETON/OUTAGAM",
+      "wmoId": null,
+      "latitude": 44.27,
+      "longitude": -88.52,
+      "elevationM": 280,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAPV",
+      "stationName": "APPLE VALLEY",
+      "wmoId": null,
+      "latitude": 34.57,
+      "longitude": -117.18,
+      "elevationM": 934,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFXI",
+      "stationName": "APT/ST. CHRISTOL",
+      "wmoId": 7657,
+      "latitude": 44.03,
+      "longitude": 5.47,
+      "elevationM": 837,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "BGAT",
+      "stationName": "APUTITEQ ADS (AU",
+      "wmoId": 4351,
+      "latitude": 67.77,
+      "longitude": -32.27,
+      "elevationM": 23,
+      "country": "GL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OJAQ",
+      "stationName": "AQABA INTL AIRPO",
+      "wmoId": 40340,
+      "latitude": 29.62,
+      "longitude": 35.02,
+      "elevationM": 51,
+      "country": "JO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAR",
+      "stationName": "ARACAJU/SANTA MA",
+      "wmoId": 83095,
+      "latitude": -10.97,
+      "longitude": -37.07,
+      "elevationM": 9,
+      "country": "BR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAU",
+      "stationName": "ARACATUBA",
+      "wmoId": null,
+      "latitude": -21.13,
+      "longitude": -50.43,
+      "elevationM": 415,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LRAR",
+      "stationName": "ARAD",
+      "wmoId": 15200,
+      "latitude": 46.18,
+      "longitude": 21.27,
+      "elevationM": 118,
+      "country": "RO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OIHR",
+      "stationName": "ARAK",
+      "wmoId": 40769,
+      "latitude": 34.13,
+      "longitude": 49.85,
+      "elevationM": 1658,
+      "country": "IR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UATA",
+      "stationName": "ARALSK",
+      "wmoId": 35746,
+      "latitude": 46.78,
+      "longitude": 61.65,
+      "elevationM": 56,
+      "country": "KZ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FYAN",
+      "stationName": "ARANOS",
+      "wmoId": null,
+      "latitude": -24.15,
+      "longitude": 19.12,
+      "elevationM": 1189,
+      "country": "NA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OERR",
+      "stationName": "ARAR",
+      "wmoId": 40357,
+      "latitude": 30.88,
+      "longitude": 41.12,
+      "elevationM": 552,
+      "country": "SA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SBAQ",
+      "stationName": "ARARAQUARA",
+      "wmoId": null,
+      "latitude": -21.8,
+      "longitude": -48.13,
+      "elevationM": 708,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SKUC",
+      "stationName": "ARAUCA/SANTIAGO",
+      "wmoId": 80099,
+      "latitude": 7.07,
+      "longitude": -70.72,
+      "elevationM": 128,
+      "country": "CO",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SBAX",
+      "stationName": "ARAXA",
+      "wmoId": null,
+      "latitude": -19.57,
+      "longitude": -46.97,
+      "elevationM": 998,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LGRX",
+      "stationName": "ARAXOS (CIV/AFB)",
+      "wmoId": 16687,
+      "latitude": 38.17,
+      "longitude": 21.42,
+      "elevationM": 15,
+      "country": "GR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HAAM",
+      "stationName": "ARBA MINCH",
+      "wmoId": 63500,
+      "latitude": 6.07,
+      "longitude": 37.67,
+      "elevationM": 1219,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KACV",
+      "stationName": "ARCATA/EUREKA",
+      "wmoId": null,
+      "latitude": 40.98,
+      "longitude": -124.1,
+      "elevationM": 67,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YBAF",
+      "stationName": "ARCHEFIELD/BRISB",
+      "wmoId": 94575,
+      "latitude": -27.57,
+      "longitude": 153,
+      "elevationM": 18,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYAB",
+      "stationName": "ARCTIC BAY",
+      "wmoId": null,
+      "latitude": 73,
+      "longitude": -85.05,
+      "elevationM": 22,
+      "country": "CA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CXAT",
+      "stationName": "ARCTIC BAY CS",
+      "wmoId": 71592,
+      "latitude": 73,
+      "longitude": -85.03,
+      "elevationM": 19,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PARC",
+      "stationName": "ARCTIC VILLAGE",
+      "wmoId": null,
+      "latitude": 68.12,
+      "longitude": -145.58,
+      "elevationM": 636,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OITL",
+      "stationName": "ARDABIL",
+      "wmoId": null,
+      "latitude": 38.33,
+      "longitude": 48.42,
+      "elevationM": 1316,
+      "country": "IR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KADM",
+      "stationName": "ARDMORE",
+      "wmoId": null,
+      "latitude": 34.28,
+      "longitude": -97.02,
+      "elevationM": 232,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "K1F0",
+      "stationName": "ARDMORE/EXEC",
+      "wmoId": null,
+      "latitude": 34.15,
+      "longitude": -97.12,
+      "elevationM": 257,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SPQU",
+      "stationName": "AREQUIPA/RODRIGU",
+      "wmoId": 84752,
+      "latitude": -16.33,
+      "longitude": -71.57,
+      "elevationM": 2554,
+      "country": "PE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LIQB",
+      "stationName": "AREZZO",
+      "wmoId": 16172,
+      "latitude": 43.47,
+      "longitude": 11.83,
+      "elevationM": 249,
+      "country": "IT",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWAR",
+      "stationName": "ARGENTIA (MARS)",
+      "wmoId": 71807,
+      "latitude": 47.28,
+      "longitude": -54,
+      "elevationM": 16,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "TVSA",
+      "stationName": "ARGYLE",
+      "wmoId": null,
+      "latitude": 13.15,
+      "longitude": -61.15,
+      "elevationM": 17,
+      "country": "VC",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YARG",
+      "stationName": "ARGYLE AERO",
+      "wmoId": 94217,
+      "latitude": -16.63,
+      "longitude": 128.45,
+      "elevationM": 165,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ULAA",
+      "stationName": "ARHANGELSK",
+      "wmoId": 22550,
+      "latitude": 64.6,
+      "longitude": 40.72,
+      "elevationM": 19,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EKKM",
+      "stationName": "ARHUS/KIRSTINESM",
+      "wmoId": null,
+      "latitude": 56.13,
+      "longitude": 10.22,
+      "elevationM": 57,
+      "country": "DK",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SCAR",
+      "stationName": "ARICA/CHACALLUTA",
+      "wmoId": 85406,
+      "latitude": -18.35,
+      "longitude": -70.32,
+      "elevationM": 59,
+      "country": "CL",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KADF",
+      "stationName": "ARKADELPHIA",
+      "wmoId": null,
+      "latitude": 34.1,
+      "longitude": -93.07,
+      "elevationM": 56,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KGKY",
+      "stationName": "ARLINGTON",
+      "wmoId": null,
+      "latitude": 32.67,
+      "longitude": -97.1,
+      "elevationM": 192,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KARL",
+      "stationName": "ARLINGTON",
+      "wmoId": null,
+      "latitude": 41.6,
+      "longitude": -106.22,
+      "elevationM": 2374,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAWO",
+      "stationName": "ARLINGTON MUNI",
+      "wmoId": null,
+      "latitude": 48.17,
+      "longitude": -122.17,
+      "elevationM": 42,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SKAR",
+      "stationName": "ARMENIA/EL EDEN",
+      "wmoId": 80211,
+      "latitude": 4.45,
+      "longitude": -75.77,
+      "elevationM": 1219,
+      "country": "CO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LEGA",
+      "stationName": "ARMILLA (CIV/MIL",
+      "wmoId": null,
+      "latitude": 37.12,
+      "longitude": -3.62,
+      "elevationM": 686,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CYYW",
+      "stationName": "ARMSTRONG (MARS)",
+      "wmoId": 71841,
+      "latitude": 50.3,
+      "longitude": -88.9,
+      "elevationM": 351,
+      "country": "CN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWRE",
+      "stationName": "ARNES",
+      "wmoId": null,
+      "latitude": 50.8,
+      "longitude": -96.95,
+      "elevationM": 221,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "TVSV",
+      "stationName": "ARNOS VALE/ST V",
+      "wmoId": 78951,
+      "latitude": 13.13,
+      "longitude": -61.2,
+      "elevationM": 9,
+      "country": "VC",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "FYAB",
+      "stationName": "AROAB",
+      "wmoId": null,
+      "latitude": -26.77,
+      "longitude": 19.63,
+      "elevationM": 986,
+      "country": "NA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NGTR",
+      "stationName": "ARORAE ISLAND",
+      "wmoId": 91629,
+      "latitude": -2.67,
+      "longitude": 176.82,
+      "elevationM": 7,
+      "country": "FJ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "GCRR",
+      "stationName": "ARRECIFE/LANZARO",
+      "wmoId": 60040,
+      "latitude": 28.93,
+      "longitude": -13.58,
+      "elevationM": 40,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MDAB",
+      "stationName": "ARROYO BARRIL",
+      "wmoId": null,
+      "latitude": 19.2,
+      "longitude": -69.43,
+      "elevationM": 35,
+      "country": "DO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KATS",
+      "stationName": "ARTESIA",
+      "wmoId": null,
+      "latitude": 32.85,
+      "longitude": -104.47,
+      "elevationM": 1081,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SUAG",
+      "stationName": "ARTIGAS",
+      "wmoId": 86330,
+      "latitude": -30.4,
+      "longitude": -56.5,
+      "elevationM": 123,
+      "country": "UY",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HUAR",
+      "stationName": "ARUA",
+      "wmoId": 63602,
+      "latitude": 3.03,
+      "longitude": 30.92,
+      "elevationM": 1211,
+      "country": "UG",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HTAR",
+      "stationName": "ARUSHA",
+      "wmoId": 63789,
+      "latitude": -3.37,
+      "longitude": 36.63,
+      "elevationM": 1387,
+      "country": "TZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CYEK",
+      "stationName": "ARVIAT AIRPORT",
+      "wmoId": null,
+      "latitude": 61.1,
+      "longitude": -94.07,
+      "elevationM": 10,
+      "country": "CA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "CXAR",
+      "stationName": "ARVIAT CLIMATE",
+      "wmoId": 71332,
+      "latitude": 61.1,
+      "longitude": -94.07,
+      "elevationM": 10,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "ESNX",
+      "stationName": "ARVIDSJAUR",
+      "wmoId": null,
+      "latitude": 65.58,
+      "longitude": 19.28,
+      "elevationM": 379,
+      "country": "SE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "GMMW",
+      "stationName": "ARWI",
+      "wmoId": null,
+      "latitude": 34.98,
+      "longitude": -3.02,
+      "elevationM": 175,
+      "country": "MA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RJEC",
+      "stationName": "ASAHIKAWA AIRPOR",
+      "wmoId": 47476,
+      "latitude": 43.67,
+      "longitude": 142.43,
+      "elevationM": 211,
+      "country": "JP",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RJCA",
+      "stationName": "ASAHIKAWA (JASDF",
+      "wmoId": 47477,
+      "latitude": 43.78,
+      "longitude": 142.37,
+      "elevationM": 118,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NSAU",
+      "stationName": "ASAU/SAVAI'I ISL",
+      "wmoId": 91760,
+      "latitude": -13.5,
+      "longitude": -172.62,
+      "elevationM": 4,
+      "country": "WS",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SEAS",
+      "stationName": "ASCAZUBI",
+      "wmoId": null,
+      "latitude": -0.07,
+      "longitude": -78.28,
+      "elevationM": 2743,
+      "country": "EC",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SLAS",
+      "stationName": "ASCENCION GUARAY",
+      "wmoId": 85175,
+      "latitude": -15.72,
+      "longitude": -63.1,
+      "elevationM": 247,
+      "country": "BO",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KHBI",
+      "stationName": "ASHEBORO MUNI",
+      "wmoId": null,
+      "latitude": 35.65,
+      "longitude": -79.9,
+      "elevationM": 205,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAVL",
+      "stationName": "ASHEVILLE",
+      "wmoId": 72315,
+      "latitude": 35.43,
+      "longitude": -82.53,
+      "elevationM": 670,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "UTAA",
+      "stationName": "ASHGABAT",
+      "wmoId": null,
+      "latitude": 37.98,
+      "longitude": 58.37,
+      "elevationM": 210,
+      "country": "TM",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "RJFA",
+      "stationName": "ASHIYA (JASDF)",
+      "wmoId": 47803,
+      "latitude": 33.87,
+      "longitude": 130.65,
+      "elevationM": 33,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KASX",
+      "stationName": "ASHLAND",
+      "wmoId": null,
+      "latitude": 46.55,
+      "longitude": -90.92,
+      "elevationM": 251,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KDWU",
+      "stationName": "ASHLAND",
+      "wmoId": null,
+      "latitude": 38.55,
+      "longitude": -82.73,
+      "elevationM": 166,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KHZY",
+      "stationName": "ASHTABULA",
+      "wmoId": null,
+      "latitude": 41.78,
+      "longitude": -80.7,
+      "elevationM": 276,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KGRB",
+      "stationName": "ASHWAUBENON",
+      "wmoId": 72645,
+      "latitude": 44.48,
+      "longitude": -88.13,
+      "elevationM": 208,
+      "country": "US",
+      "siteType": ["METAR", "NEXRAD", "rawinsonde", "WFO_office", "TAF"]
+    },
+    {
+      "stationId": "OAAS",
+      "stationName": "ASMAR",
+      "wmoId": 40934,
+      "latitude": 35.02,
+      "longitude": 71.42,
+      "elevationM": 880,
+      "country": "AF",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HHAS",
+      "stationName": "ASMARA/YOHANNES",
+      "wmoId": null,
+      "latitude": 15.27,
+      "longitude": 38.92,
+      "elevationM": 2356,
+      "country": "ET",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HAAY",
+      "stationName": "ASMARA/YOHANNES",
+      "wmoId": 63021,
+      "latitude": 15.27,
+      "longitude": 38.92,
+      "elevationM": 2325,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KASE",
+      "stationName": "ASPEN",
+      "wmoId": null,
+      "latitude": 39.23,
+      "longitude": -106.87,
+      "elevationM": 2354,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HASB",
+      "stationName": "ASSAB",
+      "wmoId": 63043,
+      "latitude": 13.07,
+      "longitude": 42.72,
+      "elevationM": 14,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWJI",
+      "stationName": "ASSINIBOIA ARPT",
+      "wmoId": 71487,
+      "latitude": 49.72,
+      "longitude": -105.92,
+      "elevationM": 724,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SBAS",
+      "stationName": "ASSIS",
+      "wmoId": null,
+      "latitude": -22.63,
+      "longitude": -50.45,
+      "elevationM": 564,
+      "country": "BR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HASO",
+      "stationName": "ASSOSA/ASOSA",
+      "wmoId": null,
+      "latitude": 10.02,
+      "longitude": 34.52,
+      "elevationM": 1733,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UACC",
+      "stationName": "ASTANA KAZAKHSTA",
+      "wmoId": null,
+      "latitude": 51.02,
+      "longitude": 71.47,
+      "elevationM": 355,
+      "country": "KZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAST",
+      "stationName": "ASTORIA",
+      "wmoId": 72791,
+      "latitude": 46.15,
+      "longitude": -123.88,
+      "elevationM": 3,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "URWA",
+      "stationName": "ASTRAKHAN",
+      "wmoId": 34880,
+      "latitude": 46.28,
+      "longitude": 48.02,
+      "elevationM": -20,
+      "country": "RU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LEAS",
+      "stationName": "ASTURIAS/AVILES",
+      "wmoId": 8011,
+      "latitude": 43.53,
+      "longitude": -6.02,
+      "elevationM": 134,
+      "country": "ES",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SGAS",
+      "stationName": "ASUNCION/SILVIO",
+      "wmoId": 86218,
+      "latitude": -25.25,
+      "longitude": -57.52,
+      "elevationM": 101,
+      "country": "PY",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HESN",
+      "stationName": "ASWAN (CIV/MIL)",
+      "wmoId": 62414,
+      "latitude": 23.97,
+      "longitude": 32.82,
+      "elevationM": 194,
+      "country": "EG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HEAT",
+      "stationName": "ASYUT",
+      "wmoId": 62393,
+      "latitude": 27.05,
+      "longitude": 31.02,
+      "elevationM": 70,
+      "country": "EG",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "DXAK",
+      "stationName": "ATAKPAME/AKPAKA",
+      "wmoId": 65376,
+      "latitude": 7.53,
+      "longitude": 1.12,
+      "elevationM": 402,
+      "country": "TG",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SPAY",
+      "stationName": "ATALAYA",
+      "wmoId": 84593,
+      "latitude": -10.72,
+      "longitude": -73.77,
+      "elevationM": 451,
+      "country": "PE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "WRKA",
+      "stationName": "ATAMBUA/HALIWEN",
+      "wmoId": 97374,
+      "latitude": -9.32,
+      "longitude": 124.9,
+      "elevationM": 125,
+      "country": "ID",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OYAT",
+      "stationName": "ATAQ",
+      "wmoId": 41437,
+      "latitude": 14.55,
+      "longitude": 46.83,
+      "elevationM": 1039,
+      "country": "YE",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "GQPA",
+      "stationName": "ATAR",
+      "wmoId": 61421,
+      "latitude": 20.52,
+      "longitude": -13.07,
+      "elevationM": 224,
+      "country": "MR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HSAT",
+      "stationName": "ATBARA",
+      "wmoId": 62680,
+      "latitude": 17.68,
+      "longitude": 33.97,
+      "elevationM": 345,
+      "country": "SD",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KUNI",
+      "stationName": "ATHENS",
+      "wmoId": null,
+      "latitude": 39.22,
+      "longitude": -82.23,
+      "elevationM": 193,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KF44",
+      "stationName": "ATHENS",
+      "wmoId": null,
+      "latitude": 32.17,
+      "longitude": -95.83,
+      "elevationM": 135,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAHN",
+      "stationName": "ATHENS",
+      "wmoId": 72311,
+      "latitude": 33.95,
+      "longitude": -83.33,
+      "elevationM": 244,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LGAV",
+      "stationName": "ATHENS/ELEF-VEN",
+      "wmoId": null,
+      "latitude": 37.93,
+      "longitude": 23.95,
+      "elevationM": 94,
+      "country": "GR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KMMI",
+      "stationName": "ATHENS/MCMINN",
+      "wmoId": null,
+      "latitude": 35.4,
+      "longitude": -84.57,
+      "elevationM": 266,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FTTI",
+      "stationName": "ATI",
+      "wmoId": 64751,
+      "latitude": 13.22,
+      "longitude": 18.32,
+      "elevationM": 334,
+      "country": "TD",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWCH",
+      "stationName": "ATIKOKAN (AUT)",
+      "wmoId": 71747,
+      "latitude": 48.75,
+      "longitude": -91.62,
+      "elevationM": 424,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PAAK",
+      "stationName": "ATKA",
+      "wmoId": null,
+      "latitude": 52.22,
+      "longitude": -174.2,
+      "elevationM": 17,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KATL",
+      "stationName": "ATLANTA",
+      "wmoId": 72219,
+      "latitude": 33.63,
+      "longitude": -84.45,
+      "elevationM": 296,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KZTL",
+      "stationName": "ATLANTA/ARTCC",
+      "wmoId": null,
+      "latitude": 33.38,
+      "longitude": -84.33,
+      "elevationM": 312,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "KFTY",
+      "stationName": "ATLANTA/FULTON",
+      "wmoId": null,
+      "latitude": 33.78,
+      "longitude": -84.52,
+      "elevationM": 263,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KPUJ",
+      "stationName": "ATLANTA/PAULDING",
+      "wmoId": null,
+      "latitude": 33.92,
+      "longitude": -84.93,
+      "elevationM": 393,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KALR",
+      "stationName": "ATLANTA RFC",
+      "wmoId": null,
+      "latitude": 33.37,
+      "longitude": -84.57,
+      "elevationM": 248,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "KATR",
+      "stationName": "ATLANTA/RFC",
+      "wmoId": null,
+      "latitude": 33.37,
+      "longitude": -84.57,
+      "elevationM": 312,
+      "country": "US",
+      "siteType": null
+    },
+    {
+      "stationId": "KAIO",
+      "stationName": "ATLANTIC",
+      "wmoId": null,
+      "latitude": 41.38,
+      "longitude": -95.03,
+      "elevationM": 360,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KACY",
+      "stationName": "ATLANTIC CITY",
+      "wmoId": 72407,
+      "latitude": 39.45,
+      "longitude": -74.57,
+      "elevationM": 23,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KATP",
+      "stationName": "ATLANTIS    OILP",
+      "wmoId": null,
+      "latitude": 27.2,
+      "longitude": -90.03,
+      "elevationM": 62,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CXAJ",
+      "stationName": "ATMORE AGDM",
+      "wmoId": 71287,
+      "latitude": 54.77,
+      "longitude": -112.82,
+      "elevationM": 574,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAQR",
+      "stationName": "ATOKA",
+      "wmoId": null,
+      "latitude": 34.4,
+      "longitude": -96.15,
+      "elevationM": 189,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PATQ",
+      "stationName": "ATQASUK BURNELL",
+      "wmoId": null,
+      "latitude": 70.47,
+      "longitude": -157.43,
+      "elevationM": 29,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RJTA",
+      "stationName": "ATSUGI NAS (JMSD",
+      "wmoId": 47679,
+      "latitude": 35.45,
+      "longitude": 139.43,
+      "elevationM": 65,
+      "country": "JP",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYAT",
+      "stationName": "ATTAWAPISKAT",
+      "wmoId": null,
+      "latitude": 52.93,
+      "longitude": -82.43,
+      "elevationM": 9,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KHBE",
+      "stationName": "ATTERBURY",
+      "wmoId": null,
+      "latitude": 39.33,
+      "longitude": -86.03,
+      "elevationM": 215,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VLAP",
+      "stationName": "ATTOPEU",
+      "wmoId": 48957,
+      "latitude": 14.8,
+      "longitude": 106.82,
+      "elevationM": 105,
+      "country": "LA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "UATG",
+      "stationName": "ATYRAU",
+      "wmoId": null,
+      "latitude": 47.12,
+      "longitude": 51.83,
+      "elevationM": -22,
+      "country": "KZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KGWB",
+      "stationName": "AUBURN DEKALB C",
+      "wmoId": null,
+      "latitude": 41.3,
+      "longitude": -85.07,
+      "elevationM": 269,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KLEW",
+      "stationName": "AUBURN/LEWISTON",
+      "wmoId": null,
+      "latitude": 44.03,
+      "longitude": -70.27,
+      "elevationM": 88,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUN",
+      "stationName": "AUBURN MUNI",
+      "wmoId": null,
+      "latitude": 38.95,
+      "longitude": -121.08,
+      "elevationM": 467,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUO",
+      "stationName": "AUBURN OPELIKA A",
+      "wmoId": null,
+      "latitude": 32.62,
+      "longitude": -85.42,
+      "elevationM": 236,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUB",
+      "stationName": "AUBURN UNIV. (AM",
+      "wmoId": null,
+      "latitude": 32.6,
+      "longitude": -85.5,
+      "elevationM": 198,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFDH",
+      "stationName": "AUCH/LAMOTHE (AU",
+      "wmoId": 7622,
+      "latitude": 43.67,
+      "longitude": 0.6,
+      "elevationM": 128,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "NZAA",
+      "stationName": "AUCKLAND INTL AR",
+      "wmoId": 93119,
+      "latitude": -37.02,
+      "longitude": 174.8,
+      "elevationM": 6,
+      "country": "NZ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KADU",
+      "stationName": "AUDUBON",
+      "wmoId": null,
+      "latitude": 41.7,
+      "longitude": -94.92,
+      "elevationM": 392,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUD",
+      "stationName": "AUDUBON PARK",
+      "wmoId": null,
+      "latitude": 29.93,
+      "longitude": -90.13,
+      "elevationM": 2,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "EDMA",
+      "stationName": "AUGSBURG/MULHAUS",
+      "wmoId": 10852,
+      "latitude": 48.42,
+      "longitude": 10.92,
+      "elevationM": 463,
+      "country": "DE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KAUG",
+      "stationName": "AUGUSTA",
+      "wmoId": null,
+      "latitude": 44.32,
+      "longitude": -69.8,
+      "elevationM": 109,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "K3AU",
+      "stationName": "AUGUSTA",
+      "wmoId": null,
+      "latitude": 37.67,
+      "longitude": -97.08,
+      "elevationM": 405,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAGS",
+      "stationName": "AUGUSTA/BUSH",
+      "wmoId": 72218,
+      "latitude": 33.37,
+      "longitude": -81.97,
+      "elevationM": 44,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KDNL",
+      "stationName": "AUGUSTA/DANIEL",
+      "wmoId": null,
+      "latitude": 33.47,
+      "longitude": -82.03,
+      "elevationM": 130,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "MPNU",
+      "stationName": "AUGUSTO VERGARA",
+      "wmoId": null,
+      "latitude": 7.82,
+      "longitude": -80.27,
+      "elevationM": 21,
+      "country": "PA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYLA",
+      "stationName": "AUPALUK",
+      "wmoId": null,
+      "latitude": 59.28,
+      "longitude": -69.58,
+      "elevationM": 35,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VAAU",
+      "stationName": "AURANGABAD AIRPO",
+      "wmoId": 43014,
+      "latitude": 19.85,
+      "longitude": 75.4,
+      "elevationM": 579,
+      "country": "IN",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LFLW",
+      "stationName": "AURILLAC (AUT)",
+      "wmoId": 7549,
+      "latitude": 44.88,
+      "longitude": 2.42,
+      "elevationM": 639,
+      "country": "FR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KUAO",
+      "stationName": "AURORA",
+      "wmoId": null,
+      "latitude": 45.25,
+      "longitude": -122.77,
+      "elevationM": 59,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUH",
+      "stationName": "AURORA",
+      "wmoId": null,
+      "latitude": 40.88,
+      "longitude": -98,
+      "elevationM": 550,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "MGGI",
+      "stationName": "AURORA ARP",
+      "wmoId": null,
+      "latitude": 14.58,
+      "longitude": -90.52,
+      "elevationM": 1489,
+      "country": "GT",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FYAS",
+      "stationName": "AUS",
+      "wmoId": null,
+      "latitude": -26.7,
+      "longitude": 16.32,
+      "elevationM": 1480,
+      "country": "NA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KU31",
+      "stationName": "AUSTIN",
+      "wmoId": null,
+      "latitude": 39.5,
+      "longitude": -117.07,
+      "elevationM": 2014,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KTMT",
+      "stationName": "AUSTIN",
+      "wmoId": null,
+      "latitude": 39.47,
+      "longitude": -117.2,
+      "elevationM": 1748,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUS",
+      "stationName": "AUSTIN",
+      "wmoId": 72254,
+      "latitude": 30.18,
+      "longitude": -97.68,
+      "elevationM": 166,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "KEDC",
+      "stationName": "AUSTIN EXEC",
+      "wmoId": null,
+      "latitude": 30.4,
+      "longitude": -97.57,
+      "elevationM": 189,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KATT",
+      "stationName": "AUSTIN/MABRY",
+      "wmoId": null,
+      "latitude": 30.32,
+      "longitude": -97.77,
+      "elevationM": 201,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAUM",
+      "stationName": "AUSTIN MUNI",
+      "wmoId": null,
+      "latitude": 43.67,
+      "longitude": -92.92,
+      "elevationM": 375,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LFLA",
+      "stationName": "AUXERRE (AUT)",
+      "wmoId": 7265,
+      "latitude": 47.78,
+      "longitude": 3.53,
+      "elevationM": 212,
+      "country": "FR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAVX",
+      "stationName": "AVALON",
+      "wmoId": 72292,
+      "latitude": 33.4,
+      "longitude": -118.42,
+      "elevationM": 482,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "YMAV",
+      "stationName": "AVALON AIRPORT",
+      "wmoId": null,
+      "latitude": -38.03,
+      "longitude": 144.48,
+      "elevationM": 8,
+      "country": "AU",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LIPA",
+      "stationName": "AVIANO (IT/US-AF",
+      "wmoId": 16036,
+      "latitude": 46.02,
+      "longitude": 12.58,
+      "elevationM": 126,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LIYW",
+      "stationName": "AVIANO (USAF)",
+      "wmoId": 16037,
+      "latitude": 46.02,
+      "longitude": 12.62,
+      "elevationM": 126,
+      "country": "IT",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EKAV",
+      "stationName": "AVNO (DAN-AFB)",
+      "wmoId": 6150,
+      "latitude": 55.07,
+      "longitude": 11.77,
+      "elevationM": 4,
+      "country": "DK",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KAVP",
+      "stationName": "AVOCA/WILKES B.",
+      "wmoId": 72513,
+      "latitude": 41.33,
+      "longitude": -75.72,
+      "elevationM": 291,
+      "country": "US",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LFOA",
+      "stationName": "AVORD (FAFB)",
+      "wmoId": 7257,
+      "latitude": 47.03,
+      "longitude": 2.63,
+      "elevationM": 179,
+      "country": "FR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HAAW",
+      "stationName": "AWASH",
+      "wmoId": null,
+      "latitude": 8.97,
+      "longitude": 40.17,
+      "elevationM": 1052,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HALA",
+      "stationName": "AWASSA (LAKE)",
+      "wmoId": 63460,
+      "latitude": 7.07,
+      "longitude": 38.5,
+      "elevationM": 1652,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HSAW",
+      "stationName": "AWEIL/UWAYL",
+      "wmoId": null,
+      "latitude": 8.77,
+      "longitude": 27.38,
+      "elevationM": 414,
+      "country": "SD",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "EHMA",
+      "stationName": "AWG-1     SEA",
+      "wmoId": 6208,
+      "latitude": 53.5,
+      "longitude": 5.95,
+      "elevationM": 50,
+      "country": "NL",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "DGTX",
+      "stationName": "AXIM",
+      "wmoId": 65465,
+      "latitude": 4.87,
+      "longitude": -2.22,
+      "elevationM": 40,
+      "country": "GH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HAAX",
+      "stationName": "AXUM",
+      "wmoId": null,
+      "latitude": 14.12,
+      "longitude": 38.72,
+      "elevationM": 2134,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SPHO",
+      "stationName": "AYACUCHO/CORONEL",
+      "wmoId": 84673,
+      "latitude": -13.17,
+      "longitude": -74.22,
+      "elevationM": 2749,
+      "country": "PE",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "LTBD",
+      "stationName": "AYDIN",
+      "wmoId": 17234,
+      "latitude": 37.82,
+      "longitude": 27.88,
+      "elevationM": 57,
+      "country": "TR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "YAYE",
+      "stationName": "AYERS ROCK",
+      "wmoId": null,
+      "latitude": -25.18,
+      "longitude": 130.98,
+      "elevationM": 496,
+      "country": "AU",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SAZA",
+      "stationName": "AZUL AIRPORT",
+      "wmoId": 87642,
+      "latitude": -36.75,
+      "longitude": -59.82,
+      "elevationM": 132,
+      "country": "AR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "PTRO",
+      "stationName": "BABELTHUAP/KOROR",
+      "wmoId": 91408,
+      "latitude": 7.37,
+      "longitude": 134.55,
+      "elevationM": 54,
+      "country": "FM",
+      "siteType": ["METAR", "rawinsonde", "TAF"]
+    },
+    {
+      "stationId": "OINB",
+      "stationName": "BABOLSAR",
+      "wmoId": null,
+      "latitude": 36.72,
+      "longitude": 52.65,
+      "elevationM": -15,
+      "country": "IR",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "LRBC",
+      "stationName": "BACAU",
+      "wmoId": 15150,
+      "latitude": 46.52,
+      "longitude": 26.92,
+      "elevationM": 185,
+      "country": "RO",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "HABC",
+      "stationName": "BACO/BAKO",
+      "wmoId": null,
+      "latitude": 5.82,
+      "longitude": 36.62,
+      "elevationM": 1311,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RPVB",
+      "stationName": "BACOLOD/NEGROS I",
+      "wmoId": null,
+      "latitude": 10.65,
+      "longitude": 122.92,
+      "elevationM": 9,
+      "country": "PH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "KBAX",
+      "stationName": "BAD AXE",
+      "wmoId": null,
+      "latitude": 43.78,
+      "longitude": -82.98,
+      "elevationM": 234,
+      "country": "US",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CWDI",
+      "stationName": "BADGER (MARS)",
+      "wmoId": 71400,
+      "latitude": 48.97,
+      "longitude": -56.07,
+      "elevationM": 105,
+      "country": "CA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "GGBF",
+      "stationName": "BAFATA",
+      "wmoId": 61781,
+      "latitude": 12.17,
+      "longitude": -14.67,
+      "elevationM": 43,
+      "country": "GW",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FKAF",
+      "stationName": "BAFIA",
+      "wmoId": 64920,
+      "latitude": 4.72,
+      "longitude": 11.25,
+      "elevationM": 500,
+      "country": "CM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "FYBG",
+      "stationName": "BAGANI",
+      "wmoId": null,
+      "latitude": -18.12,
+      "longitude": 21.63,
+      "elevationM": 1011,
+      "country": "NA",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "SBBG",
+      "stationName": "BAGE/CMDT KRAEME",
+      "wmoId": 83981,
+      "latitude": -31.38,
+      "longitude": -54.12,
+      "elevationM": 180,
+      "country": "BR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ORBI",
+      "stationName": "BAGHDAD INTL",
+      "wmoId": null,
+      "latitude": 33.27,
+      "longitude": 44.23,
+      "elevationM": 35,
+      "country": "IQ",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "ORBB",
+      "stationName": "BAGHDAD-SIRSENK",
+      "wmoId": 40650,
+      "latitude": 33.22,
+      "longitude": 44.22,
+      "elevationM": 34,
+      "country": "IQ",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VEBD",
+      "stationName": "BAGHDOGRA (IN-AF",
+      "wmoId": 42398,
+      "latitude": 26.68,
+      "longitude": 88.33,
+      "elevationM": 126,
+      "country": "IN",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "VBPG",
+      "stationName": "BAGO/PEGU",
+      "wmoId": 48093,
+      "latitude": 17.32,
+      "longitude": 96.5,
+      "elevationM": 15,
+      "country": "MM",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "CYBG",
+      "stationName": "BAGOTVILLE(CAN M",
+      "wmoId": 71727,
+      "latitude": 48.33,
+      "longitude": -70.98,
+      "elevationM": 159,
+      "country": "CA",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "OAIX",
+      "stationName": "BAGRAM",
+      "wmoId": null,
+      "latitude": 34.95,
+      "longitude": 69.27,
+      "elevationM": 1492,
+      "country": "AF",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "RPUB",
+      "stationName": "BAGUIO/LUZON ISL",
+      "wmoId": 98328,
+      "latitude": 16.38,
+      "longitude": 120.62,
+      "elevationM": 1296,
+      "country": "PH",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "HABD",
+      "stationName": "BAHAR DAR",
+      "wmoId": 63332,
+      "latitude": 11.6,
+      "longitude": 37.32,
+      "elevationM": 1822,
+      "country": "ET",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "OPBW",
+      "stationName": "BAHAWALPUR",
+      "wmoId": 41700,
+      "latitude": 29.35,
+      "longitude": 71.72,
+      "elevationM": 120,
+      "country": "PK",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SAZB",
+      "stationName": "BAHIA BLANCA (MI",
+      "wmoId": 87750,
+      "latitude": -38.72,
+      "longitude": -62.17,
+      "elevationM": 83,
+      "country": "AR",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SEBC",
+      "stationName": "BAHIA DE CARAQUE",
+      "wmoId": 84101,
+      "latitude": -0.57,
+      "longitude": -80.4,
+      "elevationM": 3,
+      "country": "EC",
+      "siteType": ["METAR"]
+    },
+    {
+      "stationId": "MMBT",
+      "stationName": "BAHIAS DE HUATUL",
+      "wmoId": null,
+      "latitude": 15.77,
+      "longitude": -96.27,
+      "elevationM": 143,
+      "country": "MX",
+      "siteType": ["METAR", "TAF"]
+    },
+    {
+      "stationId": "SKBS",
+      "stationName": "BAHIA SOLANO/JOS",
+      "wmoId": null,
+      "latitude": 6.17,
+      "longitude": -77.4,
+      "elevationM": 24,
+      "country": "CO",
+      "siteType": ["METAR"]
+    }
+  ]
+}
