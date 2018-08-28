@@ -1,12 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 const resolve = d => path.join(__dirname, d)
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', resolve('client/index')]
+    app: [ 'babel-polyfill', resolve('client/index') ]
   },
   mode: 'development',
 
@@ -19,8 +21,8 @@ module.exports = {
   },
 
   resolve: {
-    modules: ['node_modules'],
-    extensions: ['*', '.json', '.jsx', '.js'],
+    modules: [ 'node_modules' ],
+    extensions: [ '*', '.json', '.jsx', '.js' ],
     alias: {
       '-': resolve('client')
     }
@@ -31,7 +33,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader']
+        loaders: [ 'babel-loader' ]
       },
       {
         test: /\.(scss|css)$/,
@@ -62,7 +64,7 @@ module.exports = {
       },
       {
         test: /\.(glsl|md|obj)$/i,
-        loaders: ['raw-loader']
+        loaders: [ 'raw-loader' ]
       }
     ],
     unknownContextCritical: false,
@@ -78,6 +80,8 @@ module.exports = {
     //   name: 'manifest',
     //   minChunks: Infinity
     // }),
-    new ExtractTextPlugin('app.css')
-  ]
+    new ExtractTextPlugin('app.css'),
+    new BundleAnalyzerPlugin()
+  ],
+  stats: 'minimal'
 }

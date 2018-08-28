@@ -23,7 +23,8 @@
     "plugins": [
       "transform-regenerator",
       "transform-object-rest-spread",
-      "inferno"
+      "inferno",
+      "syntax-dynamic-import"
     ]
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "compression": "^1.7.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "flat-color-icons": "^1.1.0",
     "fuse": "^0.4.0",
     "gpu.js": "^1.6.0",
     "highlight.js": "^9.12.0",
@@ -49,6 +51,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-inferno": "^5.1.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-polyfill": "^6.26.0",
@@ -63,15 +66,18 @@
     "file-loader": "^2.0.0",
     "image-webpack-loader": "^4.3.1",
     "inferno": "^5.4.2",
+    "inferno-loadable": "^5.4.3",
     "mocha": "^5.2.0",
     "node-sass": "^4.9.3",
     "nyc": "^12.0.2",
     "raw-loader": "^0.5.1",
+    "react-loadable": "^5.5.0",
     "require-dir": "^1.0.0",
     "sass-loader": "^7.1.0",
     "standard": "^11.0.1",
     "style-loader": "^0.22.1",
     "webpack": "^4.17.1",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0"
   },
   "engines": {

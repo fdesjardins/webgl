@@ -11,7 +11,7 @@ const initialize = (store, Routes) => {
   const browserHistory = createBrowserHistory()
   render(
     <BrowserRouter>
-      <Routes store={initialState} browserHistory={browserHistory} />
+      <Routes store={ initialState } browserHistory={ browserHistory } />
     </BrowserRouter>,
     document.querySelector('#app')
   )

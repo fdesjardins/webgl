@@ -44,7 +44,7 @@ const didMount = (selector, scene, subscribe) => () => {
     const x2 = x1 + width
     const y1 = pos.y
     const y2 = y1 + height
-    const quad = [x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]
+    const quad = [ x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2 ]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quad), gl.STATIC_DRAW)
     gl.uniform4fv(colorLocation, color)
     const primitiveType = gl.TRIANGLES
@@ -60,27 +60,23 @@ const didMount = (selector, scene, subscribe) => () => {
 const Basics02 = ({ scene, controls, subscribe }) => {
   const Controls = () => (
     <UpDownLeftRight
-      onLeft={() => controls.moveLeft(50)}
-      onRight={() => controls.moveRight(50)}
-      onUp={() => controls.moveUp(50)}
-      onDown={() => controls.moveDown(50)}
+      onLeft={ () => controls.moveLeft(50) }
+      onRight={ () => controls.moveRight(50) }
+      onUp={ () => controls.moveUp(50) }
+      onDown={ () => controls.moveDown(50) }
     />
   )
   const components = {
     Canvas: () => <canvas id="canvas" />,
-    Controls,
-    I: ({ children }) => {
-      // console.log(children)
-      return <i class={`em em-${children[0].children}`} />
-    }
+    Controls
   }
   return (
     <div class="basics02">
       <Example
-        notes={notes}
-        components={components}
-        onComponentDidMount={didMount('#canvas', scene, subscribe)}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        notes={ notes }
+        components={ components }
+        onComponentDidMount={ didMount('#canvas', scene, subscribe) }
+        onComponentShouldUpdate={ utils.shouldUpdate }
       />
     </div>
   )
@@ -94,10 +90,10 @@ export default ({ children }, { store }) => {
   }
   return (
     <Basics02
-      scene={store.select(sq('ex1.scene')).get()}
-      controls={store.select(sq('ex1.controls')).get()}
-      subscribe={subscribe}
-      onComponentShouldUpdate={utils.shouldUpdate}
+      scene={ store.select(sq('ex1.scene')).get() }
+      controls={ store.select(sq('ex1.controls')).get() }
+      subscribe={ subscribe }
+      onComponentShouldUpdate={ utils.shouldUpdate }
     />
   )
 }
