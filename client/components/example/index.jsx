@@ -1,11 +1,11 @@
-import Inferno from 'inferno'
+import React from 'react'
 
 import Markdown from '-/components/markdown'
 import './Example.scss'
 
 const Example = ({ notes, components }) => {
   return (
-    <div class="example">
+    <div className="example">
       <Markdown text={ notes } components={ components } />
     </div>
   )

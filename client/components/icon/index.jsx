@@ -1,3 +1,4 @@
+import React from 'react'
 import About from 'flat-color-icons/svg/about.svg'
 
 const defaultStyle = {

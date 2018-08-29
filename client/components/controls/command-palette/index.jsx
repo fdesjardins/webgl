@@ -1,4 +1,4 @@
-import Inferno from 'inferno'
+import React from 'react'
 import Mousetrap from 'mousetrap'
 import utils, { sq } from '-/utils'
 
@@ -117,12 +117,12 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
     const resultsLis = results.map((r, i) => {
       const className = i === selectedIndex ? 'selected' : ''
       return (
-        <li class={className} id={r.text.replace(/ /g, '-').toLowerCase()}>
+        <li className={ className } id={ r.text.replace(/ /g, '-').toLowerCase() }>
           {r.text}
         </li>
       )
     })
-    return <ul class="command-palette-search-results">{resultsLis}</ul>
+    return <ul className="command-palette-search-results">{resultsLis}</ul>
   }
   return <span>No matches found</span>
 }
@@ -154,20 +154,20 @@ const CommandPaletteControls = ({
   }
 
   return (
-    <div class="command-palette-controls">
+    <div className="command-palette-controls">
       <input
         type="text"
         placeholder=""
-        onKeyDown={handleCmdInput(
+        onKeyDown={ handleCmdInput(
           setQueryAndIndex,
           selectNext,
           selectPrevious,
           executeAndSetIndex
-        )}
+        ) }
       />
       <CommandPaletteSearchResults
-        results={results}
-        selectedIndex={selectedIndex}
+        results={ results }
+        selectedIndex={ selectedIndex }
       />
     </div>
   )
@@ -178,20 +178,29 @@ const findCommands = query =>
     return c.text.toLowerCase().indexOf(query) !== -1
   })
 
-const CommandPalette = ({ children }, { store, router }) => {
-  const queryCursor = store.select(sq('app.query'))
-  const selectedIndex = store.select(sq('app.querySelectedIndex'))
+const CommandPalette = () => {
+  const queryCursor = {
+    get () {
+      return 1
+    }
+  }
+  const selectedIndex = {
+    get () {
+      return 1
+    }
+  }
+  const router = null
   return (
-    <div class="command-palette hidden">
+    <div className="command-palette hidden">
       <CommandPaletteControls
-        query={queryCursor.get()}
-        setQuery={query => {
+        query={ queryCursor.get() }
+        setQuery={ query => {
           queryCursor.set(query)
-        }}
-        selectedIndex={selectedIndex.get()}
-        setIndex={index => selectedIndex.set(index)}
-        router={router}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        } }
+        selectedIndex={ selectedIndex.get() }
+        setIndex={ index => selectedIndex.set(index) }
+        router={ router }
+        onComponentShouldUpdate={ utils.shouldUpdate }
       />
     </div>
   )

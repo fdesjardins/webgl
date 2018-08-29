@@ -1,4 +1,4 @@
-import Inferno from 'inferno'
+import React from 'react'
 import { default as utils, sq } from '-/utils'
 import * as THREE from 'three'
 import Promise from 'bluebird'

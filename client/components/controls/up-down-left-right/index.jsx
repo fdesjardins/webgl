@@ -1,12 +1,20 @@
-import Inferno from 'inferno'
+import React from 'react'
 
 const UpDownLeftRight = ({ onLeft, onRight, onUp, onDown }) => {
   return (
-    <div class='controls'>
-      <button class='left' onClick={ onLeft }>left</button>
-      <button class='up' onClick={ onUp }>up</button>
-      <button class='right' onClick={ onRight }>right</button>
-      <button class='down' onClick={ onDown }>down</button>
+    <div className="controls">
+      <button className="left" onClick={ onLeft }>
+        left
+      </button>
+      <button className="up" onClick={ onUp }>
+        up
+      </button>
+      <button className="right" onClick={ onRight }>
+        right
+      </button>
+      <button className="down" onClick={ onDown }>
+        down
+      </button>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import Inferno from 'inferno'
+import React from 'react'
 import _ from 'lodash'
 
 import { default as utils, sq } from '-/utils'

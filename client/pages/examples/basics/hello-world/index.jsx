@@ -1,4 +1,5 @@
-import Inferno, { createElement } from 'inferno'
+import React from 'react'
+import { branch } from 'baobab-react/higher-order'
 
 // import 'vendor/webgl-utils.js'
 
@@ -71,7 +72,7 @@ const Basics02 = ({ scene, controls, subscribe }) => {
     Controls
   }
   return (
-    <div class="basics02">
+    <div className="basics02">
       <Example
         notes={ notes }
         components={ components }
@@ -82,18 +83,25 @@ const Basics02 = ({ scene, controls, subscribe }) => {
   )
 }
 
-export default ({ children }, { store }) => {
-  const subscribe = callback => {
-    store
-      .select(sq('ex1.scene'))
-      .on('update', ({ data }) => callback(data.currentData))
-  }
-  return (
-    <Basics02
-      scene={ store.select(sq('ex1.scene')).get() }
-      controls={ store.select(sq('ex1.controls')).get() }
-      subscribe={ subscribe }
-      onComponentShouldUpdate={ utils.shouldUpdate }
-    />
-  )
-}
+export default branch(
+  {
+    scene: [ 'ex1', 'scene' ],
+    controls: [ 'ex1', 'controls' ]
+  },
+  Basics02
+)
+// () => {
+//   const subscribe = callback => {
+//     store
+//       .select(sq('ex1.scene'))
+//       .on('update', ({ data }) => callback(data.currentData))
+//   }
+//   return (
+//     <Basics02
+//       scene={ store.select(sq('ex1.scene')).get() }
+//       controls={ store.select(sq('ex1.controls')).get() }
+//       subscribe={ subscribe }
+//       onComponentShouldUpdate={ utils.shouldUpdate }
+//     />
+//   )
+// }

@@ -1,5 +1,5 @@
-import Inferno from 'inferno'
-import { Link } from 'inferno-router'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './home.scss'
 
@@ -55,7 +55,7 @@ const Links = () => (
 
 const Index = () => {
   return (
-    <ul class="index">
+    <ul className="index">
       <label>All Examples</label>
       <Links />
     </ul>

@@ -1,6 +1,5 @@
-import Inferno from 'inferno'
-import { Link } from 'inferno-router'
-import { createElement } from 'inferno-create-element'
+import React, { createElement } from 'react'
+import { Link } from 'react-router-dom'
 import marksy from 'marksy/components'
 import hljs from 'highlight.js/lib/highlight'
 import hljsJavascript from 'highlight.js/lib/languages/javascript'
@@ -25,5 +24,5 @@ export default ({ text, components }) => {
     },
     highlight: (language, code) => hljs.highlight(language, code).value
   })
-  return <div class="marksy markdown">{compile(text).tree}</div>
+  return <div className="marksy markdown">{compile(text).tree}</div>
 }

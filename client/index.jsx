@@ -1,19 +1,19 @@
-import Inferno, { render } from 'inferno'
+import React from 'react'
+import { render } from 'react-dom'
 import createBrowserHistory from 'history/createBrowserHistory'
-import { BrowserRouter, Route, IndexRoute } from 'inferno-router'
+import { BrowserRouter, Route, IndexRoute } from 'react-router-dom'
+import { root } from 'baobab-react/higher-order'
 
-import initialState from '-/state/tree'
+import state from '-/state/tree'
 import Routes from '-/components/router'
-import App from '-/components/app'
-import Provider from '-/components/provider'
 
-const initialize = (store, Routes) => {
+const initialize = Routes => {
   const browserHistory = createBrowserHistory()
   render(
     <BrowserRouter>
-      <Routes store={ initialState } browserHistory={ browserHistory } />
+      <Routes browserHistory={ browserHistory } />
     </BrowserRouter>,
     document.querySelector('#app')
   )
 }
-initialize(initialState, Routes)
+initialize(root(state, Routes))

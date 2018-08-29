@@ -1,7 +1,6 @@
-import Inferno from 'inferno'
-import { BrowserRouter, Route, IndexRoute } from 'inferno-router'
+import React from 'react'
+import { BrowserRouter, Route, IndexRoute } from 'react-router-dom'
 
-import Provider from '-/components/provider'
 import App from '-/components/app'
 import NotFound from '-/components/not-found'
 
@@ -17,19 +16,17 @@ import Winds from '-/pages/examples/advanced/winds'
 
 const Routes = ({ store }) => (
   <BrowserRouter>
-    <Provider store={store}>
-      <App onEnter={App.registerRouter}>
-        <Route exact path="/" component={Home} />
-        <Route path="/examples/basics/00" component={HelloWorld} />
-        <Route path="/examples/basics/01" component={Twgljs} />
-        <Route path="/examples/basics/02" component={Lighting} />
-        <Route path="/examples/basics/03" component={TexturesAndBlending} />
-        <Route path="/examples/basics/04" component={LoadingObjects} />
-        <Route path="/examples/threejs/00" component={HelloThreejs} />
-        <Route path="/examples/threejs/01" component={PointLight} />
-        <Route path="/examples/advanced/00" component={Winds} />
-      </App>
-    </Provider>
+    <App onEnter={ App.registerRouter }>
+      <Route exact path="/" component={ Home } />
+      <Route path="/examples/basics/00" component={ HelloWorld } />
+      <Route path="/examples/basics/01" component={ Twgljs } />
+      <Route path="/examples/basics/02" component={ Lighting } />
+      <Route path="/examples/basics/03" component={ TexturesAndBlending } />
+      <Route path="/examples/basics/04" component={ LoadingObjects } />
+      <Route path="/examples/threejs/00" component={ HelloThreejs } />
+      <Route path="/examples/threejs/01" component={ PointLight } />
+      <Route path="/examples/advanced/00" component={ Winds } />
+    </App>
   </BrowserRouter>
 )
 export default Routes
