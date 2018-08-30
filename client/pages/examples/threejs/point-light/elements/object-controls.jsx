@@ -3,12 +3,9 @@ import React from 'react'
 import ColorPicker from './color-picker'
 
 export const ScalePicker = ({ axisLabel, scale, setScale }) => (
-  <div className="input-group">
-    <div className="input-group-prepend">
-      <span className="input-group-text">{axisLabel.toUpperCase()}</span>
-    </div>
+  <div className="ui labeled small input">
+    <div className="ui label">{axisLabel.toUpperCase()}</div>
     <input
-      className="form-control"
       type="number"
       defaultValue={ scale }
       onChange={ ({ target }) => setScale(parseFloat(target.value)) }
@@ -17,7 +14,7 @@ export const ScalePicker = ({ axisLabel, scale, setScale }) => (
 )
 
 export const ObjectScale = ({ getScale, setScale }) => (
-  <div className="form-group">
+  <div className="field">
     <label>Scale</label>
     <ScalePicker
       axisLabel="x"
@@ -38,12 +35,9 @@ export const ObjectScale = ({ getScale, setScale }) => (
 )
 
 export const RotationSpeed = ({ axisLabel, speed, setSpeed }) => (
-  <div className="input-group">
-    <div className="input-group-prepend">
-      <span className="input-group-text">{axisLabel.toUpperCase()}</span>
-    </div>
+  <div className="ui labeled small input">
+    <div className="ui label">{axisLabel.toUpperCase()}</div>
     <input
-      className="form-control"
       type="number"
       defaultValue={ speed }
       step="0.005"
@@ -53,7 +47,7 @@ export const RotationSpeed = ({ axisLabel, speed, setSpeed }) => (
 )
 
 export const ObjectRotation = ({ getSpeed, setSpeed }) => (
-  <div className="form-group">
+  <div className="field">
     <label>Rotation</label>
     <RotationSpeed
       axisLabel="x"
@@ -74,7 +68,7 @@ export const ObjectRotation = ({ getSpeed, setSpeed }) => (
 )
 
 export const ObjectProperties = ({ objectCursor }) => (
-  <div className="object-properties">
+  <div className="ui form object-properties">
     <ColorPicker
       color={ objectCursor.get('color') }
       setColor={ color => objectCursor.set('color', color) }

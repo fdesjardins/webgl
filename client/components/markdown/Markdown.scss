@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/bootstrap";
-
 .markdown {
   margin-bottom: 25px;
 }
@@ -10,7 +8,6 @@
 }
 
 .markdown blockquote {
-  @extend .blockquote;
   color: #777;
   font-size: 100%;
 }

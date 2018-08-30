@@ -1,5 +1,3 @@
-@import '~bootstrap/scss/bootstrap';
-
 .command-palette {
   position: fixed;
   top: 0;
@@ -28,7 +26,6 @@
 }
 
 .command-palette-controls input {
-  @extend .form-control;
   height: 40px;
   width: 100%;
   margin-bottom: 7px;

@@ -3,14 +3,11 @@ import React from 'react'
 import ColorPicker from './color-picker'
 
 const ShadowProperties = ({ getShadows, setShadows }) => (
-  <div className="form-group">
+  <div className="field">
     <label>Shadows</label>
-    <div className="input-group">
-      <div className="input-group-prepend">
-        <span className="input-group-text">Resolution</span>
-      </div>
+    <div className="ui labeled small input">
+      <div className="ui label">Pixels</div>
       <input
-        className="form-control"
         type="number"
         defaultValue={ getShadows().mapSize.width }
         min="0"
@@ -24,7 +21,7 @@ const ShadowProperties = ({ getShadows, setShadows }) => (
 )
 
 const LightProperties = ({ lightCursor }) => (
-  <div>
+  <div className="ui form light-properties">
     <ColorPicker
       color={ lightCursor.get('color') }
       setColor={ color => lightCursor.set('color', color) }

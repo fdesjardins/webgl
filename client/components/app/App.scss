@@ -1,69 +1,19 @@
-@import '~bootstrap/scss/bootstrap';
-
 html {
-  font-size: 12px;
+  font-size: 16px;
 }
-
-@include media-breakpoint-up(sm) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@include media-breakpoint-up(md) {
-  html {
-    font-size: 16px;
-  }
-}
-
-@include media-breakpoint-up(lg) {
-  html {
-    font-size: 18px;
-  }
-}
-
-body {
-  background: white;
-  margin: 0;
-  margin-bottom: 75px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
-}
-
-button {
-  @extend .btn;
-  @extend .btn-secondary;
-}
-
 nav {
-  @extend .nav-pills;
-  padding: 15px !important;
-  background-color: #2b303b;
-  border-bottom: 1px solid #ddd;
-  a {
-    color: #ddd;
-    &:focus {
-      color: #ddd;
-    }
-    &:hover {
-      color: white;
-    }
-  }
+  border-radius: 0 !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
 }
-
-nav a {
-  @extend .nav-link;
-}
-
-.flash-message {
-  @extend .alert;
-  @extend .alert-info;
-  display: block;
-}
-
 .content {
-  padding: 100px 25px;
+  padding: 150px 0;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+}
+.ui.text.container {
+  max-width: none !important;
 }

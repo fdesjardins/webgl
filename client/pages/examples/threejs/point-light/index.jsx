@@ -8,7 +8,7 @@ import Example from '-/components/example'
 import ObjectProperties from './elements/object-controls'
 import LightProperties from './elements/light-controls'
 import { default as utils, sq } from '-/utils'
-import './Threejs02.scss'
+import './index.scss'
 import notes from './readme.md'
 
 const state = new Baobab({

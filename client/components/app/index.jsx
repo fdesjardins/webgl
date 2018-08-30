@@ -7,13 +7,16 @@ import './App.scss'
 
 const App = ({ children }) => (
   <div className="app">
-    <nav className="nav">
-      <Link to="/">Home</Link>
+    <nav className="ui inverted segment">
+      <div className="ui inverted secondary menu">
+        <div className="ui container">
+          <Link to="/" className="active item">
+            Home
+          </Link>
+        </div>
+      </div>
     </nav>
-    {/* <span class='flash-message'>
-      { appCursor.get('message') }
-    </span> */}
-    <div className="content">{children || null}</div>
+    <div className="content text ui container">{children || null}</div>
     <CommandPalette />
   </div>
 )

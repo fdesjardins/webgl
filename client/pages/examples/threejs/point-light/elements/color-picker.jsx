@@ -1,16 +1,16 @@
 import React from 'react'
 
 export const ColorPicker = ({ color, setColor }) => (
-  <div className="input-group">
-    <div className="input-group-prepend">
-      <span className="input-group-text">Color</span>
+  <div className="field">
+    <label>Light Color</label>
+    <div className="ui labeled small input">
+      <div className="ui label">Color</div>
+      <input
+        type="text"
+        defaultValue={ color }
+        onChange={ ({ target }) => setColor(target.value) }
+      />
     </div>
-    <input
-      className="form-control"
-      type="text"
-      defaultValue={ color }
-      onChange={ ({ target }) => setColor(target.value) }
-    />
   </div>
 )
 
