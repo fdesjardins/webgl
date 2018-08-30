@@ -2,31 +2,23 @@
 
 Examples, tutorials, mini-projects, ...
 
+<img src=".github/point-light.gif" width="100%">
+
 Built with
 
-- Inferno Functional Components
-- Baobab Store
+- React + Recompose + Baobab
 - Express
 - Webpack
 - WebGL2
-
-## Installation
-
-```
-npm i -g webpack nodemon
-npm install
-```
+- SCSS
 
 ## Usage
 
-Build the client side and watch for changes:
-```
-webpack -w
-```
+Clone the repo, then:
 
-Start the express server:
 ```
-nodemon server/server.js -w server/
+npm install
+npm start
 ```
 
 ## License
