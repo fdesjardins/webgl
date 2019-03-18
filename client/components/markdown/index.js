@@ -4,16 +4,37 @@ import marksy from 'marksy/components'
 import hljs from 'highlight.js/lib/highlight'
 import hljsJavascript from 'highlight.js/lib/languages/javascript'
 import 'highlight.js/styles/ocean.css'
+import { css } from 'emotion'
 
 import Icon from '-/components/icon'
-import './Markdown.scss'
 
 hljs.registerLanguage('javascript', hljsJavascript)
 
 const standardComponents = {
-  Link: ({ children, context, ...rest }) => <Link { ...rest }>{children}</Link>,
-  Icon: ({ children, context, ...rest }) => <Icon { ...rest }>{children}</Icon>
+  Link: ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>,
+  Icon: ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>
 }
+
+const style = css`
+  margin-bottom: 25px;
+
+  i.em {
+    font-size: 125%;
+    margin: 0 2px;
+  }
+
+  blockquote {
+    color: #777;
+    font-size: 100%;
+  }
+
+  pre {
+    background-color: #2b303b;
+    color: #d0d5de;
+    padding: 15px;
+    font-size: 80%;
+  }
+`
 
 export default ({ text, components }) => {
   const compile = marksy({
@@ -24,5 +45,5 @@ export default ({ text, components }) => {
     },
     highlight: (language, code) => hljs.highlight(language, code).value
   })
-  return <div className="marksy markdown">{compile(text).tree}</div>
+  return <div className={`marksy ${style}`}>{compile(text).tree}</div>
 }

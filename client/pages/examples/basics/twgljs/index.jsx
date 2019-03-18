@@ -4,7 +4,7 @@ import * as twgl from 'twgl.js'
 import { default as utils, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
-import './Basics04.scss'
+// import './Basics04.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 

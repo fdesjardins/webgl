@@ -10,7 +10,7 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
-import './index.scss'
+// import './index.scss'
 
 const didMount = (selector, scene, subscribe) => () => {
   const canvas = document.querySelector(selector)
@@ -45,7 +45,7 @@ const didMount = (selector, scene, subscribe) => () => {
     const x2 = x1 + width
     const y1 = pos.y
     const y2 = y1 + height
-    const quad = [ x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2 ]
+    const quad = [x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quad), gl.STATIC_DRAW)
     gl.uniform4fv(colorLocation, color)
     const primitiveType = gl.TRIANGLES
@@ -61,10 +61,10 @@ const didMount = (selector, scene, subscribe) => () => {
 const Basics02 = ({ scene, controls, subscribe }) => {
   const Controls = () => (
     <UpDownLeftRight
-      onLeft={ () => controls.moveLeft(50) }
-      onRight={ () => controls.moveRight(50) }
-      onUp={ () => controls.moveUp(50) }
-      onDown={ () => controls.moveDown(50) }
+      onLeft={() => controls.moveLeft(50)}
+      onRight={() => controls.moveRight(50)}
+      onUp={() => controls.moveUp(50)}
+      onDown={() => controls.moveDown(50)}
     />
   )
   const components = {
@@ -74,10 +74,10 @@ const Basics02 = ({ scene, controls, subscribe }) => {
   return (
     <div className="basics02">
       <Example
-        notes={ notes }
-        components={ components }
-        onComponentDidMount={ didMount('#canvas', scene, subscribe) }
-        onComponentShouldUpdate={ utils.shouldUpdate }
+        notes={notes}
+        components={components}
+        onComponentDidMount={didMount('#canvas', scene, subscribe)}
+        onComponentShouldUpdate={utils.shouldUpdate}
       />
     </div>
   )
@@ -85,8 +85,8 @@ const Basics02 = ({ scene, controls, subscribe }) => {
 
 export default branch(
   {
-    scene: [ 'ex1', 'scene' ],
-    controls: [ 'ex1', 'controls' ]
+    scene: ['ex1', 'scene'],
+    controls: ['ex1', 'controls']
   },
   Basics02
 )

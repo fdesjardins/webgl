@@ -6,7 +6,7 @@ import Example from '-Example'
 import Markdown from '-/components/Markdown/Markdown'
 
 import notes from './readme.md'
-import './Gpujs01.scss'
+// import './Gpujs01.scss'
 
 const didMount = displayResult => {
   console.log('mount')
@@ -22,13 +22,15 @@ const didMount = displayResult => {
     setB.push(randB)
   }
 
-  const multiplyMatrix = gpu.createKernel(function(a, b) {
-    let sum = 0
-    for (let i = 0; i < 64; i++) {
-      sum += a[this.thread.y][i] * b[i][this.thread.x]
-    }
-    return sum
-  }).setDimensions([64, 64])
+  const multiplyMatrix = gpu
+    .createKernel(function(a, b) {
+      let sum = 0
+      for (let i = 0; i < 64; i++) {
+        sum += a[this.thread.y][i] * b[i][this.thread.x]
+      }
+      return sum
+    })
+    .setDimensions([64, 64])
 
   const c = multiplyMatrix(setA, setB)
 
@@ -37,25 +39,23 @@ const didMount = displayResult => {
 
 const Output = ({ id, output }) => {
   console.log('render output')
-  return (
-    <pre id={ id }>
-      { JSON.stringify(output, null, 2) }
-    </pre>
-  )
+  return <pre id={id}>{JSON.stringify(output, null, 2)}</pre>
 }
 
 const Computation = ({ id }) => {
   console.log('render computation')
-  return (
-    <div></div>
-  )
+  return <div />
 }
 
 const Gpujs0101 = ({ id, displayResult }, { store }) => {
   console.log('render 0101')
   return (
     <div>
-      <Computation id={ id } onComponentShouldUpdate={ utils.shouldUpdate } onComponentDidMount={ () => didMount(displayResult) }/>
+      <Computation
+        id={id}
+        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentDidMount={() => didMount(displayResult)}
+      />
     </div>
   )
 }
@@ -83,17 +83,16 @@ const Gpujs01 = (props, { store }) => {
   //   Gpujs0101Output: ({ id }) => {}
   // }
   return (
-    <div class='gpujs01'>
+    <div class="gpujs01">
       <Example
-        notes={ notes }
-        components={ components }
-        onComponentShouldUpdate={ utils.shouldUpdate } />
+        notes={notes}
+        components={components}
+        onComponentShouldUpdate={utils.shouldUpdate}
+      />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  return (
-    <Gpujs01 />
-  )
+  return <Gpujs01 />
 }

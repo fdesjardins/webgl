@@ -8,7 +8,7 @@ import Example from '-/components/example'
 import ObjectProperties from './elements/object-controls'
 import LightProperties from './elements/light-controls'
 import { default as utils, sq } from '-/utils'
-import './index.scss'
+// import './index.scss'
 import notes from './readme.md'
 
 const state = new Baobab({
@@ -25,7 +25,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [ 1.0, 1.0, 1.0 ],
+    scale: [1.0, 1.0, 1.0],
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
@@ -34,7 +34,7 @@ const state = new Baobab({
   }
 })
 
-const componentDidMount = ({ canvas, container }) => {
+const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(
@@ -83,16 +83,16 @@ const componentDidMount = ({ canvas, container }) => {
   const animate = () => {
     requestAnimationFrame(animate)
 
-    cube.rotation.x += objectState.get([ 'rotationSpeed', 'x' ])
-    cube.rotation.y += objectState.get([ 'rotationSpeed', 'y' ])
-    cube.rotation.z += objectState.get([ 'rotationSpeed', 'z' ])
+    cube.rotation.x += objectState.get(['rotationSpeed', 'x'])
+    cube.rotation.y += objectState.get(['rotationSpeed', 'y'])
+    cube.rotation.z += objectState.get(['rotationSpeed', 'z'])
 
     cube.material.color.setHex(parseInt(objectState.get('color'), 16))
 
     cube.scale.set(...objectState.get('scale'))
 
     light.color.setHex(parseInt(lightState.get('color'), 16))
-    if (lightState.get([ 'shadow', 'dispose' ]) === true) {
+    if (lightState.get(['shadow', 'dispose']) === true) {
       light.shadow.mapSize.width = lightState.get('shadow').mapSize.width || 16
       light.shadow.mapSize.height = lightState.get('shadow').mapSize.width || 16
       light.shadow.map.dispose()
@@ -104,34 +104,34 @@ const componentDidMount = ({ canvas, container }) => {
   animate()
 }
 
+const update = () =>
+  didMount({
+    canvas: document.querySelector('canvas'),
+    container: document.querySelector('#threejs02')
+  })
+
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
-  <Component { ...first } { ...rest }>
+  <Component {...first} {...rest}>
     {children}
   </Component>
 )
 
-const PointLightExampleBase = () => (
+const PointLightExample = () => (
   <div id="threejs02">
     <Example
-      notes={ notes }
-      components={ {
+      notes={notes}
+      components={{
         ObjectProperties: wrap(ObjectProperties, {
           objectCursor: state.select('object')
         }),
         LightProperties: wrap(LightProperties, {
           lightCursor: state.select('light')
         })
-      } }
+      }}
+      didMount={update}
+      didUpdate={update}
     />
   </div>
 )
-
-const PointLightExample = lifecycle({
-  componentDidMount: () =>
-    componentDidMount({
-      canvas: document.querySelector('canvas'),
-      container: document.querySelector('#threejs02')
-    })
-})(PointLightExampleBase)
 
 export default PointLightExample

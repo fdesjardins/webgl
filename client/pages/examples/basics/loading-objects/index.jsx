@@ -6,7 +6,7 @@ import { default as utils, sq } from '-/utils'
 import Example from '-/components/example'
 
 import notes from './readme.md'
-import './Basics07.scss'
+// import './Basics07.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 import cube from '-/assets/cube'

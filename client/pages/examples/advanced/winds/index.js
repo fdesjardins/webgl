@@ -1,10 +1,12 @@
 import React from 'react'
+import { css } from 'emotion'
 import { default as utils, sq } from '-/utils'
 import * as THREE from 'three'
 import Promise from 'bluebird'
+import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 
 import Example from '-/components/example'
-import './Threejs03.scss'
+// import './Threejs03.scss'
 import notes from './readme.md'
 import stationsData from './stations.json'
 import threeOrbitControls from 'three-orbit-controls'
@@ -65,12 +67,9 @@ const createStationLabel = station => {
  * Load the stations data into the given scene
  */
 const loadStations = async scene => {
-  await new Promise((resolve, reject) => {
-    globals.fontLoader.load('/dist/droidsansbold.typeface.json', font => {
-      globals.font = font
-      resolve()
-    })
-  })
+  const font = globals.fontLoader.parse(droidSans)
+  globals.font = font
+
   const loadStations = stationsData.stations.map(s => async () => {
     const station = createStation(s)
     const label = createStationLabel(s)
@@ -78,7 +77,9 @@ const loadStations = async scene => {
     scene.add(label)
     globals.stations.push(station)
   })
-  Promise.map(loadStations, x => x().delay(100), { concurrency: 25 })
+  Promise.map(loadStations, x => Promise.resolve(x()).delay(100), {
+    concurrency: 25
+  })
 }
 
 const loadParticles = async scene => {
@@ -193,12 +194,8 @@ const calcPosFromLatLonRad = (lat, lon, radius) => {
   return [x, y, 0]
 }
 
-const Canvas = ({ id }) => {
-  return <canvas id={id} />
-}
-
 const Threejs0301 = ({ color, id }) => {
-  return <Canvas id={id} onComponentDidMount={didMount} />
+  return <canvas id={id} />
 }
 
 /**
@@ -212,8 +209,9 @@ const Threejs03 = ({ children }, { store }) => {
     <div id="threejs03">
       <Example
         notes={notes}
-        onComponentShouldUpdate={utils.shouldUpdate}
         components={components}
+        didMount={didMount}
+        didUpdate={didMount}
       />
     </div>
   )

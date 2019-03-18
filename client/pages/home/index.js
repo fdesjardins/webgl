@@ -1,12 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './home.scss'
-
 const Links = () => (
   <ul>
     <li>
-      <Link to="/examples/basics/00">0.00 - Hello World</Link>
+      <Link to="/examples/basics/00">0.00 - Hello Worlds</Link>
     </li>
     <li>
       <Link to="/examples/basics/01">0.01 - Twgl.js</Link>

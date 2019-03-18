@@ -3,7 +3,7 @@ const path = require('path')
 const express = require('express')
 const compression = require('compression')
 const cors = require('cors')
-const browserSync = require('browser-sync')
+// const browserSync = require('browser-sync')
 
 module.exports = async (config) => {
   const app = express()
@@ -22,13 +22,13 @@ module.exports = async (config) => {
   const server = app.listen(1137)
   console.log('listening on 1137...')
 
-  const bs = browserSync.create()
-  bs.init({
-    proxy: 'localhost:1137',
-    reloadDelay: 100
-  })
-  bs.watch(path.join(__dirname, '../dist/**/*.js')).on('change', bs.reload)
-  bs.watch(path.join(__dirname, '../dist/**/*.css')).on('change', bs.reload)
+  // const bs = browserSync.create()
+  // bs.init({
+  //   proxy: 'localhost:1137',
+  //   reloadDelay: 100
+  // })
+  // bs.watch(path.join(__dirname, '../dist/**/*.js')).on('change', bs.reload)
+  // bs.watch(path.join(__dirname, '../dist/**/*.css')).on('change', bs.reload)
 
   return { app, server }
 }

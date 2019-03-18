@@ -3,7 +3,6 @@ import { default as utils, sq } from '-/utils'
 import * as THREE from 'three'
 
 import Example from '-/components/example'
-import './Threejs01.scss'
 import notes from './readme.md'
 
 const didMount = ({ canvas, container }) => {
@@ -21,7 +20,7 @@ const didMount = ({ canvas, container }) => {
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+  const material = new THREE.MeshBasicMaterial({ color: 0xaaff00 })
   const cube = new THREE.Mesh(geometry, material)
   scene.add(cube)
 
@@ -36,17 +35,14 @@ const didMount = ({ canvas, container }) => {
   animate()
 }
 
+const update = () =>
+  didMount({
+    canvas: document.querySelector('#threejs01 canvas'),
+    container: document.querySelector('#threejs01')
+  })
+
 export default ({ children }, { store }) => (
   <div id="threejs01">
-    <Example
-      notes={notes}
-      onComponentShouldUpdate={utils.shouldUpdate}
-      onComponentDidMount={() =>
-        didMount({
-          canvas: document.querySelector('#threejs01 canvas'),
-          container: document.querySelector('#threejs01')
-        })
-      }
-    />
+    <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
 )

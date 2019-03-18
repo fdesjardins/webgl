@@ -2,7 +2,7 @@ import React from 'react'
 import Mousetrap from 'mousetrap'
 import utils, { sq } from '-/utils'
 
-import './CommandPalette.scss'
+// import './CommandPalette.scss'
 
 const commands = [
   {
@@ -117,7 +117,7 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
     const resultsLis = results.map((r, i) => {
       const className = i === selectedIndex ? 'selected' : ''
       return (
-        <li className={ className } id={ r.text.replace(/ /g, '-').toLowerCase() }>
+        <li className={className} id={r.text.replace(/ /g, '-').toLowerCase()}>
           {r.text}
         </li>
       )
@@ -158,16 +158,16 @@ const CommandPaletteControls = ({
       <input
         type="text"
         placeholder=""
-        onKeyDown={ handleCmdInput(
+        onKeyDown={handleCmdInput(
           setQueryAndIndex,
           selectNext,
           selectPrevious,
           executeAndSetIndex
-        ) }
+        )}
       />
       <CommandPaletteSearchResults
-        results={ results }
-        selectedIndex={ selectedIndex }
+        results={results}
+        selectedIndex={selectedIndex}
       />
     </div>
   )
@@ -180,12 +180,12 @@ const findCommands = query =>
 
 const CommandPalette = () => {
   const queryCursor = {
-    get () {
+    get() {
       return 1
     }
   }
   const selectedIndex = {
-    get () {
+    get() {
       return 1
     }
   }
@@ -193,14 +193,14 @@ const CommandPalette = () => {
   return (
     <div className="command-palette hidden">
       <CommandPaletteControls
-        query={ queryCursor.get() }
-        setQuery={ query => {
+        query={queryCursor.get()}
+        setQuery={query => {
           queryCursor.set(query)
-        } }
-        selectedIndex={ selectedIndex.get() }
-        setIndex={ index => selectedIndex.set(index) }
-        router={ router }
-        onComponentShouldUpdate={ utils.shouldUpdate }
+        }}
+        selectedIndex={selectedIndex.get()}
+        setIndex={index => selectedIndex.set(index)}
+        router={router}
+        onComponentShouldUpdate={utils.shouldUpdate}
       />
     </div>
   )
