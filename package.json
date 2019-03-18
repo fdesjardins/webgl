@@ -16,6 +16,7 @@
     ]
   },
   "dependencies": {
+    "@mdx-js/runtime": "^0.15.7",
     "baobab": "^2.5.2",
     "baobab-react": "^3.0.0",
     "compression": "^1.7.3",
@@ -26,9 +27,13 @@
     "highlight.js": "^9.15.6",
     "history": "^4.9.0",
     "jsx-to-string": "^1.4.0",
+    "markdown-it": "^8.4.2",
+    "markdown-it-jsx": "^1.1.0",
     "marksy": "^6.1.0",
     "mousetrap": "^1.6.3",
     "react-fast-compare": "^2.0.4",
+    "react-monaco-editor": "^0.25.1",
+    "react-treebeard": "^3.1.0",
     "three": "^0.102.1",
     "three-orbit-controls": "^82.1.0",
     "twgl.js": "^4.9.0"

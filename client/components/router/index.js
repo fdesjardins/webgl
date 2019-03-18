@@ -13,6 +13,7 @@ import LoadingObjects from '-/pages/examples/basics/loading-objects'
 import HelloThreejs from '-/pages/examples/threejs/hello-threejs'
 import PointLight from '-/pages/examples/threejs/point-light'
 import Winds from '-/pages/examples/advanced/winds'
+import Editor from '-/pages/editor'
 
 const Routes = Layout => ({ store }) => (
   <BrowserRouter>
@@ -26,6 +27,7 @@ const Routes = Layout => ({ store }) => (
       <Route path="/examples/threejs/00" component={HelloThreejs} />
       <Route path="/examples/threejs/01" component={PointLight} />
       <Route path="/examples/advanced/00" component={Winds} />
+      <Route path="/editor" component={Editor} />
     </Layout>
   </BrowserRouter>
 )

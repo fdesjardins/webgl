@@ -5,8 +5,14 @@ import hljs from 'highlight.js/lib/highlight'
 import hljsJavascript from 'highlight.js/lib/languages/javascript'
 import 'highlight.js/styles/ocean.css'
 import { css } from 'emotion'
-
+import MDX from '@mdx-js/runtime'
 import Icon from '-/components/icon'
+
+import mdit from 'markdown-it'
+import jsx from 'markdown-it-jsx'
+
+const md = mdit()
+md.use(jsx)
 
 hljs.registerLanguage('javascript', hljsJavascript)
 
@@ -47,3 +53,21 @@ export default ({ text, components }) => {
   })
   return <div className={`marksy ${style}`}>{compile(text).tree}</div>
 }
+
+// // Provide custom components for markdown elements
+// const components = {
+//   h1: props => <h1 style={{ color: 'tomato' }} {...props} />
+// }
+// // Provide custom components that will be referenced as JSX
+// // in the markdown string
+// const scope = {
+//   Demo: props => <h1>This is a demo component</h1>
+// }
+// const mdx = `
+// # Hello, world!
+//
+// <canvas id="canvas"/>
+// `
+// export default ({ text, components }) => {
+//   return <div dangerouslySetInnerHTML={{ __html: md.render(text) }} />
+// }
