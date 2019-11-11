@@ -113,6 +113,8 @@
   },
   "repository": "fdesjardins/webgl",
   "scripts": {
-    "start": "webpack-dev-server --hot"
+    "dev": "webpack-dev-server --hot",
+    "start": "node server/server.js",
+    "heroku-postbuild": "webpack -p"
   }
 }
