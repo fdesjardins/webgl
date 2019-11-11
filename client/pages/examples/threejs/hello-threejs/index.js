@@ -1,5 +1,4 @@
 import React from 'react'
-import { default as utils, sq } from '-/utils'
 import * as THREE from 'three'
 
 import Example from '-/components/example'
@@ -41,8 +40,10 @@ const update = () =>
     container: document.querySelector('#threejs01')
   })
 
-export default ({ children }, { store }) => (
+const HelloThreejs = ({ children }, { store }) => (
   <div id="threejs01">
-    <Example notes={notes} didMount={update} didUpdate={update} />
+    <Example notes={ notes } didMount={ update } didUpdate={ update } />
   </div>
 )
+
+export default HelloThreejs

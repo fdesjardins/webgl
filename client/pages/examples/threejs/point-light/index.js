@@ -25,7 +25,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [1.0, 1.0, 1.0],
+    scale: [ 1.0, 1.0, 1.0 ],
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
@@ -62,10 +62,10 @@ const didMount = ({ canvas, container }) => {
 
   const geometry = new THREE.IcosahedronBufferGeometry(1)
   const material = new THREE.MeshPhongMaterial({ color: 0x666666 })
-  const cube = new THREE.Mesh(geometry, material)
-  cube.matrixAutoUpdate = true
-  cube.castShadow = true
-  scene.add(cube)
+  const object = new THREE.Mesh(geometry, material)
+  object.matrixAutoUpdate = true
+  object.castShadow = true
+  scene.add(object)
 
   const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
   const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
@@ -83,16 +83,16 @@ const didMount = ({ canvas, container }) => {
   const animate = () => {
     requestAnimationFrame(animate)
 
-    cube.rotation.x += objectState.get(['rotationSpeed', 'x'])
-    cube.rotation.y += objectState.get(['rotationSpeed', 'y'])
-    cube.rotation.z += objectState.get(['rotationSpeed', 'z'])
+    object.rotation.x += objectState.get([ 'rotationSpeed', 'x' ])
+    object.rotation.y += objectState.get([ 'rotationSpeed', 'y' ])
+    object.rotation.z += objectState.get([ 'rotationSpeed', 'z' ])
 
-    cube.material.color.setHex(parseInt(objectState.get('color'), 16))
+    object.material.color.setHex(parseInt(objectState.get('color'), 16))
 
-    cube.scale.set(...objectState.get('scale'))
+    object.scale.set(...objectState.get('scale'))
 
     light.color.setHex(parseInt(lightState.get('color'), 16))
-    if (lightState.get(['shadow', 'dispose']) === true) {
+    if (lightState.get([ 'shadow', 'dispose' ]) === true) {
       light.shadow.mapSize.width = lightState.get('shadow').mapSize.width || 16
       light.shadow.mapSize.height = lightState.get('shadow').mapSize.width || 16
       light.shadow.map.dispose()
@@ -107,31 +107,31 @@ const didMount = ({ canvas, container }) => {
 const update = () =>
   didMount({
     canvas: document.querySelector('canvas'),
-    container: document.querySelector('#threejs02')
+    container: document.querySelector('#container')
   })
 
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
-  <Component {...first} {...rest}>
+  <Component { ...first } { ...rest }>
     {children}
   </Component>
 )
 
-const PointLightExample = () => (
-  <div id="threejs02">
+const PointLight = () => (
+  <div id="container">
     <Example
-      notes={notes}
-      components={{
+      notes={ notes }
+      components={ {
         ObjectProperties: wrap(ObjectProperties, {
           objectCursor: state.select('object')
         }),
         LightProperties: wrap(LightProperties, {
           lightCursor: state.select('light')
         })
-      }}
-      didMount={update}
-      didUpdate={update}
+      } }
+      didMount={ update }
+      didUpdate={ update }
     />
   </div>
 )
 
-export default PointLightExample
+export default PointLight

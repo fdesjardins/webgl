@@ -16,7 +16,3 @@ using regular form inputs, React, and Three.js.
     </div>
   </div>
 </div>
-
-Unfortunately, the markdown parser used, Marksy, is somewhat limited in it's
-ability to mix Markdown syntax, JSX, and HTML, so most of the markup for more
-complex examples must be written with pure JSX/HTML.

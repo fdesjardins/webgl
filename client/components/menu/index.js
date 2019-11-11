@@ -1,0 +1,52 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const MenuItem = ({ type, num, title }) => (
+  <li>
+    <Link to={ `/examples/${type}/${num}` }>{num} - {title}</Link>
+  </li>
+)
+
+const Menu = () => (
+  <ul>
+    <h3>Getting Started</h3>
+    <MenuItem type="basics" num="00" title="Hello World"/>
+    <MenuItem type="basics" num="01" title="Twgl.js"/>
+    <MenuItem type="basics" num="02" title="Lighting"/>
+    <MenuItem type="basics" num="03" title="Textures and Blending"/>
+    <MenuItem type="basics" num="04" title="Loading Objects"/>
+
+    <h3>Three.js</h3>
+    <MenuItem type="threejs" num="00" title="Hello three.js"/>
+    <MenuItem type="threejs" num="01" title="Point Light"/>
+    <MenuItem type="threejs" num="02" title="Video Texture"/>
+    <MenuItem type="threejs" num="03" title="Game of Life Texture"/>
+    <MenuItem type="threejs" num="04" title="Winds Vizualization"/>
+    <MenuItem type="threejs" num="05" title="Drawing Axes"/>
+
+    <br/>
+    <li>Mouse Events</li>
+    <li>Shadows</li>
+    <li>Geometry Shaders</li>
+    <li>Stencil Testing</li>
+    <li>Blending</li>
+    <li>Framebuffers</li>
+    <li>Cubemaps</li>
+    <li>Instancing</li>
+    <li>Deferred Shading</li>
+    <li>SSAO</li>
+    <li>Metaballs</li>
+    <li>Summed-Area Variance Shadow Maps</li>
+    <li>Motion Blur</li>
+    <li>Fluid Simulation</li>
+    <li>Matrix Multiplication</li>
+    <li>Particle Systems</li>
+    <li>Gravity</li>
+    <li>N-body Simulation</li>
+    <li>Oimo.js</li>
+    <li>A material point method for snow simulation</li>
+    <li>Heat Equation</li>
+  </ul>
+)
+
+export default React.memo(Menu)

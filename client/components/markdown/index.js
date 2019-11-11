@@ -17,8 +17,8 @@ md.use(jsx)
 hljs.registerLanguage('javascript', hljsJavascript)
 
 const standardComponents = {
-  Link: ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>,
-  Icon: ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>
+  Link: ({ children, context, ...rest }) => <Link { ...rest }>{children}</Link>,
+  Icon: ({ children, context, ...rest }) => <Icon { ...rest }>{children}</Icon>
 }
 
 const style = css`
@@ -51,7 +51,7 @@ export default ({ text, components }) => {
     },
     highlight: (language, code) => hljs.highlight(language, code).value
   })
-  return <div className={`marksy ${style}`}>{compile(text).tree}</div>
+  return <div className={ `marksy ${style}` }>{compile(text).tree}</div>
 }
 
 // // Provide custom components for markdown elements

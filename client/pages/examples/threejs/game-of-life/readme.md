@@ -1,0 +1,5 @@
+# Game of Life
+
+---
+
+<canvas/>

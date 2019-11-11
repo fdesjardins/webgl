@@ -19,8 +19,8 @@ const style = css`
 
 const Example = ({ notes, components }) => {
   return (
-    <div className={style}>
-      <Markdown text={notes} components={components} />
+    <div className={ style }>
+      <Markdown text={ notes } components={ components } />
     </div>
   )
 }
@@ -30,18 +30,15 @@ const enhance = compose(
     if (props.shouldUpdate) {
       props.shouldUpdate(props, nextProps)
     }
-    console.log(compareProps(props, nextProps))
     return true
   }),
   lifecycle({
-    componentDidMount() {
-      console.log('did update')
+    componentDidMount () {
       if (this.props.didMount) {
         this.props.didMount(this.props)
       }
     },
-    componentDidUpdate() {
-      console.log('did update')
+    componentDidUpdate () {
       if (this.props.didUpdate) {
         this.props.didUpdate(this.props)
       }
