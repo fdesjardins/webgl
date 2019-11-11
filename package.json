@@ -67,7 +67,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "engines": {
-    "node": ">=7"
+    "node": "12.x"
   },
   "eslintConfig": {
     "extends": [
@@ -114,7 +114,7 @@
   "repository": "fdesjardins/webgl",
   "scripts": {
     "dev": "webpack-dev-server --hot",
-    "start": "node server/server.js",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack -p",
+    "start": "node server/server.js"
   }
 }

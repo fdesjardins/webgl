@@ -25,6 +25,9 @@ const Menu = () => (
     <MenuItem type="threejs" num="05" title="Drawing Axes"/>
 
     <br/>
+    <Link to="/editor">Editor</Link>
+
+    <br/>
     <li>Mouse Events</li>
     <li>Shadows</li>
     <li>Geometry Shaders</li>
