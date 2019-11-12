@@ -2,6 +2,7 @@ import React from 'react'
 import * as THREE from 'three'
 import Baobab from 'baobab'
 
+import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import Example from '-/components/example'
 import notes from './readme.md'
 import threeOrbitControls from 'three-orbit-controls'
@@ -23,11 +24,65 @@ const state = new Baobab({
     scale: [ 1.0, 1.0, 1.0 ],
     rotationSpeed: {
       x: 0.0,
-      y: 0.0,
-      z: 0.5 * Math.PI
+      y: 0.5,
+      z: 0.0
+    },
+    position: {
+      x: 0,
+      y: 0,
+      z: 0
+    },
+    rotation: {
+      x: 0,
+      y: 0,
+      z: 0
     }
   }
 })
+
+const createAxes = ({ size, fontSize = 3 }) => {
+  const fontLoader = new THREE.FontLoader()
+  const font = fontLoader.parse(droidSans)
+  const axes = new THREE.AxesHelper(size)
+
+  const xLabel = new THREE.Mesh(
+    new THREE.TextGeometry('X', {
+      size: fontSize,
+      height: fontSize * 0.25,
+      font,
+      curveSegments: 3
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  )
+  xLabel.position.x = size
+  axes.add(xLabel)
+
+  const yLabel = new THREE.Mesh(
+    new THREE.TextGeometry('Y', {
+      size: fontSize,
+      height: fontSize * 0.25,
+      font,
+      curveSegments: 3
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  )
+  yLabel.position.y = size
+  axes.add(yLabel)
+
+  const zLabel = new THREE.Mesh(
+    new THREE.TextGeometry('-Z', {
+      size: fontSize,
+      height: fontSize * 0.25,
+      font,
+      curveSegments: 3
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  )
+  zLabel.position.z = size
+  axes.add(zLabel)
+
+  return axes
+}
 
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
@@ -38,9 +93,9 @@ const didMount = ({ canvas, container }) => {
     0.1,
     1000
   )
-  camera.position.x = 15
-  camera.position.y = 15
-  camera.position.z = 35
+  camera.position.x = 45
+  camera.position.y = 45
+  camera.position.z = 90
 
   const OrbitControls = threeOrbitControls(THREE)
   const controls = new OrbitControls(camera)
@@ -68,11 +123,13 @@ const didMount = ({ canvas, container }) => {
   object.castShadow = true
   const faceNormals = new THREE.FaceNormalsHelper(object, 2, 0x00ff00, 1)
   object.add(faceNormals)
-  object.add(new THREE.AxesHelper(12))
+  object.add(createAxes({ size: 12, fontSize: 2 }))
   scene.add(object)
 
   scene.add(new THREE.GridHelper(100, 0))
-  scene.add(new THREE.AxesHelper(50))
+
+  const axes = createAxes({ size: 50 })
+  scene.add(axes)
 
   const objectState = state.select('object')
   let thenSecs = 0
@@ -87,8 +144,15 @@ const didMount = ({ canvas, container }) => {
       object.rotation.x += rotationSpeed.x * deltaSecs
       object.rotation.y += rotationSpeed.y * deltaSecs
       object.rotation.z += rotationSpeed.z * deltaSecs
-      object.position.x = Math.cos(nowSecs) * 20
-      object.position.y = Math.sin(nowSecs) * 10
+      object.position.x = Math.cos(nowSecs) * 30
+      object.position.y = Math.sin(nowSecs) * 30
+
+      objectState.set('position', object.position)
+      objectState.set('rotation', {
+        x: object.rotation.x,
+        y: object.rotation.y,
+        z: object.rotation.z
+      })
     }
 
     renderer.render(scene, camera)
@@ -102,14 +166,63 @@ const update = () =>
     container: document.querySelector('#container')
   })
 
-const PointLightExample = () => (
-  <div id="container">
-    <Example
-      notes={ notes }
-      didMount={ update }
-      didUpdate={ update }
-    />
-  </div>
+const Stats = () => {
+  const [ pos, setPos ] = React.useState({})
+  const [ rot, setRot ] = React.useState({ x: 0, y: 0, z: 0 })
+
+  React.useEffect(() => {
+    const position = state.select([ 'object', 'position' ])
+    const rotation = state.select([ 'object', 'rotation' ])
+    position.on('update', ({ data }) => {
+      setPos(data.currentData)
+    })
+    rotation.on('update', ({ data }) => {
+      setRot(data.currentData)
+    })
+  })
+
+  const [ x, y, z ] = [
+    parseFloat(pos.x).toFixed(4),
+    parseFloat(pos.y).toFixed(4),
+    parseFloat(pos.z).toFixed(4)
+  ]
+  const [ rx, ry, rz ] = [
+    parseFloat(rot.x).toFixed(4),
+    parseFloat(rot.y).toFixed(4),
+    parseFloat(rot.z).toFixed(4)
+  ]
+  return (
+    <span style={ {
+      position: 'absolute',
+      color: 'white',
+      padding: '5px'
+    } }>
+      <b>Position:</b> ({x}, {y}, {z})
+      <br/>
+      <b>Rotation:</b> ({rx}, {ry}, {rz})
+    </span>
+  )
+}
+
+const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
+  <Component { ...first } { ...rest }>
+    {children}
+  </Component>
 )
+
+const PointLightExample = () => {
+  return (
+    <div id="container">
+      <Example
+        notes={ notes }
+        components={ {
+          Stats
+        } }
+        didMount={ update }
+        didUpdate={ update }
+      />
+    </div>
+  )
+}
 
 export default PointLightExample

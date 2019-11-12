@@ -2,4 +2,7 @@
 
 ---
 
-<canvas/>
+<div css="position: relative">
+  <Stats />
+  <canvas/>
+</div>

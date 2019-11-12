@@ -108,46 +108,8 @@ const rtScene = () => {
   }
 }
 
-let copyVideo = false
-
-const setupVideo = () => {
-  const url = 'https://storage.googleapis.com/avcp-camera-images/ken.mp4'
-  const video = document.createElement('video')
-
-  let playing = false
-  let timeupdate = false
-
-  video.autoplay = true
-  video.muted = true
-  video.loop = true
-
-  const checkReady = () => {
-    if (playing && timeupdate) {
-      copyVideo = true
-    }
-  }
-
-  video.addEventListener('playing', () => {
-    playing = true
-    checkReady()
-  })
-
-  video.addEventListener('timeupdate', () => {
-    timeupdate = true
-    checkReady()
-  })
-
-  video.crossOrigin = 'anonymous'
-  video.src = url
-  video.load()
-  video.play()
-
-  return video
-}
-
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
-  const video = setupVideo()
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -176,32 +138,6 @@ const didMount = ({ canvas, container }) => {
   light.shadow.camera.far = 500
   scene.add(light)
 
-  const light2 = light.clone()
-  light2.position.set(0, 0, 30)
-  scene.add(light2)
-
-  const videoTexture = new THREE.VideoTexture(video)
-  videoTexture.format = THREE.RGBFormat
-  videoTexture.minFilter = THREE.LinearFilter
-  videoTexture.magFilter = THREE.LinearFilter
-  videoTexture.needsUpdate = true
-
-  // const geometry = new THREE.IcosahedronBufferGeometry(1)
-  const geometry = new THREE.SphereBufferGeometry(5, 32, 32)
-  const renderTarget2 = new THREE.WebGLRenderTarget(512, 512)
-  // const material = new THREE.MeshPhongMaterial({ color: 0x666666 })
-  const material = new THREE.MeshPhongMaterial({
-    map: videoTexture,
-    side: THREE.DoubleSide,
-    shadowSide: THREE.DoubleSide
-  })
-  const cube = new THREE.Mesh(geometry, material)
-  cube.matrixAutoUpdate = true
-  cube.castShadow = true
-  cube.position.z = -1
-  // cube.position.x =
-  scene.add(cube)
-
   const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
   const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
@@ -211,27 +147,21 @@ const didMount = ({ canvas, container }) => {
 
   const { renderTarget, scene: renderTargetScene, camera: renderTargetCamera } = rtScene()
 
-  // renderTargetScene.add(cube)
-
-  // const planeGeometry2 = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
-  //
-  // const planeMaterial2 = new THREE.MeshPhongMaterial({
-  //   map: videoTexture
-  // })
-  // const planeMaterial2 = new THREE.ShaderMaterial({
-  //   vertexShader: vs,
-  //   fragmentShader: fs,
-  //   uniforms: {
-  //     texture: {
-  //       type: 't',
-  //       value: texture()
-  //     }
-  //   }
-  // })
-  // const plane2 = new THREE.Mesh(planeGeometry2, planeMaterial2)
-  // plane2.position.z = -15
-  // plane2.receiveShadow = true
-  // scene.add(plane2)
+  const geometry = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
+  const material = new THREE.ShaderMaterial({
+    vertexShader: vs,
+    fragmentShader: fs,
+    uniforms: {
+      texture: {
+        type: 't',
+        value: texture()
+      }
+    }
+  })
+  const object = new THREE.Mesh(geometry, material)
+  object.position.z = -15
+  object.receiveShadow = true
+  scene.add(object)
 
   const planeGeometry3 = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
   const planeMaterial3 = new THREE.MeshStandardMaterial({ color: 0x000000 })
@@ -240,9 +170,6 @@ const didMount = ({ canvas, container }) => {
   plane3.position.x = 10
   plane3.receiveShadow = true
   scene.add(plane3)
-
-  const objectState = state.select('object')
-  const lightState = state.select('light')
 
   let then = 0
   const animate = (now) => {
@@ -253,36 +180,9 @@ const didMount = ({ canvas, container }) => {
 
     controls.update()
 
-    if (nowSecs % 1 < 0.01) {
-      console.log(video)
-    }
-
-    renderer.setRenderTarget(renderTarget)
-    renderer.render(renderTargetScene, renderTargetCamera)
-    renderer.setRenderTarget(null)
-
-    renderer.setRenderTarget(renderTarget2)
-    renderer.render(scene, camera)
-    renderer.setRenderTarget(null)
-
-    // plane2.rotation.y = Math.sin(time) / 1.5
-    // plane2.rotation.x = Math.cos(time) / 1.5
-
-    cube.rotation.x += objectState.get([ 'rotationSpeed', 'x' ])
-    cube.rotation.y += objectState.get([ 'rotationSpeed', 'y' ])
-    cube.rotation.z += objectState.get([ 'rotationSpeed', 'z' ])
-
-    cube.material.color.setHex(parseInt(objectState.get('color'), 16))
-
-    cube.scale.set(...objectState.get('scale'))
-
-    light.color.setHex(parseInt(lightState.get('color'), 16))
-    if (lightState.get([ 'shadow', 'dispose' ]) === true) {
-      light.shadow.mapSize.width = lightState.get('shadow').mapSize.width || 16
-      light.shadow.mapSize.height = lightState.get('shadow').mapSize.width || 16
-      light.shadow.map.dispose()
-      light.shadow.map = null
-    }
+    // renderer.setRenderTarget(renderTarget)
+    // renderer.render(renderTargetScene, renderTargetCamera)
+    // renderer.setRenderTarget(null)
 
     renderer.render(scene, camera)
   }
@@ -292,11 +192,11 @@ const didMount = ({ canvas, container }) => {
 const update = () =>
   didMount({
     canvas: document.querySelector('canvas'),
-    container: document.querySelector('#threejs02')
+    container: document.querySelector('#container')
   })
 
 const PointLightExample = () => (
-  <div id="threejs02">
+  <div id="container">
     <Example
       notes={ notes }
       didMount={ update }
