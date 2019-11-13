@@ -7,6 +7,9 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import threeOrbitControls from 'three-orbit-controls'
 
+import ObjectProperties from './elements/object-controls'
+import Stats from './elements/stats'
+
 const state = new Baobab({
   light: {
     color: 'ffffff',
@@ -25,7 +28,7 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.0,
       y: 0.5,
-      z: 0.0
+      z: 0.5
     },
     position: {
       x: 0,
@@ -48,11 +51,11 @@ const createAxes = ({ size, fontSize = 3 }) => {
   const xLabel = new THREE.Mesh(
     new THREE.TextGeometry('X', {
       size: fontSize,
-      height: fontSize * 0.25,
+      height: fontSize * 0.1,
       font,
       curveSegments: 3
     }),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
+    new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
   xLabel.position.x = size
   axes.add(xLabel)
@@ -60,11 +63,11 @@ const createAxes = ({ size, fontSize = 3 }) => {
   const yLabel = new THREE.Mesh(
     new THREE.TextGeometry('Y', {
       size: fontSize,
-      height: fontSize * 0.25,
+      height: fontSize * 0.1,
       font,
       curveSegments: 3
     }),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
+    new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
   yLabel.position.y = size
   axes.add(yLabel)
@@ -72,11 +75,11 @@ const createAxes = ({ size, fontSize = 3 }) => {
   const zLabel = new THREE.Mesh(
     new THREE.TextGeometry('-Z', {
       size: fontSize,
-      height: fontSize * 0.25,
+      height: fontSize * 0.1,
       font,
       curveSegments: 3
     }),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
+    new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
   zLabel.position.z = size
   axes.add(zLabel)
@@ -97,15 +100,16 @@ const didMount = ({ canvas, container }) => {
   camera.position.y = 45
   camera.position.z = 90
 
-  const OrbitControls = threeOrbitControls(THREE)
-  const controls = new OrbitControls(camera)
-  controls.update()
-
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
-  scene.background = new THREE.Color(0x000000)
+  scene.background = new THREE.Color(0xffffff)
+
+  const OrbitControls = threeOrbitControls(THREE)
+  const controls = new OrbitControls(camera, renderer.domElement)
+  controls.enableDamping = true
+  controls.update()
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(0, 0, 30)
@@ -166,44 +170,6 @@ const update = () =>
     container: document.querySelector('#container')
   })
 
-const Stats = () => {
-  const [ pos, setPos ] = React.useState({})
-  const [ rot, setRot ] = React.useState({ x: 0, y: 0, z: 0 })
-
-  React.useEffect(() => {
-    const position = state.select([ 'object', 'position' ])
-    const rotation = state.select([ 'object', 'rotation' ])
-    position.on('update', ({ data }) => {
-      setPos(data.currentData)
-    })
-    rotation.on('update', ({ data }) => {
-      setRot(data.currentData)
-    })
-  })
-
-  const [ x, y, z ] = [
-    parseFloat(pos.x).toFixed(4),
-    parseFloat(pos.y).toFixed(4),
-    parseFloat(pos.z).toFixed(4)
-  ]
-  const [ rx, ry, rz ] = [
-    parseFloat(rot.x).toFixed(4),
-    parseFloat(rot.y).toFixed(4),
-    parseFloat(rot.z).toFixed(4)
-  ]
-  return (
-    <span style={ {
-      position: 'absolute',
-      color: 'white',
-      padding: '5px'
-    } }>
-      <b>Position:</b> ({x}, {y}, {z})
-      <br/>
-      <b>Rotation:</b> ({rx}, {ry}, {rz})
-    </span>
-  )
-}
-
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   <Component { ...first } { ...rest }>
     {children}
@@ -216,7 +182,13 @@ const PointLightExample = () => {
       <Example
         notes={ notes }
         components={ {
-          Stats
+          Stats: wrap(Stats, {
+            getPosition: () => state.get([ 'object', 'position' ]),
+            getRotation: () => state.get([ 'object', 'rotation' ])
+          }),
+          ObjectProperties: wrap(ObjectProperties, {
+            objectCursor: state.select('object')
+          })
         } }
         didMount={ update }
         didUpdate={ update }
