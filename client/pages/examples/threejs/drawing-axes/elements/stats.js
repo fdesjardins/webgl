@@ -1,8 +1,8 @@
 import React from 'react'
 
 const Stats = ({ getPosition, getRotation }) => {
-  const [ pos, setPos ] = React.useState({})
-  const [ rot, setRot ] = React.useState({ x: 0, y: 0, z: 0 })
+  const [pos, setPos] = React.useState({})
+  const [rot, setRot] = React.useState({ x: 0, y: 0, z: 0 })
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,27 +12,29 @@ const Stats = ({ getPosition, getRotation }) => {
     return () => clearTimeout(timer)
   })
 
-  const [ x, y, z ] = [
+  const [x, y, z] = [
     parseFloat(pos.x).toFixed(4),
     parseFloat(pos.y).toFixed(4),
     parseFloat(pos.z).toFixed(4)
   ]
-  const [ rx, ry, rz ] = [
+  const [rx, ry, rz] = [
     parseFloat(rot.x).toFixed(4),
     parseFloat(rot.y).toFixed(4),
     parseFloat(rot.z).toFixed(4)
   ]
 
   return (
-    <span style={ {
-      position: 'absolute',
-      color: 'black',
-      padding: '5px',
-      left: '65px',
-      top: '35px'
-    } }>
+    <span
+      style={{
+        position: 'absolute',
+        color: 'black',
+        padding: '5px',
+        left: '65px',
+        top: '35px'
+      }}
+    >
       <b>Position:</b> ({x}, {y}, {z})
-      <br/>
+      <br />
       <b>Rotation:</b> ({rx}, {ry}, {rz})
     </span>
   )

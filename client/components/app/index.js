@@ -27,7 +27,7 @@ const style = css`
 `
 
 const Layout = ({ children }) => (
-  <div className={ `app ${style}` }>
+  <div className={`app ${style}`}>
     <nav className="ui inverted segment">
       <div className="ui inverted secondary menu">
         <div className="ui container">

@@ -42,7 +42,7 @@ const update = () =>
 
 const HelloThreejs = ({ children }, { store }) => (
   <div id="threejs01">
-    <Example notes={ notes } didMount={ update } didUpdate={ update } />
+    <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
 )
 

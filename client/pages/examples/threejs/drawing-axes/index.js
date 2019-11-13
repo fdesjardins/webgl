@@ -24,7 +24,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [ 1.0, 1.0, 1.0 ],
+    scale: [1.0, 1.0, 1.0],
     rotationSpeed: {
       x: 0.0,
       y: 0.5,
@@ -90,12 +90,7 @@ const createAxes = ({ size, fontSize = 3 }) => {
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.x = 45
   camera.position.y = 45
   camera.position.z = 90
@@ -137,7 +132,7 @@ const didMount = ({ canvas, container }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = (now) => {
+  const animate = now => {
     requestAnimationFrame(animate)
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - thenSecs
@@ -171,7 +166,7 @@ const update = () =>
   })
 
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
-  <Component { ...first } { ...rest }>
+  <Component {...first} {...rest}>
     {children}
   </Component>
 )
@@ -180,18 +175,18 @@ const PointLightExample = () => {
   return (
     <div id="container">
       <Example
-        notes={ notes }
-        components={ {
+        notes={notes}
+        components={{
           Stats: wrap(Stats, {
-            getPosition: () => state.get([ 'object', 'position' ]),
-            getRotation: () => state.get([ 'object', 'rotation' ])
+            getPosition: () => state.get(['object', 'position']),
+            getRotation: () => state.get(['object', 'rotation'])
           }),
           ObjectProperties: wrap(ObjectProperties, {
             objectCursor: state.select('object')
           })
-        } }
-        didMount={ update }
-        didUpdate={ update }
+        }}
+        didMount={update}
+        didUpdate={update}
       />
     </div>
   )

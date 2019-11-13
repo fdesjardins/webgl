@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <ul className="index">
       <h2>WebGL Examples</h2>
-      <br/>
+      <br />
       <Menu />
     </ul>
   )

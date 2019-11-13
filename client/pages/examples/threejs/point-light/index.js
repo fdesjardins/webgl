@@ -25,7 +25,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [ 1.0, 1.0, 1.0 ],
+    scale: [1.0, 1.0, 1.0],
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
@@ -37,12 +37,7 @@ const state = new Baobab({
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 3
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
@@ -83,16 +78,16 @@ const didMount = ({ canvas, container }) => {
   const animate = () => {
     requestAnimationFrame(animate)
 
-    object.rotation.x += objectState.get([ 'rotationSpeed', 'x' ])
-    object.rotation.y += objectState.get([ 'rotationSpeed', 'y' ])
-    object.rotation.z += objectState.get([ 'rotationSpeed', 'z' ])
+    object.rotation.x += objectState.get(['rotationSpeed', 'x'])
+    object.rotation.y += objectState.get(['rotationSpeed', 'y'])
+    object.rotation.z += objectState.get(['rotationSpeed', 'z'])
 
     object.material.color.setHex(parseInt(objectState.get('color'), 16))
 
     object.scale.set(...objectState.get('scale'))
 
     light.color.setHex(parseInt(lightState.get('color'), 16))
-    if (lightState.get([ 'shadow', 'dispose' ]) === true) {
+    if (lightState.get(['shadow', 'dispose']) === true) {
       light.shadow.mapSize.width = lightState.get('shadow').mapSize.width || 16
       light.shadow.mapSize.height = lightState.get('shadow').mapSize.width || 16
       light.shadow.map.dispose()
@@ -111,7 +106,7 @@ const update = () =>
   })
 
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
-  <Component { ...first } { ...rest }>
+  <Component {...first} {...rest}>
     {children}
   </Component>
 )
@@ -119,17 +114,17 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
 const PointLight = () => (
   <div id="container">
     <Example
-      notes={ notes }
-      components={ {
+      notes={notes}
+      components={{
         ObjectProperties: wrap(ObjectProperties, {
           objectCursor: state.select('object')
         }),
         LightProperties: wrap(LightProperties, {
           lightCursor: state.select('light')
         })
-      } }
-      didMount={ update }
-      didUpdate={ update }
+      }}
+      didMount={update}
+      didUpdate={update}
     />
   </div>
 )

@@ -19,8 +19,8 @@ const style = css`
 
 const Example = ({ notes, components }) => {
   return (
-    <div className={ style }>
-      <Markdown text={ notes } components={ components } />
+    <div className={style}>
+      <Markdown text={notes} components={components} />
     </div>
   )
 }
@@ -33,12 +33,12 @@ const enhance = compose(
     return true
   }),
   lifecycle({
-    componentDidMount () {
+    componentDidMount() {
       if (this.props.didMount) {
         this.props.didMount(this.props)
       }
     },
-    componentDidUpdate () {
+    componentDidUpdate() {
       if (this.props.didUpdate) {
         this.props.didUpdate(this.props)
       }

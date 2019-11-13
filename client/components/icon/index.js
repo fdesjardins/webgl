@@ -20,8 +20,8 @@ const decodeSrc = name =>
 
 const Icon = ({ name, className = '' }) => {
   return (
-    <span className={ 'icon ' + className } style={ defaultStyle }>
-      <img src={ decodeSrc(name) } style={ defaultImgStyle } />
+    <span className={'icon ' + className} style={defaultStyle}>
+      <img src={decodeSrc(name)} style={defaultImgStyle} />
     </span>
   )
 }

@@ -60,9 +60,7 @@ const commands = [
 const getCmd = () => document.querySelector('.command-palette')
 
 const execute = router => {
-  const cmd = getCmd().querySelector(
-    '.command-palette-search-results .selected'
-  ).id
+  const cmd = getCmd().querySelector('.command-palette-search-results .selected').id
   commands.map(c => {
     if (c.text.replace(/ /g, '-').toLowerCase() === cmd) {
       c.action(router)
@@ -127,15 +125,9 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
   return <span>No matches found</span>
 }
 
-const CommandPaletteControls = ({
-  query,
-  setQuery,
-  selectedIndex,
-  setIndex,
-  router
-}) => {
+const CommandPaletteControls = ({ query, setQuery, selectedIndex, setIndex, router }) => {
   Mousetrap.bind('ctrl+shift+p', togglePalette)
-  let results = findCommands(query)
+  const results = findCommands(query)
   const selectNext = () => {
     setIndex(Math.min(results.length - 1, selectedIndex + 1))
   }
@@ -158,17 +150,9 @@ const CommandPaletteControls = ({
       <input
         type="text"
         placeholder=""
-        onKeyDown={handleCmdInput(
-          setQueryAndIndex,
-          selectNext,
-          selectPrevious,
-          executeAndSetIndex
-        )}
+        onKeyDown={handleCmdInput(setQueryAndIndex, selectNext, selectPrevious, executeAndSetIndex)}
       />
-      <CommandPaletteSearchResults
-        results={results}
-        selectedIndex={selectedIndex}
-      />
+      <CommandPaletteSearchResults results={results} selectedIndex={selectedIndex} />
     </div>
   )
 }

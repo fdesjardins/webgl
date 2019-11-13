@@ -5,11 +5,7 @@ export const ColorPicker = ({ color, setColor }) => (
     <label>Light Color</label>
     <div className="ui labeled small input">
       <div className="ui label">Color</div>
-      <input
-        type="text"
-        defaultValue={ color }
-        onChange={ ({ target }) => setColor(target.value) }
-      />
+      <input type="text" defaultValue={color} onChange={({ target }) => setColor(target.value)} />
     </div>
   </div>
 )

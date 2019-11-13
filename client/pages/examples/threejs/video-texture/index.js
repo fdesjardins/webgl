@@ -20,7 +20,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [ 1.0, 1.0, 1.0 ],
+    scale: [1.0, 1.0, 1.0],
     rotationSpeed: {
       x: 0.0,
       y: 0.005,
@@ -48,12 +48,7 @@ const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
   const video = setupVideo()
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 3
 
   const OrbitControls = threeOrbitControls(THREE)
@@ -116,9 +111,9 @@ const didMount = ({ canvas, container }) => {
   const animate = () => {
     requestAnimationFrame(animate)
 
-    object.rotation.x += objectState.get([ 'rotationSpeed', 'x' ])
-    object.rotation.y += objectState.get([ 'rotationSpeed', 'y' ])
-    object.rotation.z += objectState.get([ 'rotationSpeed', 'z' ])
+    object.rotation.x += objectState.get(['rotationSpeed', 'x'])
+    object.rotation.y += objectState.get(['rotationSpeed', 'y'])
+    object.rotation.z += objectState.get(['rotationSpeed', 'z'])
 
     renderer.render(scene, camera)
   }
@@ -133,11 +128,7 @@ const update = () =>
 
 const PointLightExample = () => (
   <div id="container">
-    <Example
-      notes={ notes }
-      didMount={ update }
-      didUpdate={ update }
-    />
+    <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
 )
 

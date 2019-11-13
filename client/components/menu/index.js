@@ -3,31 +3,33 @@ import { Link } from 'react-router-dom'
 
 const MenuItem = ({ type, num, title }) => (
   <li>
-    <Link to={ `/examples/${type}/${num}` }>{num} - {title}</Link>
+    <Link to={`/examples/${type}/${num}`}>
+      {num} - {title}
+    </Link>
   </li>
 )
 
 const Menu = () => (
   <ul>
     <h3>Getting Started</h3>
-    <MenuItem type="basics" num="00" title="Hello World"/>
-    <MenuItem type="basics" num="01" title="Twgl.js"/>
-    <MenuItem type="basics" num="02" title="Lighting"/>
-    <MenuItem type="basics" num="03" title="Textures and Blending"/>
-    <MenuItem type="basics" num="04" title="Loading Objects"/>
+    <MenuItem type="basics" num="00" title="Hello World" />
+    <MenuItem type="basics" num="01" title="Twgl.js" />
+    <MenuItem type="basics" num="02" title="Lighting" />
+    <MenuItem type="basics" num="03" title="Textures and Blending" />
+    <MenuItem type="basics" num="04" title="Loading Objects" />
 
     <h3>Three.js</h3>
-    <MenuItem type="threejs" num="00" title="Hello three.js"/>
-    <MenuItem type="threejs" num="01" title="Point Light"/>
-    <MenuItem type="threejs" num="02" title="Video Texture"/>
-    <MenuItem type="threejs" num="03" title="Game of Life Texture"/>
-    <MenuItem type="threejs" num="04" title="Winds Vizualization"/>
-    <MenuItem type="threejs" num="05" title="Drawing Axes"/>
+    <MenuItem type="threejs" num="00" title="Hello three.js" />
+    <MenuItem type="threejs" num="01" title="Point Light" />
+    <MenuItem type="threejs" num="02" title="Video Texture" />
+    <MenuItem type="threejs" num="03" title="Game of Life Texture" />
+    <MenuItem type="threejs" num="04" title="Winds Vizualization" />
+    <MenuItem type="threejs" num="05" title="Drawing Axes" />
 
-    <br/>
+    <br />
     <Link to="/editor">Editor</Link>
 
-    <br/>
+    <br />
     <li>Mouse Events</li>
     <li>Shadows</li>
     <li>Geometry Shaders</li>

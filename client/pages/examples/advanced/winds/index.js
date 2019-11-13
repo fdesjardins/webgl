@@ -158,9 +158,9 @@ const didMount = async () => {
   loadParticles(scene)
 }
 
-let grid = null
+const grid = null
 const updateParticlePosition = (pos, frame) => {
-  const [ x, y, z ] = [
+  const [x, y, z] = [
     pos.x + (Math.random() - 0.5) * 0.2,
     pos.y + (Math.random() - 0.5) * 0.2,
     pos.z
@@ -179,7 +179,7 @@ const calc3dPosFromLatLonRad = (lat, lon, radius) => {
   const z = radius * Math.sin(phi) * Math.sin(theta)
   const y = radius * Math.cos(phi)
 
-  return [ x, y, z ]
+  return [x, y, z]
 }
 
 /**
@@ -191,11 +191,11 @@ const calcPosFromLatLonRad = (lat, lon, radius) => {
   var y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180)
   y = (y * shift) / 180
 
-  return [ x, y, 0 ]
+  return [x, y, 0]
 }
 
 const WindsExample1 = ({ color, id }) => {
-  return <canvas id={ id } />
+  return <canvas id={id} />
 }
 
 /**
@@ -203,16 +203,11 @@ const WindsExample1 = ({ color, id }) => {
  */
 const WindsExample = ({ children }, { store }) => {
   const components = {
-    WindsExample1: ({ color, id }) => <WindsExample1 color={ color } id={ id } />
+    WindsExample1: ({ color, id }) => <WindsExample1 color={color} id={id} />
   }
   return (
     <div id="container">
-      <Example
-        notes={ notes }
-        components={ components }
-        didMount={ didMount }
-        didUpdate={ didMount }
-      />
+      <Example notes={notes} components={components} didMount={didMount} didUpdate={didMount} />
     </div>
   )
 }
