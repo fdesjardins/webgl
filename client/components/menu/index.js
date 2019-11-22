@@ -25,6 +25,7 @@ const Menu = () => (
     <MenuItem type="threejs" num="03" title="Game of Life Texture" />
     <MenuItem type="threejs" num="04" title="Winds Vizualization" />
     <MenuItem type="threejs" num="05" title="Drawing Axes" />
+    <MenuItem type="threejs" num="06" title="Ray Marching" />
 
     <br />
     <Link to="/editor">Editor</Link>

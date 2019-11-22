@@ -1,8 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, IndexRoute, Link } from 'react-router-dom'
-
-import App from '-/components/app'
-import NotFound from '-/components/not-found'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import Home from '-/pages/home'
 import HelloWorld from '-/pages/examples/basics/hello-world'
@@ -15,6 +12,7 @@ import PointLight from '-/pages/examples/threejs/point-light'
 import GameOfLife from '-/pages/examples/threejs/game-of-life'
 import VideoTexture from '-/pages/examples/threejs/video-texture'
 import DrawingAxes from '-/pages/examples/threejs/drawing-axes'
+import RayMarching from '-/pages/examples/threejs/ray-marching'
 import Winds from '-/pages/examples/advanced/winds'
 import Editor from '-/pages/editor'
 
@@ -34,6 +32,7 @@ const Routes = Layout => ({ store }) => (
       <Route path="/examples/threejs/03" component={GameOfLife} />
       <Route path="/examples/threejs/04" component={Winds} />
       <Route path="/examples/threejs/05" component={DrawingAxes} />
+      <Route path="/examples/threejs/06" component={RayMarching} />
 
       <Route path="/examples/advanced/00" component={Winds} />
 

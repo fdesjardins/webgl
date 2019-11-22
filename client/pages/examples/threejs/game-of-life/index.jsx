@@ -20,7 +20,7 @@ const state = new Baobab({
   },
   object: {
     color: 'ffffff',
-    scale: [ 1.0, 1.0, 1.0 ],
+    scale: [1.0, 1.0, 1.0],
     rotationSpeed: {
       x: 0.0,
       y: 0.005,
@@ -89,12 +89,7 @@ const rtScene = () => {
   const width = 512
   const height = 512
   const renderTarget = new THREE.WebGLRenderTarget(width, height)
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    width / height,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
   camera.position.z = 3
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(0xff0000)
@@ -111,12 +106,7 @@ const rtScene = () => {
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 3
 
   const OrbitControls = threeOrbitControls(THREE)
@@ -172,7 +162,7 @@ const didMount = ({ canvas, container }) => {
   scene.add(plane3)
 
   let then = 0
-  const animate = (now) => {
+  const animate = now => {
     requestAnimationFrame(animate)
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - then
@@ -197,11 +187,7 @@ const update = () =>
 
 const PointLightExample = () => (
   <div id="container">
-    <Example
-      notes={ notes }
-      didMount={ update }
-      didUpdate={ update }
-    />
+    <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
 )
 

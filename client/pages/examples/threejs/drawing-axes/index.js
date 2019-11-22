@@ -152,6 +152,8 @@ const didMount = ({ canvas, container }) => {
         y: object.rotation.y,
         z: object.rotation.z
       })
+
+      axes.children.map(child => child.lookAt(camera.position))
     }
 
     renderer.render(scene, camera)
