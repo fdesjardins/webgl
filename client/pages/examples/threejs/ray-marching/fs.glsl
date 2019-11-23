@@ -61,7 +61,7 @@ mat4 translateY(float dist){
 float sdScene(vec3 p) {
   float cubeTheta = sin(iTime);
   vec3 cubePoint = (vec4(p, 1.0) * rotateY(cubeTheta)).xyz;
-  vec3 cubeSize = vec3(0.25, 0.25, 0.25);
+  vec3 cubeSize = vec3(1.0, 0.1, 0.1);
 
   vec3 floorPoint = (vec4(p, 1.0) * translateY(0.5)).xyz;
   float sceneFloor = sdBox(floorPoint, vec3(5.0, 0.1, 5.0));
