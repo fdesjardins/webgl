@@ -28,6 +28,11 @@ const Menu = () => (
     <MenuItem type="threejs" num="06" title="Ray Marching" />
 
     <br />
+    <h3>Three.js WebVR</h3>
+    <MenuItem type="threejswebvr" num="00" title="Hello WebVR" />
+
+
+    <br />
     <Link to="/editor">Editor</Link>
 
     <br />

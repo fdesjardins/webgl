@@ -13,6 +13,7 @@ import GameOfLife from '-/pages/examples/threejs/game-of-life'
 import VideoTexture from '-/pages/examples/threejs/video-texture'
 import DrawingAxes from '-/pages/examples/threejs/drawing-axes'
 import RayMarching from '-/pages/examples/threejs/ray-marching'
+import HelloWebVr from '-/pages/examples/threejswebvr/hello-threejswebvr'
 import Winds from '-/pages/examples/advanced/winds'
 import Editor from '-/pages/editor'
 
@@ -35,6 +36,8 @@ const Routes = Layout => ({ store }) => (
       <Route path="/examples/threejs/06" component={RayMarching} />
 
       <Route path="/examples/advanced/00" component={Winds} />
+
+      <Route path="/examples/threejswebvr/00" component={HelloWebVr} />
 
       <Route path="/editor" component={Editor} />
     </Layout>
