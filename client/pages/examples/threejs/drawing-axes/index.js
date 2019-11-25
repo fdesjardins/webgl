@@ -87,15 +87,15 @@ const createAxes = ({ size, fontSize = 3 }) => {
   return axes
 }
 
-const didMount = ({ canvas, container }) => {
-  const scene = new THREE.Scene()
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.x = 45
   camera.position.y = 45
   camera.position.z = 90
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -156,16 +156,19 @@ const didMount = ({ canvas, container }) => {
       axes.children.map(child => child.lookAt(camera.position))
     }
 
-    renderer.render(scene, camera)
+    if (renderer) {
+      renderer.render(scene, camera)
+    }
   }
   animate()
-}
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
-  })
+  return () => {
+    renderer.dispose()
+    scene.dispose()
+    scene = null
+    renderer = null
+  }
+}
 
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   <Component {...first} {...rest}>
@@ -173,25 +176,20 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   </Component>
 )
 
-const PointLightExample = () => {
-  return (
-    <div id="container">
-      <Example
-        notes={notes}
-        components={{
-          Stats: wrap(Stats, {
-            getPosition: () => state.get(['object', 'position']),
-            getRotation: () => state.get(['object', 'rotation'])
-          }),
-          ObjectProperties: wrap(ObjectProperties, {
-            objectCursor: state.select('object')
-          })
-        }}
-        didMount={update}
-        didUpdate={update}
-      />
-    </div>
-  )
-}
+const PointLightExample = () => (
+  <Example
+    notes={notes}
+    components={{
+      Stats: wrap(Stats, {
+        getPosition: () => state.get(['object', 'position']),
+        getRotation: () => state.get(['object', 'rotation'])
+      }),
+      ObjectProperties: wrap(ObjectProperties, {
+        objectCursor: state.select('object')
+      })
+    }}
+    init={init}
+  />
+)
 
 export default PointLightExample

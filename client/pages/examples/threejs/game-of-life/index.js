@@ -1,39 +1,9 @@
 import React from 'react'
 import * as THREE from 'three'
-import Baobab from 'baobab'
 
 import Example from '-/components/example'
 import notes from './readme.md'
 import threeOrbitControls from 'three-orbit-controls'
-
-const state = new Baobab({
-  light: {
-    color: 'ffffff',
-    castShadow: true,
-    shadow: {
-      dispose: false,
-      mapSize: {
-        width: 1024,
-        height: 1024
-      }
-    }
-  },
-  object: {
-    color: 'ffffff',
-    scale: [1.0, 1.0, 1.0],
-    rotationSpeed: {
-      x: 0.0,
-      y: 0.005,
-      z: 0.0
-    }
-  },
-  board: {
-    size: {
-      w: 10,
-      h: 10
-    }
-  }
-})
 
 const vs = `
 varying vec2 texCoord;
@@ -187,8 +157,8 @@ const rtScene = () => {
   }
 }
 
-const didMount = ({ canvas, container }) => {
-  const scene = new THREE.Scene()
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 75
@@ -197,7 +167,7 @@ const didMount = ({ canvas, container }) => {
   const controls = new OrbitControls(camera)
   controls.update()
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -264,21 +234,18 @@ const didMount = ({ canvas, container }) => {
 
     // uTexture.value = renderTarget.texture
 
-    renderer.render(scene, camera)
+    renderer && renderer.render(scene, camera)
   }
   animate()
+
+  return () => {
+    renderer.dispose()
+    scene.dispose()
+    scene = null
+    renderer = null
+  }
 }
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
-  })
+const GameOfLife = () => <Example notes={notes} init={init} />
 
-const PointLightExample = () => (
-  <div id="container">
-    <Example notes={notes} didMount={update} didUpdate={update} />
-  </div>
-)
-
-export default PointLightExample
+export default GameOfLife

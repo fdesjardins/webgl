@@ -1,10 +1,10 @@
 import React from 'react'
-import { compose, lifecycle, shouldUpdate } from 'recompose'
-import compareProps from 'react-fast-compare'
 import { css } from 'emotion'
 
 import Markdown from '-/components/markdown'
+import ErrorBoundary from '-/components/error-boundary'
 
+// Default Example styles
 const style = css`
   canvas {
     width: 100% !important;
@@ -17,33 +17,24 @@ const style = css`
   }
 `
 
-const Example = ({ notes, components }) => {
-  return (
-    <div className={style}>
-      <Markdown text={notes} components={components} />
-    </div>
-  )
-}
-
-const enhance = compose(
-  shouldUpdate((props, nextProps) => {
-    if (props.shouldUpdate) {
-      props.shouldUpdate(props, nextProps)
-    }
-    return true
-  }),
-  lifecycle({
-    componentDidMount() {
-      if (this.props.didMount) {
-        this.props.didMount(this.props)
-      }
-    },
-    componentDidUpdate() {
-      if (this.props.didUpdate) {
-        this.props.didUpdate(this.props)
+const Example = ({ notes, components, init }) => {
+  React.useEffect(() => {
+    const canvas = document.querySelector('canvas')
+    const container = document.querySelector('.example-container')
+    if (init) {
+      const dispose = init({ canvas, container })
+      return () => {
+        dispose()
       }
     }
   })
-)
+  return (
+    <ErrorBoundary>
+      <div className={`${style} example-container`}>
+        <Markdown text={notes} components={components} />
+      </div>
+    </ErrorBoundary>
+  )
+}
 
-export default enhance(Example)
+export default Example

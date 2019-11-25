@@ -44,8 +44,8 @@ const setupVideo = () => {
   return video
 }
 
-const didMount = ({ canvas, container }) => {
-  const scene = new THREE.Scene()
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
   const video = setupVideo()
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
@@ -55,7 +55,7 @@ const didMount = ({ canvas, container }) => {
   const controls = new OrbitControls(camera)
   controls.update()
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -109,27 +109,25 @@ const didMount = ({ canvas, container }) => {
 
   const objectState = state.select('object')
   const animate = () => {
-    requestAnimationFrame(animate)
-
     object.rotation.x += objectState.get(['rotationSpeed', 'x'])
     object.rotation.y += objectState.get(['rotationSpeed', 'y'])
     object.rotation.z += objectState.get(['rotationSpeed', 'z'])
 
-    renderer.render(scene, camera)
+    if (renderer) {
+      requestAnimationFrame(animate)
+      renderer.render(scene, camera)
+    }
   }
   animate()
+
+  return () => {
+    renderer.dispose()
+    scene.dispose()
+    scene = null
+    renderer = null
+  }
 }
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
-  })
-
-const PointLightExample = () => (
-  <div id="container">
-    <Example notes={notes} didMount={update} didUpdate={update} />
-  </div>
-)
+const PointLightExample = () => <Example notes={notes} init={init} />
 
 export default PointLightExample

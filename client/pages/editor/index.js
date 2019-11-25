@@ -1,5 +1,5 @@
 import React from 'react'
-import MonacoEditor from 'react-monaco-editor'
+// import MonacoEditor from 'react-monaco-editor'
 import { Treebeard } from 'react-treebeard'
 import Baobab from 'baobab'
 import { compose, withState, withHandlers, lifecycle } from 'recompose'

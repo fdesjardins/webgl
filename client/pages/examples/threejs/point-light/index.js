@@ -1,14 +1,10 @@
 import React from 'react'
-import { lifecycle } from 'recompose'
 import * as THREE from 'three'
 import Baobab from 'baobab'
-import jsxToString from 'jsx-to-string'
 
 import Example from '-/components/example'
 import ObjectProperties from './elements/object-controls'
 import LightProperties from './elements/light-controls'
-import { default as utils, sq } from '-/utils'
-// import './index.scss'
 import notes from './readme.md'
 
 const state = new Baobab({
@@ -34,13 +30,13 @@ const state = new Baobab({
   }
 })
 
-const didMount = ({ canvas, container }) => {
-  const scene = new THREE.Scene()
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 3
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -76,8 +72,6 @@ const didMount = ({ canvas, container }) => {
   const objectState = state.select('object')
   const lightState = state.select('light')
   const animate = () => {
-    requestAnimationFrame(animate)
-
     object.rotation.x += objectState.get(['rotationSpeed', 'x'])
     object.rotation.y += objectState.get(['rotationSpeed', 'y'])
     object.rotation.z += objectState.get(['rotationSpeed', 'z'])
@@ -94,16 +88,20 @@ const didMount = ({ canvas, container }) => {
       light.shadow.map = null
     }
 
-    renderer.render(scene, camera)
+    if (renderer) {
+      requestAnimationFrame(animate)
+      renderer.render(scene, camera)
+    }
   }
   animate()
-}
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
-  })
+  return () => {
+    renderer.dispose()
+    scene.dispose()
+    scene = null
+    renderer = null
+  }
+}
 
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   <Component {...first} {...rest}>
@@ -112,21 +110,18 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
 )
 
 const PointLight = () => (
-  <div id="container">
-    <Example
-      notes={notes}
-      components={{
-        ObjectProperties: wrap(ObjectProperties, {
-          objectCursor: state.select('object')
-        }),
-        LightProperties: wrap(LightProperties, {
-          lightCursor: state.select('light')
-        })
-      }}
-      didMount={update}
-      didUpdate={update}
-    />
-  </div>
+  <Example
+    notes={notes}
+    components={{
+      ObjectProperties: wrap(ObjectProperties, {
+        objectCursor: state.select('object')
+      }),
+      LightProperties: wrap(LightProperties, {
+        lightCursor: state.select('light')
+      })
+    }}
+    init={init}
+  />
 )
 
 export default PointLight
