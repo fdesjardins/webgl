@@ -20,7 +20,12 @@ const didMount = ({ canvas, container }) => {
     1000
   )
 
-  camera.position.z = 3
+  camera.position.z = 0
+  camera.position.x = 10
+  camera.position.z = 0
+
+  camera.rotation. x = 1.6
+  camera.rotation. y = 1.6
 
   renderer = new THREE.WebGLRenderer({ canvas })
   renderer.vr.enabled = true
@@ -31,10 +36,23 @@ const didMount = ({ canvas, container }) => {
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshPhongMaterial({ color: 0x666666 })
   const cube = new THREE.Mesh(geometry, material)
+  cube.matrixAutoUpdate = true
+  cube.castShadow = true
   scene.add(cube)
 
+  const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
+  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
+  const plane = new THREE.Mesh(planeGeometry, planeMaterial)
+  plane.position.z = -2
+  plane.position.y = 0
+  plane.position.x = 0
+  plane.rotation.x = 0
+  plane.rotation.y = 0
+  plane.receiveShadow = true
+  scene.add(plane)
+
   const light = new THREE.PointLight(0xffffff, 1, 100)
-  light.position.set(-12, 12, 6)
+  light.position.set(0, 0, 12)
   light.castShadow = true
   light.shadow.mapSize.width = 1024
   light.shadow.mapSize.height = 1024
@@ -48,6 +66,9 @@ const didMount = ({ canvas, container }) => {
       renderer.render(scene, camera)
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
+
+      //camera.rotation.y += 0.01
+      //console.log(camera.rotation.y)
     })
 
     renderer.render(scene, camera)
