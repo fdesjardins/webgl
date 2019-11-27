@@ -4,13 +4,14 @@ import * as THREE from 'three'
 
 import Example from '-/components/example'
 import notes from './readme.md'
-import { WEBVR } from '../jsm/vr/WebVR.js'
+import { WEBVR } from 'three/examples/jsm/vr/WebVR.js'
+
+console.log(WEBVR)
 
 let button
 let renderer
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
-
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -22,8 +23,8 @@ const didMount = ({ canvas, container }) => {
   camera.position.z = 3
 
   renderer = new THREE.WebGLRenderer({ canvas })
-  button = WEBVR.createButton( renderer )
-  renderer.vr.enabled = true;
+  button = WEBVR.createButton(renderer)
+  renderer.vr.enabled = true
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -32,12 +33,10 @@ const didMount = ({ canvas, container }) => {
   scene.add(cube)
 
   const animate = () => {
-    //requestAnimationFrame(animate)
-    renderer.setAnimationLoop( function () {
-
-    	renderer.render( scene, camera );
-
-    } );
+    // requestAnimationFrame(animate)
+    renderer.setAnimationLoop(() => {
+      renderer.render(scene, camera)
+    })
     cube.rotation.x += 0.01
     cube.rotation.y += 0.01
 
@@ -56,7 +55,6 @@ const HelloWebVr = ({ children }, { store }) => (
   <div id="threejs01">
     <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
-
-).appendchild(button)
+)
 
 export default HelloWebVr
