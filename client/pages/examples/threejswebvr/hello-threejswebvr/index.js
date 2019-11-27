@@ -29,9 +29,18 @@ const didMount = ({ canvas, container }) => {
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0xaaff00 })
+  const material = new THREE.MeshPhongMaterial({ color: 0x666666 })
   const cube = new THREE.Mesh(geometry, material)
   scene.add(cube)
+
+  const light = new THREE.PointLight(0xffffff, 1, 100)
+  light.position.set(-12, 12, 6)
+  light.castShadow = true
+  light.shadow.mapSize.width = 1024
+  light.shadow.mapSize.height = 1024
+  light.shadow.camera.near = 0.5
+  light.shadow.camera.far = 500
+  scene.add(light)
 
   const animate = () => {
     // requestAnimationFrame(animate)
