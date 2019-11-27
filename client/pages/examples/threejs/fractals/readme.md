@@ -2,6 +2,8 @@
 
 ---
 
-<FractalPicker fractal="mandelbrot" />
+<FractalPicker />
+
+<ShapePicker />
 
 <canvas />

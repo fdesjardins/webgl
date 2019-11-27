@@ -17,12 +17,12 @@ const style = css`
   }
 `
 
-const Example = ({ notes, components, init }) => {
+const Example = ({ notes, components, init, state = {} }) => {
   React.useEffect(() => {
     const canvas = document.querySelector('canvas')
     const container = document.querySelector('.example-container')
     if (init) {
-      const dispose = init({ canvas, container })
+      const dispose = init({ canvas, container, state })
       return () => {
         dispose()
       }

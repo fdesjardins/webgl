@@ -5,8 +5,10 @@ import threeOrbitControls from 'three-orbit-controls'
 import Example from '-/components/example'
 import notes from './readme.md'
 import FractalPicker from './elements/fractal-picker'
+import ShapePicker from './elements/shape-picker'
 
 const vs = `
+precision highp float;
 varying vec2 uv2;
 void main(){
   uv2 = uv;
@@ -14,6 +16,7 @@ void main(){
 }`
 
 const mandelbrotFs = `
+precision highp float;
 varying vec2 uv2;
 const int MAXSTEPS = 160;
 uniform float iTime;
@@ -54,7 +57,7 @@ void main(){
 
 const juliaSetFs = `
 varying vec2 uv2;
-const int MAXSTEPS = 50;
+const int MAXSTEPS = 30;
 const float PI = 3.141592653589793238462643383279502884197169399375105;
 uniform float iTime;
 
@@ -106,7 +109,7 @@ void main(){
 }
 `
 
-const init = ({ canvas, container }) => {
+const init = ({ canvas, container, state }) => {
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 75
 
@@ -140,15 +143,21 @@ const init = ({ canvas, container }) => {
   plane.receiveShadow = true
   scene.add(plane)
 
-  const geometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
+  const geometry =
+    state.shape === 'plane'
+      ? new THREE.PlaneBufferGeometry(100, 100, 100, 100)
+      : state.shape === 'sphere'
+      ? new THREE.SphereBufferGeometry(50, 32, 32)
+      : state.shape === 'cylinder'
+      ? new THREE.CylinderBufferGeometry(25, 25, 50, 32)
+      : new THREE.TorusKnotBufferGeometry(25, 12, 120, 16)
   const iTime = {
     type: 'f',
     value: 0
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
-    // fragmentShader: juliaSetFs,
-    fragmentShader: mandelbrotFs,
+    fragmentShader: state.fractal === 'mandelbrot' ? mandelbrotFs : juliaSetFs,
     side: THREE.DoubleSide,
     uniforms: {
       iTime: iTime
@@ -156,6 +165,7 @@ const init = ({ canvas, container }) => {
   })
   const object = new THREE.Mesh(geometry, material)
   object.position.z = 0.0
+  object.rotation.y = Math.PI
   object.receiveShadow = true
   object.castShadow = true
   scene.add(object)
@@ -191,6 +201,26 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   </Component>
 )
 
-const PointLightExample = () => <Example notes={notes} init={init} components={{ FractalPicker }} />
+const PointLightExample = () => {
+  const [fractal, setFractal] = React.useState('mandelbrot')
+  const [shape, setShape] = React.useState('plane')
+  return (
+    <Example
+      notes={notes}
+      init={init}
+      components={{
+        FractalPicker: wrap(FractalPicker, {
+          fractal,
+          setFractal
+        }),
+        ShapePicker: wrap(ShapePicker, {
+          shape,
+          setShape
+        })
+      }}
+      state={{ fractal, shape }}
+    />
+  )
+}
 
 export default PointLightExample

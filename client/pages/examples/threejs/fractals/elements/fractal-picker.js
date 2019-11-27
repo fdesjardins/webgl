@@ -1,17 +1,19 @@
 import React from 'react'
 
-const fractals = ['mandelbrot']
+const fractals = ['mandelbrot', 'julia']
 
-export const FractalPicker = ({ fractal, setOption }) => (
-  <div className="ui input">
-    <select>
-      {fractals.map(f => (
-        <option key={f} value={f}>
-          {f}
-        </option>
-      ))}
-    </select>
-  </div>
+export const FractalPicker = ({ fractal, setFractal }) => (
+  <select
+    value={fractal}
+    className="ui dropdown"
+    onChange={({ target }) => setFractal(target.value)}
+  >
+    {fractals.map(f => (
+      <option key={f} value={f}>
+        {f}
+      </option>
+    ))}
+  </select>
 )
 
 export default FractalPicker

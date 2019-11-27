@@ -1,17 +1,15 @@
 import React from 'react'
 
-const fractals = ['mandelbrot']
+const shapes = ['plane', 'sphere', 'cylinder', 'torus knot']
 
-export const ShapePicker = ({ shape, setOption }) => (
-  <div className="ui input">
-    <select>
-      {fractals.map(f => (
-        <option key={f} value={f}>
-          {f}
-        </option>
-      ))}
-    </select>
-  </div>
+export const ShapePicker = ({ shape, setShape }) => (
+  <select value={shape} className="ui dropdown" onChange={({ target }) => setShape(target.value)}>
+    {shapes.map(f => (
+      <option key={f} value={f}>
+        {f}
+      </option>
+    ))}
+  </select>
 )
 
-export default FractalPicker
+export default ShapePicker
