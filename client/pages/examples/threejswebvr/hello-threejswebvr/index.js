@@ -23,8 +23,9 @@ const didMount = ({ canvas, container }) => {
   camera.position.z = 3
 
   renderer = new THREE.WebGLRenderer({ canvas })
-  button = WEBVR.createButton(renderer)
   renderer.vr.enabled = true
+  button = WEBVR.createButton(renderer)
+  document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -36,9 +37,9 @@ const didMount = ({ canvas, container }) => {
     // requestAnimationFrame(animate)
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera)
+      cube.rotation.x += 0.01
+      cube.rotation.y += 0.01
     })
-    cube.rotation.x += 0.01
-    cube.rotation.y += 0.01
 
     renderer.render(scene, camera)
   }
@@ -53,6 +54,7 @@ const update = () =>
 
 const HelloWebVr = ({ children }, { store }) => (
   <div id="threejs01">
+    <span id="webvr-button" />
     <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
 )
