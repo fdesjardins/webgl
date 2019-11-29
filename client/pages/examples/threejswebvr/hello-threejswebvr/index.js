@@ -34,7 +34,7 @@ const didMount = ({ canvas, container }) => {
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+  const material = new THREE.MeshPhongMaterial({ color: 0xff00ff })
   const cube = new THREE.Mesh(geometry, material)
   cube.matrixAutoUpdate = true
   cube.castShadow = true
@@ -70,12 +70,12 @@ const didMount = ({ canvas, container }) => {
 
 const update = () =>
   didMount({
-    canvas: document.querySelector('#threejsvr01 canvas'),
-    container: document.querySelector('#threejsvr01')
+    canvas: document.querySelector('#threejsvr00 canvas'),
+    container: document.querySelector('#threejsvr00')
   })
 
 const HelloWebVr = ({ children }, { store }) => (
-  <div id="threejsvr01">
+  <div id="threejsvr00">
     <span id="webvr-button" />
     <Example notes={notes} didMount={update} didUpdate={update} />
   </div>
