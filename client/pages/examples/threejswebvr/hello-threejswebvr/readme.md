@@ -1,8 +1,8 @@
-# Hello Three.js
+# Hello Three.js WebVR
 
 ---
 
-> The aim of the project is to create an easy to use, lightweight, 3D library. The library provides <canvas>, <svg>, CSS3D and WebGL renderers.
+> This is a basic Hello World for WebVR / WebXR using three.js this requires WebGL 2.0
 >
 > --[https://github.com/mrdoob/three.js/](https://github.com/mrdoob/three.js/)
 
