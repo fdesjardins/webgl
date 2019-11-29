@@ -6,8 +6,6 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 
-let button
-let renderer
 const didMount = ({ canvas, container }) => {
   const scene = new THREE.Scene()
 
@@ -24,10 +22,10 @@ const didMount = ({ canvas, container }) => {
 
   camera.rotation. x = 1.6
   camera.rotation. y = 1.6
-
-  renderer = new THREE.WebGLRenderer({ canvas })
+  const context = canvas.getContext( 'webgl2', { alpha: false } );
+  let renderer = new THREE.WebGLRenderer({ canvas, context })
   renderer.vr.enabled = true
-  button = VRButton.createButton(renderer)
+  const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
