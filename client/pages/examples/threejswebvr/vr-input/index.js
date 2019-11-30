@@ -36,36 +36,40 @@ const didMount = ({ canvas, container }) => {
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
-  let controller1 = renderer.vr.getController( 0 );
-  //controller1.addEventListener( 'selectstart', onSelectStart );
-  //controller1.addEventListener( 'selectend', onSelectEnd );
-  scene.add( controller1 );
+  let hand1 = renderer.vr.getController( 0 );
+  //hand1.addEventListener( 'selectstart', onSelectStart );
+  //hand1.addEventListener( 'selectend', onSelectEnd );
+  scene.add( hand1 );
 
-  const hand = new THREE.IcosahedronBufferGeometry( 0.1, 2 );
+  let hand = new THREE.IcosahedronBufferGeometry( 0.08, 1 );
+  hand.scale(0.2,.8,1.5)
 
-  let controller1sphere = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
-  // controller1sphere.scale.x = 0.1
-  // controller1sphere.scale.y = 0.1
-  // controller1sphere.scale.z = 0.1
-  controller1sphere.position.x = controller1.position.x
-  controller1sphere.position.y = controller1.position.y
-  controller1sphere.position.z = controller1.position.z
+  let hand1mesh = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+  // hand1mesh.scale.x = 0.1
+  // hand1mesh.scale.y = 0.1
+  // hand1mesh.scale.z = 0.1
+  hand1mesh.position.x = hand1.position.x
+  hand1mesh.position.y = hand1.position.y
+  hand1mesh.position.z = hand1.position.z
 
-  scene.add(controller1sphere)
+  scene.add(hand1mesh)
 
-  let controller2 = renderer.vr.getController( 1 );
-  //controller2.addEventListener( 'selectstart', onSelectStart );
-  //controller2.addEventListener( 'selectend', onSelectEnd );
-  scene.add( controller2 );
-  let controller2sphere = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
-  // controller1sphere.scale.x = 0.1
-  // controller1sphere.scale.y = 0.1
-  // controller1sphere.scale.z = 0.1
+  let hand2 = renderer.vr.getController( 1 );
+  //hand2.addEventListener( 'selectstart', onSelectStart );
+  //hand2.addEventListener( 'selectend', onSelectEnd );
+  scene.add( hand2 );
+  let hand2mesh = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( {
+    color: Math.random() * 0xffffff ,
+    flatShading: true
+ } ) );
+  // hand1mesh.scale.x = 0.1
+  // hand1mesh.scale.y = 0.1
+  // hand1mesh.scale.z = 0.1
 
-  controller2sphere.position.x = controller2.position.x
-  controller2sphere.position.y = controller2.position.y
-  controller2sphere.position.z = controller2.position.z
-  scene.add(controller2sphere)
+  hand2mesh.position.x = hand2.position.x
+  hand2mesh.position.y = hand2.position.y
+  hand2mesh.position.z = hand2.position.z
+  scene.add(hand2mesh)
 
   const room = new THREE.LineSegments(
     new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
@@ -81,13 +85,23 @@ const didMount = ({ canvas, container }) => {
   const animate = () => {
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera)
-      controller1sphere.position.x = controller1.position.x
-      controller1sphere.position.y = controller1.position.y
-      controller1sphere.position.z = controller1.position.z
+      hand1mesh.position.x = hand1.position.x
+      hand1mesh.position.y = hand1.position.y
+      hand1mesh.position.z = hand1.position.z
 
-      controller2sphere.position.x = controller2.position.x
-      controller2sphere.position.y = controller2.position.y
-      controller2sphere.position.z = controller2.position.z
+      hand2mesh.position.x = hand2.position.x
+      hand2mesh.position.y = hand2.position.y
+      hand2mesh.position.z = hand2.position.z
+
+      hand1mesh.quaternion.w = hand1.quaternion.w
+      hand1mesh.quaternion.x = hand1.quaternion.x
+      hand1mesh.quaternion.y = hand1.quaternion.y
+      hand1mesh.quaternion.z = hand1.quaternion.z
+
+      hand2mesh.quaternion.w = hand2.quaternion.w
+      hand2mesh.quaternion.x = hand2.quaternion.x
+      hand2mesh.quaternion.y = hand2.quaternion.y
+      hand2mesh.quaternion.z = hand2.quaternion.z
 
     })
 
