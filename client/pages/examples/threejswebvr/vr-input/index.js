@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-import  'three/examples/js/vr/HelioWebXRPolyfill.js'
+import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
-import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
+import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
 
-const didMount = ({ canvas, container }) => {
-  const scene = new THREE.Scene()
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -21,11 +21,11 @@ const didMount = ({ canvas, container }) => {
   camera.position.y = 2
   camera.position.z = 0
 
-  camera.rotation. x = 0
-  camera.rotation. y = 0
+  camera.rotation.x = 0
+  camera.rotation.y = 0
 
-  //force webgl2 context (for oculus quest compat)
-  const context = canvas.getContext( 'webgl2', { alpha: false } );
+  // force webgl2 context (for oculus quest compat)
+  const context = canvas.getContext('webgl2', { alpha: false })
 
   let renderer = new THREE.WebGLRenderer({ canvas, context })
   renderer.vr.enabled = true
@@ -36,15 +36,18 @@ const didMount = ({ canvas, container }) => {
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
-  let hand1 = renderer.vr.getController( 0 );
-  //hand1.addEventListener( 'selectstart', onSelectStart );
-  //hand1.addEventListener( 'selectend', onSelectEnd );
-  scene.add( hand1 );
+  const hand1 = renderer.vr.getController(0)
+  // hand1.addEventListener( 'selectstart', onSelectStart );
+  // hand1.addEventListener( 'selectend', onSelectEnd );
+  scene.add(hand1)
 
-  let hand = new THREE.IcosahedronBufferGeometry( 0.08, 1 );
-  hand.scale(0.2,.8,1.5)
+  const hand = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  hand.scale(0.2, 0.8, 1.5)
 
-  let hand1mesh = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+  const hand1mesh = new THREE.Mesh(
+    hand,
+    new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
+  )
   // hand1mesh.scale.x = 0.1
   // hand1mesh.scale.y = 0.1
   // hand1mesh.scale.z = 0.1
@@ -54,14 +57,17 @@ const didMount = ({ canvas, container }) => {
 
   scene.add(hand1mesh)
 
-  let hand2 = renderer.vr.getController( 1 );
-  //hand2.addEventListener( 'selectstart', onSelectStart );
-  //hand2.addEventListener( 'selectend', onSelectEnd );
-  scene.add( hand2 );
-  let hand2mesh = new THREE.Mesh( hand, new THREE.MeshLambertMaterial( {
-    color: Math.random() * 0xffffff ,
-    flatShading: true
- } ) );
+  const hand2 = renderer.vr.getController(1)
+  // hand2.addEventListener( 'selectstart', onSelectStart );
+  // hand2.addEventListener( 'selectend', onSelectEnd );
+  scene.add(hand2)
+  const hand2mesh = new THREE.Mesh(
+    hand,
+    new THREE.MeshLambertMaterial({
+      color: Math.random() * 0xffffff,
+      flatShading: true
+    })
+  )
   // hand1mesh.scale.x = 0.1
   // hand1mesh.scale.y = 0.1
   // hand1mesh.scale.z = 0.1
@@ -72,18 +78,21 @@ const didMount = ({ canvas, container }) => {
   scene.add(hand2mesh)
 
   const room = new THREE.LineSegments(
-    new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
-    new THREE.LineBasicMaterial( { color: 0x808080 } )
-  );
-  room.geometry.translate( 0, 3, 0 );
-  scene.add( room );
+    new BoxLineGeometry(6, 6, 6, 10, 10, 10),
+    new THREE.LineBasicMaterial({ color: 0x808080 })
+  )
+  room.geometry.translate(0, 3, 0)
+  scene.add(room)
 
-  let light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+  const light = new THREE.HemisphereLight(0xffffff, 0x444444)
   light.position.set(0, 4, 0)
   scene.add(light)
 
   const animate = () => {
     renderer.setAnimationLoop(() => {
+      if (!renderer) {
+        return
+      }
       renderer.render(scene, camera)
       hand1mesh.position.x = hand1.position.x
       hand1mesh.position.y = hand1.position.y
@@ -102,24 +111,24 @@ const didMount = ({ canvas, container }) => {
       hand2mesh.quaternion.x = hand2.quaternion.x
       hand2mesh.quaternion.y = hand2.quaternion.y
       hand2mesh.quaternion.z = hand2.quaternion.z
-
     })
 
     renderer.render(scene, camera)
   }
   animate()
-}
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('#threejsvr01 canvas'),
-    container: document.querySelector('#threejsvr01')
-  })
+  return () => {
+    renderer.dispose()
+    scene.dispose()
+    scene = null
+    renderer = null
+  }
+}
 
 const VRInput = ({ children }, { store }) => (
   <div id="threejsvr01">
     <span id="webvr-button" />
-    <Example notes={notes} didMount={update} didUpdate={update} />
+    <Example notes={notes} init={init} />
   </div>
 )
 
