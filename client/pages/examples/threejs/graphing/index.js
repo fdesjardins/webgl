@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import Baobab from 'baobab'
+import { css } from 'emotion'
 
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import Example from '-/components/example'
@@ -136,7 +137,7 @@ const createGraph = (f, labelText) => {
   return { object, animate }
 }
 
-const createLineGraph = (f, labelText, color = 0x0000ff) => {
+const createLineGraph = (f, labelText, color = 0x0000ff, style = 'solid') => {
   // const f = t => x => 5 * Math.sin(x + t / 200)
   const range = [-10 * Math.PI, 10 * Math.PI]
   const res = 0.1
@@ -149,8 +150,20 @@ const createLineGraph = (f, labelText, color = 0x0000ff) => {
   }
 
   const geometry = new THREE.BufferGeometry().setFromPoints(points)
-  const material = new THREE.LineBasicMaterial({ color, linewidth: 2 })
+
+  console.log(style)
+  const material =
+    style === 'dashed'
+      ? new THREE.LineDashedMaterial({
+          color,
+          linewidth: 2,
+          gapSize: 2,
+          dashSize: 3
+        })
+      : new THREE.LineBasicMaterial({ color, linewidth: 2 })
+
   const object = new THREE.Line(geometry, material)
+  object.computeLineDistances()
 
   const label = createLabel(labelText)
   label.position.x = 5 * Math.PI + 1
@@ -239,23 +252,19 @@ const init = ({ canvas, container }) => {
   scene.add(object)
 
   const xyGrid = new THREE.GridHelper(100, 20, 0x444444, 0x444444)
+  scene.add(xyGrid)
   const xzGrid = new THREE.GridHelper(100, 20, 0x444444, 0x444444)
   xzGrid.rotation.x = Math.PI / 2
+  scene.add(xzGrid)
   const zyGrid = new THREE.GridHelper(100, 20, 0x444444, 0x444444)
   zyGrid.rotation.z = Math.PI / 2
-  scene.add(xyGrid)
-  scene.add(xzGrid)
   scene.add(zyGrid)
-
-  // const { object: graph1, animate: animateGraph1 } = createGraph(x => Math.sin(x), 'f(x) = sin(x)')
-  // scene.add(graph1)
-  // const { object: graph2, animate: animateGraph2 } = createGraph(x => Math.cos(x), 'f(x) = cos(x)')
-  // scene.add(graph2)
 
   const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
     t => x => 5 * Math.sin(x + t / 200),
     'f(x) = 5 * sin(x)',
-    0x00ff00
+    0x00ff00,
+    'dashed'
   )
   const { object: lineGraph2, animate: animateLineGraph2 } = createLineGraph(
     t => x => 20 + 5 * Math.sin(x + t / 200),
@@ -272,12 +281,33 @@ const init = ({ canvas, container }) => {
   const axes = createAxes({ size: 50 })
   scene.add(axes)
 
+  const resizeRendererToDisplaySize = renderer => {
+    const canvas = renderer.domElement
+    const width = canvas.clientWidth
+    const height = canvas.clientHeight
+    const needResize = canvas.width !== width || canvas.height !== height
+    if (needResize) {
+      renderer.setSize(width, height, false)
+    }
+    return needResize
+  }
+
   const objectState = state.select('object')
   let thenSecs = 0
   const animate = now => {
     if (!renderer) {
       return
     }
+    if (resizeRendererToDisplaySize(renderer)) {
+      const c = renderer.domElement
+      camera.aspect = c.clientWidth / c.clientHeight
+      camera.left = c.clientWidth / -2
+      camera.right = c.clientWidth / 2
+      camera.top = c.clientHeight / 2
+      camera.bottom = c.clientHeight / -2
+      camera.updateProjectionMatrix()
+    }
+
     requestAnimationFrame(animate)
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - thenSecs
@@ -319,24 +349,24 @@ const init = ({ canvas, container }) => {
   }
 }
 
-const update = () =>
-  didMount({
-    canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
-  })
-
 const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   <Component {...first} {...rest}>
     {children}
   </Component>
 )
 
-const PointLightExample = () => {
-  return (
-    <div id="container">
-      <Example notes={notes} components={{}} init={init} />
-    </div>
-  )
-}
+const style = css`
+  canvas {
+    max-height: 60vh !important;
+    border-radius: 20px;
+    border: 1px solid white;
+  }
+`
 
-export default PointLightExample
+const GraphingExample = () => (
+  <div className={`${style} example-class`}>
+    <Example notes={notes} components={{}} init={init} />
+  </div>
+)
+
+export default GraphingExample

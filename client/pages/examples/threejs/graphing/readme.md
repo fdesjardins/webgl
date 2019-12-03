@@ -2,4 +2,4 @@
 
 ---
 
-<canvas/>
+<canvas id="1"/>
