@@ -33,7 +33,7 @@ const init = ({ canvas, container }) => {
   document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
+  const geometry = new THREE.BoxGeometry(100, 100, 100)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
   const hand1 = renderer.vr.getController(0)
@@ -78,10 +78,10 @@ const init = ({ canvas, container }) => {
   scene.add(hand2mesh)
 
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(6, 6, 6, 10, 10, 10),
-    new THREE.LineBasicMaterial({ color: 0x808080 })
+    new BoxLineGeometry(100, 100, 100, 100, 100, 100),
+    new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  room.geometry.translate(0, 3, 0)
+  room.geometry.translate(0, 50, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -111,6 +111,7 @@ const init = ({ canvas, container }) => {
       hand2mesh.quaternion.x = hand2.quaternion.x
       hand2mesh.quaternion.y = hand2.quaternion.y
       hand2mesh.quaternion.z = hand2.quaternion.z
+
     })
 
     renderer.render(scene, camera)
