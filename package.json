@@ -30,6 +30,7 @@
     "jsx-to-string": "^1.4.0",
     "markdown-it": "^10.0.0",
     "markdown-it-jsx": "^1.1.0",
+    "markdown-it-math": "^4.1.1",
     "marksy": "^8.0.0",
     "mousetrap": "^1.6.3",
     "oimo": "^1.0.9",

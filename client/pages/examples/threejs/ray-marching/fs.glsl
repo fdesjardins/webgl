@@ -226,16 +226,19 @@ void main(){
       vec3 dir = rayDirection(FOV, SIZE, p);
       vec3 worldDir = (viewToWorld * vec4(dir, 0.0)).xyz;
       float dist = render(cameraPos, worldDir, MIN_DIST, MAX_DIST);
+      vec3 p2 = cameraPos + dist * worldDir;
 
       if (dist > MAX_DIST - EPSILON) {
     	  continue;
       }
 
+      float fog = dist * 0.1;
+      final += fog * vec3(0.15, 0.15, 0.15);
+
       vec3 spherePos = vec3(0.0, 0.0, 0.0);
       float sphereRad = 1.0;
 
       // lighting
-      vec3 p2 = cameraPos + dist * worldDir;
       vec3 K_a = vec3(0.35, 0.35, 0.35);
       vec3 K_d = vec3(0.6, 0.6, 0.6);
       vec3 K_s = vec3(1.0, 1.0, 1.0);
@@ -250,6 +253,8 @@ void main(){
       }
       float shininess = 10.0;
       final += phongIllumination(K_a, K_d, K_s, shininess, p2, cameraPos);
+
+
 
       vec3 light = normalize(vec3(-0.1, 0.3, 0.6));
       float shadow = apprSoftShadow(p2, light, 0.01, 3.0, 5.0);

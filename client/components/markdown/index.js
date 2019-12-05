@@ -10,9 +10,11 @@ import Icon from '-/components/icon'
 
 import mdit from 'markdown-it'
 import jsx from 'markdown-it-jsx'
+import math from 'markdown-it-math'
 
 const md = mdit()
-md.use(jsx)
+  .use(math)
+  .use(jsx)
 
 hljs.registerLanguage('javascript', hljsJavascript)
 
