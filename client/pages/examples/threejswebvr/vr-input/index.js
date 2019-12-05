@@ -9,7 +9,7 @@ import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.j
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
-
+  let user = new THREE.Group();
   const camera = new THREE.PerspectiveCamera(
     75,
     container.clientWidth / container.clientWidth,
@@ -35,6 +35,8 @@ const init = ({ canvas, container }) => {
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(100, 100, 100)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+
+
 
   const hand1 = renderer.vr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
@@ -77,6 +79,10 @@ const init = ({ canvas, container }) => {
   hand2mesh.position.z = hand2.position.z
   scene.add(hand2mesh)
 
+  //user.add(hand1mesh)
+  //user.add(hand2mesh)
+
+  //scene.add(user)
   const room = new THREE.LineSegments(
     new BoxLineGeometry(100, 100, 100, 100, 100, 100),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
@@ -87,6 +93,9 @@ const init = ({ canvas, container }) => {
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
   light.position.set(0, 4, 0)
   scene.add(light)
+
+  user.add(camera)
+  scene.add(user)
 
   const animate = () => {
     renderer.setAnimationLoop(() => {
@@ -111,7 +120,7 @@ const init = ({ canvas, container }) => {
       hand2mesh.quaternion.x = hand2.quaternion.x
       hand2mesh.quaternion.y = hand2.quaternion.y
       hand2mesh.quaternion.z = hand2.quaternion.z
-
+      user.position.z -= 0.1
     })
 
     renderer.render(scene, camera)
