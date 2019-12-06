@@ -128,9 +128,9 @@ const init = ({ canvas, container }) => {
       let mycamera = renderer.vr.getCamera(camera)
       mycamera.getWorldDirection( lookvector )
 
-      if(Math.abs(user.position.x)>=roomsize/2 ||
-        Math.abs(user.position.y)>=roomsize/2 ||
-        user.position.z<=0 ){
+      if(Math.abs(user.position.x)>=roomsize/2 ||        
+        Math.abs(user.position.z)>=roomsize/2
+         ){
           user.position.x =0
           user.position.y =0
           user.position.z =0
