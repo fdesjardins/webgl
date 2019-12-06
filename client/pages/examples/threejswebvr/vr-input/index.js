@@ -57,7 +57,7 @@ const init = ({ canvas, container }) => {
   hand1mesh.position.y = hand1.position.y
   hand1mesh.position.z = hand1.position.z
 
-  scene.add(hand1mesh)
+  //scene.add(hand1mesh)
 
   const hand2 = renderer.vr.getController(1)
   // hand2.addEventListener( 'selectstart', onSelectStart );
@@ -77,17 +77,18 @@ const init = ({ canvas, container }) => {
   hand2mesh.position.x = hand2.position.x
   hand2mesh.position.y = hand2.position.y
   hand2mesh.position.z = hand2.position.z
-  scene.add(hand2mesh)
+  //scene.add(hand2mesh)
 
-  //user.add(hand1mesh)
-  //user.add(hand2mesh)
+  user.add(hand1mesh)
+  user.add(hand2mesh)
 
-  //scene.add(user)
+  scene.add(user)
+  const roomsize = 200
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(100, 100, 100, 100, 100, 100),
+    new BoxLineGeometry(roomsize, roomsize, roomsize, roomsize, roomsize, roomsize),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  room.geometry.translate(0, 50, 0)
+  room.geometry.translate(0, roomsize/2, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -97,6 +98,9 @@ const init = ({ canvas, container }) => {
   user.add(camera)
   scene.add(user)
 
+  let lookvector = new THREE.Vector3()
+
+  console.log(renderer.vr)
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
@@ -120,7 +124,23 @@ const init = ({ canvas, container }) => {
       hand2mesh.quaternion.x = hand2.quaternion.x
       hand2mesh.quaternion.y = hand2.quaternion.y
       hand2mesh.quaternion.z = hand2.quaternion.z
-      user.position.z -= 0.1
+
+      let mycamera = renderer.vr.getCamera(camera)
+      mycamera.getWorldDirection( lookvector )
+
+      if(Math.abs(user.position.x)>=roomsize/2 ||
+        Math.abs(user.position.y)>=roomsize/2 ||
+        user.position.z<=0 ){
+          user.position.x =0
+          user.position.y =0
+          user.position.z =0
+       }else{
+         user.position.x += lookvector.x/5
+         user.position.y += lookvector.y/5
+         user.position.z += lookvector.z/5
+       }
+
+
     })
 
     renderer.render(scene, camera)
