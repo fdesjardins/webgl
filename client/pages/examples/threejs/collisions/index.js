@@ -16,7 +16,8 @@ const init = ({ canvas, container }) => {
     0.1,
     1000
   )
-  camera.position.z = 3
+  camera.position.z = 10
+  camera.position.y = 5
 
  const randInt = () =>{
    return Math.floor(Math.random() * 10);
@@ -31,7 +32,7 @@ const init = ({ canvas, container }) => {
     gravity: [0,-9.8,0]
 
   });
-  let ground = world.add({size:[50, 10, 50], pos:[0,-2,0], density:1 });
+  let ground = world.add({size:[50, 10, 50], pos:[0,0,0], density:1 });
   var size = 1000;
   var divisions = 1000;
 
@@ -65,7 +66,7 @@ const init = ({ canvas, container }) => {
 
   world.step();
 
-  const sphere = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  const sphere = new THREE.IcosahedronBufferGeometry(1, 1)
   //hand.scale(0.2, 0.8, 1.5)
 
   const spheremesh = new THREE.Mesh(
@@ -78,8 +79,8 @@ scene.add(spheremesh)
   const animate = () => {
     spheremesh.position.copy(body1.getPosition())
     spheremesh.quaternion.copy( body1.getQuaternion() )
-    cube.rotation.x += 0.01
-    cube.rotation.y += 0.01
+    //cube.rotation.x += 0.01
+    //cube.rotation.y += 0.01
     if (renderer) {
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
