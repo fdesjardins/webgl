@@ -22,77 +22,69 @@ const init = ({ canvas, container }) => {
    return Math.floor(Math.random() * 10);
  }
   let world = new OIMO.World({
-    timestep: 1/60,
+    timestep: 1/30,
     iterations: 8,
     broadphase: 2, // 1: brute force, 2: sweep & prune, 3: volume tree
     worldscale: 1,
     random: true,
-    info:true // display statistique
+    info:true,
+    gravity: [0,-9.8,0]
+
   });
-  let ground = world.add({size:[50, 10, 50], pos:[0,-5,0], density:1 });
+  let ground = world.add({size:[50, 10, 50], pos:[0,-2,0], density:1 });
+  var size = 1000;
+  var divisions = 1000;
+
+  var gridHelper = new THREE.GridHelper( size, divisions );
+  scene.add( gridHelper );
+  gridHelper.position.copy(ground.getPosition())
 
   renderer.setSize(container.clientWidth, container.clientWidth)
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshLambertMaterial({ color: 0xaaff00 })
   const cube = new THREE.Mesh(geometry, material)
-  scene.add(cube)
+  //scene.add(cube)
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(0, 3, 5)
   scene.add(light)
 
-  var i = 200, d, h, w, o;
+  let body1 = world.add({
+      type:'sphere', // type of shape : sphere, box, cylinder
+      size:[1,1,1], // size of shape
+      pos:[0,0,0], // start position in degree
+      rot:[0,0,90], // start rotation in degree
+      move:true, // dynamic or statique
+      density: 1,
+      friction: 0.2,
+      restitution: 0.2,
+      belongsTo: 1, // The bits of the collision groups to which the shape belongs.
+      collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
+  });
 
-  while( i-- ) {
 
-      let w = rand(0.3,1);
-      let h = rand(0.3,4);
-      let d = rand(0.3,1);
+  world.step();
 
-      let o = {
+  const sphere = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  //hand.scale(0.2, 0.8, 1.5)
 
-          move:true,
-          density:1,
-          pos : [
-              rand(-5,5),
-              rand(2,10) + ( i*h ),
-              rand(-5,5),
-          ],
-          rot : [
-              randInt(0,360),
-              randInt(0,360),
-              randInt(0,360),
-          ]
-
-      };
-
-      let rot = [
-          randInt(0,360),
-          randInt(0,360),
-          randInt(0,360),
-      ];
-
-      switch( randInt(0,2) ){
-
-          case 0 : o.type = 'sphere'; o.size = [w]; break;
-          case 1 : o.type = 'box';  o.size = [w,w,d]; break;
-          case 2 : o.type = 'cylinder'; o.size = [d,h,d]; break;
-
-      }
-
-      // see main.js
-      world.add( o );
-
-  }
+  const spheremesh = new THREE.Mesh(
+    sphere,
+    new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
+  )
+scene.add(spheremesh)
 
 
   const animate = () => {
+    spheremesh.position.copy(body1.getPosition())
+    spheremesh.quaternion.copy( body1.getQuaternion() )
     cube.rotation.x += 0.01
     cube.rotation.y += 0.01
     if (renderer) {
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
     }
+
   }
   world.postLoop = animate
   world.play();
