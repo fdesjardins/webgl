@@ -101,6 +101,11 @@ const init = ({ canvas, container }) => {
   let lookvector = new THREE.Vector3()
 
   console.log(renderer.vr)
+
+  let pathBlock = new THREE.BoxBufferGeometry( 1, 1, 1 );
+  let pathmaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+  let cube = new THREE.Mesh( pathBlock, pathmaterial );
+  let path=[]
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
@@ -128,7 +133,7 @@ const init = ({ canvas, container }) => {
       let mycamera = renderer.vr.getCamera(camera)
       mycamera.getWorldDirection( lookvector )
 
-      if(Math.abs(user.position.x)>=roomsize/2 ||        
+      if(Math.abs(user.position.x)>=roomsize/2 ||
         Math.abs(user.position.z)>=roomsize/2
          ){
           user.position.x =0
@@ -138,6 +143,14 @@ const init = ({ canvas, container }) => {
          user.position.x += lookvector.x/5
          user.position.y += lookvector.y/5
          user.position.z += lookvector.z/5
+
+         let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
+         pathHolder.position.x = user.position.x
+         pathHolder.position.y = user.position.y
+         pathHolder.position.z = user.position.z
+         
+         path.push(pathHolder)
+         scene.add(pathHolder)
        }
 
 
