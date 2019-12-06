@@ -32,19 +32,19 @@ const init = ({ canvas, container }) => {
     gravity: [0,-9.8,0]
 
   });
-  let ground = world.add({size:[50, 10, 50], pos:[0,0,0], density:1 });
+  let ground = world.add({size:[50, 0.01, 50], pos:[0,0,0], density:1 });
   var size = 1000;
   var divisions = 1000;
 
   var gridHelper = new THREE.GridHelper( size, divisions );
+
+  gridHelper.position.x=0
+  gridHelper.position.y=0
+  gridHelper.position.z=0
+
   scene.add( gridHelper );
-  gridHelper.position.copy(ground.getPosition())
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshLambertMaterial({ color: 0xaaff00 })
-  const cube = new THREE.Mesh(geometry, material)
-  //scene.add(cube)
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(0, 3, 5)
@@ -53,8 +53,8 @@ const init = ({ canvas, container }) => {
   let body1 = world.add({
       type:'sphere', // type of shape : sphere, box, cylinder
       size:[1,1,1], // size of shape
-      pos:[0,0,0], // start position in degree
-      rot:[0,0,90], // start rotation in degree
+      pos:[0,10,0], // start position in degree
+      rot:[0,0,0], // start rotation in degree
       move:true, // dynamic or statique
       density: 1,
       friction: 0.2,
