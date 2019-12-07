@@ -63,22 +63,43 @@ const init = ({ canvas, container }) => {
       collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
   });
 
+  let body2 = world.add({
+      type:'sphere', // type of shape : sphere, box, cylinder
+      size:[1,1,1], // size of shape
+      pos:[0,15,0.2], // start position in degree
+      rot:[0,0,0], // start rotation in degree
+      move:true, // dynamic or statique
+      density: 1,
+      friction: 0.2,
+      restitution: 0.2,
+      belongsTo: 1, // The bits of the collision groups to which the shape belongs.
+      collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
+  });
+
 
   world.step();
 
-  const sphere = new THREE.IcosahedronBufferGeometry(1, 1)
+  const sphere = new THREE.IcosahedronBufferGeometry(1, 2)
   //hand.scale(0.2, 0.8, 1.5)
 
-  const spheremesh = new THREE.Mesh(
+  const spheremesh1 = new THREE.Mesh(
     sphere,
-    new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
+    new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff })
   )
-scene.add(spheremesh)
 
+  const spheremesh2 = new THREE.Mesh(
+    sphere,
+    new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff })
+  )
+   scene.add(spheremesh1)
+   scene.add(spheremesh2)
 
   const animate = () => {
-    spheremesh.position.copy(body1.getPosition())
-    spheremesh.quaternion.copy( body1.getQuaternion() )
+    spheremesh1.position.copy(body1.getPosition())
+    spheremesh1.quaternion.copy( body1.getQuaternion() )
+
+    spheremesh2.position.copy(body2.getPosition())
+    spheremesh2.quaternion.copy( body2.getQuaternion() )
     //cube.rotation.x += 0.01
     //cube.rotation.y += 0.01
     if (renderer) {
