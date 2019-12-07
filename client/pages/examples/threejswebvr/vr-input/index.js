@@ -102,10 +102,25 @@ const init = ({ canvas, container }) => {
 
   console.log(renderer.vr)
 
-  let pathBlock = new THREE.BoxBufferGeometry( 1, 1, 1 );
+  let pathBlock = new THREE.BoxBufferGeometry( 1, 5, 1 );
   let pathmaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
   let cube = new THREE.Mesh( pathBlock, pathmaterial );
   let path=[]
+
+  let lastPos = new THREE.Vector3()
+  lastPos.x =user.position.x
+  lastPos.y =user.position.y
+  lastPos.z =user.position.z
+
+  let lastPathBlock = new THREE.Vector3()
+  lastPathBlock.copy(user.position)
+const distanceVector =( v1, v2 ) =>{
+    var dx = v1.x - v2.x;
+    var dy = v1.y - v2.y;
+    var dz = v1.z - v2.z;
+
+    return Math.sqrt( dx * dx + dy * dy + dz * dz );
+}
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
@@ -141,22 +156,28 @@ const init = ({ canvas, container }) => {
           user.position.z =0
        }else{
          user.position.x += lookvector.x/5
-         user.position.y += lookvector.y/5
+         //user.position.y += lookvector.y/5
          user.position.z += lookvector.z/5
 
-         let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
-         pathHolder.position.x = user.position.x
-         pathHolder.position.y = user.position.y
-         pathHolder.position.z = user.position.z
-         
-         path.push(pathHolder)
-         scene.add(pathHolder)
+
+         console.log(distanceVector(lastPathBlock, user.position))
+         if( distanceVector(lastPathBlock, user.position)>1){
+           let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
+           pathHolder.position.x = user.position.x
+           pathHolder.position.y = user.position.y
+           pathHolder.position.z = user.position.z
+
+           path.push(pathHolder)
+           scene.add(pathHolder)
+           lastPathBlock.copy(user.position)
+         }
        }
 
 
     })
 
     renderer.render(scene, camera)
+    lastPos = user.position
   }
   animate()
 
