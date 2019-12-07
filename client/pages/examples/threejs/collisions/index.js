@@ -33,8 +33,8 @@ const init = ({ canvas, container }) => {
 
   });
   let ground = world.add({size:[50, 0.01, 50], pos:[0,0,0], density:1 });
-  var size = 1000;
-  var divisions = 1000;
+  var size = 50;
+  var divisions = 50;
 
   var gridHelper = new THREE.GridHelper( size, divisions );
 
@@ -76,6 +76,20 @@ const init = ({ canvas, container }) => {
       collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
   });
 
+  let body3 = world.add({
+      type:'sphere', // type of shape : sphere, box, cylinder
+      size:[1,1,1], // size of shape
+      pos:[1,13,0], // start position in degree
+      rot:[0,0,0], // start rotation in degree
+      move:true, // dynamic or statique
+      density: 1,
+      friction: 0.2,
+      restitution: 0.2,
+      belongsTo: 1, // The bits of the collision groups to which the shape belongs.
+      collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
+  });
+
+
 
   world.step();
 
@@ -91,8 +105,13 @@ const init = ({ canvas, container }) => {
     sphere,
     new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff })
   )
+  const spheremesh3 = new THREE.Mesh(
+    sphere,
+    new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff })
+  )
    scene.add(spheremesh1)
    scene.add(spheremesh2)
+   scene.add(spheremesh3)
 
   const animate = () => {
     spheremesh1.position.copy(body1.getPosition())
@@ -100,10 +119,12 @@ const init = ({ canvas, container }) => {
 
     spheremesh2.position.copy(body2.getPosition())
     spheremesh2.quaternion.copy( body2.getQuaternion() )
+    spheremesh3.position.copy(body3.getPosition())
+    spheremesh3.quaternion.copy( body3.getQuaternion() )
     //cube.rotation.x += 0.01
     //cube.rotation.y += 0.01
     if (renderer) {
-      requestAnimationFrame(animate)
+      //requestAnimationFrame(animate)
       renderer.render(scene, camera)
     }
 
@@ -121,6 +142,6 @@ const init = ({ canvas, container }) => {
   }
 }
 
-const Collisions = () => <Example notes={notes} init={init} />
+const OimoPhysics = () => <Example notes={notes} init={init} />
 
-export default React.memo(Collisions)
+export default React.memo(OimoPhysics)
