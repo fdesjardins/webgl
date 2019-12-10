@@ -56,11 +56,11 @@ const init = ({ canvas, container }) => {
 
   let raycaster = new THREE.Raycaster()
   let mouse = new THREE.Vector2()
+  let click = false
   const onMouseClick = (event) =>{
 
-    console.log(event)
-    console.log(mouse.x)
-    console.log(mouse.y)
+    console.log(event)    
+    click = true
   }
   const onMouseMove = (event) =>{
     mouse.x = ( event.offsetX / canvas.clientWidth) * 2 - 1;
@@ -69,11 +69,16 @@ const init = ({ canvas, container }) => {
   canvas.addEventListener( 'mousemove', onMouseMove, false );
   canvas.addEventListener( 'click', onMouseClick, false );
   const animate = () => {
-    raycaster.setFromCamera( mouse, camera );
-    let intersects = raycaster.intersectObjects( scene.children )
+
+    if(click){
+      raycaster.setFromCamera( mouse, camera );
+      let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
           intersects[ i ].object.material.color.set( Math.random() * 0xffffff )
+          console.log(intersects[i])
       }
+      click = false
+    }
     if (renderer) {
       requestAnimationFrame(animate)
 
