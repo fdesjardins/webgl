@@ -56,16 +56,18 @@ const init = ({ canvas, container }) => {
 
   let raycaster = new THREE.Raycaster()
   let mouse = new THREE.Vector2()
-  const onMouseMove = (event) =>{
-    // calculate mouse position in normalized device coordinates
-  	// (-1 to +1) for both components
+  const onMouseClick = (event) =>{
 
-  	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    //console.log(mouse)
+    console.log(event)
+    console.log(mouse.x)
+    console.log(mouse.y)
   }
-  window.addEventListener( 'mousemove', onMouseMove, false );
-
+  const onMouseMove = (event) =>{
+    mouse.x = ( event.offsetX / canvas.clientWidth) * 2 - 1;
+  	mouse.y = - ( event.offsetY / canvas.clientHeight ) * 2 + 1;
+  }
+  canvas.addEventListener( 'mousemove', onMouseMove, false );
+  canvas.addEventListener( 'click', onMouseClick, false );
   const animate = () => {
     raycaster.setFromCamera( mouse, camera );
     let intersects = raycaster.intersectObjects( scene.children )
