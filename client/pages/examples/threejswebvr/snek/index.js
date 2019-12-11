@@ -96,7 +96,7 @@ const init = ({ canvas, container }) => {
   console.log(renderer.vr)
 
   let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 1 );
-  let pathmaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+  let pathmaterial = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
   let cube = new THREE.Mesh( pathBlock, pathmaterial );
   let path=[]
 
@@ -106,7 +106,9 @@ const init = ({ canvas, container }) => {
   lastPos.z =user.position.z
 
   let lastPathBlock = new THREE.Vector3()
+  let lastUserPosition = new THREE.Vector3()
   lastPathBlock.copy(user.position)
+  lastUserPosition.copy(user.position)
 const distanceVector =( v1, v2 ) =>{
     var dx = v1.x - v2.x;
     var dy = v1.y - v2.y;
@@ -116,6 +118,13 @@ const distanceVector =( v1, v2 ) =>{
 }
 
   let raycaster = new THREE.Raycaster()
+
+  const killMe = () =>{
+    for(let pathPiece of path){
+      scene.remove(pathPiece)
+    }
+    path=[]
+  }
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
@@ -124,14 +133,13 @@ const distanceVector =( v1, v2 ) =>{
       raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() )
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
-          intersects[ i ].object.material.color.set( Math.random() * 0xffffff )
           console.log(intersects[i])
-
-          if(intersects[i].distance < .1){
+          if(intersects[i].distance < .05){
             console.log("you died")
             user.position.x =0
             user.position.y =0
             user.position.z =0
+            //killMe()
           }
       }
 
@@ -157,29 +165,35 @@ const distanceVector =( v1, v2 ) =>{
       let mycamera = renderer.vr.getCamera(camera)
       mycamera.getWorldDirection( lookvector )
 
-      if(Math.abs(user.position.x)>=roomsize/2 ||
-        Math.abs(user.position.z)>=roomsize/2
+      if(Math.abs(user.position.x)>=roomsize ||
+        Math.abs(user.position.z)>=roomsize
          ){
           user.position.x =0
           user.position.y =0
           user.position.z =0
-          init();
+          //killMe()
        }else{
          user.position.x += lookvector.x/5
          //user.position.y += lookvector.y/5
-         user.position.z += lookvector.z/5         
-         if( distanceVector(lastPathBlock, user.position)>1){
+         user.position.z += lookvector.z/5
+         if( distanceVector(lastPathBlock, user.position)>1.5){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
-           pathHolder.position.x = user.position.x
+           pathHolder.position.x = user.position.x- lookvector.x
            pathHolder.position.y = 1.5//user.position.y
-           pathHolder.position.z = user.position.z
+           pathHolder.position.z = user.position.z- lookvector.z
+
+           pathHolder.quaternion.w = mycamera.quaternion.w
+           pathHolder.quaternion.x = mycamera.quaternion.x
+           pathHolder.quaternion.y = mycamera.quaternion.y
+           pathHolder.quaternion.z = mycamera.quaternion.z
+
 
            path.push(pathHolder)
            scene.add(pathHolder)
            lastPathBlock.copy(user.position)
          }
        }
-
+       lastUserPosition.copy(user.position)
 
     })
 
