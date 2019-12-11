@@ -134,7 +134,7 @@ const distanceVector =( v1, v2 ) =>{
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
           console.log(intersects[i])
-          if(intersects[i].distance < .3){
+          if(intersects[i].distance < .2){
             console.log("you died")
             user.position.x =0
             user.position.y =0
