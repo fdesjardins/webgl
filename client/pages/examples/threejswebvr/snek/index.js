@@ -109,6 +109,7 @@ const init = ({ canvas, container }) => {
   let lastUserPosition = new THREE.Vector3()
   lastPathBlock.copy(user.position)
   lastUserPosition.copy(user.position)
+  let userVelocity = 1/6
 const distanceVector =( v1, v2 ) =>{
     var dx = v1.x - v2.x;
     var dy = v1.y - v2.y;
@@ -137,8 +138,9 @@ const distanceVector =( v1, v2 ) =>{
           if(intersects[i].distance < .2){
             console.log("you died")
             user.position.x =0
-            user.position.y =0
+            user.position.y =100
             user.position.z =0
+            userVelocity = 0
             //killMe()
           }
       }
@@ -169,13 +171,14 @@ const distanceVector =( v1, v2 ) =>{
         Math.abs(user.position.z)>=roomsize
          ){
           user.position.x =0
-          user.position.y =0
+          user.position.y =100
           user.position.z =0
+          userVelocity = 0
           //killMe()
        }else{
-         user.position.x += lookvector.x/6
+         user.position.x += lookvector.x * userVelocity
          //user.position.y += lookvector.y/5
-         user.position.z += lookvector.z/6
+         user.position.z += lookvector.z * userVelocity
          if( distanceVector(lastPathBlock, user.position)>.9){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
            pathHolder.position.x = user.position.x- 2*lookvector.x
