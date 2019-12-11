@@ -50,9 +50,7 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
   )
-  // hand1mesh.scale.x = 0.1
-  // hand1mesh.scale.y = 0.1
-  // hand1mesh.scale.z = 0.1
+
   hand1mesh.position.x = hand1.position.x
   hand1mesh.position.y = hand1.position.y
   hand1mesh.position.z = hand1.position.z
@@ -70,14 +68,9 @@ const init = ({ canvas, container }) => {
       flatShading: true
     })
   )
-  // hand1mesh.scale.x = 0.1
-  // hand1mesh.scale.y = 0.1
-  // hand1mesh.scale.z = 0.1
-
   hand2mesh.position.x = hand2.position.x
   hand2mesh.position.y = hand2.position.y
   hand2mesh.position.z = hand2.position.z
-  //scene.add(hand2mesh)
 
   user.add(hand1mesh)
   user.add(hand2mesh)
@@ -121,11 +114,27 @@ const distanceVector =( v1, v2 ) =>{
 
     return Math.sqrt( dx * dx + dy * dy + dz * dz );
 }
+
+  let raycaster = new THREE.Raycaster()
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
         return
       }
+      raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() )
+      let intersects = raycaster.intersectObjects( scene.children )
+      for ( var i = 0; i < intersects.length; i++ ) {
+          intersects[ i ].object.material.color.set( Math.random() * 0xffffff )
+          console.log(intersects[i])
+
+          if(intersects[i].distance < .1){
+            console.log("you died")
+            user.position.x =0
+            user.position.y =0
+            user.position.z =0
+          }
+      }
+
       renderer.render(scene, camera)
       hand1mesh.position.x = hand1.position.x
       hand1mesh.position.y = hand1.position.y
@@ -154,13 +163,11 @@ const distanceVector =( v1, v2 ) =>{
           user.position.x =0
           user.position.y =0
           user.position.z =0
+          init();
        }else{
          user.position.x += lookvector.x/5
          //user.position.y += lookvector.y/5
-         user.position.z += lookvector.z/5
-
-
-         console.log(distanceVector(lastPathBlock, user.position))
+         user.position.z += lookvector.z/5         
          if( distanceVector(lastPathBlock, user.position)>1){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
            pathHolder.position.x = user.position.x

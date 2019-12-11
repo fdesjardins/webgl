@@ -30,6 +30,7 @@ const Menu = () => (
     <MenuItem type="threejs" num="08" title="Graphing" />
     <MenuItem type="threejs" num="09" title="Oimo Physics" />
     <MenuItem type="threejs" num="10" title="Ray Casting" />
+    <MenuItem type="threejs" num="11" title="Triangle Strip" />
 
     <br />
     <h3>Three.js WebVR</h3>
