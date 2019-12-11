@@ -6,6 +6,7 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
+import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls.js'
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
@@ -33,10 +34,8 @@ const init = ({ canvas, container }) => {
   document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(100, 100, 100)
-  const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
-
-
+  // const geometry = new THREE.BoxGeometry(100, 100, 100)
+  // const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
   const hand1 = renderer.vr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
@@ -54,8 +53,6 @@ const init = ({ canvas, container }) => {
   hand1mesh.position.x = hand1.position.x
   hand1mesh.position.y = hand1.position.y
   hand1mesh.position.z = hand1.position.z
-
-  //scene.add(hand1mesh)
 
   const hand2 = renderer.vr.getController(1)
   // hand2.addEventListener( 'selectstart', onSelectStart );
@@ -96,7 +93,10 @@ const init = ({ canvas, container }) => {
   console.log(renderer.vr)
 
   let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 1 );
-  let pathmaterial = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+  let pathmaterial = new THREE.MeshPhongMaterial( {
+    color: 0x00ff00,
+    opacity: 0.5,
+  transparent: true,} );
   let cube = new THREE.Mesh( pathBlock, pathmaterial );
   let path=[]
 
@@ -126,6 +126,23 @@ const distanceVector =( v1, v2 ) =>{
     }
     path=[]
   }
+  let mycamera = false
+
+  let camControls = new FirstPersonControls(user, canvas)
+
+  camControls.lookSpeed = 0.8
+  camControls.movementSpeed = 0
+  camControls.noFly = true
+  camControls.lookVertical = false
+  camControls.constrainVertical = false
+  camControls.verticalMin = 0
+  camControls.verticalMax = 5.0
+  camControls.lon = -150
+  camControls.lat = 120
+  camControls.autoForward= false
+
+  let clock = new THREE.Clock()
+
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
@@ -141,6 +158,8 @@ const distanceVector =( v1, v2 ) =>{
             user.position.y =100
             user.position.z =0
             userVelocity = 0
+            camControls.lookAt(0,0,0)
+            
             //killMe()
           }
       }
@@ -164,7 +183,13 @@ const distanceVector =( v1, v2 ) =>{
       hand2mesh.quaternion.y = hand2.quaternion.y
       hand2mesh.quaternion.z = hand2.quaternion.z
 
-      let mycamera = renderer.vr.getCamera(camera)
+      try{
+      mycamera = renderer.vr.getCamera(camera)
+      camControls.enabled=false;
+      }catch(ex){
+        mycamera = camera
+        camControls.update(clock.getDelta())
+      }
       mycamera.getWorldDirection( lookvector )
 
       if(Math.abs(user.position.x)>=roomsize ||
@@ -174,6 +199,9 @@ const distanceVector =( v1, v2 ) =>{
           user.position.y =100
           user.position.z =0
           userVelocity = 0
+          camControls.lookAt(0,0,0)
+          camControls.enabled=false;
+
           //killMe()
        }else{
          user.position.x += lookvector.x * userVelocity
