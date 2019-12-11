@@ -90,7 +90,7 @@ const init = ({ canvas, container }) => {
 
   let lookvector = new THREE.Vector3()
 
-  console.log(renderer.vr)
+  //console.log(renderer.vr)
 
   let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 1 );
   let pathmaterial = new THREE.MeshPhongMaterial( {
@@ -148,10 +148,14 @@ const distanceVector =( v1, v2 ) =>{
       if (!renderer) {
         return
       }
-      raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() )
+      let cameraWorldPos = new THREE.Vector3()
+      camera.getWorldPosition(cameraWorldPos)
+      let cameraWorldDir = new THREE.Vector3()
+      camera.getWorldDirection(cameraWorldDir)
+      raycaster.set( cameraWorldPos, cameraWorldDir )
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
-          console.log(intersects[i])
+          //console.log(intersects[i])
           if(intersects[i].distance < .2){
             console.log("you died")
             user.position.x =0
@@ -159,7 +163,7 @@ const distanceVector =( v1, v2 ) =>{
             user.position.z =0
             userVelocity = 0
             camControls.lookAt(0,0,0)
-            
+
             //killMe()
           }
       }
