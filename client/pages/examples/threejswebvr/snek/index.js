@@ -134,7 +134,7 @@ const distanceVector =( v1, v2 ) =>{
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
           console.log(intersects[i])
-          if(intersects[i].distance < .05){
+          if(intersects[i].distance < .3){
             console.log("you died")
             user.position.x =0
             user.position.y =0
@@ -173,14 +173,14 @@ const distanceVector =( v1, v2 ) =>{
           user.position.z =0
           //killMe()
        }else{
-         user.position.x += lookvector.x/5
+         user.position.x += lookvector.x/6
          //user.position.y += lookvector.y/5
-         user.position.z += lookvector.z/5
-         if( distanceVector(lastPathBlock, user.position)>1.5){
+         user.position.z += lookvector.z/6
+         if( distanceVector(lastPathBlock, user.position)>.9){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
-           pathHolder.position.x = user.position.x- lookvector.x
+           pathHolder.position.x = user.position.x- 2*lookvector.x
            pathHolder.position.y = 1.5//user.position.y
-           pathHolder.position.z = user.position.z- lookvector.z
+           pathHolder.position.z = user.position.z- 2*lookvector.z
 
            pathHolder.quaternion.w = mycamera.quaternion.w
            pathHolder.quaternion.x = mycamera.quaternion.x
