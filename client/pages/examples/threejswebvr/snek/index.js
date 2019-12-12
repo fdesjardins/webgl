@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-import 'three/examples/js/vr/HelioWebXRPolyfill.js'
+//import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
+//import { CylinderBufferGeometry } from 'three/examples/jsm/geometries/CylinderBufferGeometry.js'
+import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls.js'
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
@@ -33,10 +35,6 @@ const init = ({ canvas, container }) => {
   document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(100, 100, 100)
-  const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
-
-
 
   const hand1 = renderer.vr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
@@ -50,14 +48,10 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
   )
-  // hand1mesh.scale.x = 0.1
-  // hand1mesh.scale.y = 0.1
-  // hand1mesh.scale.z = 0.1
+
   hand1mesh.position.x = hand1.position.x
   hand1mesh.position.y = hand1.position.y
   hand1mesh.position.z = hand1.position.z
-
-  //scene.add(hand1mesh)
 
   const hand2 = renderer.vr.getController(1)
   // hand2.addEventListener( 'selectstart', onSelectStart );
@@ -70,14 +64,9 @@ const init = ({ canvas, container }) => {
       flatShading: true
     })
   )
-  // hand1mesh.scale.x = 0.1
-  // hand1mesh.scale.y = 0.1
-  // hand1mesh.scale.z = 0.1
-
   hand2mesh.position.x = hand2.position.x
   hand2mesh.position.y = hand2.position.y
   hand2mesh.position.z = hand2.position.z
-  //scene.add(hand2mesh)
 
   user.add(hand1mesh)
   user.add(hand2mesh)
@@ -100,12 +89,12 @@ const init = ({ canvas, container }) => {
 
   let lookvector = new THREE.Vector3()
 
-  console.log(renderer.vr)
+  let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 2.5 );
 
-  let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 1 );
-  let pathmaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-  let cube = new THREE.Mesh( pathBlock, pathmaterial );
-  let path=[]
+  let pathmaterial = new THREE.MeshPhongMaterial( {
+    color: 0x00ff00,
+    opacity: 0.5,
+  transparent: true,} );
 
   let lastPos = new THREE.Vector3()
   lastPos.x =user.position.x
@@ -113,7 +102,10 @@ const init = ({ canvas, container }) => {
   lastPos.z =user.position.z
 
   let lastPathBlock = new THREE.Vector3()
+  let lastUserPosition = new THREE.Vector3()
   lastPathBlock.copy(user.position)
+  lastUserPosition.copy(user.position)
+  let userVelocity = 1/10
 const distanceVector =( v1, v2 ) =>{
     var dx = v1.x - v2.x;
     var dy = v1.y - v2.y;
@@ -121,58 +113,95 @@ const distanceVector =( v1, v2 ) =>{
 
     return Math.sqrt( dx * dx + dy * dy + dz * dz );
 }
+
+  let raycaster = new THREE.Raycaster()
+
+  const killMe = () =>{
+    user.position.x =0
+    user.position.y =175
+    user.position.z =0
+    userVelocity = 0
+    camControls.lookAt(0,0,0)
+    //camControls.enabled=false;
+  }
+  let mycamera = false
+
+  let camControls = new FirstPersonControls(user, canvas)
+
+  camControls.lookSpeed = 0.8
+  camControls.movementSpeed = 0
+  camControls.noFly = true
+  camControls.lookVertical = false
+  camControls.constrainVertical = false
+  camControls.verticalMin = 0
+  camControls.verticalMax = 5.0
+  camControls.lon = -150
+  camControls.lat = 120
+  camControls.autoForward= false
+
+  let clock = new THREE.Clock()
+
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
         return
       }
+      let cameraWorldPos = new THREE.Vector3()
+      camera.getWorldPosition(cameraWorldPos)
+      let cameraWorldDir = new THREE.Vector3()
+      camera.getWorldDirection(cameraWorldDir)
+      raycaster.set( cameraWorldPos, cameraWorldDir )
+      let intersects = raycaster.intersectObjects( scene.children )
+      for ( var i = 0; i < intersects.length; i++ ) {
+          //console.log(intersects[i])
+          if(intersects[i].distance < .2){
+
+            killMe()
+          }
+      }
+
       renderer.render(scene, camera)
-      hand1mesh.position.x = hand1.position.x
-      hand1mesh.position.y = hand1.position.y
-      hand1mesh.position.z = hand1.position.z
-
-      hand2mesh.position.x = hand2.position.x
-      hand2mesh.position.y = hand2.position.y
-      hand2mesh.position.z = hand2.position.z
-
-      hand1mesh.quaternion.w = hand1.quaternion.w
-      hand1mesh.quaternion.x = hand1.quaternion.x
-      hand1mesh.quaternion.y = hand1.quaternion.y
-      hand1mesh.quaternion.z = hand1.quaternion.z
-
-      hand2mesh.quaternion.w = hand2.quaternion.w
-      hand2mesh.quaternion.x = hand2.quaternion.x
-      hand2mesh.quaternion.y = hand2.quaternion.y
-      hand2mesh.quaternion.z = hand2.quaternion.z
-
-      let mycamera = renderer.vr.getCamera(camera)
+      hand1mesh.position.copy(hand1.position)
+      hand2mesh.position.copy(hand2.position)
+      hand1mesh.quaternion.copy(hand1.quaternion)
+      hand2mesh.quaternion.copy(hand2.quaternion)
+      try{
+      mycamera = renderer.vr.getCamera(camera)
+      camControls.enabled=false;
+      }catch(ex){
+        mycamera = camera
+        camControls.update(clock.getDelta())
+      }
       mycamera.getWorldDirection( lookvector )
 
-      if(Math.abs(user.position.x)>=roomsize/2 ||
-        Math.abs(user.position.z)>=roomsize/2
+      if(Math.abs(user.position.x)>=roomsize ||
+        Math.abs(user.position.z)>=roomsize
          ){
-          user.position.x =0
-          user.position.y =0
-          user.position.z =0
+
+
+          killMe()
        }else{
-         user.position.x += lookvector.x/5
-         //user.position.y += lookvector.y/5
-         user.position.z += lookvector.z/5
+         user.position.x += lookvector.x * userVelocity
 
-
-         console.log(distanceVector(lastPathBlock, user.position))
-         if( distanceVector(lastPathBlock, user.position)>1){
+         user.position.z += lookvector.z * userVelocity
+         if( distanceVector(lastPathBlock, user.position)>2){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
-           pathHolder.position.x = user.position.x
+           pathHolder.position.x = user.position.x- 2*lookvector.x
            pathHolder.position.y = 1.5//user.position.y
-           pathHolder.position.z = user.position.z
+           pathHolder.position.z = user.position.z- 2*lookvector.z
+           if(!camControls.enabled){
+             pathHolder.quaternion.copy(mycamera.quaternion)
 
-           path.push(pathHolder)
+           }else{
+             pathHolder.quaternion.copy(user.quaternion)
+         }
+
            scene.add(pathHolder)
            lastPathBlock.copy(user.position)
          }
        }
-
+       lastUserPosition.copy(user.position)
+       userVelocity *=1.001
 
     })
 
