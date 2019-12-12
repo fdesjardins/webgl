@@ -105,7 +105,7 @@ const init = ({ canvas, container }) => {
   let lastUserPosition = new THREE.Vector3()
   lastPathBlock.copy(user.position)
   lastUserPosition.copy(user.position)
-  let userVelocity = 1/6
+  let userVelocity = 1/10
 const distanceVector =( v1, v2 ) =>{
     var dx = v1.x - v2.x;
     var dy = v1.y - v2.y;
@@ -211,6 +211,7 @@ const distanceVector =( v1, v2 ) =>{
          }
        }
        lastUserPosition.copy(user.position)
+       userVelocity *=1.001
 
     })
 
