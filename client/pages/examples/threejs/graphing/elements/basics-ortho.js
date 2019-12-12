@@ -9,7 +9,6 @@ const init = ({ state }) => {
 
   let scene = new THREE.Scene()
 
-  // const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   const camera = new THREE.OrthographicCamera(
     canvas.clientWidth / -2,
     canvas.clientWidth / 2,

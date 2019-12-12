@@ -7,6 +7,7 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import BasicsOrtho, { init as init1 } from './elements/basics-ortho'
 import BasicsPersp, { init as init2 } from './elements/basics-persp'
+import VectorField, { init as init3 } from './elements/vector-field'
 
 const state = new Baobab({
   light: {
@@ -64,7 +65,8 @@ const GraphingExample = () => (
       notes={notes}
       components={{
         BasicsOrtho: wrap(BasicsOrtho, { state }),
-        BasicsPersp: wrap(BasicsPersp, { state })
+        BasicsPersp: wrap(BasicsPersp, { state }),
+        VectorField: wrap(VectorField, { state })
       }}
       init={init}
     />
