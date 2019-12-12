@@ -5,9 +5,10 @@ import { css } from 'emotion'
 
 import Example from '-/components/example'
 import notes from './readme.md'
-import BasicsOrtho, { init as init1 } from './elements/basics-ortho'
-import BasicsPersp, { init as init2 } from './elements/basics-persp'
-import VectorField, { init as init3 } from './elements/vector-field'
+import BasicsOrtho from './elements/basics-ortho'
+import BasicsPersp from './elements/basics-persp'
+import VectorField from './elements/vector-field'
+import Oscilloscope from './elements/oscilloscope'
 
 const state = new Baobab({
   light: {
@@ -66,7 +67,8 @@ const GraphingExample = () => (
       components={{
         BasicsOrtho: wrap(BasicsOrtho, { state }),
         BasicsPersp: wrap(BasicsPersp, { state }),
-        VectorField: wrap(VectorField, { state })
+        VectorField: wrap(VectorField, { state }),
+        Oscilloscope: wrap(Oscilloscope, { state })
       }}
       init={init}
     />
