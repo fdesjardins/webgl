@@ -89,7 +89,7 @@ const init = ({ canvas, container }) => {
 
   let lookvector = new THREE.Vector3()
 
-  let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 2 );
+  let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 2.5 );
 
   let pathmaterial = new THREE.MeshPhongMaterial( {
     color: 0x00ff00,
@@ -161,19 +161,10 @@ const distanceVector =( v1, v2 ) =>{
       }
 
       renderer.render(scene, camera)
-
       hand1mesh.position.copy(hand1.position)
-
-
       hand2mesh.position.copy(hand2.position)
-
-
       hand1mesh.quaternion.copy(hand1.quaternion)
-
-
       hand2mesh.quaternion.copy(hand2.quaternion)
-
-
       try{
       mycamera = renderer.vr.getCamera(camera)
       camControls.enabled=false;
@@ -191,19 +182,18 @@ const distanceVector =( v1, v2 ) =>{
           killMe()
        }else{
          user.position.x += lookvector.x * userVelocity
-         //user.position.y += lookvector.y/5
+
          user.position.z += lookvector.z * userVelocity
-         if( distanceVector(lastPathBlock, user.position)>1.9){
+         if( distanceVector(lastPathBlock, user.position)>2){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
-           pathHolder.position.x = user.position.x- lookvector.x
+           pathHolder.position.x = user.position.x- 2*lookvector.x
            pathHolder.position.y = 1.5//user.position.y
-           pathHolder.position.z = user.position.z- lookvector.z
+           pathHolder.position.z = user.position.z- 2*lookvector.z
            if(!camControls.enabled){
              pathHolder.quaternion.copy(mycamera.quaternion)
 
            }else{
              pathHolder.quaternion.copy(user.quaternion)
-
          }
 
            scene.add(pathHolder)
