@@ -48,8 +48,13 @@ const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
   const video = setupVideo()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
-  camera.position.z = 3
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
+  camera.position.z = 0.001
 
   const OrbitControls = threeOrbitControls(THREE)
   const controls = new OrbitControls(camera)
@@ -61,51 +66,61 @@ const init = ({ canvas, container }) => {
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
   scene.background = new THREE.Color(0xffffff)
 
-  const light = new THREE.PointLight(0xffffff, 1, 100)
-  light.position.set(0, 0, 0)
-  light.castShadow = true
-  light.shadow.mapSize.width = 1024
-  light.shadow.mapSize.height = 1024
-  light.shadow.camera.near = 0.5
-  light.shadow.camera.far = 500
+  // const light = new THREE.PointLight(0xffffff, 1, 100)
+  // light.position.set(0, 0, 0)
+  // light.castShadow = true
+  // light.shadow.mapSize.width = 1024
+  // light.shadow.mapSize.height = 1024
+  // light.shadow.camera.near = 0.5
+  // light.shadow.camera.far = 500
+  // scene.add(light)
+  const light = new THREE.AmbientLight(0xffffff)
   scene.add(light)
 
-  const light2 = light.clone()
-  light2.position.set(0, 0, 30)
-  scene.add(light2)
+  // const light2 = light.clone()
+  // light2.position.set(0, 0, 30)
+  // scene.add(light2)
 
-  const videoTexture = new THREE.VideoTexture(video)
-  videoTexture.format = THREE.RGBFormat
-  videoTexture.minFilter = THREE.LinearFilter
-  videoTexture.magFilter = THREE.LinearFilter
-  videoTexture.needsUpdate = true
+  // const videoTexture = new THREE.VideoTexture(video)
+  // videoTexture.format = THREE.RGBFormat
+  // videoTexture.minFilter = THREE.LinearFilter
+  // videoTexture.magFilter = THREE.LinearFilter
+  // videoTexture.needsUpdate = true
 
-  const geometry = new THREE.SphereBufferGeometry(5, 32, 32)
+  const texture = new THREE.TextureLoader().load(
+    'https://storage.googleapis.com/avcp-camera-images/new-ken.jpg'
+  )
+  texture.anisotropy = renderer.getMaxAnisotropy()
+
+  const geometry = new THREE.SphereBufferGeometry(10, 32, 32)
   const material = new THREE.MeshPhongMaterial({
-    map: videoTexture,
+    map: texture,
     side: THREE.DoubleSide,
     shadowSide: THREE.DoubleSide
   })
+  material.map.minFilter = THREE.LinearFilter
+  material.map.maxFilter = THREE.LinearFilter
+
   const object = new THREE.Mesh(geometry, material)
   object.matrixAutoUpdate = true
   object.castShadow = true
-  object.position.z = -1
+  // object.position.z = -1
   scene.add(object)
 
-  const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
-  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial)
-  plane.position.z = -50
-  plane.receiveShadow = true
-  scene.add(plane)
-
-  const planeGeometry3 = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
-  const planeMaterial3 = new THREE.MeshStandardMaterial({ color: 0x000000 })
-  const plane3 = new THREE.Mesh(planeGeometry3, planeMaterial3)
-  plane3.position.z = -30
-  plane3.position.x = 10
-  plane3.receiveShadow = true
-  scene.add(plane3)
+  // const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
+  // const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
+  // const plane = new THREE.Mesh(planeGeometry, planeMaterial)
+  // plane.position.z = -50
+  // plane.receiveShadow = true
+  // scene.add(plane)
+  //
+  // const planeGeometry3 = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
+  // const planeMaterial3 = new THREE.MeshStandardMaterial({ color: 0x000000 })
+  // const plane3 = new THREE.Mesh(planeGeometry3, planeMaterial3)
+  // plane3.position.z = -30
+  // plane3.position.x = 10
+  // plane3.receiveShadow = true
+  // scene.add(plane3)
 
   const objectState = state.select('object')
   const animate = () => {
