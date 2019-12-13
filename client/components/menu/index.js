@@ -33,6 +33,7 @@ const Menu = () => (
     <MenuItem type="threejs" num="11" title="Triangle Strip" />
     <MenuItem type="threejs" num="12" title="FPS" />
     <MenuItem type="threejs" num="13" title="DeviceOrientation" />
+    <MenuItem type="threejs" num="14" title="Metaballs and Marching Cubes" />
 
     <br />
     <h3>Three.js WebVR</h3>
@@ -45,17 +46,12 @@ const Menu = () => (
     <Link to="/editor">Editor</Link>
 
     <br />
-    <li>Mouse Events</li>
-    <li>Shadows</li>
-    <li>Geometry Shaders</li>
     <li>Stencil Testing</li>
-    <li>Blending</li>
     <li>Framebuffers</li>
     <li>Cubemaps</li>
     <li>Instancing</li>
     <li>Deferred Shading</li>
     <li>SSAO</li>
-    <li>Metaballs</li>
     <li>Summed-Area Variance Shadow Maps</li>
     <li>Motion Blur</li>
     <li>Fluid Simulation</li>
@@ -63,7 +59,6 @@ const Menu = () => (
     <li>Particle Systems</li>
     <li>Gravity</li>
     <li>N-body Simulation</li>
-    <li>Oimo.js</li>
     <li>A material point method for snow simulation</li>
     <li>Heat Equation</li>
   </ul>

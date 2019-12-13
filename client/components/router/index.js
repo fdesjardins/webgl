@@ -23,6 +23,7 @@ import RayCasting from '-/pages/examples/threejs/ray-casting'
 import TriangleStrip from '-/pages/examples/threejs/triangle-strip'
 import FPSControls from '-/pages/examples/threejs/first-person-controls'
 import DeviceOrientation from '-/pages/examples/threejs/device-orientation-controls'
+import MarchingCubes from '-/pages/examples/threejs/marching-cubes'
 import Winds from '-/pages/examples/advanced/winds'
 import Editor from '-/pages/editor'
 
@@ -50,6 +51,7 @@ const Routes = Layout => ({ store }) => (
       <Route path="/examples/threejs/11" component={TriangleStrip} />
       <Route path="/examples/threejs/12" component={FPSControls} />
       <Route path="/examples/threejs/13" component={DeviceOrientation} />
+      <Route path="/examples/threejs/14" component={MarchingCubes} />
 
       <Route path="/examples/threejswebvr/00" component={HelloWebVr} />
       <Route path="/examples/threejswebvr/01" component={VRInput} />
