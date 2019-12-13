@@ -9,6 +9,7 @@ import BasicsOrtho from './elements/basics-ortho'
 import BasicsPersp from './elements/basics-persp'
 import VectorField from './elements/vector-field'
 import VectorFieldInput from './elements/vector-field-input'
+import Oscilloscope from './elements/oscilloscope'
 
 const state = new Baobab({
   light: {
@@ -68,7 +69,8 @@ const GraphingExample = () => (
         BasicsOrtho: wrap(BasicsOrtho, { state }),
         BasicsPersp: wrap(BasicsPersp, { state }),
         VectorField: wrap(VectorField, { state }),
-        VectorFieldInput: wrap(VectorFieldInput, { state })
+        VectorFieldInput: wrap(VectorFieldInput, { state }),
+        Oscilloscope: wrap(Oscilloscope, { state })
       }}
       init={init}
     />

@@ -30,3 +30,5 @@ One interesting thing to note is the shared state tree between each example, so 
 <VectorField />
 
 <VectorFieldInput />
+
+<Oscilloscope />

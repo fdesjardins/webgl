@@ -64,12 +64,10 @@ export const createLineGraph = (
   f,
   labelText,
   color = 0x0000ff,
-  style = 'solid'
+  style = 'solid',
+  range = [-10 * Math.PI, 10 * Math.PI],
+  res = 0.1
 ) => {
-  // const f = t => x => 5 * Math.sin(x + t / 200)
-  const range = [-10 * Math.PI, 10 * Math.PI]
-  const res = 0.1
-
   let i = range[0]
   const points = []
   while (i <= range[1]) {

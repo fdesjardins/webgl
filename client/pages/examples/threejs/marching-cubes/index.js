@@ -32,11 +32,22 @@ const init = ({ canvas, container }) => {
   controls.enableDamping = true
   controls.update()
 
-  const light = new THREE.PointLight(WHITE, 5, 1000)
-  light.position.set(0, 100, 0)
-  scene.add(light)
+  // const light = new THREE.PointLight(WHITE, 5, 1000)
+  // light.position.set(0, 100, 0)
+  // light.castShadow = true
+  // scene.add(light)
   const ambientLight = new THREE.AmbientLight(0x444444)
   scene.add(ambientLight)
+
+  const spotLight = new THREE.SpotLight(WHITE, 5)
+  spotLight.position.set(0, 100, 50)
+  spotLight.castShadow = true
+  spotLight.shadow.mapSize.width = 1024
+  spotLight.shadow.mapSize.height = 1024
+  spotLight.shadow.camera.near = 500
+  spotLight.shadow.camera.far = 4000
+  spotLight.shadow.camera.fov = 30
+  scene.add(spotLight)
 
   const cubesMaterial = new THREE.MeshPhongMaterial({
     color: 0xffeeaa,
@@ -48,6 +59,7 @@ const init = ({ canvas, container }) => {
   const cubesInstance = new MarchingCubes(20, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
   cubesInstance.scale.set(100, 100, 100)
+  cubesInstance.castShadow = true
   scene.add(cubesInstance)
 
   let thenSecs = 0

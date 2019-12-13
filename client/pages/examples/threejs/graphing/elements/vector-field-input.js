@@ -245,7 +245,7 @@ const init = ({ state }) => {
   }
 }
 
-const Oscilloscope = ({ state, labels }) => {
+const VectorFieldInput = ({ state, labels }) => {
   console.log(labels)
   React.useEffect(() => {
     if (document.getElementById('ex4')) {
@@ -261,4 +261,4 @@ const Oscilloscope = ({ state, labels }) => {
 }
 
 export { init }
-export default Oscilloscope
+export default VectorFieldInput
