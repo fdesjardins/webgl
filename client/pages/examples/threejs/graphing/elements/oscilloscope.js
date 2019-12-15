@@ -47,32 +47,27 @@ const init = ({ state }) => {
   grid.rotation.x = Math.PI / 2
   scene.add(grid)
 
-  const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
-    t => x => 2 * Math.sin(x + t / 400),
-    'f(x) = 2 * sin(x)',
-    0xffff00,
-    'solid',
-    range
-  )
-  scene.add(lineGraph)
-
   const axes = createAxes({ size: (range[1] - range[0]) / 2, fontSize: 0 })
   scene.add(axes)
-
-  for (let y = range[0]; y <= range[1]; y += gridSize * 2) {
-    const label = createLabel({ text: y.toFixed(0), size: 0.3 })
-    const bbox = new THREE.Box3().setFromObject(label)
-    label.position.y = y - bbox.getSize().y / 2
-    label.position.x = range[0] - bbox.getSize().x * 2.5
-    scene.add(label)
-  }
-  for (let x = range[0]; x <= range[1]; x += gridSize * 2) {
-    const label = createLabel({ text: x.toFixed(0), size: 0.3 })
-    const bbox = new THREE.Box3().setFromObject(label)
-    label.position.x = x - bbox.getSize().x / 2
-    label.position.y = -1 * range[1] - bbox.getSize().y * 2.5
-    scene.add(label)
-  }
+  //
+  // for (let y = range[0]; y <= range[1]; y += gridSize * 2) {
+  //   const label = createLabel({ text: y.toFixed(0), size: 0.3, color: WHITE })
+  //   const bbox = new THREE.Box3().setFromObject(label)
+  //   label.position.y = y - bbox.getSize().y / 2
+  //   label.position.x = range[0] - bbox.getSize().x * 2.5
+  //   scene.add(label)
+  // }
+  // for (let x = range[0]; x <= range[1]; x += Math.PI) {
+  //   const label = createLabel({
+  //     text: `${(x / Math.PI).toFixed(0)} PI`,
+  //     size: 0.3,
+  //     color: WHITE
+  //   })
+  //   const bbox = new THREE.Box3().setFromObject(label)
+  //   label.position.x = x - bbox.getSize().x / 2
+  //   label.position.y = -1 * range[1] - bbox.getSize().y * 2.5
+  //   scene.add(label)
+  // }
 
   const resizeRendererToDisplaySize = renderer => {
     const canvas = renderer.domElement
@@ -111,6 +106,64 @@ const init = ({ state }) => {
     }
   }
 
+  const note = {
+    label: 'A',
+    frequency: 1200
+  }
+
+  const zoom = 200
+
+  // const speedOfSound = 343
+  const c = 299792458
+  const wavelength = c / note.frequency
+  const amplitude = 0.5 * Math.PI
+
+  const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
+    t => x => {
+      // console.log(t * 0.001)
+      return 2 * amplitude * Math.sin((x * c) / wavelength / zoom)
+    },
+    'f(x) = 2 * sin(x)',
+    0xeeee00,
+    'solid',
+    range
+  )
+  scene.add(lineGraph)
+
+  const label = createLabel({
+    text: `Freq: ${parseFloat(note.frequency).toFixed(4)}Hz`,
+    size: 0.3,
+    color: WHITE
+  })
+  label.position.set(range[0] + gridSize, range[1] - gridSize, 0)
+  scene.add(label)
+
+  const cycleLabel = createLabel({
+    text: `Cycl: ${parseFloat(note.frequency).toFixed(4)}Hz`,
+    size: 0.3,
+    color: WHITE
+  })
+  cycleLabel.position.set(range[0] + gridSize, range[1] - gridSize * 2, 0)
+  scene.add(cycleLabel)
+
+  const vmaxLabel = createLabel({
+    text: `Vmax: ${parseFloat(amplitude).toFixed(4)}V`,
+    size: 0.3,
+    color: WHITE
+  })
+  vmaxLabel.position.set(range[1] * 0.25 + gridSize, range[1] - gridSize, 0)
+  scene.add(vmaxLabel)
+
+  const vminLabel = createLabel({
+    text: `Vmin: ${parseFloat(-1 * amplitude).toFixed(4)}V`,
+    size: 0.3,
+    color: WHITE
+  })
+  vminLabel.position.set(range[1] * 0.25 + gridSize, range[1] - gridSize * 2, 0)
+  scene.add(vminLabel)
+
+  console.log(wavelength)
+
   const objectState = state.select('object')
   let thenSecs = 0
   const animate = now => {
@@ -119,11 +172,11 @@ const init = ({ state }) => {
     }
     if (resizeRendererToDisplaySize(renderer)) {
       const c = renderer.domElement
-      camera.aspect = c.clientWidth / c.clientHeight
-      camera.left = c.clientWidth / -2
-      camera.right = c.clientWidth / 2
-      camera.top = c.clientHeight / 2
-      camera.bottom = c.clientHeight / -2
+      // camera.aspect = c.clientWidth / c.clientHeight
+      // camera.left = c.clientWidth / -2
+      // camera.right = c.clientWidth / 2
+      // camera.top = c.clientHeight / 2
+      // camera.bottom = c.clientHeight / -2
       camera.updateProjectionMatrix()
     }
 
@@ -157,11 +210,7 @@ const Oscilloscope = ({ state, labels }) => {
     }
   })
 
-  return (
-    <div style={{ width: '500px', height: '500px' }}>
-      <canvas id="oscilloscope" />
-    </div>
-  )
+  return <canvas id="oscilloscope" />
 }
 
 export { init }

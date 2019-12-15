@@ -10,6 +10,7 @@ import BasicsPersp from './elements/basics-persp'
 import VectorField from './elements/vector-field'
 import VectorFieldInput from './elements/vector-field-input'
 import Oscilloscope from './elements/oscilloscope'
+import Pendulum from './elements/pendulum'
 
 const state = new Baobab({
   light: {
@@ -59,18 +60,23 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
   </Component>
 )
 
-const style = css``
+const style = css`
+  canvas {
+    max-width: 350px;
+  }
+`
 
 const GraphingExample = () => (
   <div className={`${style} example-class`}>
     <Example
       notes={notes}
       components={{
-        BasicsOrtho: wrap(BasicsOrtho, { state }),
-        BasicsPersp: wrap(BasicsPersp, { state }),
-        VectorField: wrap(VectorField, { state }),
-        VectorFieldInput: wrap(VectorFieldInput, { state }),
-        Oscilloscope: wrap(Oscilloscope, { state })
+        BasicsOrtho: React.memo(wrap(BasicsOrtho, { state })),
+        BasicsPersp: React.memo(wrap(BasicsPersp, { state })),
+        VectorField: React.memo(wrap(VectorField, { state })),
+        VectorFieldInput: React.memo(wrap(VectorFieldInput, { state })),
+        Oscilloscope: React.memo(wrap(Oscilloscope, { state })),
+        Pendulum: React.memo(wrap(Pendulum, { state }))
       }}
       init={init}
     />

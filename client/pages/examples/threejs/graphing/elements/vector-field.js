@@ -9,19 +9,23 @@ const init = ({ state }) => {
 
   let scene = new THREE.Scene()
 
+  const domain = [-2 * Math.PI, 2 * Math.PI]
+  const gridSize = Math.PI / 4
+  // left, right, top, bottom
+  const margin = [1, 1, 1, 1]
+
   const camera = new THREE.OrthographicCamera(
-    canvas.clientWidth / -2,
-    canvas.clientWidth / 2,
-    canvas.clientWidth / 2,
-    canvas.clientWidth / -2,
+    domain[0] - margin[0],
+    domain[1] + margin[1],
+    domain[1] + margin[2],
+    domain[0] - margin[3],
     0.1,
     1000
   )
+  camera.updateProjectionMatrix()
   camera.position.z = 500
   camera.position.x = 0
   camera.position.y = 0
-  camera.zoom = 32.999
-  camera.updateProjectionMatrix()
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -35,9 +39,6 @@ const init = ({ state }) => {
   const light = new THREE.PointLight(0xffffff, 2, 100)
   light.position.set(0, 0, 20)
   scene.add(light)
-
-  const domain = [-2 * Math.PI, 2 * Math.PI]
-  const gridSize = Math.PI / 4
 
   const objects = []
   // const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x0000ff]
@@ -115,31 +116,11 @@ const init = ({ state }) => {
   // title.position.x = 0 - bbox.getSize().x / 2
   // scene.add(title)
 
-  const resizeRendererToDisplaySize = renderer => {
-    const canvas = renderer.domElement
-    const width = canvas.clientWidth
-    const height = canvas.clientHeight
-    const needResize = canvas.width !== width || canvas.height !== height
-    if (needResize) {
-      renderer.setSize(width, height, false)
-    }
-    return needResize
-  }
-
   const objectState = state.select('object')
   let thenSecs = 0
   const animate = now => {
     if (!renderer) {
       return
-    }
-    if (resizeRendererToDisplaySize(renderer)) {
-      const c = renderer.domElement
-      camera.aspect = c.clientWidth / c.clientHeight
-      camera.left = c.clientWidth / -2
-      camera.right = c.clientWidth / 2
-      camera.top = c.clientHeight / 2
-      camera.bottom = c.clientHeight / -2
-      camera.updateProjectionMatrix()
     }
 
     requestAnimationFrame(animate)
@@ -210,11 +191,7 @@ const VectorField = ({ state, labels }) => {
     }
   })
 
-  return (
-    <div style={{ width: '500px', height: '500px' }}>
-      <canvas id="ex3" />
-    </div>
-  )
+  return <canvas id="ex3" />
 }
 
 export { init }

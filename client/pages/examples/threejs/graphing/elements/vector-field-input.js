@@ -22,11 +22,10 @@ const init = ({ state }) => {
     0.1,
     1000
   )
-  camera.position.z = 500
+  camera.updateProjectionMatrix()
+  camera.position.z = 100
   camera.position.x = 0
   camera.position.y = 0
-  // camera.zoom = 37.999
-  camera.updateProjectionMatrix()
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -113,17 +112,6 @@ const init = ({ state }) => {
     scene.add(label)
   }
 
-  const resizeRendererToDisplaySize = renderer => {
-    const canvas = renderer.domElement
-    const width = canvas.clientWidth
-    const height = canvas.clientHeight
-    const needResize = canvas.width !== width || canvas.height !== height
-    if (needResize) {
-      renderer.setSize(width, height, false)
-    }
-    return needResize
-  }
-
   let lastMousePos = { x: 0.5, y: 0.5 }
   const mousePos = event => {
     const bounds = event.target.getBoundingClientRect()
@@ -158,15 +146,6 @@ const init = ({ state }) => {
   const animate = now => {
     if (!renderer) {
       return
-    }
-    if (resizeRendererToDisplaySize(renderer)) {
-      const c = renderer.domElement
-      camera.aspect = c.clientWidth / c.clientHeight
-      camera.left = c.clientWidth / -2
-      camera.right = c.clientWidth / 2
-      camera.top = c.clientHeight / 2
-      camera.bottom = c.clientHeight / -2
-      camera.updateProjectionMatrix()
     }
 
     requestAnimationFrame(animate)
@@ -253,11 +232,7 @@ const VectorFieldInput = ({ state, labels }) => {
     }
   })
 
-  return (
-    <div style={{ width: '500px', height: '500px' }}>
-      <canvas id="ex4" />
-    </div>
-  )
+  return <canvas id="ex4" />
 }
 
 export { init }
