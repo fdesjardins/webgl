@@ -1,5 +1,6 @@
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import * as THREE from 'three'
+import threeOrbitControls from 'three-orbit-controls'
 
 export const createAxes = ({ size, fontSize = 3 }) => {
   const fontLoader = new THREE.FontLoader()
@@ -172,4 +173,44 @@ export const createGraph = (f, labelText) => {
   //   })
   // }
   return { object, animate }
+}
+
+export const createPoint = ({ size = 0.125, color = 0x000000 }) => {
+  const geometry = new THREE.SphereBufferGeometry(size)
+  const material = new THREE.MeshLambertMaterial({ color })
+  const object = new THREE.Mesh(geometry, material)
+  return object
+}
+
+export const addAxesLabels = ({ scene, domain, gridSize }) => {
+  const width = domain[1] - domain[0]
+  const center = (domain[1] + domain[0]) / 2
+  const [left, right, top, bottom] = [
+    center - width / 2,
+    center + width / 2,
+    center + width / 2,
+    center - width / 2
+  ]
+  for (let y = domain[0]; y <= domain[1]; y += gridSize * 2) {
+    const label = createLabel({ text: y.toFixed(0), size: 0.3 })
+    const bbox = new THREE.Box3().setFromObject(label)
+    label.position.y = y - bbox.getSize().y / 2
+    label.position.x = left - bbox.getSize().x - 0.5
+    scene.add(label)
+  }
+  for (let x = domain[0]; x <= domain[1]; x += gridSize * 2) {
+    const label = createLabel({ text: x.toFixed(0), size: 0.3 })
+    const bbox = new THREE.Box3().setFromObject(label)
+    label.position.x = x - bbox.getSize().x / 2
+    label.position.y = bottom - bbox.getSize().y * 2.5
+    scene.add(label)
+  }
+}
+
+export const addControls = ({ camera, renderer }) => {
+  const OrbitControls = threeOrbitControls(THREE)
+  const controls = new OrbitControls(camera, renderer.domElement)
+  controls.enableDamping = true
+  controls.update()
+  return controls
 }

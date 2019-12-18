@@ -11,6 +11,7 @@ import VectorField from './elements/vector-field'
 import VectorFieldInput from './elements/vector-field-input'
 import Oscilloscope from './elements/oscilloscope'
 import Pendulum from './elements/pendulum'
+import ForceDirectedGraph from './elements/force-directed-graph'
 
 const state = new Baobab({
   light: {
@@ -76,7 +77,8 @@ const GraphingExample = () => (
         VectorField: React.memo(wrap(VectorField, { state })),
         VectorFieldInput: React.memo(wrap(VectorFieldInput, { state })),
         Oscilloscope: React.memo(wrap(Oscilloscope, { state })),
-        Pendulum: React.memo(wrap(Pendulum, { state }))
+        Pendulum: React.memo(wrap(Pendulum, { state })),
+        ForceDirectedGraph: React.memo(wrap(ForceDirectedGraph, { state }))
       }}
       init={init}
     />

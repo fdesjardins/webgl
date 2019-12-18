@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@mdx-js/runtime": "^1.5.1",
+    "@tweenjs/tween.js": "^18.5.0",
     "baobab": "^2.5.2",
     "baobab-react": "^4.0.0",
     "bluebird": "^3.7.1",

@@ -8,31 +8,14 @@ One interesting thing to note is the shared state tree between each example, so 
 
 <BasicsOrtho labels="true"/>
 
-<BasicsPersp labels="true"/>
+<!-- <BasicsPersp labels="true"/>
 
-<!-- <div class="ui cards">
-  <div class="ui card">
-    <div class="content">
-      <span class="header">Basic Functions</span>
-      <div class="meta">
-        <a>Orthographic Camera</a>
-      </div>
-    </div>
-  </div>
-  <div class="ui card">
-    <div class="content">
-      <span class="header">Basic Functions</span>
-      <div class="meta">
-        <a>Perspective Camera</a>
-      </div>
-    </div>
-  </div>
-</div> -->
+<Oscilloscope /> -->
 
 <VectorField />
 
 <VectorFieldInput />
 
-<Oscilloscope />
-
 <Pendulum />
+
+<ForceDirectedGraph />
