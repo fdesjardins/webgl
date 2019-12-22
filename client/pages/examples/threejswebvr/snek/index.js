@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-//import 'three/examples/js/vr/HelioWebXRPolyfill.js'
+import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
@@ -199,10 +199,7 @@ const distanceVector =( v1, v2 ) =>{
       raycaster.set( cameraWorldPos, cameraWorldDir )
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
-          //console.log(intersects[i])
           if(intersects[i].distance < .2+1*userVelocity){
-            console.log(intersects[i])
-            console.log(lastPathBlock)
             if(intersects[i].object.position.x !=lastPathBlock.x&&
             intersects[i].object.position.z !=lastPathBlock.z){
               killMe()
@@ -217,7 +214,13 @@ const distanceVector =( v1, v2 ) =>{
       hand2mesh.quaternion.copy(hand2.quaternion)
       try{
         mycamera = renderer.vr.getCamera(camera)
-      camControls.enabled=false;
+        camControls.enabled=false;
+        // if(mobile){
+        //   camControls.update()
+        // }else{
+        //   camControls.update(clock.getDelta())
+        // }
+
       }catch(ex){
         mycamera = camera
         if(mobile){
