@@ -10,9 +10,20 @@ import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.j
 import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls.js'
 import {DeviceOrientationControls} from 'three/examples/jsm/controls/DeviceOrientationControls.js'
 import { css } from 'emotion'
+import * as Tone from 'tone'
 
+
+const start = ({ canvas, container }) => {
+
+}
 
 const init = ({ canvas, container }) => {
+  window.synth = new Tone.Synth().toMaster();
+  let distortion = new Tone.Distortion(0.4).toMaster();
+  window.synth.connect(distortion)
+  window.synth.triggerAttackRelease("C5", "8n");
+
+
   let scene = new THREE.Scene()
   let user = new THREE.Group();
   const camera = new THREE.PerspectiveCamera(
@@ -89,10 +100,11 @@ const init = ({ canvas, container }) => {
   scene.add(user)
   const roomsize = 400
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(roomsize, roomsize, roomsize, roomsize, roomsize, roomsize),
+    new BoxLineGeometry(roomsize, 10, roomsize, roomsize, 10, roomsize),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  room.geometry.translate(0, roomsize/2, 0)
+  //room.geometry.translate(0, roomsize/2, 0)
+  room.geometry.translate(0, 5, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -133,13 +145,15 @@ const distanceVector =( v1, v2 ) =>{
 
   const killMe = () =>{
     user.position.x =0
-    user.position.y =175
+    user.position.y =300
     user.position.z =0
     userVelocity = 0
     if(!mobile){camControls.lookAt(0,0,0)}
 
       camControls.lookSpeed = 0.01
-      setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 3000);
+      window.synth.triggerAttackRelease("E5", "8n");
+
+      setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
   }
   let mycamera = false
 
@@ -182,9 +196,6 @@ const distanceVector =( v1, v2 ) =>{
   }
 
 
-
-
-
   let clock = new THREE.Clock()
   lastPathBlock.copy(user.position)
 
@@ -216,11 +227,6 @@ const distanceVector =( v1, v2 ) =>{
       try{
         mycamera = renderer.vr.getCamera(camera)
         camControls.enabled=false;
-        // if(mobile){
-        //   camControls.update()
-        // }else{
-        //   camControls.update(clock.getDelta())
-        // }
 
       }catch(ex){
         mycamera = camera
@@ -256,6 +262,8 @@ const distanceVector =( v1, v2 ) =>{
 
            scene.add(pathHolder)
            lastPathBlock.copy(user.position)
+
+           window.synth.triggerAttackRelease("E3", ".00001");
          }
        }
        lastUserPosition.copy(user.position)
