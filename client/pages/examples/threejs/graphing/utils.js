@@ -1,6 +1,7 @@
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
+import particleTexture from '-/assets/particle3.png'
 
 export const createAxes = ({ size, fontSize = 3 }) => {
   const fontLoader = new THREE.FontLoader()
@@ -175,9 +176,38 @@ export const createGraph = (f, labelText) => {
   return { object, animate }
 }
 
-export const createPoint = ({ size = 0.125, color = 0x000000 }) => {
-  const geometry = new THREE.SphereBufferGeometry(size)
-  const material = new THREE.MeshLambertMaterial({ color })
+const particleTextureMap = THREE.ImageUtils.loadTexture(particleTexture)
+
+export const createParticle = ({
+  size = 0.125,
+  color = 0x0000ff,
+  transparent = true,
+  opacity = 0.5
+}) => {
+  const geometry = new THREE.PlaneBufferGeometry(size, size)
+  const material = new THREE.MeshBasicMaterial({
+    color,
+    opacity,
+    transparent,
+    map: particleTextureMap
+    // blending: THREE.AdditiveBlending
+  })
+  const object = new THREE.Mesh(geometry, material)
+  return object
+}
+
+export const createPoint = ({
+  size = 0.125,
+  color = 0x000000,
+  transparent = false,
+  opacity = 1
+}) => {
+  const geometry = new THREE.SphereBufferGeometry(size, size)
+  const material = new THREE.MeshBasicMaterial({
+    color,
+    opacity,
+    transparent
+  })
   const object = new THREE.Mesh(geometry, material)
   return object
 }
@@ -192,17 +222,17 @@ export const addAxesLabels = ({ scene, domain, gridSize }) => {
     center - width / 2
   ]
   for (let y = domain[0]; y <= domain[1]; y += gridSize * 2) {
-    const label = createLabel({ text: y.toFixed(0), size: 0.3 })
+    const label = createLabel({ text: y.toFixed(0), size: gridSize / 2 })
     const bbox = new THREE.Box3().setFromObject(label)
     label.position.y = y - bbox.getSize().y / 2
-    label.position.x = left - bbox.getSize().x - 0.5
+    label.position.x = left - bbox.getSize().x - width / 25
     scene.add(label)
   }
   for (let x = domain[0]; x <= domain[1]; x += gridSize * 2) {
-    const label = createLabel({ text: x.toFixed(0), size: 0.3 })
+    const label = createLabel({ text: x.toFixed(0), size: gridSize / 2 })
     const bbox = new THREE.Box3().setFromObject(label)
     label.position.x = x - bbox.getSize().x / 2
-    label.position.y = bottom - bbox.getSize().y * 2.5
+    label.position.y = bottom - bbox.getSize().y - width / 25
     scene.add(label)
   }
 }
@@ -213,4 +243,17 @@ export const addControls = ({ camera, renderer }) => {
   controls.enableDamping = true
   controls.update()
   return controls
+}
+
+export const createConnectingLine = (source, target, color = 0x000000) => {
+  const geometry = new THREE.Geometry()
+  geometry.dynamic = true
+  geometry.vertices.push(source.position)
+  geometry.vertices.push(target.position)
+  geometry.verticesNeedUpdate = true
+  const material = new THREE.LineBasicMaterial({
+    color
+  })
+  const line = new THREE.Line(geometry, material)
+  return line
 }

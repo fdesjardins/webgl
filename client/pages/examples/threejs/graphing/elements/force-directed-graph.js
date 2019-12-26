@@ -7,7 +7,8 @@ import {
   createLabel,
   addControls,
   createPoint,
-  addAxesLabels
+  addAxesLabels,
+  createConnectingLine
 } from '../utils'
 
 const WHITE = 0xffffff
@@ -71,6 +72,16 @@ const init = ({ state }) => {
     scene.add(p)
     points.push(p)
   }
+  //
+  // const lines = []
+  // points.map((p0, i) => {
+  //   points.map((p1, j) => {
+  //     if (i < j) {
+  //       lines.push(createConnectingLine(p0, p1, 0xcccccc))
+  //     }
+  //   })
+  // })
+  // lines.map(l => scene.add(l))
 
   const axes = createAxes({ size: (domain[1] - domain[0]) / 2, fontSize: 0 })
   axes.position.set(center, center, 0)
@@ -151,6 +162,10 @@ const init = ({ state }) => {
         })
       )
     }
+
+    // lines.map(l => {
+    //   l.geometry.verticesNeedUpdate = true
+    // })
 
     const mousePosVec = new THREE.Vector2(lastMousePos.x, lastMousePos.y)
     raycaster.setFromCamera(mousePosVec, camera)
