@@ -182,14 +182,15 @@ export const createParticle = ({
   size = 0.125,
   color = 0x0000ff,
   transparent = true,
-  opacity = 0.5
+  opacity = 0.15
 }) => {
   const geometry = new THREE.PlaneBufferGeometry(size, size)
   const material = new THREE.MeshBasicMaterial({
     color,
     opacity,
     transparent,
-    map: particleTextureMap
+    map: particleTextureMap,
+    depthTest: false
     // blending: THREE.AdditiveBlending
   })
   const object = new THREE.Mesh(geometry, material)
@@ -221,18 +222,21 @@ export const addAxesLabels = ({ scene, domain, gridSize }) => {
     center + width / 2,
     center - width / 2
   ]
+  const size = new THREE.Vector3()
   for (let y = domain[0]; y <= domain[1]; y += gridSize * 2) {
     const label = createLabel({ text: y.toFixed(0), size: gridSize / 2 })
     const bbox = new THREE.Box3().setFromObject(label)
-    label.position.y = y - bbox.getSize().y / 2
-    label.position.x = left - bbox.getSize().x - width / 25
+    bbox.getSize(size)
+    label.position.y = y - size.y / 2
+    label.position.x = left - size.x - width / 25
     scene.add(label)
   }
   for (let x = domain[0]; x <= domain[1]; x += gridSize * 2) {
     const label = createLabel({ text: x.toFixed(0), size: gridSize / 2 })
     const bbox = new THREE.Box3().setFromObject(label)
-    label.position.x = x - bbox.getSize().x / 2
-    label.position.y = bottom - bbox.getSize().y - width / 25
+    bbox.getSize(size)
+    label.position.x = x - size.x / 2
+    label.position.y = bottom - size.y - width / 25
     scene.add(label)
   }
 }
