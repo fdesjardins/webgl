@@ -6,7 +6,7 @@ const resolve = d => path.join(__dirname, d)
 
 module.exports = {
   entry: {
-    app: [ 'babel-polyfill', resolve('client/index') ]
+    app: ['babel-polyfill', resolve('client/index')]
   },
 
   output: {
@@ -16,8 +16,8 @@ module.exports = {
   },
 
   resolve: {
-    modules: [ 'node_modules' ],
-    extensions: [ '*', '.json', '.jsx', '.js' ],
+    modules: ['node_modules'],
+    extensions: ['*', '.json', '.jsx', '.js'],
     alias: {
       '-': resolve('client'),
       'react-dom': '@hot-loader/react-dom'
@@ -29,19 +29,19 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [ 'babel-loader' ]
+        loaders: ['babel-loader']
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [ 'file-loader' ]
+        loaders: ['file-loader']
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(glsl|md|obj|map)$/i,
-        loaders: [ 'raw-loader' ]
+        loaders: ['raw-loader']
       }
     ],
     unknownContextCritical: false,
@@ -60,5 +60,9 @@ module.exports = {
     compress: true,
     port: 9090,
     host: '0.0.0.0'
+  },
+
+  node: {
+    fs: 'empty'
   }
 }
