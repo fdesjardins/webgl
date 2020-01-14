@@ -154,7 +154,7 @@ const init = ({ state }) => {
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
 
-    if (nowSecs % 3 < 0.015) {
+    if (nowSecs % 3 < 0.025) {
       points.map(p =>
         createTween(p.position, {
           x: center + (Math.random() - 0.5) * domain[1],

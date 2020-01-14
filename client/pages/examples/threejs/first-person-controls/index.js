@@ -1,11 +1,11 @@
 import React from 'react'
 import * as THREE from 'three'
-import {BufferGeometryUtils} from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls.js'
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 
-let rand = Math.random
+const rand = Math.random
 
 const init = ({ canvas, container }) => {
   let renderer = new THREE.WebGLRenderer({ canvas })
@@ -16,21 +16,21 @@ const init = ({ canvas, container }) => {
     0.1,
     1000
   )
-  let clock = new THREE.Clock()
+  const clock = new THREE.Clock()
 
   camera.position.z = 10
   camera.position.y = 5
 
-   const randInt = () =>{
-     return Math.floor(Math.random() * 10);
-   }
-  const size = 50;
-  const divisions = 50;
-  let gridHelper = new THREE.GridHelper( size, divisions );
-  gridHelper.position.x=0
-  gridHelper.position.y=0
-  gridHelper.position.z=0
-  scene.add( gridHelper );
+  const randInt = () => {
+    return Math.floor(Math.random() * 10)
+  }
+  const size = 50
+  const divisions = 50
+  const gridHelper = new THREE.GridHelper(size, divisions)
+  gridHelper.position.x = 0
+  gridHelper.position.y = 0
+  gridHelper.position.z = 0
+  scene.add(gridHelper)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
 
@@ -38,8 +38,7 @@ const init = ({ canvas, container }) => {
   light.position.set(0, 1, -3)
   scene.add(light)
 
-
-  let camControls = new FirstPersonControls(camera, canvas)
+  const camControls = new FirstPersonControls(camera, canvas)
   camControls.lookSpeed = 0.4
   camControls.movementSpeed = 4
   camControls.noFly = true
@@ -58,12 +57,11 @@ const init = ({ canvas, container }) => {
 
       renderer.render(scene, camera)
     }
-
   }
 
-animate()
+  animate()
 
-return () => {
+  return () => {
     renderer.dispose()
     scene.dispose()
     scene = null

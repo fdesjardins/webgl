@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
+import { FaceNormalsHelper } from 'three/examples/jsm/helpers/FaceNormalsHelper'
 
 import { createAxes, createLineGraph, create3dGraph } from '../utils'
 
@@ -42,7 +43,7 @@ const init = ({ state }) => {
   const geometry = new THREE.IcosahedronGeometry(1)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
   const object = new THREE.Mesh(geometry, material)
-  const faceNormals = new THREE.FaceNormalsHelper(object, 2, 0x00ff00, 1)
+  const faceNormals = new FaceNormalsHelper(object, 2, 0x00ff00, 1)
   object.add(faceNormals)
   object.add(createAxes({ size: 12, fontSize: 2 }))
   scene.add(object)

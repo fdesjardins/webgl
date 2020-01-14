@@ -6,18 +6,16 @@ Here, the WebGL parts are broken out a little more into their own components to 
 
 One interesting thing to note is the shared state tree between each example, so the object orbit is synchronized in all examples.
 
-<!-- <BasicsOrtho labels="true"/> -->
+<BasicsOrtho labels="true"/>
 
 <!-- <BasicsPersp labels="true"/> -->
 
-<!-- <Oscilloscope /> -->
+<Oscilloscope />
 
-<!-- <VectorField /> -->
+<VectorField />
 
-<!-- <VectorFieldInput /> -->
+<VectorFieldInput />
 
-<!-- <Pendulum /> -->
+<Pendulum />
 
-<!-- <ForceDirectedGraph /> -->
-
-<SPH />
+<ForceDirectedGraph />

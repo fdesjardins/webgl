@@ -30,7 +30,7 @@ const state = new Baobab({
 })
 
 const setupVideo = () => {
-  const url = 'https://storage.googleapis.com/avcp-camera-images/ken.mp4'
+  const url = 'https://storage.googleapis.com/avcp-camera-images/447B.mp4'
 
   const video = document.createElement('video')
   video.autoplay = true
@@ -66,35 +66,24 @@ const init = ({ canvas, container }) => {
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
   scene.background = new THREE.Color(0xffffff)
 
-  // const light = new THREE.PointLight(0xffffff, 1, 100)
-  // light.position.set(0, 0, 0)
-  // light.castShadow = true
-  // light.shadow.mapSize.width = 1024
-  // light.shadow.mapSize.height = 1024
-  // light.shadow.camera.near = 0.5
-  // light.shadow.camera.far = 500
-  // scene.add(light)
   const light = new THREE.AmbientLight(0xffffff)
   scene.add(light)
 
-  // const light2 = light.clone()
-  // light2.position.set(0, 0, 30)
-  // scene.add(light2)
+  const videoTexture = new THREE.VideoTexture(video)
+  videoTexture.format = THREE.RGBFormat
+  videoTexture.minFilter = THREE.LinearFilter
+  videoTexture.magFilter = THREE.LinearFilter
+  videoTexture.needsUpdate = true
+  videoTexture.anisotropy = renderer.getMaxAnisotropy()
 
-  // const videoTexture = new THREE.VideoTexture(video)
-  // videoTexture.format = THREE.RGBFormat
-  // videoTexture.minFilter = THREE.LinearFilter
-  // videoTexture.magFilter = THREE.LinearFilter
-  // videoTexture.needsUpdate = true
-
-  const texture = new THREE.TextureLoader().load(
-    'https://storage.googleapis.com/avcp-camera-images/new-ken.jpg'
-  )
-  texture.anisotropy = renderer.getMaxAnisotropy()
+  // const texture = new THREE.TextureLoader().load(
+  //   'https://storage.googleapis.com/avcp-camera-images/new-ken.jpg'
+  // )
+  // texture.anisotropy = renderer.getMaxAnisotropy()
 
   const geometry = new THREE.SphereBufferGeometry(10, 32, 32)
   const material = new THREE.MeshPhongMaterial({
-    map: texture,
+    map: videoTexture,
     side: THREE.DoubleSide,
     shadowSide: THREE.DoubleSide
   })
@@ -103,30 +92,10 @@ const init = ({ canvas, container }) => {
 
   const object = new THREE.Mesh(geometry, material)
   object.matrixAutoUpdate = true
-  object.castShadow = true
-  // object.position.z = -1
   scene.add(object)
 
-  // const planeGeometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
-  // const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff })
-  // const plane = new THREE.Mesh(planeGeometry, planeMaterial)
-  // plane.position.z = -50
-  // plane.receiveShadow = true
-  // scene.add(plane)
-  //
-  // const planeGeometry3 = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
-  // const planeMaterial3 = new THREE.MeshStandardMaterial({ color: 0x000000 })
-  // const plane3 = new THREE.Mesh(planeGeometry3, planeMaterial3)
-  // plane3.position.z = -30
-  // plane3.position.x = 10
-  // plane3.receiveShadow = true
-  // scene.add(plane3)
-
-  const objectState = state.select('object')
   const animate = () => {
-    object.rotation.x += objectState.get(['rotationSpeed', 'x'])
-    object.rotation.y += objectState.get(['rotationSpeed', 'y'])
-    object.rotation.z += objectState.get(['rotationSpeed', 'z'])
+    object.rotation.y += 0.0025
 
     if (renderer) {
       requestAnimationFrame(animate)

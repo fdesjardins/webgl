@@ -14,6 +14,7 @@ const style = css`
     top: 0;
     left: 0;
     right: 0;
+    z-index: 99;
   }
   .content {
     padding: 150px 0;

@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
+import { FaceNormalsHelper } from 'three/examples/jsm/helpers/FaceNormalsHelper'
 
 import { createAxes, createLineGraph, create3dGraph } from '../utils'
 
@@ -9,7 +10,12 @@ const init = ({ state }) => {
 
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.updateProjectionMatrix()
   camera.position.z = 65
   camera.position.x = 7
@@ -32,7 +38,7 @@ const init = ({ state }) => {
   const geometry = new THREE.IcosahedronGeometry(1)
   const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
   const object = new THREE.Mesh(geometry, material)
-  const faceNormals = new THREE.FaceNormalsHelper(object, 2, 0x00ff00, 1)
+  const faceNormals = new FaceNormalsHelper(object, 2, 0x00ff00, 1)
   object.add(faceNormals)
   object.add(createAxes({ size: 12, fontSize: 2 }))
   scene.add(object)
