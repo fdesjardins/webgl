@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import { MarchingCubes } from 'three/examples/jsm/objects/MarchingCubes'
+import tinygradient from 'tinygradient'
 
 import {
   createAxes,
@@ -195,16 +196,16 @@ const config = {
     surfaceResolution: 26
   },
   sim: {
-    numParticles: 600,
-    numToAdd: 4,
+    numParticles: 700,
+    numToAdd: 8,
     particleSize: 1
   },
   sph: {
     h: 4,
-    gasConstant: 30,
-    mass: 10,
+    gasConstant: 100,
+    mass: 5,
     restDensity: 1,
-    viscosity: 20
+    viscosity: 30
   }
 }
 
@@ -218,8 +219,11 @@ const init = ({ state }) => {
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
 
-  const ambientLight = new THREE.AmbientLight(WHITE)
+  const ambientLight = new THREE.AmbientLight(0x707070)
   scene.add(ambientLight)
+  const pointLight = new THREE.PointLight(WHITE)
+  pointLight.position.set(20, 20, -20)
+  scene.add(pointLight)
 
   const { domain, gridSize, margin } = config.scene
 
@@ -335,12 +339,36 @@ const init = ({ state }) => {
     color: 0xcccccc,
     opacity: 0.85,
     transparent: true,
-    refractionRatio: 0.85,
-    vertexColors: THREE.VertexColors
+    refractionRatio: 0.5,
+    vertexColors: THREE.VertexColors,
+    shininess: 60
   })
-  let cubesInstance = new MarchingCubes(28, cubesMaterial, true, true)
+  let cubesInstance = new MarchingCubes(24, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
   cubesInstance.scale.set(40, 40, 40)
+
+  const carribean = [
+    '#cbdcf2',
+    '#91e1e9',
+    '#00c0e3',
+    '#0096cc',
+    '#006fb6',
+    '#044185'
+  ]
+  const lava = ['#fff1a1', '#d9a848', '#c93200', '#841800', '#3d0a03']
+  const acid = ['#b0bf1a', '#3b8e22', '#1e4d2b', '#0d2b0f']
+  const gradient = tinygradient(carribean)
+  const lookUpTable = {}
+  const gradientMax = config.sph.restDensity * 2
+  const gradientMin = config.sph.restDensity / 2
+  for (let i = gradientMin; i <= gradientMax; i += 0.1) {
+    lookUpTable[i.toFixed(1).toString()] = new THREE.Color(
+      gradient.rgbAt(i / gradientMax).toHexString()
+    )
+  }
+  const maxColor = new THREE.Color(
+    lookUpTable[Object.keys(lookUpTable).length - 1]
+  )
 
   const animate = now => {
     if (!renderer) {
@@ -398,6 +426,14 @@ const init = ({ state }) => {
 
     // Calculate forces
     calcDensityPressure(particles, neighbors, config.sph)
+    //
+    // const mousePosVec = new THREE.Vector2(lastMousePos.x, lastMousePos.y)
+    // raycaster.setFromCamera(mousePosVec, camera)
+    // const intersects = raycaster.intersectObjects(particles)
+    // if (intersects.length > 0) {
+    //   intersects[0].object.pressure += 500
+    // }
+
     calcForces(particles, neighbors, config.sph)
 
     const particleRadius = particleSize / 2
@@ -460,23 +496,8 @@ const init = ({ state }) => {
 
     // Update color of particles and fluid
     particles.map(p => {
-      let color
-      if (p.density > config.sph.restDensity * 2.2) {
-        color = 0x00445c
-        // p.material.color.set(0x01546c)
-        // p.material.color.set(0xff0000)
-      } else if (p.density > config.sph.restDensity * 1.2) {
-        color = 0x036fa1
-        // p.material.color.set(0x036fa1)
-        // p.material.color.set(0xaa00aa)
-      } else if (p.density > config.sph.restDensity / 1.8) {
-        color = 0x09c3be
-        // p.material.color.set(0x09c3be)
-      } else {
-        color = 0x77ffff
-      }
+      const color = lookUpTable[p.density.toFixed(1)] || maxColor
       p.material.color.set(color)
-
       cubesInstance.addBall(
         (p.position.x + 40) / 80,
         (p.position.y + 40) / 80,
@@ -487,9 +508,6 @@ const init = ({ state }) => {
       )
     })
 
-    // const mousePosVec = new THREE.Vector2(lastMousePos.x, lastMousePos.y)
-    // raycaster.setFromCamera(mousePosVec, camera)
-    // const intersects = raycaster.intersectObjects(particles)
     // if (label) {
     //   label.lookAt(camera.position)
     // }

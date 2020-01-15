@@ -19,9 +19,9 @@ const state = new Baobab({
   showGrid: false,
   showSurface: true,
   showParticles: true,
-  viscosity: 20,
+  viscosity: 30,
   timestep: 0.02,
-  surfaceResolution: 23
+  surfaceResolution: 24
 })
 
 const style = css`
