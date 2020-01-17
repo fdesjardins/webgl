@@ -3,7 +3,7 @@ import { branch } from 'baobab-react/higher-order'
 
 // import webglUtils from 'vendor/webgl-utils.js'
 
-import utils, { sq } from '-/utils'
+import { shouldUpdate, sq } from '-/utils'
 import UpDownLeftRight from '-/components/controls/up-down-left-right'
 
 import Example from '-/components/example'
@@ -14,9 +14,15 @@ import fragShader from './fragment.glsl'
 const didMount = (selector, scene, subscribe) => () => {
   const canvas = document.querySelector(selector)
   const gl = canvas.getContext('webgl2')
-  const program = webglUtils.createProgramFromSources(gl, [vtxShader, fragShader])
+  const program = webglUtils.createProgramFromSources(gl, [
+    vtxShader,
+    fragShader
+  ])
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
-  const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution')
+  const resolutionUniformLocation = gl.getUniformLocation(
+    program,
+    'u_resolution'
+  )
   const colorLocation = gl.getUniformLocation(program, 'u_color')
   const positionBuffer = gl.createBuffer()
   const vao = gl.createVertexArray()
@@ -70,7 +76,7 @@ const HelloWorld = ({ scene, controls, subscribe }) => {
         notes={notes}
         components={components}
         onComponentDidMount={didMount('#canvas', scene, subscribe)}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentShouldUpdate={shouldUpdate}
       />
     </div>
   )

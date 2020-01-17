@@ -357,7 +357,7 @@ const init = ({ state }) => {
   ]
   const lava = ['#fff1a1', '#d9a848', '#c93200', '#841800', '#3d0a03']
   const acid = ['#b0bf1a', '#3b8e22', '#1e4d2b', '#0d2b0f']
-  const gradient = tinygradient(carribean)
+  const gradient = tinygradient(lava)
   const lookUpTable = {}
   const gradientMax = config.sph.restDensity * 2
   const gradientMin = config.sph.restDensity / 2

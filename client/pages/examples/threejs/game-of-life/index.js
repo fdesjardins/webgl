@@ -28,20 +28,18 @@ void main(){
   }
 }`
 
+const width = 4096
+const height = 4096
+
 const fs = `
+uniform float iTime;
 uniform sampler2D texture;
 varying vec2 vUv;
 
-void edgeKernel(inout float kernel[9]){
-  kernel[0] = 0.0;
-  kernel[1] = -1.0;
-  kernel[2] = 0.0;
-  kernel[3] = -1.0;
-  kernel[4] = 4.0;
-  kernel[5] = -1.0;
-  kernel[6] = 0.0;
-  kernel[7] = -1.0;
-  kernel[8] = 0.0;
+void edgeKernel(inout float k[9]){
+  k[0] = 0.0;   k[1] = -1.0;  k[2] = 0.0;
+  k[3] = -1.0;  k[4] = 4.0;   k[5] = -1.0;
+  k[6] = 0.0;   k[7] = -1.0;  k[8] = 0.0;
 }
 
 void gaussianKernel(inout float k[9]){
@@ -78,17 +76,30 @@ vec4 convolve(float kernel[9], vec2 stepSize){
   return sum;
 }
 
+float rand(vec2 co){
+  return fract(sin(dot(co.xy ,vec2(12.9898, 78.233))) * 43758.5453);
+}
+
 void main(){
   float kernel[9];
   // edgeKernel(kernel);
-  // passthrough(kernel);
-  // gameOfLifeKernel(kernel);
+  passthrough(kernel);
+  gameOfLifeKernel(kernel);
   // gaussianKernel(kernel);
-  vec2 stepSize = 1.0 / vec2(10.0, 10.0);
+  vec2 stepSize = 1.0 / vec2(${width}.0, ${height}.0);
   vec4 sum = convolve(kernel, stepSize);
 
   // gl_FragColor = texture2D(texture, vUv);
-  gl_FragColor = sum;
+  // gl_FragColor = sum;
+
+  if (sum.x == 3.0) {
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+  } else if (sum.x == 2.0) {
+    vec4 current = texture2D(texture, vec2(vUv.x, vUv.y));
+    gl_FragColor = current;
+  } else {
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+  }
 }`
 
 const fs2 = `
@@ -119,36 +130,124 @@ void main(){
 }
 `
 
+const set = (data, i) => {
+  data[i * 3] = 255
+  data[i * 3 + 1] = 255
+  data[i * 3 + 2] = 255
+}
+
+const addGlider = (data, col, row) => {
+  set(data, col + row * width)
+  set(data, col + (row - 1) * width + 1)
+  set(data, col + (row - 2) * width - 1)
+  set(data, col + (row - 2) * width)
+  set(data, col + (row - 2) * width + 1)
+}
+
+const addBlinker = (data, col, row) => {
+  set(data, col + row * width)
+  set(data, col + (row + 1) * width)
+  set(data, col + (row + 2) * width)
+}
+
+const addToad = (data, col, row) => {
+  set(data, col + row * width)
+  set(data, col + 1 + row * width)
+  set(data, col + 2 + row * width)
+  set(data, col - 1 + (row - 1) * width)
+  set(data, col + (row - 1) * width)
+  set(data, col + 1 + (row - 1) * width)
+}
+
+const addBlock = (data, col, row) => {
+  set(data, col + row * width)
+  set(data, col + 1 + row * width)
+  set(data, col + (row - 1) * width)
+  set(data, col + 1 + (row - 1) * width)
+}
+
+const addBeacon = (data, x, y) => {
+  addBlock(data, x, y)
+  addBlock(data, x + 2, y - 2)
+}
+
+const addRPentamino = (data, col, row) => {
+  set(data, col + row * width)
+  set(data, col + 1 + row * width)
+  set(data, col - 1 + (row - 1) * width)
+  set(data, col + (row - 1) * width)
+  set(data, col + (row - 2) * width)
+}
+
+const addAcorn = (data, col, row) => {
+  set(data, col + 1 + row * width)
+  set(data, col + 3 + (row - 1) * width)
+  set(data, col + (row - 2) * width)
+  set(data, col + 1 + (row - 2) * width)
+  set(data, col + 4 + (row - 2) * width)
+  set(data, col + 5 + (row - 2) * width)
+  set(data, col + 6 + (row - 2) * width)
+}
+
 const texture = () => {
-  const width = 10
-  const height = 10
   const data = new Uint8Array(3 * width * height)
   for (let i = 0; i < width * height * 3; i++) {
     const stride = i * 3
     data[stride] = 0
     data[stride + 1] = 0
     data[stride + 2] = 0
-    if (stride === 162) {
-      data[stride] = 255
-      data[stride + 1] = 255
-      data[stride + 2] = 255
+  }
+  // addGlider(data, 6, 56)
+  // addGlider(data, 12, 56)
+  // addGlider(data, 18, 56)
+  // addGlider(data, 24, 56)
+  // addGlider(data, 30, 56)
+  // addGlider(data, 6, 48)
+  // addBeacon(data, 5, 20)
+  // addBlinker(data, 5, 25)
+  // addToad(data, 12, 27)
+  for (let x = 0; x < width; x += 128) {
+    for (let y = 0; y < height; y += 128) {
+      if (y > 2048) {
+        addRPentamino(data, x, y)
+      } else {
+        addAcorn(data, x, y)
+      }
     }
   }
+  // addRPentamino(data, 24, 48)
+  // addRPentamino(data, 24, 24)
+  // addRPentamino(data, 36, 36)
+  // addRPentamino(data, 48, 48)
+  // addRPentamino(data, 96, 96)
+
   const tex = new THREE.DataTexture(data, width, height, THREE.RGBFormat)
   tex.needsUpdate = true
   return tex
 }
 
 const rtScene = () => {
-  const width = 512
-  const height = 512
-  const renderTarget = new THREE.WebGLRenderTarget(width, height)
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000)
-  camera.position.z = 3
+  const renderTarget = new THREE.WebGLRenderTarget(width, height, {
+    magFilter: THREE.NearestFilter,
+    minFilter: THREE.NearestFilter,
+    depthBuffer: false,
+    stencilBuffer: false
+  })
+  // const camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000)
+  const camera = new THREE.OrthographicCamera(
+    -width / 2,
+    height / 2,
+    width / 2,
+    -width / 2,
+    0.1,
+    10
+  )
+  camera.position.z = 1
+  camera.updateProjectionMatrix()
   const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xff0000)
-  const light = new THREE.PointLight(0xffffff, 1, 100)
-  scene.add(light)
+  scene.background = new THREE.Color(0xffff00)
+  const ambientLight = new THREE.AmbientLight(0xffffff)
+  scene.add(ambientLight)
 
   return {
     renderTarget,
@@ -160,14 +259,23 @@ const rtScene = () => {
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
-  camera.position.z = 75
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
+  camera.position.z = 500
 
   const OrbitControls = threeOrbitControls(THREE)
   const controls = new OrbitControls(camera)
   controls.update()
 
-  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    premultipliedAlpha: false
+  })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -183,17 +291,43 @@ const init = ({ canvas, container }) => {
   scene.add(light)
 
   const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
-  const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+  const planeMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff0000,
+    side: THREE.DoubleSide
+  })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
   plane.rotation.x = -Math.PI / 2
   plane.position.z = 1
-  plane.position.y = -50
+  plane.position.y = -200
   plane.receiveShadow = true
   scene.add(plane)
 
-  const { renderTarget, scene: renderTargetScene, camera: renderTargetCamera } = rtScene()
+  const dataTex = texture()
+  const textureOptions = {
+    format: THREE.RGBAFormat,
+    type: THREE.UnsignedByteType,
+    magFilter: THREE.NearestFilter,
+    minFilter: THREE.NearestFilter,
+    depthBuffer: false,
+    stencilBuffer: false
+  }
+  let currentTexture = new THREE.WebGLRenderTarget(
+    width,
+    height,
+    textureOptions
+  )
+  let nextTexture = new THREE.WebGLRenderTarget(width, height, textureOptions)
 
-  const geometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
+  const {
+    renderTarget,
+    scene: renderTargetScene,
+    camera: renderTargetCamera
+  } = rtScene()
+
+  // const tex1 = texture()
+  // const tex2 = texture()
+
+  const geometry = new THREE.PlaneBufferGeometry(width, height)
   const uTexture = {
     type: 't',
     value: texture()
@@ -204,7 +338,7 @@ const init = ({ canvas, container }) => {
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
-    fragmentShader: fs2,
+    fragmentShader: fs,
     side: THREE.DoubleSide,
     uniforms: {
       texture: uTexture,
@@ -212,29 +346,40 @@ const init = ({ canvas, container }) => {
     }
   })
   const object = new THREE.Mesh(geometry, material)
-  object.position.z = 0.0
-  object.receiveShadow = true
-  object.castShadow = true
-  scene.add(object)
 
-  let then = 0
+  renderTargetScene.add(object)
+
+  // const object2 = object.clone()
+
+  const sphere = new THREE.SphereBufferGeometry(256, 32, 32)
+  const sphereMesh = new THREE.Mesh(sphere, material)
+  scene.add(sphereMesh)
+
+  let counter = 1
+
+  const then = 0
   const animate = now => {
-    requestAnimationFrame(animate)
-    const nowSecs = now * 0.001
-    const deltaSecs = nowSecs - then
-    then = nowSecs
+    // const nowSecs = now * 0.001
+    // const deltaSecs = nowSecs - then
+    // then = nowSecs
+    // iTime.value += 0.0025
 
-    iTime.value += 0.0025
+    if (renderer) {
+      requestAnimationFrame(animate)
 
-    controls.update()
+      renderer.setRenderTarget(nextTexture)
+      renderer.render(renderTargetScene, renderTargetCamera)
 
-    // renderer.setRenderTarget(renderTarget)
-    // renderer.render(renderTargetScene, renderTargetCamera)
-    // renderer.setRenderTarget(null)
+      if (counter++ % 1 === 0) {
+        const temp = currentTexture
+        currentTexture = nextTexture
+        uTexture.value = currentTexture.texture
+        nextTexture = temp
+      }
 
-    // uTexture.value = renderTarget.texture
-
-    renderer && renderer.render(scene, camera)
+      renderer.setRenderTarget(null)
+      renderer.render(scene, camera)
+    }
   }
   animate()
 
