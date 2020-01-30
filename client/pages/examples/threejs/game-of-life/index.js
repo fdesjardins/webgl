@@ -196,6 +196,11 @@ const texture = () => {
     data[stride] = 0
     data[stride + 1] = 0
     data[stride + 2] = 0
+
+    // Random initialization
+    if (Math.random() < 0.25) {
+      set(data, i)
+    }
   }
   // addGlider(data, 6, 56)
   // addGlider(data, 12, 56)
@@ -206,15 +211,16 @@ const texture = () => {
   // addBeacon(data, 5, 20)
   // addBlinker(data, 5, 25)
   // addToad(data, 12, 27)
-  for (let x = 0; x < width; x += 128) {
-    for (let y = 0; y < height; y += 128) {
-      if (y > 2048) {
-        addRPentamino(data, x, y)
-      } else {
-        addAcorn(data, x, y)
-      }
-    }
-  }
+  // for (let x = 0; x < width; x += 128) {
+  //   for (let y = 0; y < height; y += 128) {
+  //     if (y > 2048) {
+  //       addRPentamino(data, x, y)
+  //     } else {
+  //       addAcorn(data, x, y)
+  //     }
+  //   }
+  // }
+
   // addRPentamino(data, 24, 48)
   // addRPentamino(data, 24, 24)
   // addRPentamino(data, 36, 36)
