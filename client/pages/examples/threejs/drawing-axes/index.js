@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import Baobab from 'baobab'
+import { FaceNormalsHelper } from 'three/examples/jsm/helpers/FaceNormalsHelper'
 
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import Example from '-/components/example'
@@ -90,7 +91,12 @@ const createAxes = ({ size, fontSize = 3 }) => {
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.x = 45
   camera.position.y = 45
   camera.position.z = 90
@@ -120,7 +126,7 @@ const init = ({ canvas, container }) => {
   const object = new THREE.Mesh(geometry, material)
   object.matrixAutoUpdate = true
   object.castShadow = true
-  const faceNormals = new THREE.FaceNormalsHelper(object, 2, 0x00ff00, 1)
+  const faceNormals = new FaceNormalsHelper(object, 2, 0x00ff00, 1)
   object.add(faceNormals)
   object.add(createAxes({ size: 12, fontSize: 2 }))
   scene.add(object)

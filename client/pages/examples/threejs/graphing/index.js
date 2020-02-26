@@ -63,7 +63,7 @@ const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
 
 const style = css`
   canvas {
-    max-width: 350px;
+    max-width: 33%;
   }
 `
 

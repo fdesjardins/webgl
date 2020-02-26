@@ -1,22 +1,16 @@
-import React, { createElement } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import marksy from 'marksy/components'
-import hljs from 'highlight.js/lib/highlight'
-import hljsJavascript from 'highlight.js/lib/languages/javascript'
 import 'highlight.js/styles/ocean.css'
 import { css } from 'emotion'
 import MDX from '@mdx-js/runtime'
+import { MDXProvider } from '@mdx-js/react'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import remarkSlug from 'remark-slug'
+import remarkAutolinkHeadings from 'remark-autolink-headings'
+import remarkTableOfContents from 'remark-toc'
+
 import Icon from '-/components/icon'
-
-import mdit from 'markdown-it'
-import jsx from 'markdown-it-jsx'
-import math from 'markdown-it-math'
-
-const md = mdit()
-  .use(math)
-  .use(jsx)
-
-hljs.registerLanguage('javascript', hljsJavascript)
 
 const standardComponents = {
   Link: ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>,
@@ -42,34 +36,44 @@ const style = css`
     padding: 15px;
     font-size: 80%;
   }
+
+  i.icon.linkify {
+    margin-left: -1em;
+    font-size: 0.75em;
+    color: #eee;
+    &:hover {
+      color: #bbb;
+    }
+  }
 `
 
-export default ({ text, components }) => {
-  const compile = marksy({
-    createElement,
-    components: {
-      ...components,
-      ...standardComponents
-    },
-    highlight: (language, code) => hljs.highlight(language, code).value
-  })
-  return <div className={`marksy ${style}`}>{compile(text).tree}</div>
+const Markdown = ({ text, components }) => {
+  return (
+    <div className={`${style}`}>
+      <MDXProvider components={{ ...components, ...standardComponents }}>
+        <MDX
+          remarkPlugins={[
+            remarkMath,
+            remarkSlug,
+            remarkTableOfContents,
+            [
+              remarkAutolinkHeadings,
+              {
+                content: {
+                  type: 'element',
+                  tagName: 'i',
+                  properties: { className: ['icon', 'linkify'] }
+                }
+              }
+            ]
+          ]}
+          rehypePlugins={[rehypeKatex]}
+        >
+          {text}
+        </MDX>
+      </MDXProvider>
+    </div>
+  )
 }
 
-// // Provide custom components for markdown elements
-// const components = {
-//   h1: props => <h1 style={{ color: 'tomato' }} {...props} />
-// }
-// // Provide custom components that will be referenced as JSX
-// // in the markdown string
-// const scope = {
-//   Demo: props => <h1>This is a demo component</h1>
-// }
-// const mdx = `
-// # Hello, world!
-//
-// <canvas id="canvas"/>
-// `
-// export default ({ text, components }) => {
-//   return <div dangerouslySetInnerHTML={{ __html: md.render(text) }} />
-// }
+export default Markdown

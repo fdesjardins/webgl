@@ -25,10 +25,10 @@ const setupCamera = ({ domain, margin }) => {
 const init = ({ state }) => {
   const canvas = document.getElementById('pendulum')
 
-  const domain = [-5, 5]
+  const domain = [-10, 10]
   const gridSize = 1
   // left, right, top, bottom
-  const margin = [1, 1, 1, 1]
+  const margin = [2, 2, 2, 2]
 
   let scene = new THREE.Scene()
   const camera = setupCamera({ domain, margin })

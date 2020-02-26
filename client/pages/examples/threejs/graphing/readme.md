@@ -8,9 +8,9 @@ One interesting thing to note is the shared state tree between each example, so 
 
 <BasicsOrtho labels="true"/>
 
-<!-- <BasicsPersp labels="true"/>
+<!-- <BasicsPersp labels="true"/> -->
 
-<Oscilloscope /> -->
+<Oscilloscope />
 
 <VectorField />
 

@@ -2,7 +2,7 @@ import React from 'react'
 import * as twgl from 'twgl.js'
 import _ from 'lodash'
 
-import { default as utils, sq } from '-/utils'
+import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
 // import './Basics05.scss'
@@ -127,16 +127,16 @@ const Basics05 = ({ uniforms }) => {
     Basics0501: ({ color, id }) => <Basics0501 color={color} id={id} />
   }
   return (
-    <div class="basics05">
+    <div className="basics05">
       <Example
         notes={notes}
         components={components}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentShouldUpdate={shouldUpdate}
       />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  return <Basics05 onComponentShouldUpdate={utils.shouldUpdate} />
+  return <Basics05 onComponentShouldUpdate={shouldUpdate} />
 }
