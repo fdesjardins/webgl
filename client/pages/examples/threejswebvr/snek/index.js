@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-//import 'three/examples/js/vr/HelioWebXRPolyfill.js'
+import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
@@ -10,9 +10,20 @@ import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.j
 import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls.js'
 import {DeviceOrientationControls} from 'three/examples/jsm/controls/DeviceOrientationControls.js'
 import { css } from 'emotion'
+import * as Tone from 'tone'
 
+
+const start = ({ canvas, container }) => {
+
+}
 
 const init = ({ canvas, container }) => {
+  window.synth = new Tone.Synth().toMaster();
+  let distortion = new Tone.Distortion(0.4).toMaster();
+  window.synth.connect(distortion)
+  window.synth.triggerAttackRelease("C5", "8n");
+
+
   let scene = new THREE.Scene()
   let user = new THREE.Group();
   const camera = new THREE.PerspectiveCamera(
@@ -89,10 +100,11 @@ const init = ({ canvas, container }) => {
   scene.add(user)
   const roomsize = 400
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(roomsize, roomsize, roomsize, roomsize, roomsize, roomsize),
+    new BoxLineGeometry(roomsize, 10, roomsize, roomsize, 10, roomsize),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  room.geometry.translate(0, roomsize/2, 0)
+  //room.geometry.translate(0, roomsize/2, 0)
+  room.geometry.translate(0, 5, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -133,23 +145,21 @@ const distanceVector =( v1, v2 ) =>{
 
   const killMe = () =>{
     user.position.x =0
-    user.position.y =175
+    user.position.y =300
     user.position.z =0
     userVelocity = 0
-    camControls.lookAt(0,0,0)
+    if(!mobile){camControls.lookAt(0,0,0)}
+
       camControls.lookSpeed = 0.01
+      window.synth.triggerAttackRelease("E5", "8n");
+
+      setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
   }
   let mycamera = false
 
 
-  let camControls
-  let mobile = false
-  if(mobileCheck){
+  let camControls = null
 
-    camControls = new DeviceOrientationControls(user)
-  }else{
-    camControls = new FirstPersonControls(user, canvas)
-  }
 
   const mobileCheck = ()=> {
     var check = false;
@@ -157,18 +167,37 @@ const distanceVector =( v1, v2 ) =>{
     return check
   }
 
-  camControls.lookSpeed = 0.8
-  camControls.movementSpeed = 0
-  camControls.noFly = true
-  camControls.lookVertical = false
-  camControls.constrainVertical = false
-  camControls.verticalMin = 0
-  camControls.verticalMax = 5.0
-  camControls.lon = -150
-  camControls.lat = 120
-  camControls.autoForward= false
+  let mobile = mobileCheck()
+  if(mobile){
+    console.log("mobile detected")
+    camControls = new DeviceOrientationControls(user)
+    camControls.lookSpeed = 0.4
+    camControls.movementSpeed = 4
+    camControls.noFly = true
+    camControls.lookVertical = true
+    camControls.constrainVertical = true
+    camControls.verticalMin = 1.0
+    camControls.verticalMax = 2.0
+    camControls.lon = -150
+    camControls.lat = 120
+  }else{
+    console.log("mouselook")
+    camControls = new FirstPersonControls(user, canvas)
+    camControls.lookSpeed = 0.8
+    camControls.movementSpeed = 0
+    camControls.noFly = true
+    camControls.lookVertical = false
+    camControls.constrainVertical = false
+    camControls.verticalMin = 0
+    camControls.verticalMax = 5.0
+    camControls.lon = -150
+    camControls.lat = 120
+    camControls.autoForward= false
+  }
+
 
   let clock = new THREE.Clock()
+  lastPathBlock.copy(user.position)
 
   const animate = () => {
     renderer.setAnimationLoop(() => {
@@ -182,10 +211,11 @@ const distanceVector =( v1, v2 ) =>{
       raycaster.set( cameraWorldPos, cameraWorldDir )
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
-          //console.log(intersects[i])
-          if(intersects[i].distance < .2){
-
-            killMe()
+          if(intersects[i].distance < .2+1*userVelocity){
+            if(intersects[i].object.position.x !=lastPathBlock.x&&
+            intersects[i].object.position.z !=lastPathBlock.z){
+              killMe()
+            }
           }
       }
 
@@ -195,8 +225,9 @@ const distanceVector =( v1, v2 ) =>{
       hand1mesh.quaternion.copy(hand1.quaternion)
       hand2mesh.quaternion.copy(hand2.quaternion)
       try{
-      mycamera = renderer.vr.getCamera(camera)
-      camControls.enabled=false;
+        mycamera = renderer.vr.getCamera(camera)
+        camControls.enabled=false;
+
       }catch(ex){
         mycamera = camera
         if(mobile){
@@ -231,6 +262,8 @@ const distanceVector =( v1, v2 ) =>{
 
            scene.add(pathHolder)
            lastPathBlock.copy(user.position)
+
+           window.synth.triggerAttackRelease("E3", ".00001");
          }
        }
        lastUserPosition.copy(user.position)
