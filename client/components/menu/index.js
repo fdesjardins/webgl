@@ -36,6 +36,7 @@ const Menu = () => (
     <MenuItem type="threejs" num="14" title="Metaballs and Marching Cubes" />
     <MenuItem type="threejs" num="15" title="Smoothed-Particle Hydrodynamics" />
     <MenuItem type="threejs" num="16" title="GPU Compute" />
+    <MenuItem type="threejs" num="17" title="Pendulum" />
 
     <br />
     <h3>Three.js WebVR</h3>
