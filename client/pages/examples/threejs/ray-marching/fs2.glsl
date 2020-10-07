@@ -19,6 +19,11 @@ float sdSphere(vec3 p, float s) {
   return length(p) - s;
 }
 
+float sdTorus(vec3 p, vec2 t){
+  vec2 q = vec2(length(p.xz) - t.x, p.y);
+  return length(q) - t.y;
+}
+
 float checkers(vec2 pos) {
   vec2 w = fwidth(pos) + 0.001;
   vec2 i = 2.0 * (abs(fract((pos - 0.5 * w) * 0.5) - 0.5) - abs(fract((pos + 0.5 * w) * 0.5) - 0.5)) / w;
@@ -53,7 +58,10 @@ float sdScene(vec3 pos) {
   //   sdSphere(pos - vec3(1.0, 0.0, 0.0), 1.0)
   // );
   // vec3 lim = vec3(5.0, 5.0, 5.0);
-  return sdSphere(opRep(pos, 2.0), 0.25 + 0.1 * sin(2.0 * iTime));
+  return sdUnion(
+    sdSphere(opRep(pos, 2.0 + sin(0.1 * iTime)), 0.25 + 0.1 * sin(2.0 * iTime)),
+    sdTorus(opRep(pos, 2.0), vec2(0.25, 0.15))
+  );
   // return sdSphere(opRepLim(pos, 2.0, lim), 0.1);
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-import 'three/examples/js/vr/HelioWebXRPolyfill.js'
+// import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
@@ -65,7 +65,7 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      flatShading: true
+      flatShading: true,
     })
   )
   // hand1mesh.scale.x = 0.1

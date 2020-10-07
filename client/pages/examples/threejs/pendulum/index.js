@@ -7,7 +7,7 @@ import { createAxes, createPoint, addControls } from '../graphing/utils'
 
 const config = {
   initialPosition: new THREE.Vector3(3.0, 0.0, 0.0),
-  anchorPosition: new THREE.Vector3(0.0, 0.0, 0.0)
+  anchorPosition: new THREE.Vector3(0.0, 0.0, 0.0),
 }
 
 const setupPerspectiveCamera = ({ width, height }) => {
@@ -29,7 +29,7 @@ const init = ({ canvas }) => {
 
   const camera = setupPerspectiveCamera({
     width: canvas.width,
-    height: canvas.height
+    height: canvas.height,
   })
   scene.add(camera)
 
@@ -70,10 +70,10 @@ const init = ({ canvas }) => {
   anchor.position.copy(config.anchorPosition)
   scene.add(anchor)
 
-  const springConst = 200.0
+  const springConst = 100.0
   const restLength = 3.0
   const tempPos = new THREE.Vector3()
-  const dt = 0.02
+  const dt = 0.025
 
   const animate = () => {
     if (!renderer) {
@@ -91,11 +91,13 @@ const init = ({ canvas }) => {
     point.v = point.position.clone().sub(point.lastPosition) / dt
     // const f_damper = 1 * point.v
     // point.f.add(f_damper)
-    // const dp = point.position.clone().sub(point2.position)
-    // const dpl = d.length()
-    // point.f.add(
-    //   dp.normalize().multiplyScalar(-1 * springConst * (dpl - restLength))
-    // )
+    const dp = point.position.clone().sub(point2.position)
+    const dpl = d.length()
+    point.f.add(
+      dp
+        .normalize()
+        .multiplyScalar(-1 * springConst * (dpl - restLength) * point2.mass)
+    )
 
     point2.f.copy(f_gravity)
     const d2 = point2.position.clone().sub(point.position)
@@ -123,17 +125,9 @@ const init = ({ canvas }) => {
 
     // Other updates
     arrowHelper.setDirection(
-      point.position
-        .clone()
-        .sub(anchor.position)
-        .normalize()
+      point.position.clone().sub(anchor.position).normalize()
     )
-    arrowHelper.setLength(
-      point.position
-        .clone()
-        .sub(anchor.position)
-        .length()
-    )
+    arrowHelper.setLength(point.position.clone().sub(anchor.position).length())
 
     renderer.render(scene, camera)
   }
@@ -161,7 +155,7 @@ const E = () => (
   <Example
     notes={notes}
     components={{
-      Pendulum
+      Pendulum,
     }}
   />
 )

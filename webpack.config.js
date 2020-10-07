@@ -2,17 +2,17 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const resolve = d => path.join(__dirname, d)
+const resolve = (d) => path.join(__dirname, d)
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', resolve('client/index')]
+    app: ['babel-polyfill', resolve('client/index')],
   },
 
   output: {
     path: resolve('dist'),
     filename: '[name].[hash].js',
-    publicPath: '/'
+    publicPath: '/',
   },
 
   resolve: {
@@ -20,8 +20,8 @@ module.exports = {
     extensions: ['*', '.json', '.jsx', '.js'],
     alias: {
       '-': resolve('client'),
-      'react-dom': '@hot-loader/react-dom'
-    }
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
 
   module: {
@@ -29,40 +29,45 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader']
+        loaders: ['babel-loader'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['file-loader']
+        loaders: ['file-loader'],
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(glsl|md|obj|map)$/i,
-        loaders: ['raw-loader']
-      }
+        loaders: ['raw-loader'],
+      },
     ],
     unknownContextCritical: false,
-    unknownContextRegExp: /^.\/.*$/
+    unknownContextRegExp: /^.\/.*$/,
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve('client/index.html')
+      template: resolve('client/index.html'),
     }),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+    }),
   ],
 
   devServer: {
     historyApiFallback: true,
     compress: true,
     port: 9090,
-    host: '0.0.0.0'
+    host: '0.0.0.0',
   },
 
   node: {
-    fs: 'empty'
-  }
+    fs: 'empty',
+  },
+
+  devtool: 'eval',
 }

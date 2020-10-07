@@ -61,25 +61,26 @@ const init = ({ canvas, container }) => {
 
   const iTime = {
     type: 'f',
-    value: 100.0
+    value: 100.0,
   }
   const cameraPos = {
     type: 'vec3',
-    value: new THREE.Vector3(0.0, 0.0, 0.0)
+    value: new THREE.Vector3(0.0, 0.0, 0.0),
   }
   const cameraDir = {
     type: 'vec3',
-    value: new THREE.Vector3(1.0, 0.0, 0.0)
+    value: new THREE.Vector3(1.0, 0.0, 0.0),
   }
   const geometry = new THREE.PlaneBufferGeometry(20, 20, 20, 20)
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
     vertexShader: vs,
+    side: THREE.DoubleSide,
     uniforms: {
       iTime,
       cameraPos,
-      cameraDir
-    }
+      cameraDir,
+    },
   })
   const object = new THREE.Mesh(geometry, material)
   scene.add(object)
@@ -90,7 +91,7 @@ const init = ({ canvas, container }) => {
   const clock = new THREE.Clock()
 
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
@@ -99,11 +100,13 @@ const init = ({ canvas, container }) => {
     controls.update(delta)
 
     iTime.value += delta
-    // cameraPos.value.copy(camera.position)
     cameraPos.value.copy(camera.position)
 
     camera.getWorldDirection(camDirection)
-    object.position.copy(camera.position.clone().add(camDirection))
+    camDirection.normalize()
+    object.position.copy(
+      camera.position.clone().add(camDirection.multiplyScalar(15))
+    )
     object.lookAt(camera.position)
 
     cameraDir.value.copy(camDirection)

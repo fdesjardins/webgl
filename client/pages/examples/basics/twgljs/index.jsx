@@ -1,7 +1,7 @@
 import React from 'react'
 import * as twgl from 'twgl.js'
 
-import { default as utils, sq } from '-/utils'
+import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
 // import './Basics04.scss'
@@ -13,27 +13,27 @@ const initGL = (canvas, config) => {
   const programInfo = twgl.createProgramInfo(gl, [vtxShader, fragShader])
 
   const arrays = {
-    position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
+    position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0],
   }
   const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays)
 
   return {
     gl,
     programInfo,
-    bufferInfo
+    bufferInfo,
   }
 }
 
 const didMount = ({ canvas, register }) => {
   const { gl, programInfo, bufferInfo } = initGL(canvas)
 
-  const render = time => {
+  const render = (time) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
     const uniforms = {
       time: time * 0.001,
-      resolution: [gl.canvas.width, gl.canvas.height]
+      resolution: [gl.canvas.width, gl.canvas.height],
     }
 
     gl.useProgram(programInfo.program)
@@ -49,37 +49,34 @@ const Basics04 = ({ subscribe }) => {
   let requestAnimationFrameId
   const components = { Canvas: () => <canvas /> }
   return (
-    <div class="basics02">
+    <div className="basics02">
       <Example
         notes={notes}
         components={components}
         onComponentDidMount={() =>
           didMount({
             canvas: document.querySelector('.basics02 canvas'),
-            register: id => {
+            register: (id) => {
               requestAnimationFrameId = id
-            }
+            },
           })
         }
         onComponentWillUnmount={() =>
           cancelAnimationFrame(requestAnimationFrameId)
         }
-        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentShouldUpdate={shouldUpdate}
       />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  const subscribe = callback => {
+  const subscribe = (callback) => {
     store
       .select(sq('ex1.scene'))
       .on('update', ({ data }) => callback(data.currentData))
   }
   return (
-    <Basics04
-      subscribe={subscribe}
-      onComponentShouldUpdate={utils.shouldUpdate}
-    />
+    <Basics04 subscribe={subscribe} onComponentShouldUpdate={shouldUpdate} />
   )
 }
