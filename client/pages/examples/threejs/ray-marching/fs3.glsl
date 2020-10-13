@@ -1,158 +1,220 @@
-// #version 300 es
+uniform float iTime;
+uniform vec2 iResolution;
+uniform vec3 cameraPos;
+uniform vec3 cameraDir;
+uniform sampler2D iChannel0;
 
-// Created by inigo quilez - iq/2019
-// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+varying vec2 texCoord;
+varying vec2 vUv;
 
-// Step #1 of the LIVE Shade Deconstruction tutorials for "Spere Gears"
+// const vec2 RESOLUTION = vec2(723, 723);
+const int MAX_MARCHING_STEPS = 250;
+const float MIN_DIST = 0.0;
+const float MAX_DIST = 1000.0;
+const float EPSILON = 0.001;
 
-// Part 1: https://www.youtube.com/watch?v=sl9x19EnKng
-//   Step 1: https://www.shadertoy.com/view/ws3GD2
-//   Step 2: https://www.shadertoy.com/view/wdcGD2
-//   Step 3: https://www.shadertoy.com/view/td3GDX
-//   Step 4: https://www.shadertoy.com/view/wd33DX
-//   Step 5: https://www.shadertoy.com/view/tdc3DX
-// Part 2: https://www.youtube.com/watch?v=bdICU2uvOdU
-//   Step 6: https://www.shadertoy.com/view/td3GDf
-//   Step 7: https://www.shadertoy.com/view/wssczn
-//   Step 8: https://www.shadertoy.com/view/wdlyRr
-//   Final : https://www.shadertoy.com/view/tt2XzG
+vec3 lightPos = vec3(5.0, 0.0, 5.0);
 
-#define AA 2
-
-float sdSphere( in vec3 p, in float r )
-{
-    return length(p)-r;
+float sdSphere(vec3 p, float s) {
+  return length(p) - s;
 }
 
-vec4 map( in vec3 p, float time )
-{
-    float d = sdSphere( p, 0.2 );
-    return vec4( d, p );
+float sdBox(vec3 p, vec3 r) {
+  return length(max(abs(p) - r, 0.0));
 }
 
-#define ZERO 0 //min(iFrame,0)
+float sdBox2(vec2 p, vec2 r) {
+  return length(max(abs(p) - r, 0.0));
+}
 
-vec3 calcNormal( in vec3 pos, in float time )
-{
-    vec3 n = vec3(0.0);
-    for( int i=ZERO; i<4; i++ )
-    {
-        vec3 e = 0.5773*(2.0*vec3((((i+3)>>1)&1),((i>>1)&1),(i&1))-1.0);
-        n += e*map(pos+0.0005*e,time).x;
+float sdTorus(vec3 p, vec2 t){
+  vec2 q = vec2(length(p.xz) - t.x, p.y);
+  return length(q) - t.y;
+}
+
+float checkers(vec2 pos) {
+  vec2 w = fwidth(pos) + 0.001;
+  vec2 i = 2.0 * (abs(fract((pos - 0.5 * w) * 0.5) - 0.5) - abs(fract((pos + 0.5 * w) * 0.5) - 0.5)) / w;
+  return 0.5 - 0.5 * i.x * i.y;
+}
+
+float sdUnion(float d1, float d2) {
+  return min(d1, d2);
+}
+
+float sdRepeat(float d, float domain) {
+  return mod(d, domain) - domain / 2.0;
+}
+
+vec3 applyFog(vec3 rgb, vec3 fogColor, float dist) {
+  float fogAmount = 1.0 - exp(-dist / 15.0);
+  return mix(rgb, fogColor, fogAmount);
+}
+
+// vec3 opRepLim(vec3 p, float s, vec3 lim){
+//   return p - s * clamp(round(p / s), -lim, lim);
+// }
+
+vec3 opRep(vec3 p, float s) {
+  return mod(p + s * 0.5, s) - s * 0.5;
+}
+
+float smax(float a, float b, float k) {
+  float h = max(k - abs(a-b), 0.0);
+  return max(a, b) + (0.25/k)*h*h;
+}
+
+float sdCross(vec3 p, vec3 r) {
+  p = abs(p);
+  p.xz = (p.z > p.x) ? p.zx : p.xz;
+  return length(max(p-r, 0.0));
+}
+
+float sdVStick(vec3 p, float h) {
+  float d = max(p.y - h, 0.0);
+  return sqrt(p.x*p.x + p.z*p.z + d*d);
+}
+
+vec4 gear(vec3 pos, float time) {
+    pos.y = abs(pos.y);
+
+    pos.xz = mat2(cos(time), -sin(time),
+                sin(time), cos(time)) * pos.xz;
+
+    // gear
+    float angle = 6.283185/12.0;
+    float sector = round(atan(pos.z, pos.x) / angle);
+    vec3 q = pos;
+    float an = sector * angle;
+    q.xz = mat2(cos(an), -sin(an),
+                sin(an), cos(an)) * q.xz;
+
+    float d1 = sdBox2(q.xz - vec2(1.0, 0.0), 0.5*vec2(0.5, 0.225)) - 0.05;
+    float d2 = abs(length(pos.xz)-0.92) - 0.12;
+
+    d1 = min(d1,d2);
+
+    // cross
+    d2 = sdCross(pos - vec3(0.0,2.9,0.0), vec3(0.8, 0.04, 0.04)) - 0.03;
+    d1 = min(d1,d2);
+
+    float r = length(pos);
+    d1 = smax(d1, abs(r-3.0) - 0.165, 0.04);
+
+    // axle
+    d2 = sdVStick(pos, 3.0) - 0.05;
+    d1 = min(d1,d2);
+
+    return vec4(d1, pos.xzy);
+}
+
+vec4 sdScene(vec3 pos) {
+  // oscillate up and down
+  pos.y += 0.5*sin(iTime/1.2);
+
+  // gears
+  vec4 d1 = gear(pos, iTime);
+  vec4 d2 = gear(pos.yzx, iTime); d1 = (d2.x < d1.x) ? d2 : d1;
+       d2 = gear(pos.zxy, iTime); d1 = (d2.x < d1.x) ? d2 : d1;
+
+  // center sphere
+  float d3 = sdSphere(pos, 0.75);
+  d1.x = min(d1.x, d3);
+
+  return vec4(d1.x, pos);
+}
+
+
+float castRay(vec3 origin, vec3 dir) {
+  float depth = MIN_DIST;
+  for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
+    vec4 tuvw = sdScene(origin + depth * dir);
+    float dist = tuvw.x;
+    if (dist < EPSILON) {
+	    return depth;
     }
-    return normalize(n);
-}
-
-float calcAO( in vec3 pos, in vec3 nor, in float time )
-{
-	float occ = 0.0;
-    float sca = 1.0;
-    for( int i=ZERO; i<5; i++ )
-    {
-        float h = 0.01 + 0.12*float(i)/4.0;
-        float d = map( pos+h*nor, time ).x;
-        occ += (h-d)*sca;
-        sca *= 0.95;
+    depth += dist;
+    if (depth >= MAX_DIST) {
+      return MAX_DIST;
     }
-    return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
+  }
+  return MAX_DIST;
 }
 
-float calcSoftshadow( in vec3 ro, in vec3 rd, in float k, in float time )
-{
-    float res = 1.0;
-
-    float tmax = 2.0;
-    float t    = 0.001;
-    for( int i=0; i<64; i++ )
-    {
-        float h = map( ro + rd*t, time ).x;
-        res = min( res, k*h/t );
-        t += clamp( h, 0.012, 0.2 );
-        if( res<0.001 || t>tmax ) break;
-    }
-
-    return clamp( res, 0.0, 1.0 );
+vec2 normalizeScreenCoords(vec2 fragCoord) {
+  vec2 result = 2.0 * (fragCoord / iResolution - 0.5);
+  result.x *= iResolution.x / iResolution.y;
+  return result;
 }
 
-vec4 intersect( in vec3 ro, in vec3 rd, in float time )
-{
-    vec4 res = vec4(-1.0);
-
-    float t = 0.001;
-    float tmax = 5.0;
-    for( int i=0; i<128 && t<tmax; i++ )
-    {
-        vec4 h = map(ro+t*rd,time);
-        if( h.x<0.001 ) { res=vec4(t,h.yzw); break; }
-        t += h.x;
-    }
-
-    return res;
+vec3 getRayDirection(vec2 uv, vec3 pos, vec3 target) {
+  vec3 j = vec3(0.0, 1.0, 0.0);
+  vec3 forward = normalize(target - pos);
+  vec3 right = normalize(cross(j, forward));
+  vec3 up = normalize(cross(forward, right));
+  float fov = 2.0;
+  return normalize(uv.x * right + uv.y * up + forward * fov);
 }
 
-mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
-{
-	vec3 cw = normalize(ta-ro);
-	vec3 cp = vec3(sin(cr), cos(cr),0.0);
-	vec3 cu = normalize( cross(cw,cp) );
-	vec3 cv =          ( cross(cu,cw) );
-    return mat3( cu, cv, cw );
+vec3 estimateNormal(vec3 pos) {
+  vec4 tuvw = sdScene(pos);
+  vec2 offset = vec2(0.001, 0.0);
+  return normalize(vec3(
+    sdScene(pos + offset.xyy).x,
+    sdScene(pos + offset.yxy).x,
+    sdScene(pos + offset.yyx).x
+  ) - tuvw.x);
 }
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-{
-    vec3 tot = vec3(0.0);
+vec3 lambertIllumination(vec3 color, vec3 p, vec3 eye) {
+  const vec3 ambientLight = 0.35 * vec3(1.0, 1.0, 1.0);
+  vec3 diffuse = ambientLight * color;
 
-    #if AA>1
-    for( int m=ZERO; m<AA; m++ )
-    for( int n=ZERO; n<AA; n++ )
-    {
-        // pixel coordinates
-        vec2 o = vec2(float(m),float(n)) / float(AA) - 0.5;
-        vec2 p = (2.0*(fragCoord+o)-iResolution.xy)/iResolution.y;
-        float d = 0.5*sin(fragCoord.x*147.0)*sin(fragCoord.y*131.0);
-        float time = iTime;
-        #else
-        vec2 p = (2.0*fragCoord-iResolution.xy)/iResolution.y;
-        float time = iTime;
-        #endif
+  vec3 lightPosition = vec3(4.0 * sin(iTime), 2.0, 4.0 * cos(iTime));
+  vec3 lightIntensity = vec3(0.5, 0.5, 0.5);
 
-	    // camera
-        float an = 6.2831*time/40.0;
-        vec3 ta = vec3( 0.0, 0.0, 0.0 );
-        vec3 ro = ta + vec3( 0.5*cos(an), 0.3, 0.5*sin(an) );
+  vec3 N = estimateNormal(p);
+  vec3 L = normalize(lightPosition - p);
 
-        // camera-to-world transformation
-        mat3 ca = setCamera( ro, ta, 0.0 );
+  float dotLN = dot(L, N);
+  // Light not visible from this point on the surface
+  if (dotLN < 0.0) {
+    return diffuse;
+  }
+  diffuse += dotLN * color * lightIntensity;
+  return diffuse;
+}
 
-        // ray direction
-        float fl = 2.0;
-        vec3 rd = ca * normalize( vec3(p,fl) );
+vec4 render(vec3 origin, vec3 dir) {
+  float depth = castRay(origin, dir);
+  vec3 pos = origin + depth * dir;
 
-        // background
-        vec3 col = vec3(1.0+rd.y)*0.03;
+  vec3 color;
+  if (depth == MAX_DIST) {
+    color = vec3(0.1, 0.2, 0.3) + (dir.y * 0.5);
+  } else {
+    // vec3 normal = estimateNormal(pos);
+    // color = 0.5 + 0.5 * normal;
+    // vec4 te = texture(iChannel0, vUv*normal.yz);
+    // color = te.xyz;
+    color = lambertIllumination(vec3(1.0, 1.0, 1.0), pos, origin);
 
-        // raymarch geometry
-        vec4 tuvw = intersect( ro, rd, time );
-        if( tuvw.x>0.0 )
-        {
-            // shading/lighting
-            vec3 pos = ro + tuvw.x*rd;
-            vec3 nor = calcNormal(pos, time);
+    // color = applyFog(color, vec3(0.6, 0.6, 0.6), depth);
+  }
 
-            col = 0.5 + 0.5*nor;
-        }
+  return vec4(depth, color);
+}
 
+void main(){
+  vec3 cameraTarget = vec3(0.0, 0.0, 0.0);
 
-        // gamma
-	    tot += pow(col,vec3(0.45) );
-    #if AA>1
-    }
-    tot /= float(AA*AA);
-    #endif
+  //vec3 cameraTarget = cameraPos * vec3(cameraDir.x, cameraDir.y, cameraDir.z);
 
-    // cheap dithering
-    tot += sin(fragCoord.x*114.0)*sin(fragCoord.y*211.1)/512.0;
+  vec2 uv = normalizeScreenCoords(gl_FragCoord.xy);
+  vec3 rayDirection = getRayDirection(uv, cameraPos, cameraTarget);
 
-    fragColor = vec4( tot, 1.0 );
+  vec4 final = render(cameraPos, rayDirection);
+
+  gl_FragColor = vec4(final.yzw, 1.0);
+  gl_FragDepth = final.x / 100.0;
 }

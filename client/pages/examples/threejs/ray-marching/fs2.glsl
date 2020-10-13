@@ -1,5 +1,3 @@
-#extension GL_OES_standard_derivatives : enable
-
 uniform float iTime;
 uniform vec3 cameraPos;
 uniform vec3 cameraDir;

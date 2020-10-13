@@ -59,6 +59,7 @@ module.exports = {
   ],
 
   devServer: {
+    contentBase: resolve('/'),
     historyApiFallback: true,
     compress: true,
     port: 9090,
