@@ -45,24 +45,23 @@ const init = ({ canvas, container }) => {
   context.makeXRCompatible()
   let renderer = new THREE.WebGLRenderer({ canvas, context })
 
-  renderer.vr.enabled = true
+  renderer.xr.enabled = true
 
   const onWindowResize = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-
     renderer.setSize( window.innerWidth, window.innerHeight );
-
   }
 
   window.addEventListener( 'resize', onWindowResize, false );
 
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
-
+  console.log(button)
   renderer.setSize(window.innerWidth, window.innerHeight)
-
-  const hand1 = renderer.vr.getController(0)
+console.log("vr displays")
+  console.log(navigator)
+  const hand1 = renderer.xr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
   // hand1.addEventListener( 'selectend', onSelectEnd );
   scene.add(hand1)
@@ -79,7 +78,7 @@ const init = ({ canvas, container }) => {
   hand1mesh.position.y = hand1.position.y
   hand1mesh.position.z = hand1.position.z
 
-  const hand2 = renderer.vr.getController(1)
+  const hand2 = renderer.xr.getController(1)
   // hand2.addEventListener( 'selectstart', onSelectStart );
   // hand2.addEventListener( 'selectend', onSelectEnd );
   scene.add(hand2)
@@ -145,19 +144,15 @@ const distanceVector =( v1, v2 ) =>{
 
   const killMe = () =>{
     user.position.x =0
-    user.position.y =300
+    user.position.y =150
     user.position.z =0
     userVelocity = 0
     if(!mobile){camControls.lookAt(0,0,0)}
-
       camControls.lookSpeed = 0.01
       window.synth.triggerAttackRelease("E5", "8n");
-
-      setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
+      //setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
   }
   let mycamera = false
-
-
   let camControls = null
 
 
@@ -225,9 +220,13 @@ const distanceVector =( v1, v2 ) =>{
       hand1mesh.quaternion.copy(hand1.quaternion)
       hand2mesh.quaternion.copy(hand2.quaternion)
       try{
-        mycamera = renderer.vr.getCamera(camera)
-        camControls.enabled=false;
 
+        if(navigator.xr==undefined){
+        mycamera = renderer.xr.getCamera(camera)
+        camControls.enabled=false;
+        }else{
+          throw("noxr")
+        }
       }catch(ex){
         mycamera = camera
         if(mobile){
