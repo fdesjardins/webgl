@@ -23,7 +23,7 @@ const init = ({ canvas, container }) => {
   window.synth.connect(distortion)
   window.synth.triggerAttackRelease("C5", "8n");
 
-
+  let blockCount = 0
   let scene = new THREE.Scene()
   let user = new THREE.Group();
   const camera = new THREE.PerspectiveCamera(
@@ -126,7 +126,7 @@ console.log("vr displays")
   lastPos.x =user.position.x
   lastPos.y =user.position.y
   lastPos.z =user.position.z
-
+  let lastBlock = null
   let lastPathBlock = new THREE.Vector3()
   let lastUserPosition = new THREE.Vector3()
   lastPathBlock.copy(user.position)
@@ -151,6 +151,7 @@ const distanceVector =( v1, v2 ) =>{
       camControls.lookSpeed = 0.01
       window.synth.triggerAttackRelease("E5", "8n");
       //setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
+
   }
   let mycamera = false
   let camControls = null
@@ -206,51 +207,55 @@ const distanceVector =( v1, v2 ) =>{
       raycaster.set( cameraWorldPos, cameraWorldDir )
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
-          if(intersects[i].distance < .2+1*userVelocity){
-            if(intersects[i].object.position.x !=lastPathBlock.x&&
-            intersects[i].object.position.z !=lastPathBlock.z){
+          if(intersects[i].distance < userVelocity){
+            if(intersects[i].object.position.x !=lastPathBlock.x
+              && intersects[i].object.position.z !=lastPathBlock.z
+              && intersects[i].object != room
+              && intersects[i] != room
+              && intersects[i] != lastBlock){
+              intersects[i].object.material=new THREE.MeshPhongMaterial( {
+                color: 0xff0000,
+                opacity: 0.5,
+              transparent: true,} );
               killMe()
             }
           }
       }
+      console.log(Math.abs(user.position.x))
+      if(Math.abs(user.position.x)>=roomsize/2 ||
+        Math.abs(user.position.z)>=roomsize/2
+         ){
+          killMe()
+       }
 
       renderer.render(scene, camera)
       hand1mesh.position.copy(hand1.position)
       hand2mesh.position.copy(hand2.position)
       hand1mesh.quaternion.copy(hand1.quaternion)
       hand2mesh.quaternion.copy(hand2.quaternion)
-      try{
 
-        if(navigator.xr==undefined){
-        mycamera = renderer.xr.getCamera(camera)
-        camControls.enabled=false;
-        }else{
-          throw("noxr")
-        }
-      }catch(ex){
-        mycamera = camera
-        if(mobile){
-          camControls.update()
-        }else{
-          camControls.update(clock.getDelta())
+
+        if(renderer.xr.isPresenting==true){
+          mycamera = renderer.xr.getCamera(camera)
+          camControls.enabled=false;
+        } else {
+          mycamera = camera
+          if(mobile){
+            camControls.update()
+          }else{
+            camControls.update(clock.getDelta())
         }
       }
       mycamera.getWorldDirection( lookvector )
 
-      if(Math.abs(user.position.x)>=roomsize ||
-        Math.abs(user.position.z)>=roomsize
-         ){
 
-
-          killMe()
-       }else{
          user.position.x += lookvector.x * userVelocity
-
+         //user.position.y += lookvector.y * userVelocity
          user.position.z += lookvector.z * userVelocity
          if( distanceVector(lastPathBlock, user.position)>2){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
            pathHolder.position.x = user.position.x- 2*lookvector.x
-           pathHolder.position.y = 1.5//user.position.y
+           pathHolder.position.y = 1.5//user.position.y- 2*lookvector.y
            pathHolder.position.z = user.position.z- 2*lookvector.z
            if(!camControls.enabled){
              pathHolder.quaternion.copy(mycamera.quaternion)
@@ -258,13 +263,14 @@ const distanceVector =( v1, v2 ) =>{
            }else{
              pathHolder.quaternion.copy(user.quaternion)
          }
-
+           blockCount++
+           lastBlock=pathHolder
            scene.add(pathHolder)
            lastPathBlock.copy(user.position)
 
            window.synth.triggerAttackRelease("E3", ".00001");
          }
-       }
+
        lastUserPosition.copy(user.position)
        userVelocity *=1.001
 
