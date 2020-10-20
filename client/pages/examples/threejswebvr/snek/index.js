@@ -12,7 +12,8 @@ import {DeviceOrientationControls} from 'three/examples/jsm/controls/DeviceOrien
 import { css } from 'emotion'
 import * as Tone from 'tone'
 
-
+// to test localhost on a mobile device use :
+//adb reverse tcp:9090 tcp:9090
 const start = ({ canvas, container }) => {
 
 }
@@ -34,7 +35,7 @@ const init = ({ canvas, container }) => {
   )
 
   camera.position.x = 0
-  camera.position.y = 2
+  camera.position.y = 1
   camera.position.z = 0
 
   camera.rotation.x = 0
@@ -117,7 +118,7 @@ const init = ({ canvas, container }) => {
 
   user.add(camera)
   scene.add(user)
-
+  user.alive = true
   let lookvector = new THREE.Vector3()
 
   let pathBlock = new THREE.BoxBufferGeometry( 1, 3, 2.5 );
@@ -148,13 +149,15 @@ const distanceVector =( v1, v2 ) =>{
   let raycaster = new THREE.Raycaster()
 
   const killMe = () =>{
+    user.alive=false
     user.position.x =0
-    user.position.y =300
+    user.position.y =299
     user.position.z =0
     userVelocity = 0
+    document.getElementById('score').innerHTML="SCORE: "+blockCount
     if(!mobile){camControls.lookAt(0,0,0)}
       camControls.lookSpeed = 0.01
-      window.synth.triggerAttackRelease("E5", "8n");
+      //window.synth.triggerAttackRelease("E5", "8n");
       //setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
 
   }
@@ -184,9 +187,9 @@ const distanceVector =( v1, v2 ) =>{
   }else{
     console.log("mouselook")
     camControls = new FirstPersonControls(user, canvas)
-    camControls.lookSpeed = 0.8
+    camControls.lookSpeed = 0.3
     camControls.movementSpeed = 0
-    camControls.noFly = true
+    camControls.noFly = false
     camControls.lookVertical = false
     camControls.constrainVertical = false
     camControls.verticalMin = 0
@@ -196,7 +199,7 @@ const distanceVector =( v1, v2 ) =>{
     camControls.autoForward= false
   }
 
-
+  user.position.y=2
   let clock = new THREE.Clock()
   lastPathBlock.copy(user.position)
 
@@ -222,14 +225,13 @@ const distanceVector =( v1, v2 ) =>{
               console.log(lastBlock)
               console.log(intersects[i].object)
               userVelocity=0
-              //user.position.y =30
               killMe()
             }
           }
       }
       if(Math.abs(user.position.x)>=roomsize/2
-        || user.position.y >=roomsize
-        || user.position.y < 0
+        || user.position.y >=roomsize+2
+        || user.position.y < -2
         || Math.abs(user.position.z)>=roomsize/2
          ){
           killMe()
@@ -255,14 +257,14 @@ const distanceVector =( v1, v2 ) =>{
       }
       mycamera.getWorldDirection( lookvector )
 
-
+         document.getElementById('score').innerHTML="SCORE: "+blockCount
          user.position.x += lookvector.x * userVelocity
          //user.position.y += lookvector.y * userVelocity
          user.position.z += lookvector.z * userVelocity
-         if( distanceVector(lastPathBlock, user.position)>2){
+         if( distanceVector(lastPathBlock, user.position)>2 && user.alive){
            let pathHolder = new THREE.Mesh( pathBlock, pathmaterial )
            pathHolder.position.x = user.position.x- 2*lookvector.x
-           pathHolder.position.y = 1.5//user.position.y- 2*lookvector.y
+           pathHolder.position.y = user.position.y- 2*lookvector.y
            pathHolder.position.z = user.position.z- 2*lookvector.z
            if(!camControls.enabled){
              pathHolder.quaternion.copy(mycamera.quaternion)
@@ -298,14 +300,30 @@ const distanceVector =( v1, v2 ) =>{
 
 const Snek = ({ children }, { store }) => (
   <div id="threejsvr02" className={`${style} `}>
+    <div id="hud" class="ui container">
+      <a id="restart" class="active item" href="./02">restart</a>
+      <span id="score" >0</span>
+    </div>
     <span id="webvr-button" />
+
     <Example notes={notes} init={init} />
   </div>
 )
 
 const style = css`
-
-
+#restart{
+  margin:5px;
+}
+#hud{
+  position:fixed !important;
+  top:5px;
+  right:10px;
+  display:inline;
+  z-index:100;
+  width:200px;
+  color:white;
+  padding:5px;
+}
 
 .ui.container{
   max-width:100vw !important;
