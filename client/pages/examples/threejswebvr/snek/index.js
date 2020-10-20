@@ -42,10 +42,16 @@ const init = ({ canvas, container }) => {
 
   // force webgl2 context (for oculus quest compat)
   const context = canvas.getContext('webgl2', { alpha: false })
-  context.makeXRCompatible()
-  let renderer = new THREE.WebGLRenderer({ canvas, context })
 
-  renderer.xr.enabled = true
+  let renderer = null
+  try{
+      context.makeXRCompatible()
+      renderer = new THREE.WebGLRenderer({ canvas, context })
+      renderer.xr.enabled = true
+    }catch{
+      renderer = new THREE.WebGLRenderer({ canvas, context })
+      renderer.xr.enabled = false
+    }
 
   const onWindowResize = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -59,8 +65,7 @@ const init = ({ canvas, container }) => {
   document.getElementById('webvr-button').appendChild(button)
   console.log(button)
   renderer.setSize(window.innerWidth, window.innerHeight)
-console.log("vr displays")
-  console.log(navigator)
+
   const hand1 = renderer.xr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
   // hand1.addEventListener( 'selectend', onSelectEnd );
@@ -97,13 +102,13 @@ console.log("vr displays")
   user.add(hand2mesh)
 
   scene.add(user)
-  const roomsize = 400
+  const roomsize = 300
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(roomsize, 10, roomsize, roomsize, 10, roomsize),
+    new BoxLineGeometry(roomsize, roomsize, roomsize, roomsize/2, roomsize/2 , roomsize/2),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  //room.geometry.translate(0, roomsize/2, 0)
-  room.geometry.translate(0, 5, 0)
+  room.geometry.translate(0, roomsize/2, 0)
+  //room.geometry.translate(0, 5, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -144,7 +149,7 @@ const distanceVector =( v1, v2 ) =>{
 
   const killMe = () =>{
     user.position.x =0
-    user.position.y =150
+    user.position.y =300
     user.position.z =0
     userVelocity = 0
     if(!mobile){camControls.lookAt(0,0,0)}
@@ -208,22 +213,24 @@ const distanceVector =( v1, v2 ) =>{
       let intersects = raycaster.intersectObjects( scene.children )
       for ( var i = 0; i < intersects.length; i++ ) {
           if(intersects[i].distance < userVelocity){
-            if(intersects[i].object.position.x !=lastPathBlock.x
-              && intersects[i].object.position.z !=lastPathBlock.z
-              && intersects[i].object != room
-              && intersects[i] != room
-              && intersects[i] != lastBlock){
+            if( intersects[i].object != room
+                && intersects[i].object != lastBlock){
               intersects[i].object.material=new THREE.MeshPhongMaterial( {
                 color: 0xff0000,
                 opacity: 0.5,
               transparent: true,} );
+              console.log(lastBlock)
+              console.log(intersects[i].object)
+              userVelocity=0
+              //user.position.y =30
               killMe()
             }
           }
       }
-      console.log(Math.abs(user.position.x))
-      if(Math.abs(user.position.x)>=roomsize/2 ||
-        Math.abs(user.position.z)>=roomsize/2
+      if(Math.abs(user.position.x)>=roomsize/2
+        || user.position.y >=roomsize
+        || user.position.y < 0
+        || Math.abs(user.position.z)>=roomsize/2
          ){
           killMe()
        }
