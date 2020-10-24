@@ -91,7 +91,7 @@ animate()
 
 return () => {
     renderer.dispose()
-    scene.dispose()
+    
     scene = null
     renderer = null
   }

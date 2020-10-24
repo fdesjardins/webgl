@@ -59,7 +59,7 @@ const updateScore = (user, score) => {
 // adb reverse tcp:9090 tcp:9090
 const start = ({ canvas, container }) => {}
 
-const init = async ({ canvas, container }) => {
+const init = ({ canvas, container }) => {
   const font = globals.fontLoader.parse(droidSans)
   globals.font = font
 
@@ -360,7 +360,6 @@ const init = async ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    scene.dispose()
     scene = null
     renderer = null
   }
