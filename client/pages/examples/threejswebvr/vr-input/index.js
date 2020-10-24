@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react'
 import * as THREE from 'three'
-
+// import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
 import notes from './readme.md'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
@@ -26,7 +26,7 @@ const init = ({ canvas, container }) => {
 
   // force webgl2 context (for oculus quest compat)
   const context = canvas.getContext('webgl2', { alpha: false })
-  context.makeXRCompatible()
+
   let renderer = new THREE.WebGLRenderer({ canvas, context })
   renderer.vr.enabled = true
   const button = VRButton.createButton(renderer)
@@ -65,7 +65,7 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      flatShading: true
+      flatShading: true,
     })
   )
   // hand1mesh.scale.x = 0.1

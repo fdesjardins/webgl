@@ -5,7 +5,7 @@ import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonCont
 
 import Example from '-/components/example'
 import notes from './readme.md'
-// import { OrbitControls } from './orbitControls'
+import { OrbitControls } from './orbitControls'
 import fs from './fs3.glsl'
 import { vec3 } from '-/utils'
 
@@ -98,9 +98,9 @@ const init = ({ canvas, container }) => {
   scene.background = new THREE.Color(0xffffff)
   // renderer.context.disable(renderer.context.DEPTH_TEST)
 
-  // const controls = orbitControls(camera, renderer.domElement)
+  const controls = orbitControls(camera, renderer.domElement)
   // const controls = flyControls(camera, renderer.domElement)
-  // controls.enableDamping = true
+  controls.enableDamping = true
 
   const uniforms = createUniforms(canvas)
   const geometry = new THREE.PlaneBufferGeometry(20, 20, 20, 20)
@@ -132,7 +132,7 @@ const init = ({ canvas, container }) => {
     thenSecs = nowSecs
 
     const delta = clock.getDelta()
-    // controls.update(delta)
+    controls.update(delta)
 
     camera.getWorldDirection(camDirection)
     camDirection.normalize()

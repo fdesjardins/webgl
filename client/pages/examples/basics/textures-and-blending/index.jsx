@@ -2,7 +2,7 @@ import React from 'react'
 import * as twgl from 'twgl.js'
 import _ from 'lodash'
 
-import { default as utils, sq } from '-/utils'
+import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
 // import './Basics06.scss'
@@ -27,18 +27,18 @@ const initGL = (canvas, config) => {
   return {
     gl,
     programInfo,
-    bufferInfo
+    bufferInfo,
   }
 }
 
 // update scene based on time elapsed
-const animateScene = updateFns => {
+const animateScene = (updateFns) => {
   let then = 0
   return () => {
     const now = new Date().getTime()
     if (then !== 0) {
       const elapsed = now - then
-      updateFns.map(f => f(elapsed))
+      updateFns.map((f) => f(elapsed))
     }
     then = now
   }
@@ -52,38 +52,38 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST
+      min: gl.LINEAR_MIPMAP_NEAREST,
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
-    }
+      min: gl.LINEAR,
+    },
   })
 
   uniforms = _.merge({}, uniforms)
@@ -91,12 +91,12 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
 
   let worldRotationY = 0
   const animate = animateScene([
-    time => {
+    (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
-  const render = time => {
+  const render = (time) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
@@ -156,14 +156,14 @@ const Basics0601 = ({ color, id, texture, alpha }, { store }) => {
       onComponentDidMount={() =>
         didMount({
           canvas: document.querySelector(`#${id}`),
-          register: animId => {
+          register: (animId) => {
             requestAnimationFrameId = animId
           },
           uniforms: _.merge({}, uniforms, {
             u_lightColor: color,
-            u_alpha: alpha
+            u_alpha: alpha,
           }),
-          texture
+          texture,
         })
       }
     />
@@ -174,19 +174,19 @@ const Basics06 = ({ uniforms }) => {
   const components = {
     Basics0601: ({ color, id, texture, alpha }) => (
       <Basics0601 color={color} id={id} texture={texture} alpha={alpha} />
-    )
+    ),
   }
   return (
-    <div class="basics06">
+    <div className="basics06">
       <Example
         notes={notes}
         components={components}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentShouldUpdate={shouldUpdate}
       />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  return <Basics06 onComponentShouldUpdate={utils.shouldUpdate} />
+  return <Basics06 onComponentShouldUpdate={shouldUpdate} />
 }

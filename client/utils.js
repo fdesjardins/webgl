@@ -1,4 +1,5 @@
 import React from 'react'
+import * as THREE from 'three'
 
 export const shouldUpdate = (lastProps, nextProps) => {
   return JSON.stringify(lastProps) !== JSON.stringify(nextProps)
@@ -7,7 +8,7 @@ export const shouldUpdate = (lastProps, nextProps) => {
 /**
  * Helper method for making Baobab selects easier
  */
-const splitBaobabQuery = query => query.split('.')
+const splitBaobabQuery = (query) => query.split('.')
 export const sq = splitBaobabQuery
 
 export const wrapComponent = (Component, { ...first }) => ({
@@ -19,3 +20,8 @@ export const wrapComponent = (Component, { ...first }) => ({
     {children}
   </Component>
 )
+
+/**
+ * Threejs helpers
+ */
+export const vec3 = (x, y, z) => new THREE.Vector3(x, y, z)

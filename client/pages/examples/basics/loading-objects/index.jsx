@@ -2,7 +2,7 @@ import React from 'react'
 import * as twgl from 'twgl.js'
 import _ from 'lodash'
 
-import { default as utils, sq } from '-/utils'
+import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 
 import notes from './readme.md'
@@ -31,7 +31,7 @@ const initGL = (canvas, config) => {
     position: teapot.vertexPositions,
     normal: teapot.vertexNormals,
     texcoord: teapot.vertexTextureCoords,
-    indices: teapot.indices
+    indices: teapot.indices,
   })
 
   const sw45Mesh = new OBJ.Mesh(sw45)
@@ -39,50 +39,50 @@ const initGL = (canvas, config) => {
     position: sw45Mesh.vertices,
     normal: sw45Mesh.vertexNormals,
     texcoord: sw45Mesh.textures,
-    indices: sw45Mesh.indices
+    indices: sw45Mesh.indices,
   })
 
   const textures = twgl.createTextures(gl, {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST
+      min: gl.LINEAR_MIPMAP_NEAREST,
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     sw45: {
       src: sw45tex,
       mag: gl.NEAREST,
-      min: gl.LINEAR
-    }
+      min: gl.LINEAR,
+    },
   })
 
   return {
@@ -91,20 +91,20 @@ const initGL = (canvas, config) => {
     bufferInfo: {
       cube: cubeBufferInfo,
       teapot: teapotBufferInfo,
-      sw45: sw45BufferInfo
+      sw45: sw45BufferInfo,
     },
-    textures
+    textures,
   }
 }
 
 // update scene based on time elapsed
-const animateScene = updateFns => {
+const animateScene = (updateFns) => {
   let then = 0
   return () => {
     const now = new Date().getTime()
     if (then !== 0) {
       const elapsed = now - then
-      updateFns.map(f => f(elapsed))
+      updateFns.map((f) => f(elapsed))
     }
     then = now
   }
@@ -116,14 +116,14 @@ const didMount = ({ canvas, register, uniforms, texture, model }) => {
 
   let worldRotationY = 0
   const animate = animateScene([
-    time => {
+    (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
   console.log(model)
 
-  const render = time => {
+  const render = (time) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
@@ -189,15 +189,15 @@ const Basics0601 = ({ color, id, texture, alpha, model }, { store }) => {
       onComponentDidMount={() =>
         didMount({
           canvas: document.querySelector(`#${id}`),
-          register: animId => {
+          register: (animId) => {
             requestAnimationFrameId = animId
           },
           uniforms: _.merge({}, uniforms, {
             u_lightColor: color,
-            u_alpha: alpha
+            u_alpha: alpha,
           }),
           texture,
-          model
+          model,
         })
       }
     />
@@ -214,19 +214,19 @@ const Basics06 = ({ uniforms }) => {
         alpha={alpha}
         model={model}
       />
-    )
+    ),
   }
   return (
-    <div class="basics06">
+    <div className="basics06">
       <Example
         notes={notes}
         components={components}
-        onComponentShouldUpdate={utils.shouldUpdate}
+        onComponentShouldUpdate={shouldUpdate}
       />
     </div>
   )
 }
 
 export default ({ children }, { store }) => {
-  return <Basics06 onComponentShouldUpdate={utils.shouldUpdate} />
+  return <Basics06 onComponentShouldUpdate={shouldUpdate} />
 }
