@@ -1,5 +1,3 @@
-#extension GL_OES_standard_derivatives : enable
-
 uniform float iTime;
 uniform vec3 cameraPos;
 uniform vec3 cameraDir;
@@ -17,6 +15,11 @@ vec3 lightPos = vec3(5.0, 0.0, 5.0);
 
 float sdSphere(vec3 p, float s) {
   return length(p) - s;
+}
+
+float sdTorus(vec3 p, vec2 t){
+  vec2 q = vec2(length(p.xz) - t.x, p.y);
+  return length(q) - t.y;
 }
 
 float checkers(vec2 pos) {
@@ -53,7 +56,10 @@ float sdScene(vec3 pos) {
   //   sdSphere(pos - vec3(1.0, 0.0, 0.0), 1.0)
   // );
   // vec3 lim = vec3(5.0, 5.0, 5.0);
-  return sdSphere(opRep(pos, 2.0), 0.25 + 0.1 * sin(2.0 * iTime));
+  return sdUnion(
+    sdSphere(opRep(pos, 2.0 + sin(0.1 * iTime)), 0.25 + 0.1 * sin(2.0 * iTime)),
+    sdTorus(opRep(pos, 2.0), vec2(0.25, 0.15))
+  );
   // return sdSphere(opRepLim(pos, 2.0, lim), 0.1);
 }
 

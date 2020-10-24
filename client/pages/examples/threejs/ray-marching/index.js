@@ -4,9 +4,14 @@ import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls'
 
 import Example from '-/components/example'
-import threeOrbitControls from 'three-orbit-controls'
 import notes from './readme.md'
-import fs from './fs2.glsl'
+// import { OrbitControls } from './orbitControls'
+import fs from './fs3.glsl'
+import { vec3 } from '-/utils'
+
+const rustyMetal = new THREE.TextureLoader().load(
+  '/client/assets/rusty-metal-512x512.jpg'
+)
 
 const vs = `
 varying vec2 texCoord;
@@ -18,29 +23,15 @@ void main(){
   texCoord = vec2(gl_Position.x, gl_Position.y);
 }`
 
-const init = ({ canvas, container }) => {
-  let scene = new THREE.Scene()
+const orbitControls = (camera, domElement) => {
+  const controls = new OrbitControls(camera, domElement)
+  controls.target = vec3(0.0, 0.0, 0.0)
+  controls.rotateSpeed = 1.5
+  return controls
+}
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
-  camera.position.x = 0
-  camera.position.y = 0
-  camera.position.z = -5
-
-  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
-  renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap
-  renderer.setSize(canvas.clientWidth, canvas.clientWidth)
-  scene.background = new THREE.Color(0xffffff)
-
-  // const OrbitControls = threeOrbitControls(THREE)
-  // const controls = new OrbitControls(camera, renderer.domElement)
-  // controls.enableDamping = true
-  const controls = new FirstPersonControls(camera, renderer.domElement)
+const fpsControls = (camera, domElement) => {
+  const controls = new FirstPersonControls(camera, domElement)
   controls.lookSpeed = 0.1
   controls.movementSpeed = 4
   controls.noFly = true
@@ -50,63 +41,110 @@ const init = ({ canvas, container }) => {
   controls.verticalMax = 2.0
   controls.lon = -150
   controls.lat = 120
-  // controls.update()
+  controls.update()
+  return controls
+}
 
-  // const controls = new FlyControls(camera, renderer.domElement)
-  // controls.movementSpeed = 10
-  // controls.domElement = renderer.domElement
-  // controls.rollSpeed = Math.PI / 24
-  // controls.autoForward = false
-  // controls.dragToLook = false
+const flyControls = (camera, domElement) => {
+  const controls = new FlyControls(camera, domElement)
+  controls.movementSpeed = 10
+  controls.domElement = domElement
+  controls.rollSpeed = Math.PI / 24
+  controls.autoForward = false
+  return controls
+}
 
-  const iTime = {
-    type: 'f',
-    value: 100.0
+const createUniforms = (canvas) => {
+  return {
+    iTime: {
+      type: 'f',
+      value: 100.0,
+    },
+    iResolution: {
+      type: 'vec2',
+      value: new THREE.Vector2(canvas.width, canvas.height),
+    },
+    cameraPos: {
+      type: 'vec3',
+      value: new THREE.Vector3(),
+    },
+    cameraDir: {
+      type: 'vec3',
+      value: new THREE.Vector3(),
+    },
+    iChannel0: {
+      type: 'sampler2D',
+      value: rustyMetal,
+    },
   }
-  const cameraPos = {
-    type: 'vec3',
-    value: new THREE.Vector3(0.0, 0.0, 0.0)
-  }
-  const cameraDir = {
-    type: 'vec3',
-    value: new THREE.Vector3(1.0, 0.0, 0.0)
-  }
+}
+
+const init = ({ canvas, container }) => {
+  let scene = new THREE.Scene()
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
+  camera.position.set(2, 5, 8)
+  camera.lookAt(0, 0, 0)
+
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
+  renderer.setSize(canvas.clientWidth, canvas.clientWidth)
+  scene.background = new THREE.Color(0xffffff)
+  // renderer.context.disable(renderer.context.DEPTH_TEST)
+
+  // const controls = orbitControls(camera, renderer.domElement)
+  // const controls = flyControls(camera, renderer.domElement)
+  // controls.enableDamping = true
+
+  const uniforms = createUniforms(canvas)
   const geometry = new THREE.PlaneBufferGeometry(20, 20, 20, 20)
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
     vertexShader: vs,
-    uniforms: {
-      iTime,
-      cameraPos,
-      cameraDir
-    }
+    side: THREE.DoubleSide,
+    uniforms,
   })
   const object = new THREE.Mesh(geometry, material)
   scene.add(object)
 
-  scene.add(new THREE.GridHelper(100, 0))
+  scene.add(
+    new THREE.GridHelper(
+      100,
+      60,
+      new THREE.Color(0x666666),
+      new THREE.Color(0x222222)
+    )
+  )
   const camDirection = new THREE.Vector3()
 
   const clock = new THREE.Clock()
 
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
 
     const delta = clock.getDelta()
-    controls.update(delta)
-
-    iTime.value += delta
-    // cameraPos.value.copy(camera.position)
-    cameraPos.value.copy(camera.position)
+    // controls.update(delta)
 
     camera.getWorldDirection(camDirection)
-    object.position.copy(camera.position.clone().add(camDirection))
-    object.lookAt(camera.position)
+    camDirection.normalize()
+    object.position.copy(
+      camera.position.clone().add(camDirection.multiplyScalar(13))
+    )
+    object.lookAt(camera.position.clone())
+    // object.rotation.set(camera.rotation)
 
-    cameraDir.value.copy(camDirection)
+    uniforms.iTime.value += delta
+    uniforms.cameraPos.value.copy(camera.position)
+    uniforms.cameraDir.value.copy(camDirection)
 
     if (renderer) {
       requestAnimationFrame(animate)
@@ -117,7 +155,6 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    scene.dispose()
     scene = null
     renderer = null
   }
