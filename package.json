@@ -16,11 +16,11 @@
     ]
   },
   "dependencies": {
-    "@mdx-js/react": "^1.5.3",
-    "@mdx-js/runtime": "^1.5.3",
-    "@tweenjs/tween.js": "^18.5.0",
-    "baobab": "^2.5.3",
-    "baobab-react": "^4.0.0",
+    "@mdx-js/react": "^1.6.19",
+    "@mdx-js/runtime": "^1.6.19",
+    "@tweenjs/tween.js": "^18.6.0",
+    "baobab": "^2.6.0",
+    "baobab-react": "^4.0.2",
     "bluebird": "^3.7.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -28,101 +28,68 @@
     "express": "^4.17.1",
     "flat-color-icons": "^1.1.0",
     "greenlet": "^1.1.0",
-    "highlight.js": "^9.17.1",
+    "highlight.js": "^10.3.1",
     "history": "^4.10.1",
     "jsx-to-string": "^1.4.0",
-    "markdown-it": "^10.0.0",
-    "markdown-it-jsx": "^1.1.0",
-    "markdown-it-math": "^4.1.1",
-    "markdown-it-mathjax": "^2.0.0",
     "marksy": "^8.0.0",
-    "mousetrap": "^1.6.3",
+    "mousetrap": "^1.6.5",
     "ndarray": "^1.0.19",
     "oimo": "^1.0.9",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-fast-compare": "^2.0.4",
-    "react-hot-loader": "^4.12.18",
-    "react-monaco-editor": "^0.32.1",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-fast-compare": "^3.2.0",
+    "react-hot-loader": "^4.13.0",
+    "react-monaco-editor": "^0.40.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-treebeard": "^3.2.4",
     "recompose": "^0.30.0",
-    "rehype-katex": "^2.0.0",
-    "remark-autolink-headings": "^5.2.1",
-    "remark-math": "^2.0.0",
-    "remark-slug": "^5.1.2",
-    "remark-toc": "^6.0.0",
-    "three": "^0.112.1",
+    "rehype-katex": "^4.0.0",
+    "remark-autolink-headings": "^6.0.1",
+    "remark-math": "^3.0.1",
+    "remark-slug": "^6.0.0",
+    "remark-toc": "^7.0.0",
+    "three": "^0.121.1",
     "three-orbit-controls": "^82.1.0",
-    "tone": "^13.8.33",
-    "tinygradient": "^1.1.1",
-    "twgl.js": "^4.14.1"
+    "tinygradient": "^1.1.2",
+    "tone": "^14.7.58",
+    "twgl.js": "^4.16.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4",
-    "@hot-loader/react-dom": "^16.11.0",
-    "@mdx-js/loader": "^1.5.3",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "@hot-loader/react-dom": "^16.13.0",
+    "@mdx-js/loader": "^1.6.19",
+    "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
-    "css-loader": "^3.4.1",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "compression-webpack-plugin": "^6.0.3",
+    "css-loader": "^4.3.0",
+    "eslint": "^7.12.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-standard": "^4.0.1",
-    "file-loader": "^5.0.2",
-    "html-webpack-plugin": "^3.2.0",
-    "prettier": "^1.19.1",
-    "raw-loader": "^4.0.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-standard": "^4.0.2",
+    "file-loader": "^6.1.1",
+    "html-webpack-plugin": "^4.5.0",
+    "prettier": "^2.1.2",
+    "raw-loader": "^4.0.2",
     "react-create-element": "^1.0.0",
     "react-loadable": "^5.5.0",
     "require-dir": "^1.2.0",
-    "style-loader": "^1.1.2",
-    "url-loader": "^3.0.0",
+    "source-map-loader": "^1.1.1",
+    "style-loader": "^1.3.0",
+    "url-loader": "^4.1.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.11.0"
   },
   "engines": {
     "node": "12.x"
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": [
-            "**/*-spec.js"
-          ]
-        }
-      ],
-      "func-style": [
-        "error",
-        "expression"
-      ],
-      "prefer-arrow-callback": [
-        "error",
-        {
-          "allowNamedFunctions": false
-        }
-      ]
-    },
-    "env": {
-      "browser": true,
-      "node": true
-    }
   },
   "files": [
     "index.js"
@@ -140,6 +107,7 @@
   "scripts": {
     "dev": "webpack-dev-server --hot",
     "heroku-postbuild": "webpack -p",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "eslint": "eslint client/**/*.js"
   }
 }
