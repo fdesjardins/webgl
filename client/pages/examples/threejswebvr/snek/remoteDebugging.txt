@@ -1,0 +1,20 @@
+testing on an android device locally:
+# make sure your device has developer mode enabled. 
+#install the android sdk
+# plug in your android device
+# run:
+adb devices
+# if it says: no permissions (user in plugdev group; are your udev rules wrong?); see [http://developer.android.com/tools/device.html]
+# run:
+lsusb
+# note the id of the device (it looks like 04d9:a0cd)
+# create or edit the file here:
+
+ /etc/udev/rules.d/51-android.rules
+
+#add a line like this:
+SUBSYSTEM=="usb", ATTR{idVendor}=="<first part of id>", ATTR{idProduct}=="<second part of id>", MODE="0666", GROUP="plugdev"
+
+# replug your device
+# run:
+ adb reverse tcp:9090 tcp:9090
