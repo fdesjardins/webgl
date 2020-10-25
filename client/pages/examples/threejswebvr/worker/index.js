@@ -29,6 +29,7 @@ const state = {
     alive: true,
     velocity: 1 / 10,
   },
+  minWorkers:50,
 
 }
 
@@ -211,8 +212,8 @@ const init = async ({ canvas, container }) => {
           sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
 
           newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/2
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.g/2
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.b/2
+          newChildWorker.workerMesh.material.color.g=newChildWorker.workerMesh.material.color.g/2
+          newChildWorker.workerMesh.material.color.b=newChildWorker.workerMesh.material.color.b/2
           newChildWorker.workerMesh.material.opacity=0.5
 
           //console.log(newChildWorker.workerMesh.material)
@@ -255,8 +256,9 @@ const init = async ({ canvas, container }) => {
       for (const child of sweatShop){
           child.postMessage("get back to work!");
       }
-      if(sweatShop.length==0){
-        console.log("we're out of workers, get another one.")
+
+      if(sweatShop.length<=state.minWorkers){
+        console.log("we're low on workers, get another one.")
         addChildWorker()}
       //childWorker.postMessage(childWorker.workerMesh.position.x)
 
