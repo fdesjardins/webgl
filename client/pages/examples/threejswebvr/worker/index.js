@@ -193,9 +193,9 @@ const init = async ({ canvas, container }) => {
 
   const clock = new THREE.Clock()
 
-  user.position.x = 50
+  user.position.x = -50
   user.position.y = 60
-  user.position.z = 50
+  user.position.z = -50
 
   if (!mobile) {
     camControls.lookAt(0, 0, 0)
