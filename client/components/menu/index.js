@@ -42,7 +42,8 @@ const Menu = () => (
     <MenuItem type="threejswebvr" num="00" title="Hello WebVR" />
     <MenuItem type="threejswebvr" num="01" title="VR input" />
     <MenuItem type="threejswebvr" num="02" title="Snek" />
-    <MenuItem type="threejswebvr" num="03" title="childWorker" />
+    <MenuItem type="threejswebvr" num="03" title="Workers" />
+    <MenuItem type="threejswebvr" num="04" title="p2p" />
 
     <br />
     <h3>Other Cool Stuff</h3>
