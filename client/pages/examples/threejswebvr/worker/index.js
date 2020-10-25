@@ -193,9 +193,9 @@ const init = async ({ canvas, container }) => {
 
   const clock = new THREE.Clock()
 
-  user.position.x = 75
-  user.position.y = 20
-  user.position.z = 0
+  user.position.x = 50
+  user.position.y = 60
+  user.position.z = 50
 
   if (!mobile) {
     camControls.lookAt(0, 0, 0)
@@ -221,7 +221,7 @@ const init = async ({ canvas, container }) => {
       })
       const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
       newChildWorker.workerMesh = workerMesh
-      newChildWorker.workerMesh.position.y = 5
+      newChildWorker.workerMesh.position.y = roomsize / 2
       scene.add(newChildWorker.workerMesh)
       newChildWorker.onmessage = function(e) {
         if(!isNaN(e.data[0])){
@@ -239,17 +239,14 @@ const init = async ({ canvas, container }) => {
           console.log("a worker perished after escaping the factory ")
 
           sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
-          // newChildWorker.workerMesh.material.emissive.r=newChildWorker.workerMesh.material.color.r
-          // newChildWorker.workerMesh.material.emissive.g=newChildWorker.workerMesh.material.color.g
-          // newChildWorker.workerMesh.material.emissive.b=newChildWorker.workerMesh.material.color.b
 
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/3
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.g/3
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.b/3
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/2
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.g/2
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.b/2
           newChildWorker.workerMesh.material.opacity=0.5
 
-          console.log(newChildWorker.workerMesh.material)
-          //no leave him there as an example
+          //console.log(newChildWorker.workerMesh.material)
+          //no leave him there as an example to the others
           //scene.remove(newChildWorker)
         }
       }
@@ -288,6 +285,9 @@ const init = async ({ canvas, container }) => {
       for (const child of sweatShop){
           child.postMessage("get back to work!");
       }
+      if(sweatShop.length==0){
+        console.log("we're out of workers, get another one.")
+        addChildWorker()}
       //childWorker.postMessage(childWorker.workerMesh.position.x)
 
       renderer.render(scene, camera)
