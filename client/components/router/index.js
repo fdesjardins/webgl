@@ -16,6 +16,7 @@ import RayMarching from '-/pages/examples/threejs/ray-marching'
 import HelloWebVr from '-/pages/examples/threejswebvr/hello-threejswebvr'
 import VRInput from '-/pages/examples/threejswebvr/vr-input'
 import Snek from '-/pages/examples/threejswebvr/snek'
+import ChildWorker from '-/pages/examples/threejswebvr/worker'
 import Fractals from '-/pages/examples/threejs/fractals'
 import Graphing from '-/pages/examples/threejs/graphing'
 import OimoPhysics from '-/pages/examples/threejs/oimophysics'
@@ -60,6 +61,7 @@ const Routes = Layout => ({ store }) => (
       <Route path="/examples/threejswebvr/00" component={HelloWebVr} />
       <Route path="/examples/threejswebvr/01" component={VRInput} />
       <Route path="/examples/threejswebvr/02" component={Snek} />
+      <Route path="/examples/threejswebvr/03" component={ChildWorker} />
 
       <Route path="/examples/advanced/00" component={Winds} />
 
