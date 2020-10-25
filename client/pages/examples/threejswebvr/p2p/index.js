@@ -178,7 +178,7 @@ const init = async ({ canvas, container }) => {
     const addUserAvatar=(user)=>{
       console.log('addingUser')
 
-      const userBlock = new THREE.BoxBufferGeometry( 1, 4,1)
+      const userBlock = new THREE.BoxBufferGeometry( 2, 4,1)
       const userMaterial = new THREE.MeshPhongMaterial({
         color: Math.random() * 0xffffff,
         opacity: 1,
