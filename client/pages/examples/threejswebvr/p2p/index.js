@@ -137,8 +137,8 @@ const init = async ({ canvas, container }) => {
   light.position.set(0, 4, 0)
   scene.add(light)
 
-  user.add(camera)
-  scene.add(user)
+
+
 
   const lookvector = new THREE.Vector3()
   const raycaster = new THREE.Raycaster()
@@ -150,10 +150,10 @@ const init = async ({ canvas, container }) => {
 
     console.log('mouselook')
     camControls = new FirstPersonControls(user, canvas)
-    camControls.lookSpeed = 0.01
-    camControls.movementSpeed = 1
+    camControls.lookSpeed = 0.05
+    camControls.movementSpeed = 10
     camControls.noFly = false
-    camControls.lookVertical = true
+    camControls.lookVertical = false
     camControls.constrainVertical = false
     camControls.verticalMin = 0
     camControls.verticalMax = 5.0
@@ -165,6 +165,8 @@ const init = async ({ canvas, container }) => {
     user.position.z = 0
 
     //camControls.lookAt(0, 0, 0)
+    camera.position.set(0, 5, 10)
+    camera.add(user)
 
     const clock = new THREE.Clock()
 //  const kernel = ({}) => {
@@ -173,6 +175,26 @@ const init = async ({ canvas, container }) => {
     //var second = document.querySelector('input#number2');
     let sweatShop=[]
 
+    const addUserAvatar=(user)=>{
+      console.log('addingUser')
+
+      const userBlock = new THREE.BoxBufferGeometry( 1, 4,1)
+      const userMaterial = new THREE.MeshPhongMaterial({
+        color: Math.random() * 0xffffff,
+        opacity: 1,
+        transparent: true,
+        side: THREE.DoubleSide,
+      })
+
+      const userMesh = new THREE.Mesh(userBlock, userMaterial)
+      user.userMesh = userMesh
+      user.add(userMesh)
+      user.add(camera)
+      //user.userMesh.position.y = roomsize / 2
+      //scene.add(user.userMesh)
+
+    }
+    addUserAvatar(user)
 
     const addChildWorker=()=>{
       console.log('putting child to work')
@@ -235,7 +257,8 @@ const init = async ({ canvas, container }) => {
 
     addChildWorker();
 
-
+scene.add(user)
+//scene.add(user.userMesha)
 
    const animate = () => {
     renderer.setAnimationLoop(() => {
