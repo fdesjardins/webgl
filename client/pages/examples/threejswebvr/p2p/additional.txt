@@ -1,0 +1,3 @@
+you'll also need:
+
+ sudo apt-get install build-essential

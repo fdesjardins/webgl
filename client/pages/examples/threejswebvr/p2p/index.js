@@ -9,6 +9,7 @@ import {InputHandler} from './InputHandler.js'
 import Example from '-/components/example'
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import notes from './readme.md'
+import P2pNode from './P2pNode.js'
 //import Worker from 'worker-loader!./basic.worker.js'
 import Worker from './basic.worker.js';
 
@@ -22,6 +23,7 @@ import Worker from './basic.worker.js';
 const globals = {
   fontLoader: new THREE.FontLoader(),
   font: null,
+  p2pNode: null
 }
 
 const state = {
@@ -38,6 +40,9 @@ const state = {
 const start = ({ canvas, container }) => {}
 
 const init = async ({ canvas, container }) => {
+
+    globals.p2pNode= await new P2pNode()
+    
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()
@@ -259,6 +264,8 @@ const init = async ({ canvas, container }) => {
 
 scene.add(user)
 //scene.add(user.userMesha)
+
+
 
    const animate = () => {
     renderer.setAnimationLoop(() => {
