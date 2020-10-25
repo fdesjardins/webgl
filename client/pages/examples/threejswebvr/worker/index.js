@@ -116,15 +116,15 @@ const init = async ({ canvas, container }) => {
 
 
 
-  const roomsize = 300
+  const roomsize = 50
   const room = new THREE.LineSegments(
     new BoxLineGeometry(
       roomsize,
       roomsize,
       roomsize,
-      roomsize / 2,
-      roomsize / 2,
-      roomsize / 2
+      roomsize ,
+      roomsize ,
+      roomsize
     ),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
@@ -189,40 +189,85 @@ const init = async ({ canvas, container }) => {
     camControls.lat = 120
     camControls.autoForward = false
   }
-  if (!mobile) {
-    camControls.lookAt(0, 0, 0)
-  }
+
 
   const clock = new THREE.Clock()
 
-  user.position.x = 0
-  user.position.y = 50
+  user.position.x = 75
+  user.position.y = 20
   user.position.z = 0
 
-
+  if (!mobile) {
+    camControls.lookAt(0, 0, 0)
+  }
 //  const kernel = ({}) => {
 
     //var first = document.querySelector('input#number1');
     //var second = document.querySelector('input#number2');
+    let sweatShop=[]
 
-    let childWorker = new Worker();
+
+    const addChildWorker=()=>{
+      console.log('putting child to work')
+      let newChildWorker = new Worker();
+      const workerBlock = new THREE.BoxBufferGeometry(
+        3+2*Math.random(),
+        3+2*Math.random(),
+        3+2*Math.random())
+      const workerMaterial = new THREE.MeshPhongMaterial({
+        color: Math.random() * 0xffffff,
+        opacity: 1,
+        transparent: true,
+      })
+      const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
+      newChildWorker.workerMesh = workerMesh
+      newChildWorker.workerMesh.position.y = 5
+      scene.add(newChildWorker.workerMesh)
+      newChildWorker.onmessage = function(e) {
+        if(!isNaN(e.data[0])){
+            newChildWorker.workerMesh.position.x += e.data[0]*2
+            newChildWorker.workerMesh.position.y += e.data[1]*2
+            newChildWorker.workerMesh.position.z += e.data[2]*2
+        }
+        if (
+          Math.abs(newChildWorker.workerMesh.position.x) >= roomsize / 2 ||
+          newChildWorker.workerMesh.position.y >= roomsize + 2 ||
+          newChildWorker.workerMesh.position.y < -2 ||
+          Math.abs(newChildWorker.workerMesh.position.z) >= roomsize / 2
+        ) {
+          newChildWorker.terminate()
+          console.log("a worker perished after escaping the factory ")
+
+          sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
+          // newChildWorker.workerMesh.material.emissive.r=newChildWorker.workerMesh.material.color.r
+          // newChildWorker.workerMesh.material.emissive.g=newChildWorker.workerMesh.material.color.g
+          // newChildWorker.workerMesh.material.emissive.b=newChildWorker.workerMesh.material.color.b
+
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/3
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.g/3
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.b/3
+          newChildWorker.workerMesh.material.opacity=0.5
+
+          console.log(newChildWorker.workerMesh.material)
+          //no leave him there as an example
+          //scene.remove(newChildWorker)
+        }
+      }
+      newChildWorker.onerror = function(error) {
+        console.log('You mistreated your child worker: ' + error.message + '\n');
+        console.log(error);
+        throw error;
+      };
+      sweatShop.push(newChildWorker)
+    }
     window.addEventListener("click", function(event) {
-      console.log('Message sent to worker: ')
-      childWorker.postMessage([5, Math.random()])
+      addChildWorker()
     });
 
 
-    childWorker.onmessage = function(e) {
-      //result.textContent = e.data;
-      console.log('Message received from worker: ')
-      console.log(e);
-    }
+    addChildWorker();
 
-    childWorker.onerror = function(error) {
-      console.log('Worker error: ' + error.message + '\n');
-      console.log(error);
-      throw error;
-    };
+
 
    const animate = () => {
     renderer.setAnimationLoop(() => {
@@ -240,6 +285,11 @@ const init = async ({ canvas, container }) => {
 
 
       }
+      for (const child of sweatShop){
+          child.postMessage("get back to work!");
+      }
+      //childWorker.postMessage(childWorker.workerMesh.position.x)
+
       renderer.render(scene, camera)
 
       if (renderer.xr.isPresenting === true) {
@@ -273,9 +323,9 @@ const init = async ({ canvas, container }) => {
 const ChildWorker = ({ children }, { store }) => (
   <div id="threejsvr02" className={`${style} `}>
     <div id="hud" className="ui container">
-      <a id="restart" className="active item" href="./02">
-        restart
-      </a>
+      <span id="restart" className="active item">
+        Click to add workers.
+      </span>
     </div>
     <span id="webvr-button" />
 
@@ -290,7 +340,7 @@ const style = css`
   right:5px;
   display:inline;
   z-index:100;
-  width:50px;
+  width:200px;
   color:white;
 }
 

@@ -1,12 +1,10 @@
 onmessage = function(e) {
   postMessage('received');
-  console.log('Worker: Message received from main script');
-  const result = e.data[0] * e.data[1];
-  if (isNaN(result)) {
-    postMessage('Please write two numbers');
+  const result = [.5-Math.random(),.5-Math.random(),.5-Math.random()]
+  if (false) {
+
   } else {
-    const workerResult = 'Result: ' + result;
-    console.log('Worker: Posting message back to main script');
+    const workerResult = result
     postMessage(workerResult);
   }
 }
