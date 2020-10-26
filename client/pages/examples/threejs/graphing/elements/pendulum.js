@@ -140,9 +140,12 @@ const init = ({ state }) => {
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
 
+    const rad2deg = (rad) => rad * (180 / Math.PI)
+    const deg2rad = (deg) => deg / (180 / Math.PI)
+
     const t = nowSecs
     const w_i = w_0 + a * t
-    const d_i = Math.radians(0 + Math.degrees(w_i * t))
+    const d_i = deg2rad(0 + rad2deg(w_i * t))
 
     const d_x = radius * Math.cos(d_i)
     const d_y = radius * Math.sin(d_i)
