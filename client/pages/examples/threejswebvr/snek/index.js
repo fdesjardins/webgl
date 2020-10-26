@@ -66,7 +66,7 @@ const init = ({ canvas, container }) => {
   window.synth = new Tone.Synth().toMaster()
   const distortion = new Tone.Distortion(0.4).toMaster()
   window.synth.connect(distortion)
-  window.synth.triggerAttackRelease('C5', '8n')
+  // window.synth.triggerAttackRelease('C5', '8n')
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()

@@ -8,10 +8,9 @@ import notes from './readme.md'
 import { OrbitControls } from './orbitControls'
 import fs from './fs3.glsl'
 import { vec3 } from '-/utils'
+import rustyMetalTexImage from '-/assets/rusty-metal-512x512.jpg'
 
-const rustyMetal = new THREE.TextureLoader().load(
-  '/client/assets/rusty-metal-512x512.jpg'
-)
+const rustyMetal = new THREE.TextureLoader().load(rustyMetalTexImage)
 
 const vs = `
 varying vec2 texCoord;

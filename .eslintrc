@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "standard",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["webpack.config.js"]
+    }],
+    "func-style": ["error", "expression"],
+    "prefer-arrow-callback": ["error", {
+      "allowNamedFunctions": false
+    }]
+  }
+}
