@@ -1,13 +1,10 @@
 import React from 'react'
 import * as THREE from 'three'
 import { css } from 'emotion'
-import * as Tone from 'tone'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js'
-import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js'
 import Example from '-/components/example'
-import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import notes from './readme.md'
 // import Worker from 'worker-loader!./basic.worker.js'
 import Worker from './basic.worker.js'
@@ -28,8 +25,6 @@ const state = {
   },
   minWorkers: 50,
 }
-
-const start = ({ canvas, container }) => {}
 
 const init = async ({ canvas, container }) => {
   let scene = new THREE.Scene()

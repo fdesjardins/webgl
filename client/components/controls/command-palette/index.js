@@ -1,6 +1,6 @@
 import React from 'react'
 import Mousetrap from 'mousetrap'
-import utils, { sq } from '-/utils'
+import utils from '-/utils'
 
 // import './CommandPalette.scss'
 
