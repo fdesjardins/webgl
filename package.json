@@ -9,7 +9,7 @@
   "dependencies": {
     "@mdx-js/react": "^1.6.19",
     "@mdx-js/runtime": "^1.6.19",
-    "@tweenjs/tween.js": "^18.6.0",
+    "@tweenjs/tween.js": "^18.6.4",
     "baobab": "^2.6.0",
     "baobab-react": "^4.0.2",
     "bluebird": "^3.7.2",
@@ -56,7 +56,7 @@
     "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
-    "compression-webpack-plugin": "^6.0.3",
+    "compression-webpack-plugin": "^6.0.4",
     "css-loader": "^5.0.0",
     "eslint": "^7.12.0",
     "eslint-config-prettier": "^6.14.0",
@@ -102,6 +102,6 @@
     "dev": "webpack-dev-server --hot",
     "heroku-postbuild": "webpack -p",
     "start": "node server/server.js",
-    "eslint": "eslint client/**/*.js"
+    "eslint": "eslint client/"
   }
 }

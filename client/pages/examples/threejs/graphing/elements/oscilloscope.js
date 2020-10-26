@@ -69,7 +69,7 @@ const init = ({ state }) => {
   //   scene.add(label)
   // }
 
-  const resizeRendererToDisplaySize = renderer => {
+  const resizeRendererToDisplaySize = (renderer) => {
     const canvas = renderer.domElement
     const width = canvas.clientWidth
     const height = canvas.clientHeight
@@ -81,7 +81,7 @@ const init = ({ state }) => {
   }
 
   let lastMousePos = { x: 0.5, y: 0.5 }
-  const mousePos = event => {
+  const mousePos = (event) => {
     const bounds = event.target.getBoundingClientRect()
     // const center = {
     //   x: (bounds.right - bounds.left) / 2,
@@ -89,7 +89,7 @@ const init = ({ state }) => {
     // }
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = xy.x / event.target.clientWidth
     const y = xy.y / event.target.clientHeight
@@ -98,17 +98,17 @@ const init = ({ state }) => {
     // const y = event.clientY / event.target.clientHeight
     return [x, y]
   }
-  canvas.onmousemove = event => {
+  canvas.onmousemove = (event) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
 
   const note = {
     label: 'A',
-    frequency: 1200
+    frequency: 1200,
   }
 
   const zoom = 200
@@ -119,7 +119,7 @@ const init = ({ state }) => {
   const amplitude = 0.5 * Math.PI
 
   const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
-    t => x => {
+    (t) => (x) => {
       // console.log(t * 0.001)
       return 2 * amplitude * Math.sin((x * c) / wavelength / zoom)
     },
@@ -133,7 +133,7 @@ const init = ({ state }) => {
   const label = createLabel({
     text: `Freq: ${parseFloat(note.frequency).toFixed(4)}Hz`,
     size: 0.3,
-    color: WHITE
+    color: WHITE,
   })
   label.position.set(range[0] + gridSize, range[1] - gridSize, 0)
   scene.add(label)
@@ -141,7 +141,7 @@ const init = ({ state }) => {
   const cycleLabel = createLabel({
     text: `Cycl: ${parseFloat(note.frequency).toFixed(4)}Hz`,
     size: 0.3,
-    color: WHITE
+    color: WHITE,
   })
   cycleLabel.position.set(range[0] + gridSize, range[1] - gridSize * 2, 0)
   scene.add(cycleLabel)
@@ -149,7 +149,7 @@ const init = ({ state }) => {
   const vmaxLabel = createLabel({
     text: `Vmax: ${parseFloat(amplitude).toFixed(4)}V`,
     size: 0.3,
-    color: WHITE
+    color: WHITE,
   })
   vmaxLabel.position.set(range[1] * 0.25 + gridSize, range[1] - gridSize, 0)
   scene.add(vmaxLabel)
@@ -157,7 +157,7 @@ const init = ({ state }) => {
   const vminLabel = createLabel({
     text: `Vmin: ${parseFloat(-1 * amplitude).toFixed(4)}V`,
     size: 0.3,
-    color: WHITE
+    color: WHITE,
   })
   vminLabel.position.set(range[1] * 0.25 + gridSize, range[1] - gridSize * 2, 0)
   scene.add(vminLabel)
@@ -166,7 +166,7 @@ const init = ({ state }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -197,7 +197,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

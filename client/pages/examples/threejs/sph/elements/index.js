@@ -8,7 +8,7 @@ export const ShapePicker = ({ shape, setShape }) => (
     className="ui dropdown"
     onChange={({ target }) => setShape(target.value)}
   >
-    {shapes.map(f => (
+    {shapes.map((f) => (
       <option key={f} value={f}>
         {f}
       </option>

@@ -47,7 +47,7 @@ const init = ({ state }) => {
     const geometry = new THREE.SphereBufferGeometry(mass)
 
     const material = new THREE.MeshLambertMaterial({
-      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999
+      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999,
     })
     const object = new THREE.Mesh(geometry, material)
     object.mass = mass
@@ -118,7 +118,7 @@ const init = ({ state }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -128,7 +128,7 @@ const init = ({ state }) => {
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
 
-    arrows.map(arrow => {
+    arrows.map((arrow) => {
       const newDir = new THREE.Vector3(
         Math.cos(arrow.position.y + nowSecs * 3),
         Math.sin(arrow.position.x + nowSecs),
@@ -143,7 +143,7 @@ const init = ({ state }) => {
 
     if (deltaSecs) {
       const rotationSpeed = objectState.get('rotationSpeed')
-      objects.map(object => {
+      objects.map((object) => {
         object.rotation.x += rotationSpeed.x * deltaSecs
         object.rotation.y += rotationSpeed.y * deltaSecs
         object.rotation.z += rotationSpeed.z * deltaSecs
@@ -177,7 +177,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

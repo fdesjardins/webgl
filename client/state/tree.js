@@ -6,34 +6,34 @@ const state = new Baobab({
   app: {
     message: '',
     query: '',
-    querySelectedIndex: 0
-  }
+    querySelectedIndex: 0,
+  },
 })
 
 state.set('ex1', {
   scene: {
     pos: {
       x: 50,
-      y: 50
+      y: 50,
     },
     color: [Math.random(), Math.random(), Math.random(), 1],
     width: 75,
-    height: 75
+    height: 75,
   },
   controls: {
-    moveLeft: d => {
-      state.select(sq('ex1.scene.pos.x')).apply(x => x - d)
+    moveLeft: (d) => {
+      state.select(sq('ex1.scene.pos.x')).apply((x) => x - d)
     },
-    moveRight: d => {
-      state.select(sq('ex1.scene.pos.x')).apply(x => x + d)
+    moveRight: (d) => {
+      state.select(sq('ex1.scene.pos.x')).apply((x) => x + d)
     },
-    moveUp: d => {
-      state.select(sq('ex1.scene.pos.y')).apply(y => y - d)
+    moveUp: (d) => {
+      state.select(sq('ex1.scene.pos.y')).apply((y) => y - d)
     },
-    moveDown: d => {
-      state.select(sq('ex1.scene.pos.y')).apply(y => y + d)
-    }
-  }
+    moveDown: (d) => {
+      state.select(sq('ex1.scene.pos.y')).apply((y) => y + d)
+    },
+  },
 })
 
 state.select(sq('ex1.scene.pos')).on('update', ({ target }) => {
@@ -50,9 +50,9 @@ state.set('ex5', {
       u_shininess: 100,
       u_specularFactor: 10,
       u_diffuse: null,
-      u_alpha: 0.7
-    }
-  }
+      u_alpha: 0.7,
+    },
+  },
 })
 
 state.set('ex7', {
@@ -65,13 +65,13 @@ state.set('ex7', {
       u_shininess: 5,
       u_specularFactor: 5,
       u_diffuse: [0.2, 0.2, 0.2, 1],
-      u_alpha: 0.7
-    }
-  }
+      u_alpha: 0.7,
+    },
+  },
 })
 
 state.set('gpujs01', {
-  result: null
+  result: null,
 })
 
 export default state

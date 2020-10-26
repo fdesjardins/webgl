@@ -12,7 +12,7 @@ import {
   ToggleParticles,
   Viscosity,
   TimeStep,
-  SurfaceResolution
+  SurfaceResolution,
 } from './elements'
 
 const state = new Baobab({
@@ -21,7 +21,7 @@ const state = new Baobab({
   showParticles: true,
   viscosity: 30,
   timestep: 0.02,
-  surfaceResolution: 24
+  surfaceResolution: 24,
 })
 
 const style = css`
@@ -38,36 +38,36 @@ const E = () => (
   <div className={`${style}`}>
     <TimeStep
       get={() => state.get('timestep')}
-      set={val => state.set('timestep', val)}
+      set={(val) => state.set('timestep', val)}
     />
     <Viscosity
       get={() => state.get('viscosity')}
-      set={val => state.set('viscosity', val)}
+      set={(val) => state.set('viscosity', val)}
     />
     <SurfaceResolution
       get={() => state.get('surfaceResolution')}
-      set={val => state.set('surfaceResolution', val)}
+      set={(val) => state.set('surfaceResolution', val)}
     />
     <br />
     <br />
     <ToggleGrid
       getShowGrid={() => state.get('showGrid')}
-      setShowGrid={val => state.set('showGrid', val)}
+      setShowGrid={(val) => state.set('showGrid', val)}
     />
     <ToggleSurface
       getShowSurface={() => state.get('showSurface')}
-      setShowSurface={val => state.set('showSurface', val)}
+      setShowSurface={(val) => state.set('showSurface', val)}
     />
     <ToggleParticles
       get={() => state.get('showParticles')}
-      set={val => state.set('showParticles', val)}
+      set={(val) => state.set('showParticles', val)}
     />
     <br />
     <br />
     <Example
       notes={notes}
       components={{
-        SPH: wrapComponent(SPH, { state })
+        SPH: wrapComponent(SPH, { state }),
       }}
     />
   </div>

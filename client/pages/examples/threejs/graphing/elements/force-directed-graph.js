@@ -8,7 +8,7 @@ import {
   addControls,
   createPoint,
   addAxesLabels,
-  createConnectingLine
+  createConnectingLine,
 } from '../utils'
 
 const WHITE = 0xffffff
@@ -89,21 +89,21 @@ const init = ({ state }) => {
   addAxesLabels({ scene, domain, gridSize })
 
   let lastMousePos = { x: 0.5, y: 0.5 }
-  const mousePos = event => {
+  const mousePos = (event) => {
     const bounds = event.target.getBoundingClientRect()
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = (xy.x / event.target.clientWidth) * 2 - 1
     const y = -((xy.y / event.target.clientHeight) * 2 - 1)
     return [x, y]
   }
-  canvas.onmousemove = event => {
+  canvas.onmousemove = (event) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
   let label
@@ -115,10 +115,10 @@ const init = ({ state }) => {
     }
   }
 
-  points.map(p => {
+  points.map((p) => {
     const F = new THREE.Vector3(1, 1, 1)
     // console.log(p.position.distanceTo(F))
-    points.map(otherP => {
+    points.map((otherP) => {
       const dist = p.position.distanceTo(otherP.position)
       // if (dist && dist !== Infinity) {
       //   const fstr = 2.0 * (1 / dist ** 2)
@@ -143,7 +143,7 @@ const init = ({ state }) => {
   }
 
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -155,10 +155,10 @@ const init = ({ state }) => {
     thenSecs = nowSecs
 
     if (nowSecs % 3 < 0.025) {
-      points.map(p =>
+      points.map((p) =>
         createTween(p.position, {
           x: center + (Math.random() - 0.5) * domain[1],
-          y: center + (Math.random() - 0.5) * domain[1]
+          y: center + (Math.random() - 0.5) * domain[1],
         })
       )
     }
@@ -188,7 +188,7 @@ const init = ({ state }) => {
       label = createLabel({
         text: `(${pos.x.toFixed(2)}, ${pos.y.toFixed(2)})`,
         color: BLACK,
-        size: 0.5
+        size: 0.5,
       })
       label.position.set(
         target.object.position.x,
@@ -208,7 +208,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

@@ -18,17 +18,17 @@ export const ObjectRotation = ({ getSpeed, setSpeed }) => (
     <RotationSpeed
       axisLabel="x"
       speed={getSpeed('x')}
-      setSpeed={speed => setSpeed({ axis: 'x', speed })}
+      setSpeed={(speed) => setSpeed({ axis: 'x', speed })}
     />
     <RotationSpeed
       axisLabel="y"
       speed={getSpeed('y')}
-      setSpeed={speed => setSpeed({ axis: 'y', speed })}
+      setSpeed={(speed) => setSpeed({ axis: 'y', speed })}
     />
     <RotationSpeed
       axisLabel="z"
       speed={getSpeed('z')}
-      setSpeed={speed => setSpeed({ axis: 'z', speed })}
+      setSpeed={(speed) => setSpeed({ axis: 'z', speed })}
     />
   </div>
 )
@@ -36,8 +36,10 @@ export const ObjectRotation = ({ getSpeed, setSpeed }) => (
 export const ObjectProperties = ({ objectCursor }) => (
   <div className="ui form object-properties">
     <ObjectRotation
-      getSpeed={axis => objectCursor.get(['rotationSpeed', axis])}
-      setSpeed={({ axis, speed }) => objectCursor.set(['rotationSpeed', axis], speed)}
+      getSpeed={(axis) => objectCursor.get(['rotationSpeed', axis])}
+      setSpeed={({ axis, speed }) =>
+        objectCursor.set(['rotationSpeed', axis], speed)
+      }
     />
   </div>
 )

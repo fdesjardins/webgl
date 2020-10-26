@@ -14,7 +14,7 @@ import Icon from '-/components/icon'
 
 const standardComponents = {
   Link: ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>,
-  Icon: ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>
+  Icon: ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>,
 }
 
 const style = css`
@@ -62,10 +62,10 @@ const Markdown = ({ text, components }) => {
                 content: {
                   type: 'element',
                   tagName: 'i',
-                  properties: { className: ['icon', 'linkify'] }
-                }
-              }
-            ]
+                  properties: { className: ['icon', 'linkify'] },
+                },
+              },
+            ],
           ]}
           rehypePlugins={[rehypeKatex]}
         >

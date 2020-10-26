@@ -14,9 +14,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024
-      }
-    }
+        height: 1024,
+      },
+    },
   },
   object: {
     color: 'ffffff',
@@ -24,9 +24,9 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.0,
       y: 0.005,
-      z: 0.0
-    }
-  }
+      z: 0.0,
+    },
+  },
 })
 
 const setupVideo = () => {
@@ -85,7 +85,7 @@ const init = ({ canvas, container }) => {
   const material = new THREE.MeshPhongMaterial({
     map: videoTexture,
     side: THREE.DoubleSide,
-    shadowSide: THREE.DoubleSide
+    shadowSide: THREE.DoubleSide,
   })
   material.map.minFilter = THREE.LinearFilter
   material.map.maxFilter = THREE.LinearFilter
@@ -106,7 +106,7 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

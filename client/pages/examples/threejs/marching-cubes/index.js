@@ -54,7 +54,7 @@ const init = ({ canvas, container }) => {
     opacity: 0.85,
     transparent: true,
     refractionRatio: 0.85,
-    vertexColors: THREE.VertexColors
+    vertexColors: THREE.VertexColors,
   })
   const cubesInstance = new MarchingCubes(20, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
@@ -63,7 +63,7 @@ const init = ({ canvas, container }) => {
   scene.add(cubesInstance)
 
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -103,7 +103,7 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

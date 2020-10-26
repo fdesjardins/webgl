@@ -101,7 +101,7 @@ const init = ({ canvas }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

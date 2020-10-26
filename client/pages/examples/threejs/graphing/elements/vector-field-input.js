@@ -47,7 +47,7 @@ const init = ({ state }) => {
     const geometry = new THREE.SphereBufferGeometry(mass)
 
     const material = new THREE.MeshLambertMaterial({
-      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999
+      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999,
     })
     const object = new THREE.Mesh(geometry, material)
     object.mass = mass
@@ -113,7 +113,7 @@ const init = ({ state }) => {
   }
 
   let lastMousePos = { x: 0.5, y: 0.5 }
-  const mousePos = event => {
+  const mousePos = (event) => {
     const bounds = event.target.getBoundingClientRect()
     // const center = {
     //   x: (bounds.right - bounds.left) / 2,
@@ -121,7 +121,7 @@ const init = ({ state }) => {
     // }
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = xy.x / event.target.clientWidth
     const y = xy.y / event.target.clientHeight
@@ -130,11 +130,11 @@ const init = ({ state }) => {
     // const y = event.clientY / event.target.clientHeight
     return [x, y]
   }
-  canvas.onmousemove = event => {
+  canvas.onmousemove = (event) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
   canvas.onmouseleave = () => {
@@ -143,7 +143,7 @@ const init = ({ state }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -153,7 +153,7 @@ const init = ({ state }) => {
     const deltaSecs = nowSecs - thenSecs
     thenSecs = nowSecs
 
-    arrows.map(arrow => {
+    arrows.map((arrow) => {
       const newDir = new THREE.Vector3(
         Math.cos(arrow.position.y + nowSecs * 3),
         Math.sin(arrow.position.x + nowSecs),
@@ -166,7 +166,7 @@ const init = ({ state }) => {
       arrow.setLength(newLength, headLength, headWidth)
     })
 
-    mouseArrows.map(arrow => {
+    mouseArrows.map((arrow) => {
       const newDir = new THREE.Vector3(
         (lastMousePos.x * 2 - 1) * (domain[1] + 1) - arrow.position.x,
         -1 * (lastMousePos.y * 2 - 1) * (domain[1] + 1) - arrow.position.y,
@@ -181,7 +181,7 @@ const init = ({ state }) => {
 
     if (deltaSecs) {
       const rotationSpeed = objectState.get('rotationSpeed')
-      objects.map(object => {
+      objects.map((object) => {
         object.rotation.x += rotationSpeed.x * deltaSecs
         object.rotation.y += rotationSpeed.y * deltaSecs
         object.rotation.z += rotationSpeed.z * deltaSecs
@@ -218,7 +218,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

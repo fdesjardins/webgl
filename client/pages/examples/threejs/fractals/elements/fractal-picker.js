@@ -8,7 +8,7 @@ export const FractalPicker = ({ fractal, setFractal }) => (
     className="ui dropdown"
     onChange={({ target }) => setFractal(target.value)}
   >
-    {fractals.map(f => (
+    {fractals.map((f) => (
       <option key={f} value={f}>
         {f}
       </option>

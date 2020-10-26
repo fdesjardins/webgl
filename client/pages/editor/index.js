@@ -14,9 +14,9 @@ const projectStructure = {
   children: [
     {
       name: 'index.js',
-      children: []
-    }
-  ]
+      children: [],
+    },
+  ],
 }
 
 const state = new Baobab({
@@ -27,9 +27,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024
-      }
-    }
+        height: 1024,
+      },
+    },
   },
   object: {
     color: 'ffffff',
@@ -37,9 +37,9 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
-      z: 0.01
-    }
-  }
+      z: 0.01,
+    },
+  },
 })
 
 const notes = `
@@ -57,7 +57,11 @@ const ColorPicker = ({ color, setColor }) => (
     <label>Light Color</label>
     <div className="ui labeled small input">
       <div className="ui label">Color</div>
-      <input type="text" defaultValue={color} onChange={({ target }) => setColor(target.value)} />
+      <input
+        type="text"
+        defaultValue={color}
+        onChange={({ target }) => setColor(target.value)}
+      />
     </div>
   </div>
 )
@@ -66,15 +70,15 @@ const ObjectProperties = ({ objectCursor }) => (
   <div className="ui form object-properties">
     <ColorPicker
       color={objectCursor.get('color')}
-      setColor={color => objectCursor.set('color', color)}
+      setColor={(color) => objectCursor.set('color', color)}
     />
   </div>
 )
 
 const components = {
   ObjectProperties: wrap(ObjectProperties, {
-    objectCursor: state.select('object')
-  })
+    objectCursor: state.select('object'),
+  }),
 }
 
 const didMount = ({ canvas, container }) => {
@@ -114,7 +118,7 @@ const didMount = ({ canvas, container }) => {
 const update = () =>
   didMount({
     canvas: document.querySelector('#canvas'),
-    container: document.querySelector('.output')
+    container: document.querySelector('.output'),
   })
 
 const Output = ({ text }) => <Markdown text={text} components={components} />
@@ -198,8 +202,8 @@ const Editor = ({ text, onRun, onEditorChange }) => {
           options={{
             lineNumbers: 'off',
             minimap: {
-              enabled: false
-            }
+              enabled: false,
+            },
           }}
           onChange={onEditorChange}
         />
@@ -229,11 +233,11 @@ const enhance = compose(
   withState('innerText', 'setInnerText', initialText),
   withState('text', 'setText', initialText),
   withHandlers({
-    onEditorChange: ({ setInnerText }) => data => setInnerText(data),
+    onEditorChange: ({ setInnerText }) => (data) => setInnerText(data),
     onRun: ({ setText, innerText }) => () => {
       console.log('running...', innerText)
       setText(innerText)
-    }
+    },
   }),
   lifecycle({
     componentDidUpdate() {
@@ -241,7 +245,7 @@ const enhance = compose(
     },
     componentDidMount() {
       update()
-    }
+    },
   })
 )
 

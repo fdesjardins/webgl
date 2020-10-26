@@ -53,13 +53,13 @@ const init = ({ state }) => {
   scene.add(zyGrid)
 
   const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
-    t => x => 5 * Math.sin(x + t / 200),
+    (t) => (x) => 5 * Math.sin(x + t / 200),
     'f(x) = 5 * sin(x)',
     0x00ff00,
     'dashed'
   )
   const { object: lineGraph2, animate: animateLineGraph2 } = createLineGraph(
-    t => x => 20 + 5 * Math.sin(x + t / 200),
+    (t) => (x) => 20 + 5 * Math.sin(x + t / 200),
     'f(x) = 20 + 5 * sin(x)',
     0xff0000
   )
@@ -73,7 +73,7 @@ const init = ({ state }) => {
   const axes = createAxes({ size: 50 })
   scene.add(axes)
 
-  const resizeRendererToDisplaySize = renderer => {
+  const resizeRendererToDisplaySize = (renderer) => {
     const canvas = renderer.domElement
     const width = canvas.clientWidth
     const height = canvas.clientHeight
@@ -86,7 +86,7 @@ const init = ({ state }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -123,7 +123,7 @@ const init = ({ state }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z
+        z: object.rotation.z,
       })
 
       // axes.children.map(child => child.lookAt(camera.position))
@@ -135,7 +135,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

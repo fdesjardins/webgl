@@ -86,13 +86,13 @@ const init = ({ state }) => {
     linewidth: 2,
     scale: 1,
     dashSize: 0.25,
-    gapSize: 0.25
+    gapSize: 0.25,
   })
   const curve = new THREE.Line(pointsGeometry, pointsMaterial)
   scene.add(curve)
 
   let lastMousePos = { x: 0.5, y: 0.5 }
-  const mousePos = event => {
+  const mousePos = (event) => {
     const bounds = event.target.getBoundingClientRect()
     // const center = {
     //   x: (bounds.right - bounds.left) / 2,
@@ -100,7 +100,7 @@ const init = ({ state }) => {
     // }
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = xy.x / event.target.clientWidth
     const y = xy.y / event.target.clientHeight
@@ -109,11 +109,11 @@ const init = ({ state }) => {
     // const y = event.clientY / event.target.clientHeight
     return [x, y]
   }
-  canvas.onmousemove = event => {
+  canvas.onmousemove = (event) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
   canvas.onmouseleave = () => {
@@ -130,7 +130,7 @@ const init = ({ state }) => {
 
   const objectState = state.select('object')
   let thenSecs = 0
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -221,7 +221,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

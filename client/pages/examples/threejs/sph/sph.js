@@ -7,7 +7,7 @@ import {
   createAxes,
   addControls,
   createParticle,
-  addAxesLabels
+  addAxesLabels,
 } from '../graphing/utils'
 
 // import { buildCells, buildCellNeighbors, assignToCell } from './2d-cell-list'
@@ -47,7 +47,7 @@ const createParticles = ({ n, size, center }) => {
       size,
       color: 0x0000ff,
       transparent: true,
-      opacity: 0.65
+      opacity: 0.65,
     })
   const particles = []
   for (let i = 0; i < n; i += 1) {
@@ -61,7 +61,7 @@ const createParticles = ({ n, size, center }) => {
     particles.push(p)
   }
   return {
-    particles
+    particles,
   }
 }
 
@@ -77,17 +77,17 @@ const createBoundingCube = () => {
     color: 0xeeeeee,
     opacity: 0.25,
     transparent: true,
-    side: THREE.BackSide
+    side: THREE.BackSide,
   })
   const cube = new THREE.Mesh(cubeGeom, cubeMat)
   return cube
 }
 
-const mousePos = event => {
+const mousePos = (event) => {
   const bounds = event.target.getBoundingClientRect()
   const xy = {
     x: event.clientX - bounds.left,
-    y: event.clientY - bounds.top
+    y: event.clientY - bounds.top,
   }
   const x = (xy.x / event.target.clientWidth) * 2 - 1
   const y = -((xy.y / event.target.clientHeight) * 2 - 1)
@@ -123,10 +123,10 @@ const spikyf = (r, h) => 15 / (h ** 6 * Math.PI) / (h - r) ** 3
 const poly6fg = (r, h) =>
   -1 * r * (945 / (32 * h ** 9 * Math.PI)) * (h ** 2 - r ** 2) ** 2
 
-const sqNorm = v => {
+const sqNorm = (v) => {
   return v.x ** 2 + v.y ** 2 + v.z ** 2
 }
-const norm = v => {
+const norm = (v) => {
   return Math.sqrt(sqNorm(v))
 }
 
@@ -137,7 +137,7 @@ const calcDensityPressure = (
 ) => {
   particles.map((pi, i) => {
     pi.density = 0
-    neighbors[i].map(j => {
+    neighbors[i].map((j) => {
       const pj = particles[j]
       const dist = pj.position.distanceTo(pi.position)
       if (dist < h) {
@@ -156,7 +156,7 @@ const calcForces = (particles, neighbors, { h, viscosity, mass }) => {
     if (!neighbors || neighbors.length === 0) {
       return
     }
-    neighbors[i].map(j => {
+    neighbors[i].map((j) => {
       const pj = particles[j]
       const r = pj.position.distanceTo(pi.position)
       if (r < h) {
@@ -193,20 +193,20 @@ const config = {
     gridSize: 1,
     // l,r,t,b
     margin: [4, 4, 4, 4],
-    surfaceResolution: 26
+    surfaceResolution: 26,
   },
   sim: {
     numParticles: 700,
     numToAdd: 8,
-    particleSize: 1
+    particleSize: 1,
   },
   sph: {
     h: 4,
     gasConstant: 100,
     mass: 5,
     restDensity: 1,
-    viscosity: 30
-  }
+    viscosity: 30,
+  },
 }
 
 const width = config.scene.domain[1] - config.scene.domain[0]
@@ -285,13 +285,13 @@ const init = ({ state }) => {
     new THREE.Vector3(15, 18, 15),
     new THREE.Vector3(-15, 18, 15),
     new THREE.Vector3(15, 18, -15),
-    new THREE.Vector3(-15, 18, -15)
+    new THREE.Vector3(-15, 18, -15),
   ]
   const interval = setInterval(() => {
     const { particles: newParticles } = createParticles({
       n: numToAdd,
       size: particleSize,
-      center
+      center,
     })
     newParticles.map((p, i) => {
       p.position.add(particleEmitters[i % 4])
@@ -332,7 +332,7 @@ const init = ({ state }) => {
     cellmin,
     cellmax,
     cellw,
-    stride
+    stride,
   })
 
   const cubesMaterial = new THREE.MeshPhongMaterial({
@@ -341,7 +341,7 @@ const init = ({ state }) => {
     transparent: true,
     refractionRatio: 0.5,
     vertexColors: THREE.VertexColors,
-    shininess: 60
+    shininess: 60,
   })
   let cubesInstance = new MarchingCubes(24, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
@@ -353,7 +353,7 @@ const init = ({ state }) => {
     '#00c0e3',
     '#0096cc',
     '#006fb6',
-    '#044185'
+    '#044185',
   ]
   const lava = ['#fff1a1', '#d9a848', '#c93200', '#841800', '#3d0a03']
   const acid = ['#b0bf1a', '#3b8e22', '#1e4d2b', '#0d2b0f']
@@ -370,7 +370,7 @@ const init = ({ state }) => {
     lookUpTable[Object.keys(lookUpTable).length - 1]
   )
 
-  const animate = now => {
+  const animate = (now) => {
     if (!renderer) {
       return
     }
@@ -393,10 +393,10 @@ const init = ({ state }) => {
     arrowHelper.setDirection(F_gravity.clone().normalize())
 
     // Rebuild neighbors list
-    const particleCellIndices = particles.map(p => {
+    const particleCellIndices = particles.map((p) => {
       return assignToCell(cells, cellw, p.position)
     })
-    const neighbors = particleCellIndices.map(cellIndex => {
+    const neighbors = particleCellIndices.map((cellIndex) => {
       const neighboringCells = cellNeighbors[cellIndex]
       const nb = []
       particleCellIndices.map((b, j) => {
@@ -495,7 +495,7 @@ const init = ({ state }) => {
     cubesInstance.reset()
 
     // Update color of particles and fluid
-    particles.map(p => {
+    particles.map((p) => {
       const color = lookUpTable[p.density.toFixed(1)] || maxColor
       p.material.color.set(color)
       cubesInstance.addBall(
@@ -578,7 +578,7 @@ const init = ({ state }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

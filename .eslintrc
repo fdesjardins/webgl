@@ -1,8 +1,8 @@
 {
   "extends": [
     "standard",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react/recommended"
   ],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {

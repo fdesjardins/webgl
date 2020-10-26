@@ -14,23 +14,23 @@ import threeOrbitControls from 'three-orbit-controls'
 const globals = {
   stations: [],
   particles: {
-    vertices: []
+    vertices: [],
   },
   fontLoader: new THREE.FontLoader(),
   font: null,
   colors: {
     stations: 0x4466ff,
-    stationLabels: 0xffffff
-  }
+    stationLabels: 0xffffff,
+  },
 }
 
 /**
  * Create a station mesh object
  */
-const createStation = station => {
+const createStation = (station) => {
   const stationGeom = new THREE.IcosahedronBufferGeometry(0.35, 0)
   const stationMat = new THREE.MeshPhongMaterial({
-    color: globals.colors.stations
+    color: globals.colors.stations,
   })
   const polyhedron = new THREE.Mesh(stationGeom, stationMat)
   const pos = calcPosFromLatLonRad(station.latitude, station.longitude, 30)
@@ -41,20 +41,20 @@ const createStation = station => {
 /**
  * Create a station mesh label
  */
-const createStationLabel = station => {
+const createStationLabel = (station) => {
   const textMat = new THREE.MeshPhongMaterial({
-    color: globals.colors.stationLabels
+    color: globals.colors.stationLabels,
   })
   const defaultTextBufferGeomOpts = {
     size: 0.25,
     height: 0.25,
     curveSegments: 3,
-    bevelEnabled: false
+    bevelEnabled: false,
   }
   const textGeom = new THREE.TextBufferGeometry(
     station.stationName,
     Object.assign({}, defaultTextBufferGeomOpts, {
-      font: globals.font
+      font: globals.font,
     })
   )
   const text = new THREE.Mesh(textGeom, textMat)
@@ -66,28 +66,28 @@ const createStationLabel = station => {
 /**
  * Load the stations data into the given scene
  */
-const loadStations = async scene => {
+const loadStations = async (scene) => {
   const font = globals.fontLoader.parse(droidSans)
   globals.font = font
 
-  const loadStations = stationsData.stations.map(s => async () => {
+  const loadStations = stationsData.stations.map((s) => async () => {
     const station = createStation(s)
     const label = createStationLabel(s)
     scene.add(station)
     scene.add(label)
     globals.stations.push(station)
   })
-  Promise.map(loadStations, x => Promise.resolve(x()).delay(100), {
-    concurrency: 25
+  Promise.map(loadStations, (x) => Promise.resolve(x()).delay(100), {
+    concurrency: 25,
   })
 }
 
-const loadParticles = async scene => {
+const loadParticles = async (scene) => {
   const particleCount = 1800
   const particleGeom = new THREE.Geometry()
   const particleMat = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 0.5
+    size: 0.5,
   })
 
   Array.from(new Array(particleCount).keys()).map(() => {
@@ -163,7 +163,7 @@ const updateParticlePosition = (pos, frame) => {
   const [x, y, z] = [
     pos.x + (Math.random() - 0.5) * 0.2,
     pos.y + (Math.random() - 0.5) * 0.2,
-    pos.z
+    pos.z,
   ]
   return new THREE.Vector3(x, y, z)
 }
@@ -203,11 +203,16 @@ const WindsExample1 = ({ color, id }) => {
  */
 const WindsExample = ({ children }, { store }) => {
   const components = {
-    WindsExample1: ({ color, id }) => <WindsExample1 color={color} id={id} />
+    WindsExample1: ({ color, id }) => <WindsExample1 color={color} id={id} />,
   }
   return (
     <div id="container">
-      <Example notes={notes} components={components} didMount={didMount} didUpdate={didMount} />
+      <Example
+        notes={notes}
+        components={components}
+        didMount={didMount}
+        didUpdate={didMount}
+      />
     </div>
   )
 }

@@ -19,7 +19,7 @@ const initGL = (canvas, config) => {
   const tex = twgl.createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
-    src: cubeTex
+    src: cubeTex,
   })
 
   console.log(twgl)
@@ -28,18 +28,18 @@ const initGL = (canvas, config) => {
     gl,
     programInfo,
     bufferInfo,
-    tex
+    tex,
   }
 }
 
 // update scene based on time elapsed
-const animateScene = updateFns => {
+const animateScene = (updateFns) => {
   let then = 0
   return () => {
     const now = new Date().getTime()
     if (then !== 0) {
       const elapsed = now - then
-      updateFns.map(f => f(elapsed))
+      updateFns.map((f) => f(elapsed))
     }
     then = now
   }
@@ -54,12 +54,12 @@ const didMount = ({ canvas, register, uniforms }) => {
 
   let worldRotationY = 0
   const animate = animateScene([
-    time => {
+    (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
-  const render = time => {
+  const render = (time) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     gl.enable(gl.DEPTH_TEST)
@@ -112,10 +112,10 @@ const Basics0501 = ({ color, id }, { store }) => {
       onComponentDidMount={() =>
         didMount({
           canvas: document.querySelector(`#${id}`),
-          register: animId => {
+          register: (animId) => {
             requestAnimationFrameId = animId
           },
-          uniforms: _.merge({}, uniforms, { u_lightColor: color })
+          uniforms: _.merge({}, uniforms, { u_lightColor: color }),
         })
       }
     />
@@ -124,7 +124,7 @@ const Basics0501 = ({ color, id }, { store }) => {
 
 const Basics05 = ({ uniforms }) => {
   const components = {
-    Basics0501: ({ color, id }) => <Basics0501 color={color} id={id} />
+    Basics0501: ({ color, id }) => <Basics0501 color={color} id={id} />,
   }
   return (
     <div className="basics05">

@@ -16,7 +16,7 @@ const didMount = (selector, scene, subscribe) => () => {
   const gl = canvas.getContext('webgl2')
   const program = webglUtils.createProgramFromSources(gl, [
     vtxShader,
-    fragShader
+    fragShader,
   ])
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const resolutionUniformLocation = gl.getUniformLocation(
@@ -68,7 +68,7 @@ const HelloWorld = ({ scene, controls, subscribe }) => {
   )
   const components = {
     Canvas: () => <canvas id="canvas" />,
-    Controls
+    Controls,
   }
   return (
     <div className="basics02">
@@ -85,7 +85,7 @@ const HelloWorld = ({ scene, controls, subscribe }) => {
 export default branch(
   {
     scene: ['ex1', 'scene'],
-    controls: ['ex1', 'controls']
+    controls: ['ex1', 'controls'],
   },
   HelloWorld
 )

@@ -15,9 +15,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024
-      }
-    }
+        height: 1024,
+      },
+    },
   },
   object: {
     color: 'ffffff',
@@ -25,15 +25,20 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
-      z: 0.01
-    }
-  }
+      z: 0.01,
+    },
+  },
 })
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.z = 3
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
@@ -97,7 +102,7 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }
@@ -114,11 +119,11 @@ const PointLight = () => (
     notes={notes}
     components={{
       ObjectProperties: wrap(ObjectProperties, {
-        objectCursor: state.select('object')
+        objectCursor: state.select('object'),
       }),
       LightProperties: wrap(LightProperties, {
-        lightCursor: state.select('light')
-      })
+        lightCursor: state.select('light'),
+      }),
     }}
     init={init}
   />

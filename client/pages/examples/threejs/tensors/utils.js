@@ -11,7 +11,7 @@ export const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0xffffff })
   )
@@ -23,7 +23,7 @@ export const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0xffffff })
   )
@@ -45,7 +45,7 @@ export const createAxes = ({ size, fontSize = 3 }) => {
   return axes
 }
 
-export const createLabel = text => {
+export const createLabel = (text) => {
   const fontLoader = new THREE.FontLoader()
   const fontSize = 1.5
   const font = fontLoader.parse(droidSans)
@@ -54,14 +54,19 @@ export const createLabel = text => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0xffffff })
   )
   return label
 }
 
-export const createLineGraph = (f, labelText, color = 0x0000ff, style = 'solid') => {
+export const createLineGraph = (
+  f,
+  labelText,
+  color = 0x0000ff,
+  style = 'solid'
+) => {
   // const f = t => x => 5 * Math.sin(x + t / 200)
   const range = [-10 * Math.PI, 10 * Math.PI]
   const res = 0.1
@@ -82,7 +87,7 @@ export const createLineGraph = (f, labelText, color = 0x0000ff, style = 'solid')
           color,
           linewidth: 2,
           gapSize: 2,
-          dashSize: 3
+          dashSize: 3,
         })
       : new THREE.LineBasicMaterial({ color, linewidth: 2 })
 
@@ -96,19 +101,22 @@ export const createLineGraph = (f, labelText, color = 0x0000ff, style = 'solid')
 
   return {
     object,
-    animate: now => {
+    animate: (now) => {
       points.map((p, i) => {
         object.geometry.attributes.position.array[i * 3 + 1] = f(now)(p.x)
       })
       object.geometry.attributes.position.needsUpdate = true
-    }
+    },
   }
 }
 
 export const create3dGraph = (_, labelText) => {
-  const f = t => (x, z, vec) => {
+  const f = (t) => (x, z, vec) => {
     vec.x = x * 20 * Math.PI - 10 * Math.PI
-    vec.y = 2 * Math.sin(x * 20 * Math.PI + t) + 2 * Math.sin(z * 20 * Math.PI + t) - 20
+    vec.y =
+      2 * Math.sin(x * 20 * Math.PI + t) +
+      2 * Math.sin(z * 20 * Math.PI + t) -
+      20
     vec.z = z * 20 * Math.PI - 10 * Math.PI
   }
   const range = [-10 * Math.PI, 10 * Math.PI]
@@ -116,7 +124,7 @@ export const create3dGraph = (_, labelText) => {
   const wireframe = new THREE.WireframeGeometry(geometry)
   const material = new THREE.LineBasicMaterial({
     color: 0x0000ff,
-    linewidth: 1
+    linewidth: 1,
   })
   const object = new THREE.LineSegments(wireframe, material)
 
@@ -127,9 +135,9 @@ export const create3dGraph = (_, labelText) => {
 
   return {
     object,
-    animate: now => {
+    animate: (now) => {
       object.geometry = new THREE.ParametricBufferGeometry(f(now / 200), 65, 65)
-    }
+    },
   }
 }
 

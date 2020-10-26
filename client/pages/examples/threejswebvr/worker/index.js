@@ -9,15 +9,12 @@ import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOri
 import Example from '-/components/example'
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import notes from './readme.md'
-//import Worker from 'worker-loader!./basic.worker.js'
-import Worker from './basic.worker.js';
+// import Worker from 'worker-loader!./basic.worker.js'
+import Worker from './basic.worker.js'
 
-//import MyWorker from 'worker.js'
+// import MyWorker from 'worker.js'
 
-//import MyWorker from 'worker.js'
-
-
-
+// import MyWorker from 'worker.js'
 
 const globals = {
   fontLoader: new THREE.FontLoader(),
@@ -29,16 +26,12 @@ const state = {
     alive: true,
     velocity: 1 / 10,
   },
-  minWorkers:50,
-
+  minWorkers: 50,
 }
-
-
 
 const start = ({ canvas, container }) => {}
 
 const init = async ({ canvas, container }) => {
-
   let scene = new THREE.Scene()
   const user = new THREE.Group()
   const camera = new THREE.PerspectiveCamera(
@@ -115,16 +108,14 @@ const init = async ({ canvas, container }) => {
 
   scene.add(user)
 
-
-
   const roomsize = 50
   const room = new THREE.LineSegments(
     new BoxLineGeometry(
       roomsize,
       roomsize,
       roomsize,
-      roomsize ,
-      roomsize ,
+      roomsize,
+      roomsize,
       roomsize
     ),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
@@ -143,22 +134,21 @@ const init = async ({ canvas, container }) => {
   const lookvector = new THREE.Vector3()
   const raycaster = new THREE.Raycaster()
 
-
   let mycamera = false
   let camControls = null
 
-    console.log('mouselook')
-    camControls = new FirstPersonControls(user, canvas)
-    camControls.lookSpeed = 0
-    camControls.movementSpeed = 1
-    camControls.noFly = false
-    camControls.lookVertical = true
-    camControls.constrainVertical = false
-    camControls.verticalMin = 0
-    camControls.verticalMax = 5.0
-    camControls.lon = -150
-    camControls.lat = 120
-    camControls.autoForward = false
+  console.log('mouselook')
+  camControls = new FirstPersonControls(user, canvas)
+  camControls.lookSpeed = 0
+  camControls.movementSpeed = 1
+  camControls.noFly = false
+  camControls.lookVertical = true
+  camControls.constrainVertical = false
+  camControls.verticalMin = 0
+  camControls.verticalMax = 5.0
+  camControls.lon = -150
+  camControls.lat = 120
+  camControls.autoForward = false
 
   const clock = new THREE.Clock()
 
@@ -166,78 +156,77 @@ const init = async ({ canvas, container }) => {
   user.position.y = 60
   user.position.z = -50
 
-    camControls.lookAt(0, 0, 0)
-//  const kernel = ({}) => {
+  camControls.lookAt(0, 0, 0)
+  //  const kernel = ({}) => {
 
-    //var first = document.querySelector('input#number1');
-    //var second = document.querySelector('input#number2');
-    let sweatShop=[]
+  // var first = document.querySelector('input#number1');
+  // var second = document.querySelector('input#number2');
+  const sweatShop = []
 
-
-    const addChildWorker=()=>{
-      console.log('putting child to work')
-      let newChildWorker = new Worker();
-      const workerBlock = new THREE.BoxBufferGeometry(
-        3+2*Math.random(),
-        3+2*Math.random(),
-        3+2*Math.random())
-      const workerMaterial = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff,
-        opacity: 1,
-        transparent: true,
-      })
-      const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
-      newChildWorker.workerMesh = workerMesh
-      newChildWorker.workerMesh.position.y = roomsize / 2
-      scene.add(newChildWorker.workerMesh)
-      newChildWorker.onmessage = function(e) {
-        if(!isNaN(e.data[0])){
-            newChildWorker.workerMesh.position.x += e.data[0]*2
-            newChildWorker.workerMesh.position.y += e.data[1]*2
-            newChildWorker.workerMesh.position.z += e.data[2]*2
-            newChildWorker.workerMesh.rotation.x += e.data[0]*.1
-            newChildWorker.workerMesh.rotation.y += e.data[1]*.1
-            newChildWorker.workerMesh.rotation.z += e.data[2]*.1
-
-        }
-        if (
-          Math.abs(newChildWorker.workerMesh.position.x) >= roomsize / 2 ||
-          newChildWorker.workerMesh.position.y >= roomsize + 2 ||
-          newChildWorker.workerMesh.position.y < -2 ||
-          Math.abs(newChildWorker.workerMesh.position.z) >= roomsize / 2
-        ) {
-          newChildWorker.terminate()
-          console.log("a worker perished after escaping the factory ")
-
-          sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
-
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/2
-          newChildWorker.workerMesh.material.color.g=newChildWorker.workerMesh.material.color.g/2
-          newChildWorker.workerMesh.material.color.b=newChildWorker.workerMesh.material.color.b/2
-          newChildWorker.workerMesh.material.opacity=0.5
-
-          //console.log(newChildWorker.workerMesh.material)
-          //no leave him there as an example to the others
-          //scene.remove(newChildWorker)
-        }
+  const addChildWorker = () => {
+    console.log('putting child to work')
+    const newChildWorker = new Worker()
+    const workerBlock = new THREE.BoxBufferGeometry(
+      3 + 2 * Math.random(),
+      3 + 2 * Math.random(),
+      3 + 2 * Math.random()
+    )
+    const workerMaterial = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff,
+      opacity: 1,
+      transparent: true,
+    })
+    const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
+    newChildWorker.workerMesh = workerMesh
+    newChildWorker.workerMesh.position.y = roomsize / 2
+    scene.add(newChildWorker.workerMesh)
+    newChildWorker.onmessage = function (e) {
+      if (!isNaN(e.data[0])) {
+        newChildWorker.workerMesh.position.x += e.data[0] * 2
+        newChildWorker.workerMesh.position.y += e.data[1] * 2
+        newChildWorker.workerMesh.position.z += e.data[2] * 2
+        newChildWorker.workerMesh.rotation.x += e.data[0] * 0.1
+        newChildWorker.workerMesh.rotation.y += e.data[1] * 0.1
+        newChildWorker.workerMesh.rotation.z += e.data[2] * 0.1
       }
-      newChildWorker.onerror = function(error) {
-        console.log('You mistreated your child worker: ' + error.message + '\n');
-        console.log(error);
-        throw error;
-      };
-      sweatShop.push(newChildWorker)
+      if (
+        Math.abs(newChildWorker.workerMesh.position.x) >= roomsize / 2 ||
+        newChildWorker.workerMesh.position.y >= roomsize + 2 ||
+        newChildWorker.workerMesh.position.y < -2 ||
+        Math.abs(newChildWorker.workerMesh.position.z) >= roomsize / 2
+      ) {
+        newChildWorker.terminate()
+        console.log('a worker perished after escaping the factory ')
+
+        sweatShop.splice(sweatShop.indexOf(newChildWorker), 1)
+
+        newChildWorker.workerMesh.material.color.r =
+          newChildWorker.workerMesh.material.color.r / 2
+        newChildWorker.workerMesh.material.color.g =
+          newChildWorker.workerMesh.material.color.g / 2
+        newChildWorker.workerMesh.material.color.b =
+          newChildWorker.workerMesh.material.color.b / 2
+        newChildWorker.workerMesh.material.opacity = 0.5
+
+        // console.log(newChildWorker.workerMesh.material)
+        // no leave him there as an example to the others
+        // scene.remove(newChildWorker)
+      }
     }
-    window.addEventListener("click", function(event) {
-      addChildWorker()
-    });
+    newChildWorker.onerror = function (error) {
+      console.log('You mistreated your child worker: ' + error.message + '\n')
+      console.log(error)
+      throw error
+    }
+    sweatShop.push(newChildWorker)
+  }
+  window.addEventListener('click', (event) => {
+    addChildWorker()
+  })
 
+  addChildWorker()
 
-    addChildWorker();
-
-
-
-   const animate = () => {
+  const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
         return
@@ -249,18 +238,16 @@ const init = async ({ canvas, container }) => {
       camera.getWorldDirection(cameraWorldDir)
       raycaster.set(cameraWorldPos, cameraWorldDir)
       const intersects = raycaster.intersectObjects(scene.children)
-      for (var i = 0; i < intersects.length; i++) {
-
-
-      }
-      for (const child of sweatShop){
-          child.postMessage("get back to work!");
+      for (var i = 0; i < intersects.length; i++) {}
+      for (const child of sweatShop) {
+        child.postMessage('get back to work!')
       }
 
-      if(sweatShop.length<=state.minWorkers){
+      if (sweatShop.length <= state.minWorkers) {
         console.log("we're low on workers, get another one.")
-        addChildWorker()}
-      //childWorker.postMessage(childWorker.workerMesh.position.x)
+        addChildWorker()
+      }
+      // childWorker.postMessage(childWorker.workerMesh.position.x)
 
       renderer.render(scene, camera)
 
@@ -270,8 +257,7 @@ const init = async ({ canvas, container }) => {
       } else {
         mycamera = camera
 
-          camControls.update(clock.getDelta())
-
+        camControls.update(clock.getDelta())
       }
       mycamera.getWorldDirection(lookvector)
     })
@@ -287,8 +273,8 @@ const init = async ({ canvas, container }) => {
     renderer = null
   }
 }
- //kernel()
-//}
+// kernel()
+// }
 
 const ChildWorker = ({ children }, { store }) => (
   <div id="threejsvr02" className={`${style} `}>

@@ -237,7 +237,7 @@ const rtScene = () => {
     magFilter: THREE.NearestFilter,
     minFilter: THREE.NearestFilter,
     depthBuffer: false,
-    stencilBuffer: false
+    stencilBuffer: false,
   })
   // const camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000)
   const camera = new THREE.OrthographicCamera(
@@ -258,7 +258,7 @@ const rtScene = () => {
   return {
     renderTarget,
     scene,
-    camera
+    camera,
   }
 }
 
@@ -280,7 +280,7 @@ const init = ({ canvas, container }) => {
   let renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    premultipliedAlpha: false
+    premultipliedAlpha: false,
   })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -299,7 +299,7 @@ const init = ({ canvas, container }) => {
   const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
   const planeMaterial = new THREE.MeshPhongMaterial({
     color: 0xff0000,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
   })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
   plane.rotation.x = -Math.PI / 2
@@ -315,7 +315,7 @@ const init = ({ canvas, container }) => {
     magFilter: THREE.NearestFilter,
     minFilter: THREE.NearestFilter,
     depthBuffer: false,
-    stencilBuffer: false
+    stencilBuffer: false,
   }
   let currentTexture = new THREE.WebGLRenderTarget(
     width,
@@ -327,7 +327,7 @@ const init = ({ canvas, container }) => {
   const {
     renderTarget,
     scene: renderTargetScene,
-    camera: renderTargetCamera
+    camera: renderTargetCamera,
   } = rtScene()
 
   // const tex1 = texture()
@@ -336,11 +336,11 @@ const init = ({ canvas, container }) => {
   const geometry = new THREE.PlaneBufferGeometry(width, height)
   const uTexture = {
     type: 't',
-    value: texture()
+    value: texture(),
   }
   const iTime = {
     type: 'f',
-    value: 1.5 * Math.PI
+    value: 1.5 * Math.PI,
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
@@ -348,8 +348,8 @@ const init = ({ canvas, container }) => {
     side: THREE.DoubleSide,
     uniforms: {
       texture: uTexture,
-      iTime: iTime
-    }
+      iTime: iTime,
+    },
   })
   const object = new THREE.Mesh(geometry, material)
 
@@ -364,7 +364,7 @@ const init = ({ canvas, container }) => {
   let counter = 1
 
   const then = 0
-  const animate = now => {
+  const animate = (now) => {
     // const nowSecs = now * 0.001
     // const deltaSecs = nowSecs - then
     // then = nowSecs
@@ -391,7 +391,7 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-    
+
     scene = null
     renderer = null
   }

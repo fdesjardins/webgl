@@ -30,7 +30,7 @@ import SPH from '-/pages/examples/threejs/sph'
 import Winds from '-/pages/examples/advanced/winds'
 import Editor from '-/pages/editor'
 
-const Routes = Layout => ({ store }) => (
+const Routes = (Layout) => ({ store }) => (
   <BrowserRouter>
     <Layout>
       <Route exact path="/" component={Home} />
