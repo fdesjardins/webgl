@@ -1,7 +1,7 @@
 import React from 'react'
 import { branch } from 'baobab-react/higher-order'
 
-// import webglUtils from 'vendor/webgl-utils.js'
+import webglUtils from '../../../../../lib/webgl-utils.js'
 
 import { shouldUpdate, sq } from '-/utils'
 import UpDownLeftRight from '-/components/controls/up-down-left-right'
@@ -10,9 +10,16 @@ import Example from '-/components/example'
 import notes from './readme.md'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
+import Baobab from 'baobab'
 
-const didMount = (selector, scene, subscribe) => () => {
-  const canvas = document.querySelector(selector)
+const state = new Baobab({
+  pos: { x: 0, y: 0 },
+  width: 50,
+  height: 50,
+  color: [Math.random(), Math.random(), Math.random(), 1],
+})
+
+const init = ({ canvas, container }) => {
   const gl = canvas.getContext('webgl2')
   const program = webglUtils.createProgramFromSources(gl, [
     vtxShader,
@@ -53,31 +60,25 @@ const didMount = (selector, scene, subscribe) => () => {
     gl.drawArrays(primitiveType, offset, count)
   }
 
-  subscribe(drawScene)
-  drawScene(scene)
+  state.on('update', () => drawScene(state.toJSON()))
+  drawScene(state.toJSON())
 }
 
-const HelloWorld = ({ scene, controls, subscribe }) => {
+const HelloWorld = () => {
   const Controls = () => (
     <UpDownLeftRight
-      onLeft={() => controls.moveLeft(50)}
-      onRight={() => controls.moveRight(50)}
-      onUp={() => controls.moveUp(50)}
-      onDown={() => controls.moveDown(50)}
+      onLeft={() => state.select(['pos', 'x']).apply((x) => x - 50)}
+      onRight={() => state.select(['pos', 'x']).apply((x) => x + 50)}
+      onUp={() => state.select(['pos', 'y']).apply((x) => x - 50)}
+      onDown={() => state.select(['pos', 'y']).apply((x) => x + 50)}
     />
   )
   const components = {
-    Canvas: () => <canvas id="canvas" />,
     Controls,
   }
   return (
     <div className="basics02">
-      <Example
-        notes={notes}
-        components={components}
-        onComponentDidMount={didMount('#canvas', scene, subscribe)}
-        onComponentShouldUpdate={shouldUpdate}
-      />
+      <Example notes={notes} components={components} init={init} />
     </div>
   )
 }

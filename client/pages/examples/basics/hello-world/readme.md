@@ -1,4 +1,4 @@
-# 01 - Hello World
+# Hello World
 
 ---
 
@@ -9,7 +9,7 @@ you're doing low-level WebGL work, as it's very verbose.
 Also, this example shows how you might connect state in Javascript to the WebGL
 context. Try to move the square using the buttons at below:
 
-<Canvas />
+<canvas />
 
 <Controls />
 
