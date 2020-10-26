@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import 'highlight.js/styles/ocean.css'
 import { css } from 'emotion'
 import MDX from '@mdx-js/runtime'
 import { MDXProvider } from '@mdx-js/react'
