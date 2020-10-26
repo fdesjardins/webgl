@@ -18,12 +18,9 @@ const style = css`
   }
   .content {
     padding: 150px 0;
-    max-width: 1000px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-  }
-  .ui.text.container {
-    max-width: none !important;
   }
 `
 
