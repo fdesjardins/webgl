@@ -16,6 +16,7 @@ module.exports = {
     },
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: resolve('dist'),
     port: 9090,
     host: '0.0.0.0',
