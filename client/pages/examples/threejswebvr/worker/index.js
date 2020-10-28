@@ -29,7 +29,7 @@ const state = {
     alive: true,
     velocity: 1 / 10,
   },
-  minWorkers:50,
+  minWorkers:10,
 
 }
 
@@ -195,9 +195,9 @@ const init = async ({ canvas, container }) => {
             newChildWorker.workerMesh.position.x += e.data[0]*2
             newChildWorker.workerMesh.position.y += e.data[1]*2
             newChildWorker.workerMesh.position.z += e.data[2]*2
-            newChildWorker.workerMesh.rotation.x += e.data[0]*.1
-            newChildWorker.workerMesh.rotation.y += e.data[1]*.1
-            newChildWorker.workerMesh.rotation.z += e.data[2]*.1
+            newChildWorker.workerMesh.rotation.x += e.data[3]*.5
+            newChildWorker.workerMesh.rotation.y += e.data[4]*.5
+            newChildWorker.workerMesh.rotation.z += e.data[5]*.5
 
         }
         if (
@@ -211,9 +211,9 @@ const init = async ({ canvas, container }) => {
 
           sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
 
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/2
-          newChildWorker.workerMesh.material.color.g=newChildWorker.workerMesh.material.color.g/2
-          newChildWorker.workerMesh.material.color.b=newChildWorker.workerMesh.material.color.b/2
+          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r
+          newChildWorker.workerMesh.material.color.g=newChildWorker.workerMesh.material.color.g
+          newChildWorker.workerMesh.material.color.b=newChildWorker.workerMesh.material.color.b
           newChildWorker.workerMesh.material.opacity=0.5
 
           //console.log(newChildWorker.workerMesh.material)
