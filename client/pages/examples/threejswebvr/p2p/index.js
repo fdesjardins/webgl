@@ -5,26 +5,23 @@ import * as Tone from 'tone'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js'
-import {InputHandler} from './InputHandler.js'
+import { InputHandler } from './InputHandler.js'
 import Example from '-/components/example'
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import notes from './readme.md'
-import P2pNode from './P2pNode.js'
-//import P2pWStar from './P2pWStar.js'
+//import P2pNode from './P2pNode.js'
+import P2pWStar from './P2pWStar.js'
 
-import Worker from './basic.worker.js';
-
-//import MyWorker from 'worker.js'
+import Worker from './basic.worker.js'
 
 //import MyWorker from 'worker.js'
 
-
-
+//import MyWorker from 'worker.js'
 
 const globals = {
   fontLoader: new THREE.FontLoader(),
   font: null,
-  p2pNode: null
+  p2pNode: null,
 }
 
 const state = {
@@ -32,18 +29,14 @@ const state = {
     alive: true,
     velocity: 1 / 10,
   },
-  minWorkers:0,
-
+  minWorkers: 0,
 }
-
-
 
 const start = ({ canvas, container }) => {}
 
 const init = async ({ canvas, container }) => {
-
-    globals.p2pNode= await new P2pNode()
-    //globals.p2pNode = await new P2pWStar ()
+  //globals.p2pNode= await new P2pNode()
+  globals.p2pNode = await new P2pWStar()
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()
@@ -121,16 +114,14 @@ const init = async ({ canvas, container }) => {
 
   scene.add(user)
 
-
-
   const roomsize = 200
   const room = new THREE.LineSegments(
     new BoxLineGeometry(
       roomsize,
       roomsize,
       roomsize,
-      roomsize ,
-      roomsize ,
+      roomsize,
+      roomsize,
       roomsize
     ),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
@@ -143,132 +134,127 @@ const init = async ({ canvas, container }) => {
   light.position.set(0, 4, 0)
   scene.add(light)
 
-
-
-
   const lookvector = new THREE.Vector3()
   const raycaster = new THREE.Raycaster()
-
 
   let mycamera = false
 
   let camControls = null
 
-    console.log('mouselook')
-    camControls = new FirstPersonControls(user, canvas)
-    camControls.lookSpeed = 0.05
-    camControls.movementSpeed = 10
-    camControls.noFly = false
-    camControls.lookVertical = false
-    camControls.constrainVertical = false
-    camControls.verticalMin = 0
-    camControls.verticalMax = 5.0
-    camControls.lon = -150
-    camControls.lat = 120
-    camControls.autoForward = false
-    user.position.x = 0
-    user.position.y = 3
-    user.position.z = 0
+  console.log('mouselook')
+  camControls = new FirstPersonControls(user, canvas)
+  camControls.lookSpeed = 0.05
+  camControls.movementSpeed = 10
+  camControls.noFly = false
+  camControls.lookVertical = false
+  camControls.constrainVertical = false
+  camControls.verticalMin = 0
+  camControls.verticalMax = 5.0
+  camControls.lon = -150
+  camControls.lat = 120
+  camControls.autoForward = false
+  user.position.x = 0
+  user.position.y = 3
+  user.position.z = 0
 
-    //camControls.lookAt(0, 0, 0)
-    camera.position.set(0, 5, 10)
-    camera.add(user)
+  //camControls.lookAt(0, 0, 0)
+  camera.position.set(0, 5, 10)
+  camera.add(user)
 
-    const clock = new THREE.Clock()
-//  const kernel = ({}) => {
+  const clock = new THREE.Clock()
+  //  const kernel = ({}) => {
 
-    //var first = document.querySelector('input#number1');
-    //var second = document.querySelector('input#number2');
-    let sweatShop=[]
+  //var first = document.querySelector('input#number1');
+  //var second = document.querySelector('input#number2');
+  let sweatShop = []
 
-    const addUserAvatar=(user)=>{
-      console.log('addingUser')
+  const addUserAvatar = (user) => {
+    console.log('addingUser')
 
-      const userBlock = new THREE.BoxBufferGeometry( 2, 4,1)
-      const userMaterial = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff,
-        opacity: 1,
-        transparent: true,
-        side: THREE.DoubleSide,
-      })
+    const userBlock = new THREE.BoxBufferGeometry(2, 4, 1)
+    const userMaterial = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff,
+      opacity: 1,
+      transparent: true,
+      side: THREE.DoubleSide,
+    })
 
-      const userMesh = new THREE.Mesh(userBlock, userMaterial)
-      user.userMesh = userMesh
-      user.add(userMesh)
-      user.add(camera)
-      //user.userMesh.position.y = roomsize / 2
-      //scene.add(user.userMesh)
+    const userMesh = new THREE.Mesh(userBlock, userMaterial)
+    user.userMesh = userMesh
+    user.add(userMesh)
+    user.add(camera)
+    //user.userMesh.position.y = roomsize / 2
+    //scene.add(user.userMesh)
+  }
+  addUserAvatar(user)
 
-    }
-    addUserAvatar(user)
-
-    const addChildWorker=()=>{
-      console.log('putting child to work')
-      let newChildWorker = new Worker();
-      const workerBlock = new THREE.BoxBufferGeometry(
-        3+2*Math.random(),
-        3+2*Math.random(),
-        3+2*Math.random())
-      const workerMaterial = new THREE.MeshPhongMaterial({
-        color: Math.random() * 0xffffff,
-        opacity: 1,
-        transparent: true,
-      })
-      const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
-      newChildWorker.workerMesh = workerMesh
-      newChildWorker.workerMesh.position.y = roomsize / 2
-      scene.add(newChildWorker.workerMesh)
-      newChildWorker.onmessage = function(e) {
-        if(!isNaN(e.data[0])){
-            newChildWorker.workerMesh.position.x += e.data[0]*2
-            newChildWorker.workerMesh.position.y += e.data[1]*2
-            newChildWorker.workerMesh.position.z += e.data[2]*2
-            newChildWorker.workerMesh.rotation.x += e.data[0]*.1
-            newChildWorker.workerMesh.rotation.y += e.data[1]*.1
-            newChildWorker.workerMesh.rotation.z += e.data[2]*.1
-
-        }
-        if (
-          Math.abs(newChildWorker.workerMesh.position.x) >= roomsize / 2 ||
-          newChildWorker.workerMesh.position.y >= roomsize + 2 ||
-          newChildWorker.workerMesh.position.y < -2 ||
-          Math.abs(newChildWorker.workerMesh.position.z) >= roomsize / 2
-        ) {
-          newChildWorker.terminate()
-          console.log("a worker perished after escaping the factory ")
-
-          sweatShop.splice(sweatShop.indexOf(newChildWorker), 1);
-
-          newChildWorker.workerMesh.material.color.r=newChildWorker.workerMesh.material.color.r/2
-          newChildWorker.workerMesh.material.color.g=newChildWorker.workerMesh.material.color.g/2
-          newChildWorker.workerMesh.material.color.b=newChildWorker.workerMesh.material.color.b/2
-          newChildWorker.workerMesh.material.opacity=0.5
-
-          //console.log(newChildWorker.workerMesh.material)
-          //no leave him there as an example to the others
-          //scene.remove(newChildWorker)
-        }
+  const addChildWorker = () => {
+    console.log('putting child to work')
+    let newChildWorker = new Worker()
+    const workerBlock = new THREE.BoxBufferGeometry(
+      3 + 2 * Math.random(),
+      3 + 2 * Math.random(),
+      3 + 2 * Math.random()
+    )
+    const workerMaterial = new THREE.MeshPhongMaterial({
+      color: Math.random() * 0xffffff,
+      opacity: 1,
+      transparent: true,
+    })
+    const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
+    newChildWorker.workerMesh = workerMesh
+    newChildWorker.workerMesh.position.y = roomsize / 2
+    scene.add(newChildWorker.workerMesh)
+    newChildWorker.onmessage = function (e) {
+      if (!isNaN(e.data[0])) {
+        newChildWorker.workerMesh.position.x += e.data[0] * 2
+        newChildWorker.workerMesh.position.y += e.data[1] * 2
+        newChildWorker.workerMesh.position.z += e.data[2] * 2
+        newChildWorker.workerMesh.rotation.x += e.data[0] * 0.1
+        newChildWorker.workerMesh.rotation.y += e.data[1] * 0.1
+        newChildWorker.workerMesh.rotation.z += e.data[2] * 0.1
       }
-      newChildWorker.onerror = function(error) {
-        console.log('You mistreated your child worker: ' + error.message + '\n');
-        console.log(error);
-        throw error;
-      };
-      sweatShop.push(newChildWorker)
+      if (
+        Math.abs(newChildWorker.workerMesh.position.x) >= roomsize / 2 ||
+        newChildWorker.workerMesh.position.y >= roomsize + 2 ||
+        newChildWorker.workerMesh.position.y < -2 ||
+        Math.abs(newChildWorker.workerMesh.position.z) >= roomsize / 2
+      ) {
+        newChildWorker.terminate()
+        console.log('a worker perished after escaping the factory ')
+
+        sweatShop.splice(sweatShop.indexOf(newChildWorker), 1)
+
+        newChildWorker.workerMesh.material.color.r =
+          newChildWorker.workerMesh.material.color.r / 2
+        newChildWorker.workerMesh.material.color.g =
+          newChildWorker.workerMesh.material.color.g / 2
+        newChildWorker.workerMesh.material.color.b =
+          newChildWorker.workerMesh.material.color.b / 2
+        newChildWorker.workerMesh.material.opacity = 0.5
+
+        //console.log(newChildWorker.workerMesh.material)
+        //no leave him there as an example to the others
+        //scene.remove(newChildWorker)
+      }
     }
-    window.addEventListener("click", function(event) {
-      addChildWorker()
-    });
+    newChildWorker.onerror = function (error) {
+      console.log('You mistreated your child worker: ' + error.message + '\n')
+      console.log(error)
+      throw error
+    }
+    sweatShop.push(newChildWorker)
+  }
+  window.addEventListener('click', function (event) {
+    //addChildWorker()
+  })
 
+  //addChildWorker();
 
-    addChildWorker();
+  scene.add(user)
+  //scene.add(user.userMesha)
 
-scene.add(user)
-//scene.add(user.userMesha)
-
-
-
-   const animate = () => {
+  const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
         return
@@ -280,17 +266,15 @@ scene.add(user)
       camera.getWorldDirection(cameraWorldDir)
       raycaster.set(cameraWorldPos, cameraWorldDir)
       const intersects = raycaster.intersectObjects(scene.children)
-      for (var i = 0; i < intersects.length; i++) {
-
-
-      }
-      for (const child of sweatShop){
-          child.postMessage("get back to work!");
+      for (var i = 0; i < intersects.length; i++) {}
+      for (const child of sweatShop) {
+        child.postMessage('get back to work!')
       }
 
-      if(sweatShop.length<=state.minWorkers){
-        console.log("we're low on workers, get another one.")
-        addChildWorker()}
+      //if(sweatShop.length<=state.minWorkers){
+      //  console.log("we're low on workers, get another one.")
+      //  addChildWorker()
+      //}
       //childWorker.postMessage(childWorker.workerMesh.position.x)
 
       renderer.render(scene, camera)
@@ -301,8 +285,7 @@ scene.add(user)
       } else {
         mycamera = camera
 
-          camControls.update(clock.getDelta())
-
+        camControls.update(clock.getDelta())
       }
       mycamera.getWorldDirection(lookvector)
     })
@@ -318,7 +301,7 @@ scene.add(user)
     renderer = null
   }
 }
- //kernel()
+//kernel()
 //}
 
 const P2P = ({ children }, { store }) => (
