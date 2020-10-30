@@ -28,32 +28,59 @@ const state = {
     mesh: null,
   },
   blockCount: 0,
+  ui: {
+    mesh: null,
+    width: null,
+    height: null,
+  },
 }
 
 /**
- * Create and update the score
+ * Create the game score
  */
-const textMat = new THREE.MeshPhongMaterial({
+const textMat = new THREE.MeshBasicMaterial({
   color: 0xffffff,
 })
-const createScore = (score) => {
+const createScore = (score, { size = 0.01 }) => {
   const textGeom = new THREE.TextBufferGeometry(`Score: ${score}`, {
     font: globals.font,
-    size: 1.5,
-    height: 1e-3,
+    size,
+    height: 1e-5,
   })
   const textMesh = new THREE.Mesh(textGeom, textMat)
   return textMesh
 }
-const updateScore = (user, score) => {
-  state.score.value = String(score)
-  if (state.score.mesh) {
-    user.remove(state.score.mesh)
+
+/**
+ * Determine a world-space location from NDC coords for drawing UI elements
+ */
+const uiToWorld = (canvas, camera, uiMesh, xy) => {
+  const raycaster = new THREE.Raycaster()
+  raycaster.setFromCamera(new THREE.Vector2(xy.x, xy.y), camera)
+  const intersections = raycaster.intersectObject(uiMesh)
+  if (intersections.length < 1) {
+    return null
   }
-  const mesh = createScore(state.score.value)
-  state.score.mesh = mesh
-  user.add(mesh)
-  mesh.position.set(-22, 13, -20)
+  return intersections[0].point
+}
+/**
+ * Create a transparent plane at a given distance to serve as the UI plane
+ */
+const createUiPlane = (canvas, camera, distance = 0.11) => {
+  const aspect = canvas.clientWidth / canvas.clientHeight
+  const vfov = (camera.fov * Math.PI) / 180
+  const h = 2 * Math.tan(vfov / 2) * distance
+  const w = h * aspect
+  const uiGeom = new THREE.PlaneBufferGeometry(w, h)
+  const uiMat = new THREE.MeshBasicMaterial({
+    color: 0xffaaaa,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.0,
+  })
+  const uiMesh = new THREE.Mesh(uiGeom, uiMat)
+  uiMesh.position.z = -distance
+  return uiMesh
 }
 
 // to test localhost on a mobile device use :
@@ -62,16 +89,16 @@ const init = ({ canvas, container }) => {
   const font = globals.fontLoader.parse(droidSans)
   globals.font = font
 
-  window.synth = new Tone.Synth().toMaster()
-  const distortion = new Tone.Distortion(0.4).toMaster()
-  window.synth.connect(distortion)
+  // window.synth = new Tone.Synth().toMaster()
+  // const distortion = new Tone.Distortion(0.4).toMaster()
+  // window.synth.connect(distortion)
   // window.synth.triggerAttackRelease('C5', '8n')
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()
   const camera = new THREE.PerspectiveCamera(
     75,
-    window.innerWidth / window.innerHeight,
+    canvas.clientWidth / canvas.clientHeight,
     0.1,
     1000
   )
@@ -96,18 +123,9 @@ const init = ({ canvas, container }) => {
     renderer.xr.enabled = false
   }
 
-  const onWindowResize = () => {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
-  }
-
-  window.addEventListener('resize', onWindowResize, false)
-
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
-  console.log(button)
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
   const hand1 = renderer.xr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
@@ -146,8 +164,6 @@ const init = ({ canvas, container }) => {
 
   scene.add(user)
 
-  updateScore(user, 0)
-
   const roomsize = 300
   const room = new THREE.LineSegments(
     new BoxLineGeometry(
@@ -161,7 +177,6 @@ const init = ({ canvas, container }) => {
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
   room.geometry.translate(0, roomsize / 2, 0)
-  // room.geometry.translate(0, 5, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -208,7 +223,7 @@ const init = ({ canvas, container }) => {
     user.position.x = 0
     user.position.y = 299
     user.position.z = 0
-    updateScore(user, state.blockCount)
+    // updateScore(user, state.blockCount)
     if (!isMobile) {
       camControls.lookAt(0, 0, 0)
     }
@@ -218,6 +233,8 @@ const init = ({ canvas, container }) => {
   }
   let mycamera = false
   let camControls = null
+
+  // user.position.y = 2
 
   if (isMobile) {
     console.log('mobile detected')
@@ -246,9 +263,59 @@ const init = ({ canvas, container }) => {
     camControls.autoForward = false
   }
 
-  user.position.y = 2
   const clock = new THREE.Clock()
   lastPathBlock.copy(user.position)
+
+  let uiMesh = createUiPlane(canvas, camera)
+  camera.add(uiMesh)
+  // renderer.render(scene, camera)
+
+  const updateScore = (score) => {
+    if (state.score.mesh) {
+      uiMesh.remove(state.score.mesh)
+      state.score.mesh = null
+    }
+    const scoreMesh = createScore(String(score), { size: 0.0075 })
+    const scorePos = uiMesh.worldToLocal(
+      uiToWorld(canvas, camera, uiMesh, {
+        x: -0.95,
+        y: 0.75,
+      })
+    )
+    state.score.mesh = scoreMesh
+    state.score.value = score
+    uiMesh.add(scoreMesh)
+    scoreMesh.position.copy(scorePos)
+  }
+
+  const onWindowResize = () => {
+    camera.aspect = canvas.clientWidth / canvas.clientHeight
+    camera.updateProjectionMatrix()
+    if (renderer) {
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight)
+    }
+    if (uiMesh) {
+      camera.remove(uiMesh)
+      uiMesh = createUiPlane(canvas, camera)
+      camera.add(uiMesh)
+    }
+  }
+  window.addEventListener('resize', onWindowResize, false)
+
+  // Example of how to use mouseclick to get UI positions
+  // canvas.addEventListener('mousedown', (event) => {
+  //   console.log(event.clientX - canvas.offsetLeft)
+  //   console.log(event.clientY - canvas.offsetTop)
+  //   const scorePos = uiMesh.worldToLocal(
+  //     uiToWorld(canvas, camera, uiMesh, {
+  //       x: event.clientX - canvas.offsetLeft,
+  //       y: event.clientY - canvas.offsetTop,
+  //     })
+  //   )
+  //   console.log('scorePos', scorePos)
+  //   scorePos.z = 0
+  //   scoreMesh.position.copy(scorePos)
+  // })
 
   const animate = () => {
     renderer.setAnimationLoop(() => {
@@ -308,7 +375,7 @@ const init = ({ canvas, container }) => {
       }
       mycamera.getWorldDirection(lookvector)
 
-      updateScore(user, state.blockCount)
+      updateScore(state.blockCount)
       user.position.x += lookvector.x * state.user.velocity
       // user.position.y += lookvector.y * state.user.velocity
       user.position.z += lookvector.z * state.user.velocity
@@ -330,7 +397,7 @@ const init = ({ canvas, container }) => {
         scene.add(pathHolder)
         lastPathBlock.copy(user.position)
 
-        window.synth.triggerAttackRelease('E3', '.00001')
+        // window.synth.triggerAttackRelease('E3', '.00001')
       }
 
       lastUserPosition.copy(user.position)
@@ -351,49 +418,19 @@ const init = ({ canvas, container }) => {
 
 const Snek = ({ children }, { store }) => (
   <div id="threejsvr02" className={`${style} `}>
-    <div id="hud" className="ui container">
-      <a id="restart" className="active item" href="./02">
-        restart
-      </a>
-    </div>
     <span id="webvr-button" />
-
     <Example notes={notes} init={init} />
   </div>
 )
 
 const style = css`
-#hud{
-  position:fixed !important;
-  top:5px;
-  right:5px;
-  display:inline;
-  z-index:100;
-  width:50px;
-  color:white;
-}
-
-.ui.container{
-  max-width:100vw !important;
-  margin-left:0;
-  margin-right:0;
-}
-
-.content {
-  margin-left:0;
-  margin-right:0;
-
-}
   canvas {
- position:fixed !important;
- top:60px;
- left:0px;
-
- width:100vw !important;
-
+    position: fixed;
+    top: 68px;
+    left: 0px;
+    width: 100vw;
+    height: calc(100vh - 68px) !important;
   }
-  .ui.secondary.inverted.menu {
-    display: inline-block;
 `
 
 export default Snek
