@@ -234,7 +234,7 @@ const init = ({ canvas, container }) => {
   let mycamera = false
   let camControls = null
 
-  // user.position.y = 2
+  user.position.y = 2
 
   if (isMobile) {
     console.log('mobile detected')
@@ -275,11 +275,11 @@ const init = ({ canvas, container }) => {
       uiMesh.remove(state.score.mesh)
       state.score.mesh = null
     }
-    const scoreMesh = createScore(String(score), { size: 0.0075 })
+    const scoreMesh = createScore(String(score), { size: 0.0065 })
     const scorePos = uiMesh.worldToLocal(
       uiToWorld(canvas, camera, uiMesh, {
         x: -0.95,
-        y: 0.75,
+        y: 0.85,
       })
     )
     state.score.mesh = scoreMesh
