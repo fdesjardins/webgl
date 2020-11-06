@@ -37,7 +37,7 @@ module.exports = {
         loader: 'worker-loader',
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif|svg|ogg)$/i,
         loader: 'file-loader',
       },
       {

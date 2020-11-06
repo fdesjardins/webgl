@@ -10,12 +10,15 @@ import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOri
 
 import Example from '-/components/example'
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
+import nom from '-/assets/nom.ogg'
 import notes from './readme.md'
 import { isMobileDevice } from '-/utils'
 
 const globals = {
   fontLoader: new THREE.FontLoader(),
   font: null,
+  audioListener: new THREE.AudioListener(),
+  audioLoader: new THREE.AudioLoader(),
 }
 
 const config = {
@@ -168,12 +171,18 @@ const init = ({ canvas, container }) => {
   const font = globals.fontLoader.parse(droidSans)
   globals.font = font
 
+  const sound = new THREE.Audio(globals.audioListener)
+  globals.audioLoader.load(nom, (b) => {
+    sound.setBuffer(b)
+    sound.setVolume(0.5)
+  })
+
   const { renderer } = createContextAndRenderer(canvas)
 
-  // window.synth = new Tone.Synth().toMaster()
-  // const distortion = new Tone.Distortion(0.4).toMaster()
-  // window.synth.connect(distortion)
-  // window.synth.triggerAttackRelease('C5', '8n')
+  window.synth = new Tone.Synth().toDestination()
+  const distortion = new Tone.Distortion(0.4).toMaster()
+  window.synth.connect(distortion)
+  window.synth.triggerAttackRelease('C5', '8n')
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -220,13 +229,11 @@ const init = ({ canvas, container }) => {
     user.position.x = 0
     user.position.y = 299
     user.position.z = 0
-    // updateScore(user, state.blockCount)
     if (!config.isMobile) {
       camControls.lookAt(0, 0, 0)
     }
     camControls.lookSpeed = 0.01
-    // window.synth.triggerAttackRelease("E5", "8n");
-    // setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
+    window.synth.triggerAttackRelease('E5', '8n')
   }
   let mycamera = false
 
@@ -398,8 +405,7 @@ const init = ({ canvas, container }) => {
           pathHolders.shift()
         }
         lastPathBlock.copy(user.position)
-
-        // window.synth.triggerAttackRelease('E3', '.00001')
+        window.synth.triggerAttackRelease('E3', '.00001')
       }
 
       // Add a tasty egg to eat every now and then
@@ -424,6 +430,7 @@ const init = ({ canvas, container }) => {
       for (const egg of raycaster.intersectObjects(eggs)) {
         if (egg.distance < state.user.velocity + 1) {
           scene.remove(egg.object)
+          sound.play()
           eggs.splice(eggs.indexOf(egg.object), 1)
           state.blockCount += 1
           state.user.velocity += 0.03
