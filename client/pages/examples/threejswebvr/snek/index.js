@@ -180,7 +180,7 @@ const init = ({ canvas, container }) => {
   const { renderer } = createContextAndRenderer(canvas)
 
   window.synth = new Tone.Synth().toDestination()
-  const distortion = new Tone.Distortion(0.4).toMaster()
+  const distortion = new Tone.Distortion(0.4).toDestination()
   window.synth.connect(distortion)
   window.synth.triggerAttackRelease('C5', '8n')
 
@@ -405,7 +405,9 @@ const init = ({ canvas, container }) => {
           pathHolders.shift()
         }
         lastPathBlock.copy(user.position)
-        window.synth.triggerAttackRelease('E3', '.00001')
+        try {
+          window.synth.triggerAttackRelease('E3', '.00001')
+        } catch {}
       }
 
       // Add a tasty egg to eat every now and then
@@ -423,9 +425,6 @@ const init = ({ canvas, container }) => {
         eggs.push(egg)
       }
 
-      const removeItem = (items, i) =>
-        items.slice(0, i - 1).concat(items.slice(i, items.length))
-
       // GULP: We ate an egg!
       for (const egg of raycaster.intersectObjects(eggs)) {
         if (egg.distance < state.user.velocity + 1) {
@@ -436,7 +435,7 @@ const init = ({ canvas, container }) => {
           state.user.velocity += 0.03
         }
       }
-      // Move the eggs for to make them more tasty looking
+      // Move the eggs around to make them more tasty looking
       eggs.map((egg) => {
         egg.rotation.y += 0.1
         egg.position.y =
