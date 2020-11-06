@@ -10,8 +10,8 @@ import Example from '-/components/example'
 import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import notes from './readme.md'
 //import P2pNode from './P2pNode.js'
-import P2pWStar from './P2pWStar.js'
-
+//import P2pWStar from './P2pWStar.js'
+import IpfsNode from './JsIpfs.js'
 import Worker from './basic.worker.js'
 
 //import MyWorker from 'worker.js'
@@ -36,7 +36,7 @@ const start = ({ canvas, container }) => {}
 
 const init = async ({ canvas, container }) => {
   //globals.p2pNode= await new P2pNode()
-  globals.p2pNode = await new P2pWStar()
+  globals.p2pNode = await IpfsNode()
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()
