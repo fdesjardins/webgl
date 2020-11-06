@@ -87,7 +87,7 @@
   "repository": "fdesjardins/webgl",
   "scripts": {
     "dev": "webpack serve",
-    "heroku-postbuild": "webpack -p",
+    "heroku-postbuild": "webpack --mode production",
     "start": "node server/server.js",
     "eslint": "eslint client/"
   }
