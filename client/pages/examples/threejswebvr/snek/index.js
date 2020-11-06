@@ -18,6 +18,11 @@ const globals = {
   font: null,
 }
 
+const config = {
+  roomSize: 300,
+  isMobile: isMobileDevice(),
+}
+
 const state = {
   user: {
     alive: true,
@@ -83,33 +88,7 @@ const createUiPlane = (canvas, camera, distance = 0.11) => {
   return uiMesh
 }
 
-// to test localhost on a mobile device use :
-// adb reverse tcp:9090 tcp:9090
-const init = ({ canvas, container }) => {
-  const font = globals.fontLoader.parse(droidSans)
-  globals.font = font
-
-  // window.synth = new Tone.Synth().toMaster()
-  // const distortion = new Tone.Distortion(0.4).toMaster()
-  // window.synth.connect(distortion)
-  // window.synth.triggerAttackRelease('C5', '8n')
-
-  let scene = new THREE.Scene()
-  const user = new THREE.Group()
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientHeight,
-    0.1,
-    1000
-  )
-
-  camera.position.x = 0
-  camera.position.y = 1
-  camera.position.z = 0
-
-  camera.rotation.x = 0
-  camera.rotation.y = 0
-
+const createContextAndRenderer = (canvas) => {
   // force webgl2 context (for oculus quest compat)
   const context = canvas.getContext('webgl2', { alpha: false })
 
@@ -122,61 +101,107 @@ const init = ({ canvas, container }) => {
     renderer = new THREE.WebGLRenderer({ canvas, context })
     renderer.xr.enabled = false
   }
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight)
+
+  return { context, renderer }
+}
+
+const createVRHands = (xr) => {
+  const hand1 = xr.getController(0)
+  const hand2 = xr.getController(1)
+  // hand1.addEventListener( 'selectstart', onSelectStart );
+  // hand1.addEventListener( 'selectend', onSelectEnd );
+  // hand2.addEventListener( 'selectstart', onSelectStart );
+  // hand2.addEventListener( 'selectend', onSelectEnd );
+
+  const handGeom = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  handGeom.scale(0.2, 0.8, 1.5)
+  const hand1Mat = new THREE.MeshLambertMaterial({
+    color: Math.random() * 0xffffff,
+  })
+  const hand2Mat = new THREE.MeshLambertMaterial({
+    color: Math.random() * 0xffffff,
+    flatShading: true,
+  })
+
+  const hand1Mesh = new THREE.Mesh(handGeom, hand1Mat)
+  hand1Mesh.position.set(hand1.position.x, hand1.position.y, hand1.position.z)
+  const hand2Mesh = new THREE.Mesh(handGeom, hand2Mat)
+  hand2Mesh.position.set(hand2.position.x, hand2.position.y, hand2.position.z)
+
+  return { hand1, hand2, hand1Mesh, hand2Mesh }
+}
+
+const createControls = (user, canvas) => {
+  if (config.isMobile) {
+    console.log('mobile detected')
+    const controls = new DeviceOrientationControls(user)
+    controls.lookSpeed = 0.4
+    controls.movementSpeed = 4
+    controls.noFly = true
+    controls.lookVertical = true
+    controls.constrainVertical = true
+    controls.verticalMin = 1.0
+    controls.verticalMax = 2.0
+    controls.lon = -150
+    controls.lat = 120
+    return controls
+  }
+  console.log('mouselook')
+  const controls = new FirstPersonControls(user, canvas)
+  controls.lookSpeed = 0.3
+  controls.movementSpeed = 0
+  controls.noFly = false
+  controls.lookVertical = false
+  controls.constrainVertical = false
+  controls.verticalMin = 0
+  controls.verticalMax = 5.0
+  controls.lon = -150
+  controls.lat = 120
+  controls.autoForward = false
+  return controls
+}
+
+// to test localhost on a mobile device use :
+// adb reverse tcp:9090 tcp:9090
+const init = ({ canvas, container }) => {
+  const font = globals.fontLoader.parse(droidSans)
+  globals.font = font
+
+  const { renderer } = createContextAndRenderer(canvas)
+
+  // window.synth = new Tone.Synth().toMaster()
+  // const distortion = new Tone.Distortion(0.4).toMaster()
+  // window.synth.connect(distortion)
+  // window.synth.triggerAttackRelease('C5', '8n')
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientHeight,
+    0.1,
+    1000
+  )
+  camera.position.set(0, 1, 0)
+  camera.rotation.set(0, 0, 0)
 
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
-  const hand1 = renderer.xr.getController(0)
-  // hand1.addEventListener( 'selectstart', onSelectStart );
-  // hand1.addEventListener( 'selectend', onSelectEnd );
+  let scene = new THREE.Scene()
+  const user = new THREE.Group()
+
+  const { hand1, hand2, hand1Mesh, hand2Mesh } = createVRHands(renderer.xr)
   scene.add(hand1)
-
-  const hand = new THREE.IcosahedronBufferGeometry(0.08, 1)
-  hand.scale(0.2, 0.8, 1.5)
-
-  const hand1mesh = new THREE.Mesh(
-    hand,
-    new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff })
-  )
-
-  hand1mesh.position.x = hand1.position.x
-  hand1mesh.position.y = hand1.position.y
-  hand1mesh.position.z = hand1.position.z
-
-  const hand2 = renderer.xr.getController(1)
-  // hand2.addEventListener( 'selectstart', onSelectStart );
-  // hand2.addEventListener( 'selectend', onSelectEnd );
   scene.add(hand2)
-  const hand2mesh = new THREE.Mesh(
-    hand,
-    new THREE.MeshLambertMaterial({
-      color: Math.random() * 0xffffff,
-      flatShading: true,
-    })
-  )
-  hand2mesh.position.x = hand2.position.x
-  hand2mesh.position.y = hand2.position.y
-  hand2mesh.position.z = hand2.position.z
+  user.add(hand1Mesh)
+  user.add(hand2Mesh)
 
-  user.add(hand1mesh)
-  user.add(hand2mesh)
-
-  scene.add(user)
-
-  const roomsize = 300
+  const rs = config.roomSize
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(
-      roomsize,
-      roomsize,
-      roomsize,
-      roomsize / 2,
-      roomsize / 2,
-      roomsize / 2
-    ),
+    new BoxLineGeometry(rs, rs, rs, rs / 2, rs / 2, rs / 2),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
-  room.geometry.translate(0, roomsize / 2, 0)
+  room.geometry.translate(0, rs / 2, 0)
   scene.add(room)
 
   const light = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -185,37 +210,9 @@ const init = ({ canvas, container }) => {
 
   user.add(camera)
   scene.add(user)
+  user.position.y = 2
 
-  const lookvector = new THREE.Vector3()
-
-  const pathBlock = new THREE.BoxBufferGeometry(1, 3, 2.5)
-
-  const pathmaterial = new THREE.MeshPhongMaterial({
-    color: 0x00ff00,
-    opacity: 0.5,
-    transparent: true,
-  })
-
-  let lastPos = new THREE.Vector3()
-  lastPos.x = user.position.x
-  lastPos.y = user.position.y
-  lastPos.z = user.position.z
-  let lastBlock = null
-  const lastPathBlock = new THREE.Vector3()
-  const lastUserPosition = new THREE.Vector3()
-  lastPathBlock.copy(user.position)
-  lastUserPosition.copy(user.position)
-  const distanceVector = (v1, v2) => {
-    var dx = v1.x - v2.x
-    var dy = v1.y - v2.y
-    var dz = v1.z - v2.z
-
-    return Math.sqrt(dx * dx + dy * dy + dz * dz)
-  }
-
-  const raycaster = new THREE.Raycaster()
-
-  const isMobile = isMobileDevice()
+  const camControls = createControls(user, canvas)
 
   const killMe = () => {
     state.user.alive = false
@@ -224,7 +221,7 @@ const init = ({ canvas, container }) => {
     user.position.y = 299
     user.position.z = 0
     // updateScore(user, state.blockCount)
-    if (!isMobile) {
+    if (!config.isMobile) {
       camControls.lookAt(0, 0, 0)
     }
     camControls.lookSpeed = 0.01
@@ -232,47 +229,15 @@ const init = ({ canvas, container }) => {
     // setTimeout(function(){ window.location='/examples/threejswebvr/02' }, 10000);
   }
   let mycamera = false
-  let camControls = null
-
-  user.position.y = 2
-
-  if (isMobile) {
-    console.log('mobile detected')
-    camControls = new DeviceOrientationControls(user)
-    camControls.lookSpeed = 0.4
-    camControls.movementSpeed = 4
-    camControls.noFly = true
-    camControls.lookVertical = true
-    camControls.constrainVertical = true
-    camControls.verticalMin = 1.0
-    camControls.verticalMax = 2.0
-    camControls.lon = -150
-    camControls.lat = 120
-  } else {
-    console.log('mouselook')
-    camControls = new FirstPersonControls(user, canvas)
-    camControls.lookSpeed = 0.3
-    camControls.movementSpeed = 0
-    camControls.noFly = false
-    camControls.lookVertical = false
-    camControls.constrainVertical = false
-    camControls.verticalMin = 0
-    camControls.verticalMax = 5.0
-    camControls.lon = -150
-    camControls.lat = 120
-    camControls.autoForward = false
-  }
-
-  const clock = new THREE.Clock()
-  lastPathBlock.copy(user.position)
 
   let uiMesh = createUiPlane(canvas, camera)
   camera.add(uiMesh)
-  // renderer.render(scene, camera)
 
   const updateScore = (score) => {
     if (state.score.mesh) {
       uiMesh.remove(state.score.mesh)
+      state.score.mesh.geometry.dispose()
+      state.score.mesh.material.dispose()
       state.score.mesh = null
     }
     const scoreMesh = createScore(String(score), { size: 0.0065 })
@@ -317,106 +282,174 @@ const init = ({ canvas, container }) => {
   //   scoreMesh.position.copy(scorePos)
   // })
 
+  const pathBlock = new THREE.BoxBufferGeometry(1, 3, 2.5)
+  const pathmaterial = new THREE.MeshPhongMaterial({
+    color: 0x00ff00,
+    opacity: 0.5,
+    transparent: true,
+  })
+
+  let lastBlock = null
+  const lastPathBlock = new THREE.Vector3()
+  const lastUserPosition = new THREE.Vector3()
+  lastPathBlock.copy(user.position)
+  lastUserPosition.copy(user.position)
+  const distanceVector = (v1, v2) => {
+    var dx = v1.x - v2.x
+    var dy = v1.y - v2.y
+    var dz = v1.z - v2.z
+
+    return Math.sqrt(dx * dx + dy * dy + dz * dz)
+  }
+  lastPathBlock.copy(user.position)
+
+  const clock = new THREE.Clock()
+  const lookvector = new THREE.Vector3()
+  const cameraWorldPos = new THREE.Vector3()
+  const cameraWorldDir = new THREE.Vector3()
+  const raycaster = new THREE.Raycaster()
+  const pathHolders = []
+  const eggs = []
+
   const animate = () => {
     renderer.setAnimationLoop(() => {
       if (!renderer) {
         return
       }
-
-      const cameraWorldPos = new THREE.Vector3()
-      camera.getWorldPosition(cameraWorldPos)
-      const cameraWorldDir = new THREE.Vector3()
-      camera.getWorldDirection(cameraWorldDir)
-      raycaster.set(cameraWorldPos, cameraWorldDir)
-      const intersects = raycaster.intersectObjects(scene.children)
-      for (var i = 0; i < intersects.length; i++) {
-        if (intersects[i].distance < state.user.velocity) {
-          if (
-            intersects[i].object !== room &&
-            intersects[i].object !== lastBlock
-          ) {
-            intersects[i].object.material = new THREE.MeshPhongMaterial({
-              color: 0xff0000,
-              opacity: 0.5,
-              transparent: true,
-            })
-            console.log(lastBlock)
-            console.log(intersects[i].object)
-            state.user.velocity = 0
-            killMe()
-          }
-        }
-      }
-      if (
-        Math.abs(user.position.x) >= roomsize / 2 ||
-        user.position.y >= roomsize + 2 ||
-        user.position.y < -2 ||
-        Math.abs(user.position.z) >= roomsize / 2
-      ) {
-        killMe()
-      }
-
       renderer.render(scene, camera)
-      hand1mesh.position.copy(hand1.position)
-      hand2mesh.position.copy(hand2.position)
-      hand1mesh.quaternion.copy(hand1.quaternion)
-      hand2mesh.quaternion.copy(hand2.quaternion)
 
+      // Update VR Hand Meshes
+      hand1Mesh.position.copy(hand1.position)
+      hand2Mesh.position.copy(hand2.position)
+      hand1Mesh.quaternion.copy(hand1.quaternion)
+      hand2Mesh.quaternion.copy(hand2.quaternion)
+
+      // Update controls
       if (renderer.xr.isPresenting === true) {
         mycamera = renderer.xr.getCamera(camera)
         camControls.enabled = false
       } else {
         mycamera = camera
-        if (isMobile) {
+        if (config.isMobile) {
           camControls.update()
         } else {
           camControls.update(clock.getDelta())
         }
       }
-      mycamera.getWorldDirection(lookvector)
 
-      updateScore(state.blockCount)
+      // Update user position
+      mycamera.getWorldDirection(lookvector)
       user.position.x += lookvector.x * state.user.velocity
       // user.position.y += lookvector.y * state.user.velocity
       user.position.z += lookvector.z * state.user.velocity
+
+      // GAMEOVER: You're already dead
+      if (!state.user.alive) {
+        return
+      }
+      // GAMEOVER: The player collides with the wall
+      if (
+        Math.abs(user.position.x) >= config.roomSize / 2 ||
+        user.position.y >= config.roomSize + 2 ||
+        user.position.y < -2 ||
+        Math.abs(user.position.z) >= config.roomSize / 2
+      ) {
+        killMe()
+      }
+      // GAMEOVER: The player collides with an existing block
+      camera.getWorldPosition(cameraWorldPos)
+      camera.getWorldDirection(cameraWorldDir)
+      raycaster.set(cameraWorldPos, cameraWorldDir)
+      for (const i of raycaster.intersectObjects(pathHolders)) {
+        if (i.distance < state.user.velocity) {
+          if (i.object !== lastBlock) {
+            i.object.material = new THREE.MeshPhongMaterial({
+              color: 0xff0000,
+              opacity: 0.5,
+              transparent: true,
+            })
+            state.user.velocity = 0
+            killMe()
+          }
+        }
+      }
+
+      // Advance forward and add a new path segment
       if (
         distanceVector(lastPathBlock, user.position) > 2 &&
         state.user.alive
       ) {
         const pathHolder = new THREE.Mesh(pathBlock, pathmaterial)
-        pathHolder.position.x = user.position.x - 2 * lookvector.x
-        pathHolder.position.y = user.position.y - 2 * lookvector.y
-        pathHolder.position.z = user.position.z - 2 * lookvector.z
+        pathHolder.position.set(
+          user.position.x - 2 * lookvector.x,
+          user.position.y - 2 * lookvector.y,
+          user.position.z - 2 * lookvector.z
+        )
         if (!camControls.enabled) {
           pathHolder.quaternion.copy(mycamera.quaternion)
         } else {
           pathHolder.quaternion.copy(user.quaternion)
         }
-        state.blockCount++
         lastBlock = pathHolder
         scene.add(pathHolder)
+        pathHolders.push(pathHolder)
+        if (pathHolders.length >= state.blockCount * 10) {
+          scene.remove(pathHolders[0])
+          pathHolders.shift()
+        }
         lastPathBlock.copy(user.position)
 
         // window.synth.triggerAttackRelease('E3', '.00001')
       }
 
-      lastUserPosition.copy(user.position)
-      state.user.velocity *= 1.001
-    })
+      // Add a tasty egg to eat every now and then
+      if (Math.random() < 0.005) {
+        const egg = new THREE.Mesh(
+          new THREE.IcosahedronBufferGeometry(2),
+          new THREE.MeshLambertMaterial({ color: 0xff00ff })
+        )
+        egg.position.set(
+          user.position.x + 20 * lookvector.x,
+          user.position.y + 20 * lookvector.y,
+          user.position.z + 20 * lookvector.z
+        )
+        scene.add(egg)
+        eggs.push(egg)
+      }
 
-    renderer.render(scene, camera)
-    lastPos = user.position
+      const removeItem = (items, i) =>
+        items.slice(0, i - 1).concat(items.slice(i, items.length))
+
+      // GULP: We ate an egg!
+      for (const egg of raycaster.intersectObjects(eggs)) {
+        if (egg.distance < state.user.velocity + 1) {
+          scene.remove(egg.object)
+          eggs.splice(eggs.indexOf(egg.object), 1)
+          state.blockCount += 1
+          state.user.velocity += 0.03
+        }
+      }
+      // Move the eggs for to make them more tasty looking
+      eggs.map((egg) => {
+        egg.rotation.y += 0.1
+        egg.position.y =
+          user.position.y + 0.25 * Math.sin(clock.elapsedTime * 5)
+      })
+
+      lastUserPosition.copy(user.position)
+
+      updateScore(state.blockCount)
+    })
   }
   animate()
 
   return () => {
     renderer.dispose()
     scene = null
-    renderer = null
   }
 }
 
-const Snek = ({ children }, { store }) => (
+const Snek = (_, { store }) => (
   <div id="threejsvr02" className={`${style} `}>
     <span id="webvr-button" />
     <Example notes={notes} init={init} />
