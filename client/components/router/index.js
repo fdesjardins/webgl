@@ -1,71 +1,123 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import Home from '-/pages/home'
-import HelloWorld from '-/pages/examples/basics/hello-world'
-import Twgljs from '-/pages/examples/basics/twgljs'
-import Lighting from '-/pages/examples/basics/lighting'
-import TexturesAndBlending from '-/pages/examples/basics/textures-and-blending'
-import LoadingObjects from '-/pages/examples/basics/loading-objects'
-import HelloThreejs from '-/pages/examples/threejs/hello-threejs'
-import PointLight from '-/pages/examples/threejs/point-light'
-import GameOfLife from '-/pages/examples/threejs/game-of-life'
-import VideoTexture from '-/pages/examples/threejs/video-texture'
-import DrawingAxes from '-/pages/examples/threejs/drawing-axes'
-import RayMarching from '-/pages/examples/threejs/ray-marching'
-import HelloWebVr from '-/pages/examples/threejswebvr/hello-threejswebvr'
-import VRInput from '-/pages/examples/threejswebvr/vr-input'
-import Snek from '-/pages/examples/threejswebvr/snek'
-import ChildWorker from '-/pages/examples/threejswebvr/worker'
-import Fractals from '-/pages/examples/threejs/fractals'
-import Graphing from '-/pages/examples/threejs/graphing'
-import OimoPhysics from '-/pages/examples/threejs/oimophysics'
-import RayCasting from '-/pages/examples/threejs/ray-casting'
-import TriangleStrip from '-/pages/examples/threejs/triangle-strip'
-import FPSControls from '-/pages/examples/threejs/first-person-controls'
-import DeviceOrientation from '-/pages/examples/threejs/device-orientation-controls'
-import MarchingCubes from '-/pages/examples/threejs/marching-cubes'
-import GpuCompute from '-/pages/examples/threejs/gpu-compute'
-import SPH from '-/pages/examples/threejs/sph'
-import Winds from '-/pages/examples/advanced/winds'
-import Editor from '-/pages/editor'
 
-const Routes = (Layout) => ({ store }) => (
+const HelloWorld = React.lazy(() =>
+  import('-/pages/examples/basics/hello-world')
+)
+const Twgljs = React.lazy(() => import('-/pages/examples/basics/twgljs'))
+const Lighting = React.lazy(() => import('-/pages/examples/basics/lighting'))
+const TexturesAndBlending = React.lazy(() =>
+  import('-/pages/examples/basics/textures-and-blending')
+)
+const LoadingObjects = React.lazy(() =>
+  import('-/pages/examples/basics/loading-objects')
+)
+const HelloThreejs = React.lazy(() =>
+  import('-/pages/examples/threejs/hello-threejs')
+)
+const PointLight = React.lazy(() =>
+  import('-/pages/examples/threejs/point-light')
+)
+const GameOfLife = React.lazy(() =>
+  import('-/pages/examples/threejs/game-of-life')
+)
+const VideoTexture = React.lazy(() =>
+  import('-/pages/examples/threejs/video-texture')
+)
+const DrawingAxes = React.lazy(() =>
+  import('-/pages/examples/threejs/drawing-axes')
+)
+const RayMarching = React.lazy(() =>
+  import('-/pages/examples/threejs/ray-marching')
+)
+const HelloWebVr = React.lazy(() =>
+  import('-/pages/examples/threejswebvr/hello-threejswebvr')
+)
+const VRInput = React.lazy(() =>
+  import('-/pages/examples/threejswebvr/vr-input')
+)
+const ChildWorker = React.lazy(() =>
+  import('-/pages/examples/threejswebvr/worker')
+)
+const Fractals = React.lazy(() => import('-/pages/examples/threejs/fractals'))
+const Graphing = React.lazy(() => import('-/pages/examples/threejs/graphing'))
+const OimoPhysics = React.lazy(() =>
+  import('-/pages/examples/threejs/oimophysics')
+)
+const RayCasting = React.lazy(() =>
+  import('-/pages/examples/threejs/ray-casting')
+)
+const TriangleStrip = React.lazy(() =>
+  import('-/pages/examples/threejs/triangle-strip')
+)
+const FPSControls = React.lazy(() =>
+  import('-/pages/examples/threejs/first-person-controls')
+)
+const DeviceOrientation = React.lazy(() =>
+  import('-/pages/examples/threejs/device-orientation-controls')
+)
+const MarchingCubes = React.lazy(() =>
+  import('-/pages/examples/threejs/marching-cubes')
+)
+const GpuCompute = React.lazy(() =>
+  import('-/pages/examples/threejs/gpu-compute')
+)
+const SPH = React.lazy(() => import('-/pages/examples/threejs/sph'))
+const Winds = React.lazy(() => import('-/pages/examples/advanced/winds'))
+const Editor = React.lazy(() => import('-/pages/editor'))
+
+const Snek = React.lazy(() => import('-/pages/examples/threejswebvr/snek'))
+
+const Loading = () => (
+  <div className="content text ui container">
+    <div className="ui active centered inline loader text">Loading</div>
+  </div>
+)
+
+const lazy = (Component) => (...args) => (
+  <Suspense fallback={<Loading />}>
+    <Component {...args} />
+  </Suspense>
+)
+
+const Routes = (Layout) => () => (
   <BrowserRouter>
     <Layout>
       <Route exact path="/" component={Home} />
-      <Route path="/examples/basics/00" component={HelloWorld} />
-      <Route path="/examples/basics/01" component={Twgljs} />
-      <Route path="/examples/basics/02" component={Lighting} />
-      <Route path="/examples/basics/03" component={TexturesAndBlending} />
-      <Route path="/examples/basics/04" component={LoadingObjects} />
+      <Route path="/examples/basics/00" component={lazy(HelloWorld)} />
+      <Route path="/examples/basics/01" component={lazy(Twgljs)} />
+      <Route path="/examples/basics/02" component={lazy(Lighting)} />
+      <Route path="/examples/basics/03" component={lazy(TexturesAndBlending)} />
+      <Route path="/examples/basics/04" component={lazy(LoadingObjects)} />
 
-      <Route path="/examples/threejs/00" component={HelloThreejs} />
-      <Route path="/examples/threejs/01" component={PointLight} />
-      <Route path="/examples/threejs/02" component={VideoTexture} />
-      <Route path="/examples/threejs/03" component={GameOfLife} />
-      <Route path="/examples/threejs/04" component={Winds} />
-      <Route path="/examples/threejs/05" component={DrawingAxes} />
-      <Route path="/examples/threejs/06" component={RayMarching} />
-      <Route path="/examples/threejs/07" component={Fractals} />
-      <Route path="/examples/threejs/08" component={Graphing} />
-      <Route path="/examples/threejs/09" component={OimoPhysics} />
-      <Route path="/examples/threejs/10" component={RayCasting} />
-      <Route path="/examples/threejs/11" component={TriangleStrip} />
-      <Route path="/examples/threejs/12" component={FPSControls} />
-      <Route path="/examples/threejs/13" component={DeviceOrientation} />
-      <Route path="/examples/threejs/14" component={MarchingCubes} />
-      <Route path="/examples/threejs/15" component={SPH} />
-      <Route path="/examples/threejs/16" component={GpuCompute} />
+      <Route path="/examples/threejs/00" component={lazy(HelloThreejs)} />
+      <Route path="/examples/threejs/01" component={lazy(PointLight)} />
+      <Route path="/examples/threejs/02" component={lazy(VideoTexture)} />
+      <Route path="/examples/threejs/03" component={lazy(GameOfLife)} />
+      <Route path="/examples/threejs/04" component={lazy(Winds)} />
+      <Route path="/examples/threejs/05" component={lazy(DrawingAxes)} />
+      <Route path="/examples/threejs/06" component={lazy(RayMarching)} />
+      <Route path="/examples/threejs/07" component={lazy(Fractals)} />
+      <Route path="/examples/threejs/08" component={lazy(Graphing)} />
+      <Route path="/examples/threejs/09" component={lazy(OimoPhysics)} />
+      <Route path="/examples/threejs/10" component={lazy(RayCasting)} />
+      <Route path="/examples/threejs/11" component={lazy(TriangleStrip)} />
+      <Route path="/examples/threejs/12" component={lazy(FPSControls)} />
+      <Route path="/examples/threejs/13" component={lazy(DeviceOrientation)} />
+      <Route path="/examples/threejs/14" component={lazy(MarchingCubes)} />
+      <Route path="/examples/threejs/15" component={lazy(SPH)} />
+      <Route path="/examples/threejs/16" component={lazy(GpuCompute)} />
 
-      <Route path="/examples/threejswebvr/00" component={HelloWebVr} />
-      <Route path="/examples/threejswebvr/01" component={VRInput} />
-      <Route path="/examples/threejswebvr/02" component={Snek} />
-      <Route path="/examples/threejswebvr/03" component={ChildWorker} />
+      <Route path="/examples/threejswebvr/00" component={lazy(HelloWebVr)} />
+      <Route path="/examples/threejswebvr/01" component={lazy(VRInput)} />
+      <Route path="/examples/threejswebvr/02" component={lazy(Snek)} />
+      <Route path="/examples/threejswebvr/03" component={lazy(ChildWorker)} />
 
-      <Route path="/examples/advanced/00" component={Winds} />
+      <Route path="/examples/advanced/00" component={lazy(Winds)} />
 
-      <Route path="/editor" component={Editor} />
+      <Route path="/editor" component={lazy(Editor)} />
     </Layout>
   </BrowserRouter>
 )
