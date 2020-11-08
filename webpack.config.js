@@ -8,11 +8,12 @@ const resolve = (d) => path.join(__dirname, d)
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
-  entry: './client/index',
+  entry: ['react-hot-loader/patch', './client/index'],
   resolve: {
     extensions: ['*', '.json', '.js'],
     alias: {
       '-': resolve('client'),
+      'react-dom': '@hot-loader/react-dom',
     },
   },
   devServer: {

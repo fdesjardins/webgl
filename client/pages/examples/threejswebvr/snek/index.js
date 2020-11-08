@@ -247,17 +247,17 @@ const init = ({ canvas, container }) => {
       state.score.mesh.material.dispose()
       state.score.mesh = null
     }
-    const scoreMesh = createScore(String(score), { size: 0.0065 })
+    const scoreMesh = createScore(String(score), { size: 0.006 })
     const scorePos = uiMesh.worldToLocal(
       uiToWorld(canvas, camera, uiMesh, {
         x: -0.95,
-        y: 0.85,
+        y: 0.88,
       })
     )
+    scoreMesh.position.copy(scorePos)
     state.score.mesh = scoreMesh
     state.score.value = score
     uiMesh.add(scoreMesh)
-    scoreMesh.position.copy(scorePos)
   }
 
   const onWindowResize = () => {

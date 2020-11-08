@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { root } from 'baobab-react/higher-order'
-import { hot } from 'react-hot-loader/root'
 import { css } from 'emotion'
 
 import state from '-/state/tree'
@@ -39,4 +38,4 @@ const Layout = ({ children }) => (
   </div>
 )
 
-export default hot(root(state, Routes(Layout)))
+export default root(state, Routes(Layout))
