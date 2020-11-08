@@ -23,6 +23,7 @@ const globals = {
 
 const config = {
   roomSize: 300,
+  roomColor: 0x0080f0,
   isMobile: isMobileDevice(),
 }
 
@@ -193,11 +194,26 @@ const init = ({ canvas, container }) => {
   camera.position.set(0, 1, 0)
   camera.rotation.set(0, 0, 0)
 
+  const overheadCam = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientHeight,
+    0.1,
+    1000
+  )
+  overheadCam.position.set(0, 195, -1)
+  overheadCam.lookAt(0, 0, 0)
+
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
 
   let scene = new THREE.Scene()
   const user = new THREE.Group()
+
+  const userMesh = new THREE.Mesh(
+    new THREE.IcosahedronBufferGeometry(3),
+    new THREE.MeshBasicMaterial({ color: 0xffff00 })
+  )
+  user.add(userMesh)
 
   const { hand1, hand2, hand1Mesh, hand2Mesh } = createVRHands(renderer.xr)
   scene.add(hand1)
@@ -208,7 +224,7 @@ const init = ({ canvas, container }) => {
   const rs = config.roomSize
   const room = new THREE.LineSegments(
     new BoxLineGeometry(rs, rs, rs, rs / 2, rs / 2, rs / 2),
-    new THREE.LineBasicMaterial({ color: 0x0080f0 })
+    new THREE.LineBasicMaterial({ color: config.roomColor })
   )
   room.geometry.translate(0, rs / 2, 0)
   scene.add(room)
@@ -240,6 +256,8 @@ const init = ({ canvas, container }) => {
   let uiMesh = createUiPlane(canvas, camera)
   camera.add(uiMesh)
 
+  renderer.render(scene, camera)
+
   const updateScore = (score) => {
     if (state.score.mesh) {
       uiMesh.remove(state.score.mesh)
@@ -259,6 +277,25 @@ const init = ({ canvas, container }) => {
     state.score.value = score
     uiMesh.add(scoreMesh)
   }
+
+  const overheadRenderTarget = new THREE.WebGLRenderTarget(256, 256)
+  const overheadViewMesh = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(
+      (0.04 / 950) * canvas.clientWidth,
+      (0.04 / 950) * canvas.clientWidth
+    ),
+    new THREE.MeshBasicMaterial({
+      map: overheadRenderTarget.texture,
+    })
+  )
+  const overheadViewPos = uiMesh.worldToLocal(
+    uiToWorld(canvas, camera, uiMesh, {
+      x: 0.75,
+      y: 0.7,
+    })
+  )
+  uiMesh.add(overheadViewMesh)
+  overheadViewMesh.position.copy(overheadViewPos)
 
   const onWindowResize = () => {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
@@ -323,6 +360,13 @@ const init = ({ canvas, container }) => {
       if (!renderer) {
         return
       }
+      user.add(userMesh)
+      room.material.color.setHex(0x000000)
+      renderer.setRenderTarget(overheadRenderTarget)
+      renderer.render(scene, overheadCam)
+      user.remove(userMesh)
+      room.material.color.setHex(config.roomColor)
+      renderer.setRenderTarget(null)
       renderer.render(scene, camera)
 
       // Update VR Hand Meshes
