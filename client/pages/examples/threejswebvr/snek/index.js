@@ -13,7 +13,7 @@ import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
 import nom from '-/assets/nom.ogg'
 import notes from './readme.md'
 import { isMobileDevice } from '-/utils'
-
+import Stats from 'stats.js'
 const globals = {
   fontLoader: new THREE.FontLoader(),
   font: null,
@@ -42,6 +42,7 @@ const state = {
     width: null,
     height: null,
   },
+  stats: new Stats(),
 }
 
 /**
@@ -205,7 +206,9 @@ const init = ({ canvas, container }) => {
 
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
-
+  state.stats.showPanel(0)
+  //state.stats.showPanel(2)
+  document.body.appendChild(state.stats.dom)
   let scene = new THREE.Scene()
   const user = new THREE.Group()
 
@@ -358,6 +361,7 @@ const init = ({ canvas, container }) => {
 
   const animate = () => {
     renderer.setAnimationLoop(() => {
+      state.stats.begin()
       if (!renderer) {
         return
       }
@@ -489,6 +493,7 @@ const init = ({ canvas, container }) => {
       })
 
       lastUserPosition.copy(user.position)
+      state.stats.end()
     })
   }
   animate()
