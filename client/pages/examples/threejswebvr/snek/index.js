@@ -240,6 +240,7 @@ const init = ({ canvas, container }) => {
   const camControls = createControls(user, canvas)
 
   const killMe = () => {
+    updateScore(state.blockCount)
     state.user.alive = false
     state.user.velocity = 0
     user.position.x = 0
@@ -380,6 +381,7 @@ const init = ({ canvas, container }) => {
         mycamera = renderer.xr.getCamera(camera)
         camControls.enabled = false
       } else {
+        //updateScore(state.blockCount)
         mycamera = camera
         if (config.isMobile) {
           camControls.update()
@@ -487,8 +489,6 @@ const init = ({ canvas, container }) => {
       })
 
       lastUserPosition.copy(user.position)
-
-      updateScore(state.blockCount)
     })
   }
   animate()
