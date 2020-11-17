@@ -13,6 +13,8 @@ app.use('/lib', express.static(path.join(__dirname, '../lib')))
 app.use(cors())
 app.all('*', cors())
 
-app.all('*', (req, res) => res.sendFile(path.join(__dirname, '../dist/index.html')))
+app.all('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

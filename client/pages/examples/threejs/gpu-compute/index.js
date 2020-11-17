@@ -4,7 +4,6 @@ import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
 import { GPUComputationRenderer } from 'three/examples/jsm/misc/GPUComputationRenderer'
 
-import { wrapComponent } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
 

@@ -70,6 +70,10 @@ const Editor = React.lazy(() => import('-/pages/editor'))
 
 const Snek = React.lazy(() => import('-/pages/examples/threejswebvr/snek'))
 
+const StreamingPano = React.lazy(() =>
+  import('-/pages/examples/threejs/streaming-panorama')
+)
+
 const Loading = () => (
   <div className="content text ui container">
     <div className="ui active centered inline loader text">Loading</div>
@@ -109,6 +113,7 @@ const Routes = (Layout) => () => (
       <Route path="/examples/threejs/14" component={lazy(MarchingCubes)} />
       <Route path="/examples/threejs/15" component={lazy(SPH)} />
       <Route path="/examples/threejs/16" component={lazy(GpuCompute)} />
+      <Route path="/examples/threejs/17" component={lazy(StreamingPano)} />
 
       <Route path="/examples/threejswebvr/00" component={lazy(HelloWebVr)} />
       <Route path="/examples/threejswebvr/01" component={lazy(VRInput)} />
