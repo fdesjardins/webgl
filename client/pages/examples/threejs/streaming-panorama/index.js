@@ -256,9 +256,11 @@ const init = ({ canvas, container }) => {
     raycaster.setFromCamera(new THREE.Vector2(0.5, 0.5), camera)
     const intersections = raycaster.intersectObjects([mesh])
     // console.log(intersections)
-    if (intersections[0].uv.x >= 0.875 && intersections[0].uv.x <= 1.0) {
+    if (intersections[0].uv.x >= 0.825 && intersections[0].uv.x <= 1.0) {
       loader.load(images[imageIndex++], (texture) => {
+        const oldTexture = image1Uniform.value
         image1Uniform.value = texture
+        oldTexture.dispose()
       })
       if (imageIndex === 4) {
         imageIndex = 0
