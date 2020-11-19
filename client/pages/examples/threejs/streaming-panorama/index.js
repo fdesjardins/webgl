@@ -6,7 +6,7 @@ import threeOrbitControls from 'three-orbit-controls'
 import Example from '-/components/example'
 import notes from './readme.md'
 
-import image0 from './0.jpg'
+import image0 from './0-4096.jpg'
 import image11 from './1-1.jpg'
 import image12 from './1-2.jpg'
 import image13 from './1-3.jpg'
@@ -18,7 +18,19 @@ import image5 from './5.jpg'
 import image6 from './6.jpg'
 import image7 from './7.jpg'
 
-const Image0 = new THREE.TextureLoader().load(image0)
+const loader = new THREE.TextureLoader()
+
+const loadTexture = (url) => {
+  return new Promise((resolve, reject) => {
+    loader.load(url, (tex) => {
+      tex.minFilter = THREE.LinearFilter
+      resolve(tex)
+    })
+  })
+}
+
+let Image0
+
 const Image11 = new THREE.TextureLoader().load(image11)
 const Image12 = new THREE.TextureLoader().load(image12)
 const Image13 = new THREE.TextureLoader().load(image13)
@@ -30,14 +42,14 @@ const Image5 = new THREE.TextureLoader().load(image5)
 const Image6 = new THREE.TextureLoader().load(image6)
 const Image7 = new THREE.TextureLoader().load(image7)
 
-Image0.minFilter = THREE.NearestFilter
-Image11.minFilter = THREE.NearestFilter
-Image2.minFilter = THREE.NearestFilter
-Image3.minFilter = THREE.NearestFilter
-Image4.minFilter = THREE.NearestFilter
-Image5.minFilter = THREE.NearestFilter
-Image6.minFilter = THREE.NearestFilter
-Image7.minFilter = THREE.NearestFilter
+// Image0.minFilter = THREE.LinearFilter
+Image11.minFilter = THREE.LinearFilter
+Image2.minFilter = THREE.LinearFilter
+Image3.minFilter = THREE.LinearFilter
+Image4.minFilter = THREE.LinearFilter
+Image5.minFilter = THREE.LinearFilter
+Image6.minFilter = THREE.LinearFilter
+Image7.minFilter = THREE.LinearFilter
 
 const WHITE = 0xffffff
 const BLACK = 0x000000
@@ -203,58 +215,71 @@ const init = ({ canvas, container }) => {
   const ambientLight = new THREE.AmbientLight(0x444444)
   scene.add(ambientLight)
 
-  renderer.setSize(container.clientWidth, container.clientWidth)
+  const onResize = () => {
+    camera.aspect = canvas.clientWidth / canvas.clientHeight
+    camera.updateProjectionMatrix()
+    if (renderer) {
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight)
+    }
+    renderer.setSize(canvas.clientWidth, canvas.clientWidth)
+  }
+  window.addEventListener('resize', onResize, false)
+  onResize()
 
   const image1Uniform = {
     type: 'sampler2D',
     value: Image11,
   }
 
+  let mesh
   const geometry = new THREE.CylinderBufferGeometry(25, 25, 23, 64)
   // const material = new THREE.MeshPhongMaterial({ color: WHITE })
-  const material = new THREE.ShaderMaterial({
-    fragmentShader: fs,
-    vertexShader: vs,
-    side: THREE.DoubleSide,
-    uniforms: {
-      iChannel0: {
-        type: 'sampler2D',
-        value: Image0,
+  loadTexture(image0).then((tex) => {
+    Image0 = tex
+    const material = new THREE.ShaderMaterial({
+      fragmentShader: fs,
+      vertexShader: vs,
+      side: THREE.DoubleSide,
+      uniforms: {
+        iChannel0: {
+          type: 'sampler2D',
+          value: Image0,
+        },
+        iChannel1: image1Uniform,
+        iChannel2: {
+          type: 'sampler2D',
+          value: Image2,
+        },
+        iChannel3: {
+          type: 'sampler2D',
+          value: Image3,
+        },
+        iChannel4: {
+          type: 'sampler2D',
+          value: Image4,
+        },
+        iChannel5: {
+          type: 'sampler2D',
+          value: Image5,
+        },
+        iChannel6: {
+          type: 'sampler2D',
+          value: Image6,
+        },
+        iChannel7: {
+          type: 'sampler2D',
+          value: Image7,
+        },
       },
-      iChannel1: image1Uniform,
-      iChannel2: {
-        type: 'sampler2D',
-        value: Image2,
-      },
-      iChannel3: {
-        type: 'sampler2D',
-        value: Image3,
-      },
-      iChannel4: {
-        type: 'sampler2D',
-        value: Image4,
-      },
-      iChannel5: {
-        type: 'sampler2D',
-        value: Image5,
-      },
-      iChannel6: {
-        type: 'sampler2D',
-        value: Image6,
-      },
-      iChannel7: {
-        type: 'sampler2D',
-        value: Image7,
-      },
-    },
+    })
+    const materials = [
+      material,
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),
+    ]
+    mesh = new THREE.Mesh(geometry, materials)
+    scene.add(mesh)
   })
-  const materials = [
-    material,
-    new THREE.MeshBasicMaterial({ color: 0x000000 }),
-    new THREE.MeshBasicMaterial({ color: 0x000000 }),
-  ]
-  const mesh = new THREE.Mesh(geometry, materials)
-  scene.add(mesh)
 
   const images = [image11, image12, image13, image14]
   let imageIndex = 1
@@ -266,8 +291,7 @@ const init = ({ canvas, container }) => {
     const intersections = raycaster.intersectObjects([mesh])
     // console.log(intersections)
     if (intersections[0].uv.x >= 0.825 && intersections[0].uv.x <= 1.0) {
-      loader.load(images[imageIndex++], (texture) => {
-        texture.minFilter = THREE.NearestFilter
+      loadTexture(images[imageIndex++]).then((texture) => {
         const oldTexture = image1Uniform.value
         image1Uniform.value = texture
         oldTexture.dispose()
