@@ -6,7 +6,7 @@ import threeOrbitControls from 'three-orbit-controls'
 import Example from '-/components/example'
 import notes from './readme.md'
 
-import image0 from './0-4096.jpg'
+import image0 from './0.jpg'
 import image11 from './1-1.jpg'
 import image12 from './1-2.jpg'
 import image13 from './1-3.jpg'
@@ -17,6 +17,8 @@ import image4 from './4.jpg'
 import image5 from './5.jpg'
 import image6 from './6.jpg'
 import image7 from './7.jpg'
+
+import Stats from 'stats.js'
 
 const loader = new THREE.TextureLoader()
 
@@ -76,6 +78,7 @@ void main(){
 const fs = `
 varying vec2 texCoord;
 varying vec2 vUv;
+
 uniform sampler2D iChannel0;
 uniform sampler2D iChannel1;
 uniform sampler2D iChannel2;
@@ -85,105 +88,116 @@ uniform sampler2D iChannel5;
 uniform sampler2D iChannel6;
 uniform sampler2D iChannel7;
 
+mat2 rotate2d(float theta){
+  return mat2(cos(theta), -sin(theta),
+              sin(theta),  cos(theta));
+}
+
+mat2 scale(float sx, float sy){
+  return mat2(1.0/sx, 0.0,
+              0.0,    1.0/sy);
+}
+
+vec4 map(int channel, vec2 uv){
+  vec4 res = vec4(0.0);
+  switch (channel) {
+  case 0: res = texture(iChannel0, uv); break;
+  case 1: res = texture(iChannel1, uv); break;
+  case 2: res = texture(iChannel2, uv); break;
+  case 3: res = texture(iChannel3, uv); break;
+  case 4: res = texture(iChannel4, uv); break;
+  case 5: res = texture(iChannel5, uv); break;
+  case 6: res = texture(iChannel6, uv); break;
+  case 7: res = texture(iChannel7, uv); break;
+  }
+  return res;
+}
+
 void main(){
   float vfov = 0.75;
-  gl_FragColor = vec4(0.0);
+  vec2 uv = vUv;
+  int channel;
+  float lighten = 1.0;
 
   if (vUv.x <= 0.125) {
-    vec2 uvMinMax = vec2(0.1, 0.912);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel0,
-      vec2(
-        clamp(1.0 - (vUv.x * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
-    gl_FragColor *= 1.3;
+    channel = 0;
+    uv.x = 1.0 - uv.x * 8.0;
+    lighten = 1.3;
+    uv *= rotate2d(-0.01);
+    uv *= scale(1.35, 1.0);
+    uv.x += 0.09;
   } else if (vUv.x <= 0.25) {
-    vec2 uvMinMax = vec2(0.088, 0.95);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel7,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.125) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
+    channel = 7;
+    uv.x = 1.0 - (uv.x - 0.125) * 8.0;
+    uv *= rotate2d(0.017);
+    uv *= scale(1.29, 1.0);
+    uv.x += 0.125;
   } else if (vUv.x <= 0.375) {
-    vec2 uvMinMax = vec2(0.2, 0.9);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel6,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.25) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
+    channel = 6;
+    uv.x = 1.0 - (uv.x - 0.25) * 8.0;
+    uv *= rotate2d(0.015);
+    uv *= scale(1.28, 1.0);
+    uv.y += 0.03;
+    uv.x += 0.12;
   } else if (vUv.x <= 0.5) {
-    vec2 uvMinMax = vec2(0.15, 0.95);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel5,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.375) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
+    channel = 5;
+    uv.x = 1.0 - (uv.x - 0.375) * 8.0;
+    uv *= rotate2d(0.013);
+    uv *= scale(1.35, 1.0);
+    uv.x += 0.09;
+    uv.y += 0.01;
   } else if (vUv.x <= 0.625) {
-    vec2 uvMinMax = vec2(0.227, 0.975);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel4,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.5) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
+    channel = 4;
+    uv.x = 1.0 - (uv.x - 0.5) * 8.0;
+    uv *= rotate2d(0.005);
+    uv *= scale(1.38, 1.0);
+    uv.x += 0.08;
   } else if (vUv.x <= 0.75) {
-    vec2 uvMinMax = vec2(0.227, 0.925);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel3,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.625) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
-    gl_FragColor *= 1.2;
+    channel = 3;
+    uv.x = 1.0 - (uv.x - 0.625) * 8.0;
+    uv *= scale(1.35, 1.0);
+    uv *= rotate2d(0.0);
+    uv.x += 0.1;
+    lighten *= 1.2;
   } else if (vUv.x <= 0.875) {
-    vec2 uvMinMax = vec2(0.2, 0.9);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel2,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.75) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
-    gl_FragColor *= 1.2;
+    channel = 2;
+    uv.x = 1.0 - (uv.x - 0.75) * 8.0;
+    uv *= rotate2d(0.01);
+    uv *= scale(1.35, 1.0);
+    uv.x += 0.095;
+    uv.y += 0.012;
+    lighten *= 1.2;
   } else {
-    vec2 uvMinMax = vec2(0.125, 0.85);
-    float shift = uvMinMax.x;
-    float s = 8.0 * (uvMinMax.y - uvMinMax.x);
-    gl_FragColor = texture(iChannel1,
-      vec2(
-        clamp(1.0 - ((vUv.x - 0.875) * s + shift), 0.0, 1.0),
-        vUv.y
-      )
-    );
-
+    channel = 1;
+    uv.x = 1.0 - (uv.x - 0.875) * 8.0;
+    uv *= rotate2d(-0.005);
+    uv *= scale(1.35, 1.0);
+    uv.x += 0.09;
+    uv.y += 0.01;
+    lighten = 1.1;
   }
 
-  // if (vUv.y < 0.01 || vUv.y > 0.99) {
-  //   gl_FragColor = vec4(0.0);
-  // }
+  // Set the color to black instead of allowing the texture to repeat
+  if (uv.y < 0.0 || uv.y > 1.0 || uv.x < 0.0 || uv.x > 1.0) {
+    gl_FragColor = vec4(0.0);
+  } else {
+    gl_FragColor = map(channel, uv) * lighten;
+  }
+
+  // Chop a little off the top and bottom for a clean edge
+  if (vUv.y < 0.025 || vUv.y > 0.96) {
+    gl_FragColor = vec4(0.0);
+  }
 }
 `
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
   scene.background = new THREE.Color(BLACK)
+
+  const stats = new Stats()
+  stats.showPanel(0)
+  document.body.appendChild(stats.dom)
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -192,7 +206,7 @@ const init = ({ canvas, container }) => {
     2000
   )
   camera.updateProjectionMatrix()
-  camera.position.set(1, 0, -1)
+  camera.position.set(0.01, 0, 0)
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -201,13 +215,13 @@ const init = ({ canvas, container }) => {
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
   controls.enableZoom = false
-  controls.rotateSpeed = (-1 * camera.fov) / 1250 // -0.06
+  controls.rotateSpeed = (-1 * camera.fov) / 800
   controls.update()
 
   const onWheel = (delta) => {
     const fov = camera.fov + delta * 0.1
     camera.fov = THREE.MathUtils.clamp(fov, 5, 90)
-    controls.rotateSpeed = (-1 * camera.fov) / 1250
+    controls.rotateSpeed = (-1 * camera.fov) / 800
     camera.updateProjectionMatrix()
   }
   canvas.addEventListener('wheel', (e) => onWheel(e.deltaY))
@@ -281,16 +295,17 @@ const init = ({ canvas, container }) => {
     scene.add(mesh)
   })
 
+  // Rotate through the sample images if we're pointed at the last octant
   const images = [image11, image12, image13, image14]
   let imageIndex = 1
-  const loader = new THREE.TextureLoader()
   const raycaster = new THREE.Raycaster()
-
   setInterval(() => {
-    raycaster.setFromCamera(new THREE.Vector2(0.5, 0.5), camera)
+    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera)
     const intersections = raycaster.intersectObjects([mesh])
-    // console.log(intersections)
-    if (intersections[0].uv.x >= 0.825 && intersections[0].uv.x <= 1.0) {
+    if (intersections.length === 0) {
+      return
+    }
+    if (intersections[0].uv.x >= 0.875 && intersections[0].uv.x <= 1.0) {
       loadTexture(images[imageIndex++]).then((texture) => {
         const oldTexture = image1Uniform.value
         image1Uniform.value = texture
@@ -300,12 +315,14 @@ const init = ({ canvas, container }) => {
         imageIndex = 0
       }
     }
-  }, 1000)
+  }, 2000)
 
   const animate = () => {
     if (renderer) {
+      stats.begin()
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
+      stats.end()
     }
   }
   animate()
