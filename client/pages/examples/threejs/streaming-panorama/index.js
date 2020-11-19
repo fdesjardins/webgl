@@ -30,6 +30,15 @@ const Image5 = new THREE.TextureLoader().load(image5)
 const Image6 = new THREE.TextureLoader().load(image6)
 const Image7 = new THREE.TextureLoader().load(image7)
 
+Image0.minFilter = THREE.NearestFilter
+Image11.minFilter = THREE.NearestFilter
+Image2.minFilter = THREE.NearestFilter
+Image3.minFilter = THREE.NearestFilter
+Image4.minFilter = THREE.NearestFilter
+Image5.minFilter = THREE.NearestFilter
+Image6.minFilter = THREE.NearestFilter
+Image7.minFilter = THREE.NearestFilter
+
 const WHITE = 0xffffff
 const BLACK = 0x000000
 
@@ -201,7 +210,7 @@ const init = ({ canvas, container }) => {
     value: Image11,
   }
 
-  const geometry = new THREE.CylinderBufferGeometry(25, 25, 25, 32)
+  const geometry = new THREE.CylinderBufferGeometry(25, 25, 23, 64)
   // const material = new THREE.MeshPhongMaterial({ color: WHITE })
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
@@ -258,6 +267,7 @@ const init = ({ canvas, container }) => {
     // console.log(intersections)
     if (intersections[0].uv.x >= 0.825 && intersections[0].uv.x <= 1.0) {
       loader.load(images[imageIndex++], (texture) => {
+        texture.minFilter = THREE.NearestFilter
         const oldTexture = image1Uniform.value
         image1Uniform.value = texture
         oldTexture.dispose()
