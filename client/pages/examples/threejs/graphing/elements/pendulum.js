@@ -69,16 +69,7 @@ const init = ({ state }) => {
 
   addAxesLabels({ scene, domain, gridSize })
 
-  const ellipseCurve = new THREE.EllipseCurve(
-    0,
-    0,
-    radius,
-    radius,
-    0,
-    Math.PI,
-    false,
-    0
-  )
+  const ellipseCurve = new THREE.EllipseCurve(0, 0, radius, radius, 0, Math.PI, false, 0)
   const points = ellipseCurve.getPoints(20)
   const pointsGeometry = new THREE.BufferGeometry().setFromPoints(points)
   const pointsMaterial = new THREE.LineDashedMaterial({
@@ -86,7 +77,7 @@ const init = ({ state }) => {
     linewidth: 2,
     scale: 1,
     dashSize: 0.25,
-    gapSize: 0.25,
+    gapSize: 0.25
   })
   const curve = new THREE.Line(pointsGeometry, pointsMaterial)
   scene.add(curve)
@@ -100,7 +91,7 @@ const init = ({ state }) => {
     // }
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top,
+      y: event.clientY - bounds.top
     }
     const x = xy.x / event.target.clientWidth
     const y = xy.y / event.target.clientHeight
@@ -113,7 +104,7 @@ const init = ({ state }) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y,
+      y
     }
   }
   canvas.onmouseleave = () => {

@@ -1,14 +1,27 @@
 import React from 'react'
+import PT from 'prop-types'
 import * as twgl from 'twgl.js'
 import _ from 'lodash'
 
-import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
-// import './Basics05.scss'
+
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
-import { default as cube, tex as cubeTex } from '-/assets/cube'
+import cube, { tex as cubeTex } from '-/assets/cube'
+
+const globals = {
+  uniforms: {
+    u_lightWorldPos: [10, 10, -10],
+    u_lightColor: [1, 1, 1, 1],
+    u_ambient: [0.2, 0.2, 0.2, 1],
+    u_specular: [0.8, 0.8, 0.8, 1],
+    u_shininess: 100,
+    u_specularFactor: 10,
+    u_diffuse: null,
+    u_alpha: 0.7
+  }
+}
 
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl')
@@ -19,16 +32,14 @@ const initGL = (canvas, config) => {
   const tex = twgl.createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
-    src: cubeTex,
+    src: cubeTex
   })
-
-  console.log(twgl)
 
   return {
     gl,
     programInfo,
     bufferInfo,
-    tex,
+    tex
   }
 }
 
@@ -45,18 +56,17 @@ const animateScene = (updateFns) => {
   }
 }
 
-const didMount = ({ canvas, register, uniforms }) => {
+const init = ({ canvas, uniforms }) => {
   const { gl, programInfo, bufferInfo, tex } = initGL(canvas)
   const m4 = twgl.m4
 
-  uniforms = _.merge({}, uniforms)
   uniforms.u_diffuse = tex
 
   let worldRotationY = 0
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    },
+    }
   ])
 
   const render = (time) => {
@@ -91,52 +101,24 @@ const didMount = ({ canvas, register, uniforms }) => {
     gl.drawElements(gl.TRIANGLES, bufferInfo.numElements, gl.UNSIGNED_SHORT, 0)
 
     animate()
-    register(requestAnimationFrame(render))
+    requestAnimationFrame(render)
   }
-  register(requestAnimationFrame(render))
+  render()
 }
 
-const Canvas = ({ id }) => {
-  return <canvas id={id} />
+const Lighting = ({ color }) => {
+  const canvas = React.useRef(null)
+  React.useEffect(() => {
+    return init({ canvas: canvas.current, uniforms: _.merge({}, globals.uniforms, { u_lightColor: color }) })
+  })
+  return <canvas ref={canvas} />
+}
+Lighting.propTypes = {
+  color: PT.array
 }
 
-const Basics0501 = ({ color, id }, { store }) => {
-  const uniforms = store.get(sq('ex5.scene.uniforms'))
-  let requestAnimationFrameId
-  return (
-    <Canvas
-      id={id}
-      onComponentWillUnmount={() =>
-        cancelAnimationFrame(requestAnimationFrameId)
-      }
-      onComponentDidMount={() =>
-        didMount({
-          canvas: document.querySelector(`#${id}`),
-          register: (animId) => {
-            requestAnimationFrameId = animId
-          },
-          uniforms: _.merge({}, uniforms, { u_lightColor: color }),
-        })
-      }
-    />
-  )
-}
+const Default = () => (
+  <Example notes={notes} components={{ Lighting }} init={() => () => {}}/>
+)
 
-const Basics05 = ({ uniforms }) => {
-  const components = {
-    Basics0501: ({ color, id }) => <Basics0501 color={color} id={id} />,
-  }
-  return (
-    <div className="basics05">
-      <Example
-        notes={notes}
-        components={components}
-        onComponentShouldUpdate={shouldUpdate}
-      />
-    </div>
-  )
-}
-
-export default ({ children }, { store }) => {
-  return <Basics05 onComponentShouldUpdate={shouldUpdate} />
-}
+export default Default

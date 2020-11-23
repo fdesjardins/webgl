@@ -1,12 +1,12 @@
 import React from 'react'
+import PT from 'prop-types'
 import * as twgl from 'twgl.js'
+import * as OBJ from 'webgl-obj-loader'
 import _ from 'lodash'
 
-import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 
 import notes from './readme.md'
-// import './Basics07.scss'
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 import cube from '-/assets/cube'
@@ -21,6 +21,19 @@ import teapot from './assets/teapot.json'
 import sw45 from './assets/sw45.obj'
 import sw45tex from './assets/sw45tex.png'
 
+const globals = {
+  uniforms: {
+    u_lightWorldPos: [10, 10, -10],
+    u_lightColor: [1, 1, 1, 1],
+    u_ambient: [0.2, 0.2, 0.2, 1],
+    u_specular: [0.8, 0.8, 0.8, 1],
+    u_shininess: 100,
+    u_specularFactor: 10,
+    u_diffuse: null,
+    u_alpha: 0.7
+  }
+}
+
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl2')
   const programInfo = twgl.createProgramInfo(gl, [vtxShader, fragShader])
@@ -31,7 +44,7 @@ const initGL = (canvas, config) => {
     position: teapot.vertexPositions,
     normal: teapot.vertexNormals,
     texcoord: teapot.vertexTextureCoords,
-    indices: teapot.indices,
+    indices: teapot.indices
   })
 
   const sw45Mesh = new OBJ.Mesh(sw45)
@@ -39,50 +52,50 @@ const initGL = (canvas, config) => {
     position: sw45Mesh.vertices,
     normal: sw45Mesh.vertexNormals,
     texcoord: sw45Mesh.textures,
-    indices: sw45Mesh.indices,
+    indices: sw45Mesh.indices
   })
 
   const textures = twgl.createTextures(gl, {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST,
+      min: gl.LINEAR_MIPMAP_NEAREST
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     sw45: {
       src: sw45tex,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
-    },
+      min: gl.LINEAR
+    }
   })
 
   return {
@@ -91,9 +104,9 @@ const initGL = (canvas, config) => {
     bufferInfo: {
       cube: cubeBufferInfo,
       teapot: teapotBufferInfo,
-      sw45: sw45BufferInfo,
+      sw45: sw45BufferInfo
     },
-    textures,
+    textures
   }
 }
 
@@ -110,7 +123,7 @@ const animateScene = (updateFns) => {
   }
 }
 
-const didMount = ({ canvas, register, uniforms, texture, model }) => {
+const init = ({ canvas, uniforms, texture, model }) => {
   const { gl, programInfo, bufferInfo, textures } = initGL(canvas)
   const m4 = twgl.m4
 
@@ -118,10 +131,8 @@ const didMount = ({ canvas, register, uniforms, texture, model }) => {
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    },
+    }
   ])
-
-  console.log(model)
 
   const render = (time) => {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
@@ -160,73 +171,35 @@ const didMount = ({ canvas, register, uniforms, texture, model }) => {
     gl.useProgram(programInfo.program)
     twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[model])
     twgl.setUniforms(programInfo, uniforms)
-    gl.drawElements(
-      gl.TRIANGLES,
-      bufferInfo[model].numElements,
-      gl.UNSIGNED_SHORT,
-      0
-    )
+    gl.drawElements(gl.TRIANGLES, bufferInfo[model].numElements, gl.UNSIGNED_SHORT, 0)
 
     animate()
-    register(requestAnimationFrame(render))
+    requestAnimationFrame(render)
   }
-  register(requestAnimationFrame(render))
+  requestAnimationFrame(render)
 }
 
-const Canvas = ({ id }) => {
-  return <canvas id={id} />
+const Obj = ({ color, model, texture, alpha }) => {
+  const canvas = React.useRef(null)
+  React.useEffect(() => {
+    return init({
+      canvas: canvas.current,
+      uniforms: _.merge({}, globals.uniforms, { u_lightColor: color, u_alpha: alpha }),
+      model,
+      texture
+    })
+  })
+  return <canvas ref={canvas} />
+}
+Obj.propTypes = {
+  color: PT.array,
+  model: PT.string,
+  texture: PT.string,
+  alpha: PT.number
 }
 
-const Basics0601 = ({ color, id, texture, alpha, model }, { store }) => {
-  const uniforms = store.get(sq('ex7.scene.uniforms'))
-  let requestAnimationFrameId
-  return (
-    <Canvas
-      id={id}
-      onComponentWillUnmount={() =>
-        cancelAnimationFrame(requestAnimationFrameId)
-      }
-      onComponentDidMount={() =>
-        didMount({
-          canvas: document.querySelector(`#${id}`),
-          register: (animId) => {
-            requestAnimationFrameId = animId
-          },
-          uniforms: _.merge({}, uniforms, {
-            u_lightColor: color,
-            u_alpha: alpha,
-          }),
-          texture,
-          model,
-        })
-      }
-    />
-  )
-}
+const Default = () => (
+  <Example notes={notes} components={{ Obj }} init={() => () => {}}/>
+)
 
-const Basics06 = ({ uniforms }) => {
-  const components = {
-    Basics0601: ({ color, id, texture, alpha, model }) => (
-      <Basics0601
-        color={color}
-        id={id}
-        texture={texture}
-        alpha={alpha}
-        model={model}
-      />
-    ),
-  }
-  return (
-    <div className="basics06">
-      <Example
-        notes={notes}
-        components={components}
-        onComponentShouldUpdate={shouldUpdate}
-      />
-    </div>
-  )
-}
-
-export default ({ children }, { store }) => {
-  return <Basics06 onComponentShouldUpdate={shouldUpdate} />
-}
+export default Default

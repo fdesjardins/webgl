@@ -3,12 +3,12 @@ import * as THREE from 'three'
 
 import Example from '-/components/example'
 import notes from './readme.md'
-import { createAxes, createLineGraph, addControls } from '../graphing/utils'
+import { createAxes, addControls } from '../graphing/utils'
 
-const config = {
-  initialPosition: new THREE.Vector3(3.0, 0.0, 0.0),
-  anchorPosition: new THREE.Vector3(0.0, 0.0, 0.0),
-}
+// const config = {
+//   initialPosition: new THREE.Vector3(3.0, 0.0, 0.0),
+//   anchorPosition: new THREE.Vector3(0.0, 0.0, 0.0)
+// }
 
 const setupPerspectiveCamera = ({ width, height }) => {
   const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000)
@@ -29,7 +29,7 @@ const init = ({ canvas }) => {
 
   const camera = setupPerspectiveCamera({
     width: canvas.width,
-    height: canvas.height,
+    height: canvas.height
   })
   scene.add(camera)
 
@@ -51,24 +51,24 @@ const init = ({ canvas }) => {
   const axes = createAxes({ size: 10, fontSize: 0.25 })
   scene.add(axes)
 
-  const dt = 0.025
+  // const dt = 0.025
 
-  const note = {
-    label: 'A',
-    frequency: 1200,
-  }
+  // const note = {
+  //   label: 'A',
+  //   frequency: 1200
+  // }
 
-  const zoom = 200
+  // const zoom = 200
 
   // const speedOfSound = 343
   // h-bar J⋅s
-  const hbar = 1.054571817e-34
-  const p = 1e8
-  const c = 299792458
-  const wavelength = c / note.frequency
-  const amplitude = 0.5 * Math.PI
-
-  const i = 0
+  // const hbar = 1.054571817e-34
+  // const p = 1e8
+  // const c = 299792458
+  // const wavelength = c / note.frequency
+  // const amplitude = 0.5 * Math.PI
+  //
+  // const i = 0
 
   // const { object: lineGraph, animate: animateLineGraph } = createLineGraph(
   //   (t) => (x) => {
@@ -121,7 +121,7 @@ const E = () => (
   <Example
     notes={notes}
     components={{
-      Basic,
+      Basic
     }}
   />
 )

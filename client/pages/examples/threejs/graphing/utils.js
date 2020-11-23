@@ -13,7 +13,7 @@ export const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3,
+      curveSegments: 3
     }),
     new THREE.MeshBasicMaterial({ color: 0xffffff })
   )
@@ -25,7 +25,7 @@ export const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3,
+      curveSegments: 3
     }),
     new THREE.MeshBasicMaterial({ color: 0xffffff })
   )
@@ -55,7 +55,7 @@ export const createLabel = ({ text, color = 0x000000, size = 1.5 }) => {
       size,
       height: size * 0.1,
       font,
-      curveSegments: 3,
+      curveSegments: 3
     }),
     new THREE.MeshBasicMaterial({ color })
   )
@@ -86,7 +86,7 @@ export const createLineGraph = (
           color,
           linewidth: 2,
           gapSize: 2,
-          dashSize: 3,
+          dashSize: 3
         })
       : new THREE.LineBasicMaterial({ color, linewidth: 2 })
 
@@ -105,17 +105,14 @@ export const createLineGraph = (
         object.geometry.attributes.position.array[i * 3 + 1] = f(now)(p.x)
       })
       object.geometry.attributes.position.needsUpdate = true
-    },
+    }
   }
 }
 
 export const create3dGraph = (_, labelText) => {
   const f = (t) => (x, z, vec) => {
     vec.x = x * 20 * Math.PI - 10 * Math.PI
-    vec.y =
-      2 * Math.sin(x * 20 * Math.PI + t) +
-      2 * Math.sin(z * 20 * Math.PI + t) -
-      20
+    vec.y = 2 * Math.sin(x * 20 * Math.PI + t) + 2 * Math.sin(z * 20 * Math.PI + t) - 20
     vec.z = z * 20 * Math.PI - 10 * Math.PI
   }
   const range = [-10 * Math.PI, 10 * Math.PI]
@@ -123,7 +120,7 @@ export const create3dGraph = (_, labelText) => {
   const wireframe = new THREE.WireframeGeometry(geometry)
   const material = new THREE.LineBasicMaterial({
     color: 0x0000ff,
-    linewidth: 1,
+    linewidth: 1
   })
   const object = new THREE.LineSegments(wireframe, material)
 
@@ -136,7 +133,7 @@ export const create3dGraph = (_, labelText) => {
     object,
     animate: (now) => {
       object.geometry = new THREE.ParametricBufferGeometry(f(now / 200), 65, 65)
-    },
+    }
   }
 }
 
@@ -182,7 +179,7 @@ export const createParticle = ({
   size = 0.125,
   color = 0x0000ff,
   transparent = true,
-  opacity = 0.15,
+  opacity = 0.15
 }) => {
   const geometry = new THREE.PlaneBufferGeometry(size, size)
   const material = new THREE.MeshBasicMaterial({
@@ -190,7 +187,7 @@ export const createParticle = ({
     opacity,
     transparent,
     map: particleTextureMap,
-    depthTest: false,
+    depthTest: false
     // blending: THREE.AdditiveBlending
   })
   const object = new THREE.Mesh(geometry, material)
@@ -201,13 +198,13 @@ export const createPoint = ({
   size = 0.125,
   color = 0x000000,
   transparent = false,
-  opacity = 1,
+  opacity = 1
 }) => {
   const geometry = new THREE.SphereBufferGeometry(size, size)
   const material = new THREE.MeshBasicMaterial({
     color,
     opacity,
-    transparent,
+    transparent
   })
   const object = new THREE.Mesh(geometry, material)
   return object
@@ -220,7 +217,7 @@ export const addAxesLabels = ({ scene, domain, gridSize }) => {
     center - width / 2,
     center + width / 2,
     center + width / 2,
-    center - width / 2,
+    center - width / 2
   ]
   const size = new THREE.Vector3()
   for (let y = domain[0]; y <= domain[1]; y += gridSize * 2) {
@@ -256,7 +253,7 @@ export const createConnectingLine = (source, target, color = 0x000000) => {
   geometry.vertices.push(target.position)
   geometry.verticesNeedUpdate = true
   const material = new THREE.LineBasicMaterial({
-    color,
+    color
   })
   const line = new THREE.Line(geometry, material)
   return line

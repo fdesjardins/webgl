@@ -20,19 +20,20 @@ import image7 from './7.jpg'
 
 import Stats from 'stats.js'
 
-const loader = new THREE.TextureLoader()
+const globals = {
+  textureLoader: new THREE.TextureLoader()
+}
 
 const loadTexture = (url) => {
   return new Promise((resolve, reject) => {
-    loader.load(url, (tex) => {
+    globals.textureLoader.load(url, (tex) => {
       tex.minFilter = THREE.LinearFilter
       resolve(tex)
     })
   })
 }
 
-let Image0
-
+let Image0 = new THREE.TextureLoader().load(image0)
 const Image11 = new THREE.TextureLoader().load(image11)
 const Image12 = new THREE.TextureLoader().load(image12)
 const Image13 = new THREE.TextureLoader().load(image13)
@@ -44,7 +45,7 @@ const Image5 = new THREE.TextureLoader().load(image5)
 const Image6 = new THREE.TextureLoader().load(image6)
 const Image7 = new THREE.TextureLoader().load(image7)
 
-// Image0.minFilter = THREE.LinearFilter
+Image0.minFilter = THREE.LinearFilter
 Image11.minFilter = THREE.LinearFilter
 Image2.minFilter = THREE.LinearFilter
 Image3.minFilter = THREE.LinearFilter
@@ -53,7 +54,6 @@ Image5.minFilter = THREE.LinearFilter
 Image6.minFilter = THREE.LinearFilter
 Image7.minFilter = THREE.LinearFilter
 
-const WHITE = 0xffffff
 const BLACK = 0x000000
 
 const style = css`
@@ -192,19 +192,14 @@ void main(){
 `
 
 const init = ({ canvas, container }) => {
-  let scene = new THREE.Scene()
+  const scene = new THREE.Scene()
   scene.background = new THREE.Color(BLACK)
 
   const stats = new Stats()
   stats.showPanel(0)
-  document.body.appendChild(stats.dom)
+  canvas.appendChild(stats.dom)
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    2000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
   camera.updateProjectionMatrix()
   camera.position.set(0.01, 0, 0)
 
@@ -240,56 +235,32 @@ const init = ({ canvas, container }) => {
   window.addEventListener('resize', onResize, false)
   onResize()
 
-  const image1Uniform = {
-    type: 'sampler2D',
-    value: Image11,
+  const mkUniform = (name, value) => ({ [name]: { type: 'sampler2D', value } })
+  const uniforms = {
+    ...mkUniform('iChannel0', Image0),
+    ...mkUniform('iChannel1', Image11),
+    ...mkUniform('iChannel2', Image2),
+    ...mkUniform('iChannel3', Image3),
+    ...mkUniform('iChannel4', Image4),
+    ...mkUniform('iChannel5', Image5),
+    ...mkUniform('iChannel6', Image6),
+    ...mkUniform('iChannel7', Image7)
   }
 
   let mesh
   const geometry = new THREE.CylinderBufferGeometry(25, 25, 23, 64)
-  // const material = new THREE.MeshPhongMaterial({ color: WHITE })
   loadTexture(image0).then((tex) => {
     Image0 = tex
     const material = new THREE.ShaderMaterial({
       fragmentShader: fs,
       vertexShader: vs,
       side: THREE.DoubleSide,
-      uniforms: {
-        iChannel0: {
-          type: 'sampler2D',
-          value: Image0,
-        },
-        iChannel1: image1Uniform,
-        iChannel2: {
-          type: 'sampler2D',
-          value: Image2,
-        },
-        iChannel3: {
-          type: 'sampler2D',
-          value: Image3,
-        },
-        iChannel4: {
-          type: 'sampler2D',
-          value: Image4,
-        },
-        iChannel5: {
-          type: 'sampler2D',
-          value: Image5,
-        },
-        iChannel6: {
-          type: 'sampler2D',
-          value: Image6,
-        },
-        iChannel7: {
-          type: 'sampler2D',
-          value: Image7,
-        },
-      },
+      uniforms: { ...uniforms }
     })
     const materials = [
       material,
-      new THREE.MeshBasicMaterial({ color: 0x000000 }),
-      new THREE.MeshBasicMaterial({ color: 0x000000 }),
+      new THREE.MeshBasicMaterial({ color: BLACK }),
+      new THREE.MeshBasicMaterial({ color: BLACK })
     ]
     mesh = new THREE.Mesh(geometry, materials)
     scene.add(mesh)
@@ -302,13 +273,13 @@ const init = ({ canvas, container }) => {
   setInterval(() => {
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera)
     const intersections = raycaster.intersectObjects([mesh])
-    if (intersections.length === 0) {
+    if (!intersections || intersections.length === 0) {
       return
     }
     if (intersections[0].uv.x >= 0.875 && intersections[0].uv.x <= 1.0) {
       loadTexture(images[imageIndex++]).then((texture) => {
-        const oldTexture = image1Uniform.value
-        image1Uniform.value = texture
+        const oldTexture = uniforms.iChannel1.value
+        uniforms.iChannel1.value = texture
         oldTexture.dispose()
       })
       if (imageIndex === 4) {
@@ -329,8 +300,7 @@ const init = ({ canvas, container }) => {
 
   return () => {
     renderer.dispose()
-
-    scene = null
+    stats.scene = null
     renderer = null
   }
 }

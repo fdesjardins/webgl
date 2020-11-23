@@ -110,12 +110,7 @@ void main(){
 `
 
 const init = ({ canvas, container, state }) => {
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    1000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
   camera.position.z = 75
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
@@ -142,7 +137,7 @@ const init = ({ canvas, container, state }) => {
   const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
   const planeMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff,
-    side: THREE.DoubleSide,
+    side: THREE.DoubleSide
   })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
   plane.rotation.x = -Math.PI / 2
@@ -155,21 +150,21 @@ const init = ({ canvas, container, state }) => {
     state.shape === 'plane'
       ? new THREE.PlaneBufferGeometry(100, 100, 100, 100)
       : state.shape === 'sphere'
-      ? new THREE.SphereBufferGeometry(50, 32, 32)
-      : state.shape === 'cylinder'
-      ? new THREE.CylinderBufferGeometry(25, 25, 50, 32)
-      : new THREE.TorusKnotBufferGeometry(25, 12, 120, 16)
+        ? new THREE.SphereBufferGeometry(50, 32, 32)
+        : state.shape === 'cylinder'
+          ? new THREE.CylinderBufferGeometry(25, 25, 50, 32)
+          : new THREE.TorusKnotBufferGeometry(25, 12, 120, 16)
   const iTime = {
     type: 'f',
-    value: 0,
+    value: 0
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
     fragmentShader: state.fractal === 'mandelbrot' ? mandelbrotFs : juliaSetFs,
     side: THREE.DoubleSide,
     uniforms: {
-      iTime: iTime,
-    },
+      iTime: iTime
+    }
   })
   const object = new THREE.Mesh(geometry, material)
   object.position.z = 0.0
@@ -219,12 +214,12 @@ const PointLightExample = () => {
       components={{
         FractalPicker: wrap(FractalPicker, {
           fractal,
-          setFractal,
+          setFractal
         }),
         ShapePicker: wrap(ShapePicker, {
           shape,
-          setShape,
-        }),
+          setShape
+        })
       }}
       state={{ fractal, shape }}
     />

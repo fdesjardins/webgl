@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { css } from 'emotion'
 import MDX from '@mdx-js/runtime'
@@ -11,14 +12,24 @@ import remarkTableOfContents from 'remark-toc'
 
 import Icon from '-/components/icon'
 
+const LinkComponent = ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>
+LinkComponent.propTypes = {
+  children: PropTypes.node,
+  context: PropTypes.object
+}
+
+const IconComponent = ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>
+IconComponent.propTypes = {
+  children: PropTypes.object,
+  context: PropTypes.object
+}
+
 const standardComponents = {
-  Link: ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>,
-  Icon: ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>,
+  Link: LinkComponent,
+  Icon: IconComponent
 }
 
 const style = css`
-  margin-bottom: 25px;
-
   i.em {
     font-size: 125%;
     margin: 0 2px;
@@ -36,12 +47,17 @@ const style = css`
     font-size: 80%;
   }
 
-  i.icon.linkify {
-    margin-left: -1em;
-    font-size: 0.75em;
-    color: #eee;
-    &:hover {
-      color: #bbb;
+  h1,h2,h3,h4,h5,h6 {
+    > a {
+      color: #444;
+    }
+    ::before {
+      pointer-events: none;
+      display: block;
+      content: " ";
+      margin-top: -3.5em;
+      height: 3.5em;
+      visibility: hidden;
     }
   }
 `
@@ -58,13 +74,9 @@ const Markdown = ({ text, components }) => {
             [
               remarkAutolinkHeadings,
               {
-                content: {
-                  type: 'element',
-                  tagName: 'i',
-                  properties: { className: ['icon', 'linkify'] },
-                },
-              },
-            ],
+                behavior: 'wrap'
+              }
+            ]
           ]}
           rehypePlugins={[rehypeKatex]}
         >
@@ -73,6 +85,11 @@ const Markdown = ({ text, components }) => {
       </MDXProvider>
     </div>
   )
+}
+
+Markdown.propTypes = {
+  text: PropTypes.string,
+  components: PropTypes.object
 }
 
 export default Markdown

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const UpDownLeftRight = ({ onLeft, onRight, onUp, onDown }) => {
   return (
@@ -17,6 +18,13 @@ const UpDownLeftRight = ({ onLeft, onRight, onUp, onDown }) => {
       </button>
     </div>
   )
+}
+
+UpDownLeftRight.propTypes = {
+  onLeft: PropTypes.func,
+  onRight: PropTypes.func,
+  onUp: PropTypes.func,
+  onDown: PropTypes.func
 }
 
 export default UpDownLeftRight

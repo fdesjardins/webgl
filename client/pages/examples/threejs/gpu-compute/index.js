@@ -24,12 +24,7 @@ const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
   scene.background = new THREE.Color(BLACK)
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientWidth,
-    0.1,
-    2000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
   camera.updateProjectionMatrix()
   camera.position.set(5, 0, 0)
 
@@ -63,11 +58,7 @@ const init = ({ canvas, container }) => {
    */
   const gpuCompute = new GPUComputationRenderer(512, 512, renderer)
   const positionBuffer = gpuCompute.createTexture()
-  const positionVar = gpuCompute.addVariable(
-    'texturePosition',
-    fsPosition,
-    positionBuffer
-  )
+  const positionVar = gpuCompute.addVariable('texturePosition', fsPosition, positionBuffer)
   // const gpuCompute.setVariableDependencies(positionVar)
   positionVar.material.uniforms.time = { value: 0.0 }
 

@@ -70,7 +70,7 @@ const init = ({ canvas, container }) => {
     if (click) {
       raycaster.setFromCamera(mouse, camera)
       const intersects = raycaster.intersectObjects(scene.children)
-      for (var i = 0; i < intersects.length; i++) {
+      for (let i = 0; i < intersects.length; i++) {
         intersects[i].object.material.color.set(Math.random() * 0xffffff)
         console.log(intersects[i])
       }

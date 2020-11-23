@@ -8,13 +8,13 @@ import Markdown from '-/components/Markdown/Markdown'
 import notes from './readme.md'
 // import './Gpujs01.scss'
 
-const didMount = displayResult => {
+const didMount = (displayResult) => {
   console.log('mount')
   const gpu = new GPU()
 
   const length = 64
-  let setA = []
-  let setB = []
+  const setA = []
+  const setB = []
   for (let n = 0; n < length; n++) {
     const randA = Math.random() * 100.0
     const randB = Math.random() * 100.0
@@ -23,7 +23,7 @@ const didMount = displayResult => {
   }
 
   const multiplyMatrix = gpu
-    .createKernel(function(a, b) {
+    .createKernel(function (a, b) {
       let sum = 0
       for (let i = 0; i < 64; i++) {
         sum += a[this.thread.y][i] * b[i][this.thread.x]
@@ -60,7 +60,7 @@ const Gpujs0101 = ({ id, displayResult }, { store }) => {
   )
 }
 
-let lastResult = null
+const lastResult = null
 const Gpujs01 = (props, { store }) => {
   console.log('render')
 
@@ -83,12 +83,8 @@ const Gpujs01 = (props, { store }) => {
   //   Gpujs0101Output: ({ id }) => {}
   // }
   return (
-    <div class="gpujs01">
-      <Example
-        notes={notes}
-        components={components}
-        onComponentShouldUpdate={utils.shouldUpdate}
-      />
+    <div className="gpujs01">
+      <Example notes={notes} components={components} onComponentShouldUpdate={utils.shouldUpdate} />
     </div>
   )
 }

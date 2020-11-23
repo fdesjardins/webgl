@@ -1,5 +1,6 @@
 # GPU.JS
-----
+
+---
 
 > Perform massively parallel GPGPU computations using WebGL.
 

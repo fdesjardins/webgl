@@ -18,44 +18,44 @@ const globals = {
   fontLoader: new THREE.FontLoader(),
   font: null,
   audioListener: new THREE.AudioListener(),
-  audioLoader: new THREE.AudioLoader(),
+  audioLoader: new THREE.AudioLoader()
 }
 
 const config = {
   roomSize: 300,
   roomColor: 0x0080f0,
-  isMobile: isMobileDevice(),
+  isMobile: isMobileDevice()
 }
 
 const state = {
   user: {
     alive: true,
-    velocity: 1 / 10,
+    velocity: 1 / 10
   },
   score: {
     value: 0,
-    mesh: null,
+    mesh: null
   },
   blockCount: 0,
   ui: {
     mesh: null,
     width: null,
-    height: null,
+    height: null
   },
-  stats: new Stats(),
+  stats: new Stats()
 }
 
 /**
  * Create the game score
  */
 const textMat = new THREE.MeshBasicMaterial({
-  color: 0xffffff,
+  color: 0xffffff
 })
 const createScore = (score, { size = 0.01 }) => {
   const textGeom = new THREE.TextBufferGeometry(`Score: ${score}`, {
     font: globals.font,
     size,
-    height: 1e-5,
+    height: 1e-5
   })
   const textMesh = new THREE.Mesh(textGeom, textMat)
   return textMesh
@@ -86,7 +86,7 @@ const createUiPlane = (canvas, camera, distance = 0.11) => {
     color: 0xffaaaa,
     side: THREE.DoubleSide,
     transparent: true,
-    opacity: 0.0,
+    opacity: 0.0
   })
   const uiMesh = new THREE.Mesh(uiGeom, uiMat)
   uiMesh.position.z = -distance
@@ -122,11 +122,11 @@ const createVRHands = (xr) => {
   const handGeom = new THREE.IcosahedronBufferGeometry(0.08, 1)
   handGeom.scale(0.2, 0.8, 1.5)
   const hand1Mat = new THREE.MeshLambertMaterial({
-    color: Math.random() * 0xffffff,
+    color: Math.random() * 0xffffff
   })
   const hand2Mat = new THREE.MeshLambertMaterial({
     color: Math.random() * 0xffffff,
-    flatShading: true,
+    flatShading: true
   })
 
   const hand1Mesh = new THREE.Mesh(handGeom, hand1Mat)
@@ -207,7 +207,7 @@ const init = ({ canvas, container }) => {
   const button = VRButton.createButton(renderer)
   document.getElementById('webvr-button').appendChild(button)
   state.stats.showPanel(0)
-  //state.stats.showPanel(2)
+  // state.stats.showPanel(2)
   document.body.appendChild(state.stats.dom)
   let scene = new THREE.Scene()
   const user = new THREE.Group()
@@ -273,7 +273,7 @@ const init = ({ canvas, container }) => {
     const scorePos = uiMesh.worldToLocal(
       uiToWorld(canvas, camera, uiMesh, {
         x: -0.95,
-        y: 0.88,
+        y: 0.88
       })
     )
     scoreMesh.position.copy(scorePos)
@@ -289,13 +289,13 @@ const init = ({ canvas, container }) => {
       (0.04 / 950) * canvas.clientWidth
     ),
     new THREE.MeshBasicMaterial({
-      map: overheadRenderTarget.texture,
+      map: overheadRenderTarget.texture
     })
   )
   const overheadViewPos = uiMesh.worldToLocal(
     uiToWorld(canvas, camera, uiMesh, {
       x: 0.75,
-      y: 0.7,
+      y: 0.7
     })
   )
   uiMesh.add(overheadViewMesh)
@@ -334,7 +334,7 @@ const init = ({ canvas, container }) => {
   const pathmaterial = new THREE.MeshPhongMaterial({
     color: 0x00ff00,
     opacity: 0.5,
-    transparent: true,
+    transparent: true
   })
 
   let lastBlock = null
@@ -343,9 +343,9 @@ const init = ({ canvas, container }) => {
   lastPathBlock.copy(user.position)
   lastUserPosition.copy(user.position)
   const distanceVector = (v1, v2) => {
-    var dx = v1.x - v2.x
-    var dy = v1.y - v2.y
-    var dz = v1.z - v2.z
+    const dx = v1.x - v2.x
+    const dy = v1.y - v2.y
+    const dz = v1.z - v2.z
 
     return Math.sqrt(dx * dx + dy * dy + dz * dz)
   }
@@ -385,7 +385,7 @@ const init = ({ canvas, container }) => {
         mycamera = renderer.xr.getCamera(camera)
         camControls.enabled = false
       } else {
-        //updateScore(state.blockCount)
+        // updateScore(state.blockCount)
         mycamera = camera
         if (config.isMobile) {
           camControls.update()
@@ -423,7 +423,7 @@ const init = ({ canvas, container }) => {
             i.object.material = new THREE.MeshPhongMaterial({
               color: 0xff0000,
               opacity: 0.5,
-              transparent: true,
+              transparent: true
             })
             state.user.velocity = 0
             killMe()
@@ -432,10 +432,7 @@ const init = ({ canvas, container }) => {
       }
 
       // Advance forward and add a new path segment
-      if (
-        distanceVector(lastPathBlock, user.position) > 2 &&
-        state.user.alive
-      ) {
+      if (distanceVector(lastPathBlock, user.position) > 2 && state.user.alive) {
         const pathHolder = new THREE.Mesh(pathBlock, pathmaterial)
         pathHolder.position.set(
           user.position.x - 2 * lookvector.x,
@@ -486,10 +483,9 @@ const init = ({ canvas, container }) => {
         }
       }
       // Move the eggs around to make them more tasty looking
-      eggs.map((egg) => {
+      eggs.forEach((egg) => {
         egg.rotation.y += 0.1
-        egg.position.y =
-          user.position.y + 0.25 * Math.sin(clock.elapsedTime * 5)
+        egg.position.y = user.position.y + 0.25 * Math.sin(clock.elapsedTime * 5)
       })
 
       lastUserPosition.copy(user.position)

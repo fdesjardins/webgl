@@ -15,12 +15,12 @@ const Stats = ({ getPosition, getRotation }) => {
   const [x, y, z] = [
     parseFloat(pos.x).toFixed(4),
     parseFloat(pos.y).toFixed(4),
-    parseFloat(pos.z).toFixed(4),
+    parseFloat(pos.z).toFixed(4)
   ]
   const [rx, ry, rz] = [
     parseFloat(rot.x).toFixed(4),
     parseFloat(rot.y).toFixed(4),
-    parseFloat(rot.z).toFixed(4),
+    parseFloat(rot.z).toFixed(4)
   ]
 
   return (
@@ -30,7 +30,7 @@ const Stats = ({ getPosition, getRotation }) => {
         color: 'black',
         padding: '5px',
         left: '65px',
-        top: '35px',
+        top: '35px'
       }}
     >
       <b>Position:</b> ({x}, {y}, {z})

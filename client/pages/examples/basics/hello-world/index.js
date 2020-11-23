@@ -1,9 +1,6 @@
 import React from 'react'
-import { branch } from 'baobab-react/higher-order'
 
-import webglUtils from '../../../../../lib/webgl-utils.js'
-
-import { shouldUpdate, sq } from '-/utils'
+import webglUtils from '-lib/webgl-utils.js'
 import UpDownLeftRight from '-/components/controls/up-down-left-right'
 
 import Example from '-/components/example'
@@ -16,20 +13,14 @@ const state = new Baobab({
   pos: { x: 0, y: 0 },
   width: 50,
   height: 50,
-  color: [Math.random(), Math.random(), Math.random(), 1],
+  color: [Math.random(), Math.random(), Math.random(), 1]
 })
 
 const init = ({ canvas, container }) => {
   const gl = canvas.getContext('webgl2')
-  const program = webglUtils.createProgramFromSources(gl, [
-    vtxShader,
-    fragShader,
-  ])
+  const program = webglUtils.createProgramFromSources(gl, [vtxShader, fragShader])
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
-  const resolutionUniformLocation = gl.getUniformLocation(
-    program,
-    'u_resolution'
-  )
+  const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution')
   const colorLocation = gl.getUniformLocation(program, 'u_color')
   const positionBuffer = gl.createBuffer()
   const vao = gl.createVertexArray()
@@ -74,7 +65,7 @@ const HelloWorld = () => {
     />
   )
   const components = {
-    Controls,
+    Controls
   }
   return (
     <div className="basics02">
@@ -83,26 +74,4 @@ const HelloWorld = () => {
   )
 }
 
-export default branch(
-  {
-    scene: ['ex1', 'scene'],
-    controls: ['ex1', 'controls'],
-  },
-  HelloWorld
-)
-
-// () => {
-//   const subscribe = callback => {
-//     store
-//       .select(sq('ex1.scene'))
-//       .on('update', ({ data }) => callback(data.currentData))
-//   }
-//   return (
-//     <Basics02
-//       scene={ store.select(sq('ex1.scene')).get() }
-//       controls={ store.select(sq('ex1.controls')).get() }
-//       subscribe={ subscribe }
-//       onComponentShouldUpdate={ utils.shouldUpdate }
-//     />
-//   )
-// }
+export default HelloWorld

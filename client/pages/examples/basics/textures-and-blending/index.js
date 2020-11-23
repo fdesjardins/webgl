@@ -1,11 +1,11 @@
 import React from 'react'
+import PT from 'prop-types'
 import * as twgl from 'twgl.js'
 import _ from 'lodash'
 
-import { shouldUpdate, sq } from '-/utils'
 import Example from '-/components/example'
 import notes from './readme.md'
-// import './Basics06.scss'
+
 import vtxShader from './vertex.glsl'
 import fragShader from './fragment.glsl'
 import cube from '-/assets/cube'
@@ -17,6 +17,19 @@ import carbonFiberTexture from './assets/carbon-fiber.jpg'
 import amberGlassTexture from './assets/amber-glass.jpg'
 import infinityTexture from './assets/infinity.jpg'
 
+const globals = {
+  uniforms: {
+    u_lightWorldPos: [10, 10, -10],
+    u_lightColor: [1, 1, 1, 1],
+    u_ambient: [0.2, 0.2, 0.2, 1],
+    u_specular: [0.8, 0.8, 0.8, 1],
+    u_shininess: 100,
+    u_specularFactor: 10,
+    u_diffuse: null,
+    u_alpha: 0.7
+  }
+}
+
 const initGL = (canvas, config) => {
   const gl = canvas.getContext('webgl')
 
@@ -27,7 +40,7 @@ const initGL = (canvas, config) => {
   return {
     gl,
     programInfo,
-    bufferInfo,
+    bufferInfo
   }
 }
 
@@ -44,7 +57,7 @@ const animateScene = (updateFns) => {
   }
 }
 
-const didMount = ({ canvas, register, uniforms, texture }) => {
+const init = ({ canvas, register, uniforms, texture }) => {
   const { gl, programInfo, bufferInfo } = initGL(canvas)
   const m4 = twgl.m4
 
@@ -52,38 +65,38 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST,
+      min: gl.LINEAR_MIPMAP_NEAREST
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
+      min: gl.LINEAR
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR,
-    },
+      min: gl.LINEAR
+    }
   })
 
   uniforms = _.merge({}, uniforms)
@@ -93,7 +106,7 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    },
+    }
   ])
 
   const render = (time) => {
@@ -135,58 +148,32 @@ const didMount = ({ canvas, register, uniforms, texture }) => {
     gl.drawElements(gl.TRIANGLES, bufferInfo.numElements, gl.UNSIGNED_SHORT, 0)
 
     animate()
-    register(requestAnimationFrame(render))
+    requestAnimationFrame(render)
   }
-  register(requestAnimationFrame(render))
+  requestAnimationFrame(render)
 }
 
-const Canvas = ({ id }) => {
-  return <canvas id={id} />
+const Tex = ({ color, model, texture, alpha }) => {
+  const canvas = React.useRef(null)
+  React.useEffect(() => {
+    return init({
+      canvas: canvas.current,
+      uniforms: { ...globals.uniforms, u_lightColor: color, u_alpha: alpha },
+      model,
+      texture
+    })
+  })
+  return <canvas ref={canvas} />
+}
+Tex.propTypes = {
+  color: PT.array,
+  model: PT.string,
+  texture: PT.string,
+  alpha: PT.number
 }
 
-const Basics0601 = ({ color, id, texture, alpha }, { store }) => {
-  const uniforms = store.get(sq('ex5.scene.uniforms'))
-  let requestAnimationFrameId
-  return (
-    <Canvas
-      id={id}
-      onComponentWillUnmount={() =>
-        cancelAnimationFrame(requestAnimationFrameId)
-      }
-      onComponentDidMount={() =>
-        didMount({
-          canvas: document.querySelector(`#${id}`),
-          register: (animId) => {
-            requestAnimationFrameId = animId
-          },
-          uniforms: _.merge({}, uniforms, {
-            u_lightColor: color,
-            u_alpha: alpha,
-          }),
-          texture,
-        })
-      }
-    />
-  )
-}
+const Default = () => (
+  <Example notes={notes} components={{ Tex }} init={() => () => {}}/>
+)
 
-const Basics06 = ({ uniforms }) => {
-  const components = {
-    Basics0601: ({ color, id, texture, alpha }) => (
-      <Basics0601 color={color} id={id} texture={texture} alpha={alpha} />
-    ),
-  }
-  return (
-    <div className="basics06">
-      <Example
-        notes={notes}
-        components={components}
-        onComponentShouldUpdate={shouldUpdate}
-      />
-    </div>
-  )
-}
-
-export default ({ children }, { store }) => {
-  return <Basics06 onComponentShouldUpdate={shouldUpdate} />
-}
+export default Default

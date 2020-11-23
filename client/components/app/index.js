@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { root } from 'baobab-react/higher-order'
 import { css } from 'emotion'
 
@@ -37,5 +38,9 @@ const Layout = ({ children }) => (
     <div className="content text ui container">{children || null}</div>
   </div>
 )
+
+Layout.propTypes = {
+  children: PropTypes.array
+}
 
 export default root(state, Routes(Layout))

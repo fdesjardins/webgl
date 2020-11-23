@@ -13,52 +13,53 @@ module.exports = {
     extensions: ['*', '.json', '.js'],
     alias: {
       '-': resolve('client'),
-      'react-dom': '@hot-loader/react-dom',
-    },
+      '-lib': resolve('lib'),
+      'react-dom': '@hot-loader/react-dom'
+    }
   },
   devServer: {
     historyApiFallback: true,
     contentBase: resolve('dist'),
     port: 9090,
     host: '0.0.0.0',
-    hot: true,
+    hot: true
   },
   output: {
-    publicPath: '/',
+    publicPath: '/'
   },
   module: {
     rules: [
       {
         test: /\.js?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.worker\.js$/,
-        loader: 'worker-loader',
+        loader: 'worker-loader'
       },
       {
-        test: /\.(jpe?g|png|gif|svg|ogg)$/i,
-        loader: 'file-loader',
+        test: /\.(jpe?g|png|gif|svg|ogg|ttf)$/i,
+        loader: 'file-loader'
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(glsl|md|obj|map)$/i,
-        loader: 'raw-loader',
-      },
-    ],
+        loader: 'raw-loader'
+      }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: './client/index.html',
+      template: './client/index.html'
     }),
-    new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin()
   ],
   node: {
-    fs: 'empty',
-  },
+    fs: 'empty'
+  }
 }

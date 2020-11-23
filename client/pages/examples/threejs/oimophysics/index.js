@@ -29,13 +29,13 @@ const init = ({ canvas, container }) => {
     worldscale: 1,
     random: true,
     info: true,
-    gravity: [0, -9.8, 0],
+    gravity: [0, -9.8, 0]
   })
   const ground = world.add({ size: [50, 0.01, 50], pos: [0, 0, 0], density: 1 })
-  var size = 50
-  var divisions = 50
+  const size = 50
+  const divisions = 50
 
-  var gridHelper = new THREE.GridHelper(size, divisions)
+  const gridHelper = new THREE.GridHelper(size, divisions)
 
   gridHelper.position.x = 0
   gridHelper.position.y = 0
@@ -59,7 +59,7 @@ const init = ({ canvas, container }) => {
     friction: 0.2,
     restitution: 0.2,
     belongsTo: 1, // The bits of the collision groups to which the shape belongs.
-    collidesWith: 0xffffffff, // The bits of the collision groups with which the shape collides.
+    collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
   })
 
   const body2 = world.add({
@@ -72,7 +72,7 @@ const init = ({ canvas, container }) => {
     friction: 0.2,
     restitution: 0.2,
     belongsTo: 1, // The bits of the collision groups to which the shape belongs.
-    collidesWith: 0xffffffff, // The bits of the collision groups with which the shape collides.
+    collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
   })
 
   const body3 = world.add({
@@ -85,7 +85,7 @@ const init = ({ canvas, container }) => {
     friction: 0.2,
     restitution: 0.2,
     belongsTo: 1, // The bits of the collision groups to which the shape belongs.
-    collidesWith: 0xffffffff, // The bits of the collision groups with which the shape collides.
+    collidesWith: 0xffffffff // The bits of the collision groups with which the shape collides.
   })
 
   world.step()

@@ -1,5 +1,7 @@
 # twgl.js
-----
+
+---
+
 > (rhymes with wiggle])
 >
 > WebGL is a very verbose API. Setting up shaders, buffers, attributes and uniforms
@@ -7,4 +9,4 @@
 >
 > -- [https://github.com/greggman/twgl.js/](https://github.com/greggman/twgl.js/)
 
-<Canvas />
+<canvas />

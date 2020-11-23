@@ -4,11 +4,8 @@ onmessage = function (e) {
   const result = [
     (0.5 - Math.random()) * workerSpeed,
     (0.5 - Math.random()) * workerSpeed,
-    (0.5 - Math.random()) * workerSpeed,
+    (0.5 - Math.random()) * workerSpeed
   ]
-  if (false) {
-  } else {
-    const workerResult = result
-    postMessage(workerResult)
-  }
+  const workerResult = result
+  postMessage(workerResult)
 }

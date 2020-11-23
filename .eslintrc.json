@@ -1,9 +1,23 @@
 {
   "extends": [
+    "plugin:compat/recommended",
     "standard",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "prettier/react"
   ],
+  "plugins": [
+    "@emotion"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true
+  },
   "rules": {
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": ["webpack.config.js"]

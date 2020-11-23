@@ -1,4 +1,5 @@
 import React from 'react'
+import PT from 'prop-types'
 import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
 
@@ -128,7 +129,7 @@ const init = ({ state }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z,
+        z: object.rotation.z
       })
 
       // axes.children.map(child => child.lookAt(camera.position))
@@ -154,6 +155,10 @@ const BasicsOrtho = ({ state, labels }) => {
   })
 
   return <canvas id="ex1" />
+}
+BasicsOrtho.propTypes = {
+  state: PT.object,
+  labels: PT.array
 }
 
 export { init }

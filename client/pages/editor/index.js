@@ -1,5 +1,6 @@
 import React from 'react'
-// import MonacoEditor from 'react-monaco-editor'
+import PT from 'prop-types'
+import MonacoEditor from 'react-monaco-editor'
 import { Treebeard } from 'react-treebeard'
 import Baobab from 'baobab'
 import { compose, withState, withHandlers, lifecycle } from 'recompose'
@@ -14,9 +15,9 @@ const projectStructure = {
   children: [
     {
       name: 'index.js',
-      children: [],
-    },
-  ],
+      children: []
+    }
+  ]
 }
 
 const state = new Baobab({
@@ -27,9 +28,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024,
-      },
-    },
+        height: 1024
+      }
+    }
   },
   object: {
     color: 'ffffff',
@@ -37,34 +38,37 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.01,
       y: 0.01,
-      z: 0.01,
-    },
-  },
+      z: 0.01
+    }
+  }
 })
 
-const notes = `
-# Basics
-`
+// const notes = `
+// # Basics
+// `
 
-const wrap = (Component, { ...first }) => ({ children, context, ...rest }) => (
+/* eslint-disable */
+const wrap = (Component, { ...first }) => ({ Component, children, context, ...rest }) => (
   <Component {...first} {...rest}>
     {children}
   </Component>
 )
+/* eslint-enable */
 
 const ColorPicker = ({ color, setColor }) => (
   <div className="field">
     <label>Light Color</label>
     <div className="ui labeled small input">
       <div className="ui label">Color</div>
-      <input
-        type="text"
-        defaultValue={color}
-        onChange={({ target }) => setColor(target.value)}
-      />
+      <input type="text" defaultValue={color} onChange={({ target }) => setColor(target.value)} />
     </div>
   </div>
 )
+
+ColorPicker.propTypes = {
+  color: PT.string,
+  setColor: PT.func
+}
 
 const ObjectProperties = ({ objectCursor }) => (
   <div className="ui form object-properties">
@@ -75,10 +79,14 @@ const ObjectProperties = ({ objectCursor }) => (
   </div>
 )
 
+ObjectProperties.propTypes = {
+  objectCursor: PT.object
+}
+
 const components = {
   ObjectProperties: wrap(ObjectProperties, {
-    objectCursor: state.select('object'),
-  }),
+    objectCursor: state.select('object')
+  })
 }
 
 const didMount = ({ canvas, container }) => {
@@ -118,10 +126,13 @@ const didMount = ({ canvas, container }) => {
 const update = () =>
   didMount({
     canvas: document.querySelector('#canvas'),
-    container: document.querySelector('.output'),
+    container: document.querySelector('.output')
   })
 
 const Output = ({ text }) => <Markdown text={text} components={components} />
+Output.propTypes = {
+  text: PT.string
+}
 
 const style = css`
   position: absolute;
@@ -202,8 +213,8 @@ const Editor = ({ text, onRun, onEditorChange }) => {
           options={{
             lineNumbers: 'off',
             minimap: {
-              enabled: false,
-            },
+              enabled: false
+            }
           }}
           onChange={onEditorChange}
         />
@@ -213,6 +224,12 @@ const Editor = ({ text, onRun, onEditorChange }) => {
       </div>
     </div>
   )
+}
+
+Editor.propTypes = {
+  text: PT.string,
+  onRun: PT.func,
+  onEditorChange: PT.func
 }
 
 const initialText = `
@@ -237,15 +254,15 @@ const enhance = compose(
     onRun: ({ setText, innerText }) => () => {
       console.log('running...', innerText)
       setText(innerText)
-    },
+    }
   }),
   lifecycle({
-    componentDidUpdate() {
+    componentDidUpdate () {
       update()
     },
-    componentDidMount() {
+    componentDidMount () {
       update()
-    },
+    }
   })
 )
 

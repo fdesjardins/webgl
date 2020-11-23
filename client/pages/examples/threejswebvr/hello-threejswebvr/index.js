@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react'
+import PT from 'prop-types'
 import * as THREE from 'three'
 // import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
@@ -83,5 +83,8 @@ const HelloWebVr = ({ children }, { store }) => (
     <Example notes={notes} init={init} />
   </div>
 )
+HelloWebVr.propTypes = {
+  children: PT.node
+}
 
 export default HelloWebVr

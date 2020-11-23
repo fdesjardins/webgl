@@ -26,10 +26,7 @@ export const buildCells = ({ cellmin, cellmax, cellw }) => {
  *  |/         |/          |/
  *
  */
-export const buildCellNeighbors = (
-  cells,
-  { stride, cellmin, cellmax, cellw }
-) => {
+export const buildCellNeighbors = (cells, { stride, cellmin, cellmax, cellw }) => {
   return cells.map((cell, i) => {
     const nb = []
     if (cell[0] === cellmin && cell[1] === cellmin && cell[2] === cellmin) {
@@ -40,11 +37,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] < cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] === cellmin && cell[1] < cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride)
       nb.push(i - stride + 1)
       nb.push(i + 1)
@@ -56,11 +49,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] === cellmin &&
-      cell[2] < cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] === cellmin && cell[2] < cellmax - cellw) {
       nb.push(i - 1)
       nb.push(i + 1)
       nb.push(i + stride - 1)
@@ -72,11 +61,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] < cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] < cellmax - cellw && cell[1] === cellmin && cell[2] === cellmin) {
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + 1)
       nb.push(i - stride ** 2 + stride)
@@ -88,11 +73,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] < cellmax - cellw &&
-      cell[2] < cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] < cellmax - cellw && cell[2] < cellmax - cellw) {
       nb.push(i - stride - 1)
       nb.push(i - stride)
       nb.push(i - stride + 1)
@@ -110,11 +91,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] < cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] < cellmax - cellw
-    ) {
+    } else if (cell[0] < cellmax - cellw && cell[1] === cellmin && cell[2] < cellmax - cellw) {
       nb.push(i - stride ** 2 - 1)
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + 1)
@@ -132,11 +109,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] < cellmax - cellw &&
-      cell[1] < cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] < cellmax - cellw && cell[1] < cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride ** 2 - stride)
       nb.push(i - stride ** 2 - stride + 1)
       nb.push(i - stride ** 2)
@@ -185,11 +158,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
       nb.push(i + stride ** 2 + stride + 1)
-    } else if (
-      cell[0] === cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] === cellmax - cellw && cell[1] === cellmin && cell[2] === cellmin) {
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + 1)
       nb.push(i - stride ** 2 + stride)
@@ -197,11 +166,7 @@ export const buildCellNeighbors = (
       nb.push(i + 1)
       nb.push(i + stride)
       nb.push(i + stride + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] === cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] === cellmin && cell[1] === cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride)
       nb.push(i - stride + 1)
       nb.push(i + 1)
@@ -209,11 +174,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 - stride + 1)
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] === cellmin &&
-      cell[2] === cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] === cellmin && cell[2] === cellmax - cellw) {
       nb.push(i - 1)
       nb.push(i + stride - 1)
       nb.push(i + stride)
@@ -221,11 +182,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
-    } else if (
-      cell[0] === cellmax - cellw &&
-      cell[1] === cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] === cellmax - cellw && cell[1] === cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride ** 2 - stride)
       nb.push(i - stride ** 2 - stride + 1)
       nb.push(i - stride ** 2)
@@ -233,11 +190,7 @@ export const buildCellNeighbors = (
       nb.push(i - stride)
       nb.push(i - stride + 1)
       nb.push(i + 1)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] === cellmax - cellw &&
-      cell[2] === cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] === cellmax - cellw && cell[2] === cellmax - cellw) {
       nb.push(i - stride - 1)
       nb.push(i - stride)
       nb.push(i - 1)
@@ -245,11 +198,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 - stride)
       nb.push(i + stride ** 2 - 1)
       nb.push(i + stride ** 2)
-    } else if (
-      cell[0] === cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] === cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmax - cellw && cell[1] === cellmin && cell[2] === cellmax - cellw) {
       nb.push(i - stride ** 2 - 1)
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + stride - 1)
@@ -317,11 +266,7 @@ export const buildCellNeighbors = (
       nb.push(i - 1)
       nb.push(i + stride - 1)
       nb.push(i + stride)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] < cellmax - cellw &&
-      cell[2] === cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] < cellmax - cellw && cell[2] === cellmax - cellw) {
       nb.push(i - stride - 1)
       nb.push(i - stride)
       nb.push(i - 1)
@@ -333,11 +278,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
-    } else if (
-      cell[0] === cellmin &&
-      cell[1] === cellmax - cellw &&
-      cell[2] < cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmin && cell[1] === cellmax - cellw && cell[2] < cellmax - cellw) {
       nb.push(i - stride - 1)
       nb.push(i - stride)
       nb.push(i - stride + 1)
@@ -349,11 +290,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 - 1)
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + 1)
-    } else if (
-      cell[0] < cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] === cellmax - cellw
-    ) {
+    } else if (cell[0] < cellmax - cellw && cell[1] === cellmin && cell[2] === cellmax - cellw) {
       nb.push(i - stride ** 2 - 1)
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + stride - 1)
@@ -387,11 +324,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + stride - 1)
       nb.push(i + stride ** 2 + stride)
-    } else if (
-      cell[0] < cellmax - cellw &&
-      cell[1] === cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] < cellmax - cellw && cell[1] === cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride ** 2 - stride)
       nb.push(i - stride ** 2 - stride + 1)
       nb.push(i - stride ** 2)
@@ -425,11 +358,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride ** 2 - 1)
       nb.push(i + stride ** 2)
       nb.push(i + stride ** 2 + 1)
-    } else if (
-      cell[0] === cellmax - cellw &&
-      cell[1] === cellmin &&
-      cell[2] < cellmax - cellw
-    ) {
+    } else if (cell[0] === cellmax - cellw && cell[1] === cellmin && cell[2] < cellmax - cellw) {
       nb.push(i - stride ** 2 - 1)
       nb.push(i - stride ** 2)
       nb.push(i - stride ** 2 + 1)
@@ -441,11 +370,7 @@ export const buildCellNeighbors = (
       nb.push(i + stride - 1)
       nb.push(i + stride)
       nb.push(i + stride + 1)
-    } else if (
-      cell[0] === cellmax - cellw &&
-      cell[1] < cellmax - cellw &&
-      cell[2] === cellmin
-    ) {
+    } else if (cell[0] === cellmax - cellw && cell[1] < cellmax - cellw && cell[2] === cellmin) {
       nb.push(i - stride ** 2 - stride)
       nb.push(i - stride ** 2 - stride + 1)
       nb.push(i - stride ** 2)

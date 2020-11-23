@@ -21,9 +21,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024,
-      },
-    },
+        height: 1024
+      }
+    }
   },
   object: {
     color: 'ffffff',
@@ -31,19 +31,19 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.0,
       y: 0.5,
-      z: 0.5,
+      z: 0.5
     },
     position: {
       x: 0,
       y: 0,
-      z: 0,
+      z: 0
     },
     rotation: {
       x: 0,
       y: 0,
-      z: 0,
-    },
-  },
+      z: 0
+    }
+  }
 })
 
 const init = () => {
@@ -78,7 +78,7 @@ const GraphingExample = () => (
         VectorFieldInput: React.memo(wrap(VectorFieldInput, { state })),
         Oscilloscope: React.memo(wrap(Oscilloscope, { state })),
         Pendulum: React.memo(wrap(Pendulum, { state })),
-        ForceDirectedGraph: React.memo(wrap(ForceDirectedGraph, { state })),
+        ForceDirectedGraph: React.memo(wrap(ForceDirectedGraph, { state }))
       }}
       init={init}
     />

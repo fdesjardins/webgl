@@ -1,13 +1,10 @@
 import React from 'react'
+import PT from 'prop-types'
 
 const shapes = ['plane', 'sphere', 'cylinder', 'torus knot']
 
 export const ShapePicker = ({ shape, setShape }) => (
-  <select
-    value={shape}
-    className="ui dropdown"
-    onChange={({ target }) => setShape(target.value)}
-  >
+  <select value={shape} className="ui dropdown" onChange={({ target }) => setShape(target.value)}>
     {shapes.map((f) => (
       <option key={f} value={f}>
         {f}
@@ -15,6 +12,10 @@ export const ShapePicker = ({ shape, setShape }) => (
     ))}
   </select>
 )
+ShapePicker.propTypes = {
+  shape: PT.array,
+  setShape: PT.func
+}
 
 export const ToggleGrid = ({ getShowGrid, setShowGrid }) => (
   <button
@@ -26,6 +27,10 @@ export const ToggleGrid = ({ getShowGrid, setShowGrid }) => (
     Toggle Grid
   </button>
 )
+ToggleGrid.propTypes = {
+  getShowGrid: PT.func,
+  setShowGrid: PT.func
+}
 
 export const ToggleSurface = ({ getShowSurface, setShowSurface }) => (
   <button
@@ -37,6 +42,10 @@ export const ToggleSurface = ({ getShowSurface, setShowSurface }) => (
     Toggle Surface
   </button>
 )
+ToggleSurface.propTypes = {
+  getShowSurface: PT.func,
+  setShowSurface: PT.func
+}
 
 export const ToggleParticles = ({ get, set }) => (
   <button
@@ -48,6 +57,10 @@ export const ToggleParticles = ({ get, set }) => (
     Toggle Particles
   </button>
 )
+ToggleParticles.propTypes = {
+  get: PT.func,
+  set: PT.func
+}
 
 export const Viscosity = ({ get, set }) => (
   <div className="ui labeled input">
@@ -62,6 +75,10 @@ export const Viscosity = ({ get, set }) => (
     />
   </div>
 )
+Viscosity.propTypes = {
+  get: PT.func,
+  set: PT.func
+}
 
 export const TimeStep = ({ get, set }) => (
   <div className="ui labeled input">
@@ -76,6 +93,10 @@ export const TimeStep = ({ get, set }) => (
     />
   </div>
 )
+TimeStep.propTypes = {
+  get: PT.func,
+  set: PT.func
+}
 
 export const SurfaceResolution = ({ get, set }) => (
   <div className="ui labeled input">
@@ -90,3 +111,7 @@ export const SurfaceResolution = ({ get, set }) => (
     />
   </div>
 )
+SurfaceResolution.propTypes = {
+  get: PT.func,
+  set: PT.func
+}

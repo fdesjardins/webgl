@@ -37,9 +37,7 @@ export const ObjectProperties = ({ objectCursor }) => (
   <div className="ui form object-properties">
     <ObjectRotation
       getSpeed={(axis) => objectCursor.get(['rotationSpeed', axis])}
-      setSpeed={({ axis, speed }) =>
-        objectCursor.set(['rotationSpeed', axis], speed)
-      }
+      setSpeed={({ axis, speed }) => objectCursor.set(['rotationSpeed', axis], speed)}
     />
   </div>
 )

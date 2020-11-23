@@ -14,9 +14,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024
-      }
-    }
+        height: 1024,
+      },
+    },
   },
   object: {
     color: 'ffffff',
@@ -24,15 +24,15 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.0,
       y: 0.005,
-      z: 0.0
-    }
+      z: 0.0,
+    },
   },
   board: {
     size: {
       w: 10,
-      h: 10
-    }
-  }
+      h: 10,
+    },
+  },
 })
 
 const vs = `
@@ -183,7 +183,7 @@ const rtScene = () => {
   return {
     renderTarget,
     scene,
-    camera
+    camera,
   }
 }
 
@@ -213,7 +213,10 @@ const didMount = ({ canvas, container }) => {
   scene.add(light)
 
   const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
-  const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+  const planeMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+  })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
   plane.rotation.x = -Math.PI / 2
   plane.position.z = 1
@@ -226,11 +229,11 @@ const didMount = ({ canvas, container }) => {
   const geometry = new THREE.PlaneBufferGeometry(100, 100, 100, 100)
   const uTexture = {
     type: 't',
-    value: texture()
+    value: texture(),
   }
   const iTime = {
     type: 'f',
-    value: 1.5 * Math.PI
+    value: 1.5 * Math.PI,
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
@@ -238,8 +241,8 @@ const didMount = ({ canvas, container }) => {
     side: THREE.DoubleSide,
     uniforms: {
       texture: uTexture,
-      iTime: iTime
-    }
+      iTime: iTime,
+    },
   })
   const object = new THREE.Mesh(geometry, material)
   object.position.z = 0.0
@@ -248,7 +251,7 @@ const didMount = ({ canvas, container }) => {
   scene.add(object)
 
   let then = 0
-  const animate = now => {
+  const animate = (now) => {
     requestAnimationFrame(animate)
     const nowSecs = now * 0.001
     const deltaSecs = nowSecs - then
@@ -272,7 +275,7 @@ const didMount = ({ canvas, container }) => {
 const update = () =>
   didMount({
     canvas: document.querySelector('canvas'),
-    container: document.querySelector('#container')
+    container: document.querySelector('#container'),
   })
 
 const PointLightExample = () => (

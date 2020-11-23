@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react'
+import PT from 'prop-types'
 import * as THREE from 'three'
 // import 'three/examples/js/vr/HelioWebXRPolyfill.js'
 import Example from '-/components/example'
@@ -33,8 +33,8 @@ const init = ({ canvas, container }) => {
   document.getElementById('webvr-button').appendChild(button)
 
   renderer.setSize(container.clientWidth, container.clientWidth)
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
+  // const geometry = new THREE.BoxGeometry(1, 1, 1)
+  // const material = new THREE.MeshPhongMaterial({ color: 0xffffff })
 
   const hand1 = renderer.vr.getController(0)
   // hand1.addEventListener( 'selectstart', onSelectStart );
@@ -65,7 +65,7 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      flatShading: true,
+      flatShading: true
     })
   )
   // hand1mesh.scale.x = 0.1
@@ -131,5 +131,8 @@ const VRInput = ({ children }, { store }) => (
     <Example notes={notes} init={init} />
   </div>
 )
+VRInput.propTypes = {
+  children: PT.node
+}
 
 export default VRInput

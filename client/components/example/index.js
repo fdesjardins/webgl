@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { css } from 'emotion'
 
 import Markdown from '-/components/markdown'
@@ -19,9 +20,7 @@ const style = css`
 
 const Example = ({ notes, components, init, state = {}, id }) => {
   React.useEffect(() => {
-    const canvas = id
-      ? document.getElementById(id)
-      : document.querySelector('canvas')
+    const canvas = id ? document.getElementById(id) : document.querySelector('canvas')
     const container = document.querySelector('.example-container')
     if (init) {
       const dispose = init({ canvas, container, state })
@@ -39,6 +38,14 @@ const Example = ({ notes, components, init, state = {}, id }) => {
       </div>
     </ErrorBoundary>
   )
+}
+
+Example.propTypes = {
+  notes: PropTypes.string,
+  components: PropTypes.object,
+  init: PropTypes.func,
+  state: PropTypes.object,
+  id: PropTypes.string
 }
 
 export default Example

@@ -1,69 +1,66 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Mousetrap from 'mousetrap'
 import utils from '-/utils'
-
-// import './CommandPalette.scss'
 
 const commands = [
   {
     namespace: 'navigation',
     text: 'Navigate home',
-    action: (router) => router.push('/'),
+    action: (router) => router.push('/')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/01 (hello world)',
-    action: (router) => router.push('/basics/01'),
+    action: (router) => router.push('/basics/01')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/02 (2D)',
-    action: (router) => router.push('/basics/02'),
+    action: (router) => router.push('/basics/02')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/03 (3D)',
-    action: (router) => router.push('/basics/03'),
+    action: (router) => router.push('/basics/03')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/04 (twgl.js)',
-    action: (router) => router.push('/basics/04'),
+    action: (router) => router.push('/basics/04')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/05 (lighting)',
-    action: (router) => router.push('/basics/05'),
+    action: (router) => router.push('/basics/05')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /basics/06 (textures & blending)',
-    action: (router) => router.push('/basics/06'),
+    action: (router) => router.push('/basics/06')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /threejs/01 (hello three.js)',
-    action: (router) => router.push('/threejs/01'),
+    action: (router) => router.push('/threejs/01')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /threejs/02 (lighting)',
-    action: (router) => router.push('/threejs/02'),
+    action: (router) => router.push('/threejs/02')
   },
   {
     namespace: 'navigation',
     text: 'Navigate to /threejs/03 (physics)',
-    action: (router) => router.push('/threejs/03'),
-  },
+    action: (router) => router.push('/threejs/03')
+  }
 ]
 
 const getCmd = () => document.querySelector('.command-palette')
 
 const execute = (router) => {
-  const cmd = getCmd().querySelector(
-    '.command-palette-search-results .selected'
-  ).id
-  commands.map((c) => {
+  const cmd = getCmd().querySelector('.command-palette-search-results .selected').id
+  commands.forEach((c) => {
     if (c.text.replace(/ /g, '-').toLowerCase() === cmd) {
       c.action(router)
       return hidePalette()
@@ -71,9 +68,7 @@ const execute = (router) => {
   })
 }
 
-const handleCmdInput = (setQuery, selectNext, selectPrevious, execute) => (
-  e
-) => {
+const handleCmdInput = (setQuery, selectNext, selectPrevious, execute) => (e) => {
   // console.log(e.key)
   if (e.key === 'Escape') {
     return hidePalette()
@@ -118,8 +113,9 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
   if (results && results.length > 0) {
     const resultsLis = results.map((r, i) => {
       const className = i === selectedIndex ? 'selected' : ''
+      const id = r.text.replace(/ /g, '-').toLowerCase()
       return (
-        <li className={className} id={r.text.replace(/ /g, '-').toLowerCase()}>
+        <li className={className} id={id} key={id}>
           {r.text}
         </li>
       )
@@ -129,13 +125,12 @@ const CommandPaletteSearchResults = ({ results, selectedIndex }) => {
   return <span>No matches found</span>
 }
 
-const CommandPaletteControls = ({
-  query,
-  setQuery,
-  selectedIndex,
-  setIndex,
-  router,
-}) => {
+CommandPaletteSearchResults.propTypes = {
+  results: PropTypes.array,
+  selectedIndex: PropTypes.number
+}
+
+const CommandPaletteControls = ({ query, setQuery, selectedIndex, setIndex, router }) => {
   Mousetrap.bind('ctrl+shift+p', togglePalette)
   const results = findCommands(query)
   const selectNext = () => {
@@ -160,19 +155,19 @@ const CommandPaletteControls = ({
       <input
         type="text"
         placeholder=""
-        onKeyDown={handleCmdInput(
-          setQueryAndIndex,
-          selectNext,
-          selectPrevious,
-          executeAndSetIndex
-        )}
+        onKeyDown={handleCmdInput(setQueryAndIndex, selectNext, selectPrevious, executeAndSetIndex)}
       />
-      <CommandPaletteSearchResults
-        results={results}
-        selectedIndex={selectedIndex}
-      />
+      <CommandPaletteSearchResults results={results} selectedIndex={selectedIndex} />
     </div>
   )
+}
+
+CommandPaletteControls.propTypes = {
+  query: PropTypes.string,
+  setQuery: PropTypes.func,
+  selectedIndex: PropTypes.number,
+  setIndex: PropTypes.func,
+  router: PropTypes.object
 }
 
 const findCommands = (query) =>
@@ -182,14 +177,14 @@ const findCommands = (query) =>
 
 const CommandPalette = () => {
   const queryCursor = {
-    get() {
+    get () {
       return 1
-    },
+    }
   }
   const selectedIndex = {
-    get() {
+    get () {
       return 1
-    },
+    }
   }
   const router = null
   return (

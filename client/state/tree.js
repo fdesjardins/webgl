@@ -4,8 +4,8 @@ const state = new Baobab({
   app: {
     message: '',
     query: '',
-    querySelectedIndex: 0,
-  },
+    querySelectedIndex: 0
+  }
 })
 
 state.set('ex5', {
@@ -18,9 +18,9 @@ state.set('ex5', {
       u_shininess: 100,
       u_specularFactor: 10,
       u_diffuse: null,
-      u_alpha: 0.7,
-    },
-  },
+      u_alpha: 0.7
+    }
+  }
 })
 
 state.set('ex7', {
@@ -33,13 +33,13 @@ state.set('ex7', {
       u_shininess: 5,
       u_specularFactor: 5,
       u_diffuse: [0.2, 0.2, 0.2, 1],
-      u_alpha: 0.7,
-    },
-  },
+      u_alpha: 0.7
+    }
+  }
 })
 
 state.set('gpujs01', {
-  result: null,
+  result: null
 })
 
 export default state
