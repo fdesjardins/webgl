@@ -5,11 +5,47 @@ import { css } from 'emotion'
 
 import examplesIndex from '-/examples-index'
 
+const tagStyle = css`
+  font-size: 0.7em;
+  color: #888;
+  background-color: #eee;
+  padding: 0 5px;
+  height: 20px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin-left: 1em;
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0.5;
+  transition: all 0.25s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.threejs {
+    background-color: #ddeeff;
+    border-color: #bbccff;
+  }
+  &.webvr {
+    background-color: #ffe6e6;
+    border-color: #ddc6c6;
+  }
+  &.gpgpu {
+    background-color: #e6ffe6;
+    border-color: #c6ddc6;
+  }
+`
+
 const Tags = ({ tags, setFilter }) => {
   return (
     <>
       {tags.split(',').map((tag) => (
-        <div key={tag} className={`${tag} tag`} onClick={() => setFilter(tag)}>
+        <div
+          key={tag}
+          className={`${tagStyle} ${tag} tag`}
+          onClick={() => setFilter(tag)}
+        >
           {tag}
         </div>
       ))}
@@ -17,33 +53,15 @@ const Tags = ({ tags, setFilter }) => {
   )
 }
 
+Tags.propTypes = {
+  tags: PT.string,
+  setFilter: PT.func,
+}
+
 const menuItemStyle = css`
   font-size: 1em;
   margin-bottom: 0.4em;
   display: flex !important;
-
-  .tag {
-    font-size: 0.65em;
-    color: #888;
-    background-color: #eee;
-    padding: 0px 5px;
-    border: 1px solid #bbb;
-    border-radius: 5px;
-    margin-left: 1em;
-    cursor: pointer;
-  }
-  .tag.threejs {
-    background-color: #ddeeff;
-    border-color: #bbccff;
-  }
-  .tag.webvr {
-    background-color: #ffe6e6;
-    border-color: #ddc6c6;
-  }
-  .tag.gpgpu {
-    background-color: #e6ffe6;
-    border-color: #c6ddc6;
-  }
 `
 
 const MenuItem = ({ title, to, tags, setFilter }) => (
@@ -52,10 +70,12 @@ const MenuItem = ({ title, to, tags, setFilter }) => (
     <Tags tags={tags} setFilter={setFilter} />
   </div>
 )
+
 MenuItem.propTypes = {
   title: PT.string,
   to: PT.string,
   tags: PT.string,
+  setFilter: PT.func,
 }
 
 const Menu = () => {
@@ -67,9 +87,22 @@ const Menu = () => {
       x.tags.toLowerCase().match(new RegExp(filter.toLowerCase()))
   )
 
+  const className = `ui input fluid transparent small ${
+    filter !== '' ? 'left icon' : ''
+  }`
+
   return (
     <>
-      <div className="ui input fluid transparent small">
+      <div className={className}>
+        {filter !== '' && (
+          <button
+            onClick={() => setFilter('')}
+            className="ui button basic"
+            style={{ boxShadow: 'none', padding: 0, margin: 0 }}
+          >
+            <i className="close icon"></i>
+          </button>
+        )}
         <input
           type="text"
           placeholder="Search..."
@@ -94,25 +127,4 @@ const Menu = () => {
   )
 }
 
-// <br />
-// <h3>Other Cool Stuff</h3>
-// <Link to="/editor">Editor</Link>
-//
-// <br />
-// <li>Stencil Testing</li>
-// <li>Framebuffers</li>
-// <li>Cubemaps</li>
-// <li>Instancing</li>
-// <li>Deferred Shading</li>
-// <li>SSAO</li>
-// <li>Summed-Area Variance Shadow Maps</li>
-// <li>Motion Blur</li>
-// <li>Fluid Simulation</li>
-// <li>Matrix Multiplication</li>
-// <li>Particle Systems</li>
-// <li>Gravity</li>
-// <li>N-body Simulation</li>
-// <li>A material point method for snow simulation</li>
-// <li>Heat Equation</li>
-//
 export default React.memo(Menu)

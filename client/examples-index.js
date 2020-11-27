@@ -122,7 +122,7 @@ const examples = [
     component: import('-/pages/examples/threejs/marching-cubes'),
   },
   {
-    tags: 'threejs',
+    tags: 'threejs,gpgpu',
     title: 'Smoothed-Particle Hydrodynamics',
     slug: 'sph',
     component: import('-/pages/examples/threejs/sph'),

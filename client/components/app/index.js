@@ -16,9 +16,9 @@ const style = css`
     right: 0;
     z-index: 99;
   }
-  .content {
+  > .ui.content {
     padding: 150px 0;
-    max-width: 800px;
+    max-width: 1200px !important;
     margin-left: auto;
     margin-right: auto;
   }
