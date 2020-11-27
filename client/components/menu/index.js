@@ -1,78 +1,118 @@
 import React from 'react'
 import PT from 'prop-types'
 import { Link } from 'react-router-dom'
+import { css } from 'emotion'
 
-const MenuItem = ({ type, num, title }) => (
-  <li>
-    <Link to={`/examples/${type}/${num}`}>
-      {num} - {title}
-    </Link>
-  </li>
-)
-MenuItem.propTypes = {
-  type: PT.string,
-  num: PT.string,
-  title: PT.string,
+import examplesIndex from '-/examples-index'
+
+const Tags = ({ tags, setFilter }) => {
+  return (
+    <>
+      {tags.split(',').map((tag) => (
+        <div key={tag} className={`${tag} tag`} onClick={() => setFilter(tag)}>
+          {tag}
+        </div>
+      ))}
+    </>
+  )
 }
 
-const Menu = () => (
-  <ul>
-    <h3>Getting Started</h3>
-    <MenuItem type="basics" num="00" title="Hello World" />
-    <MenuItem type="basics" num="01" title="Twgl.js" />
-    <MenuItem type="basics" num="02" title="Lighting" />
-    <MenuItem type="basics" num="03" title="Textures and Blending" />
-    <MenuItem type="basics" num="04" title="Loading Objects" />
+const menuItemStyle = css`
+  font-size: 1em;
+  margin-bottom: 0.4em;
+  display: flex !important;
 
-    <h3>Three.js</h3>
-    <MenuItem type="threejs" num="00" title="Hello three.js" />
-    <MenuItem type="threejs" num="01" title="Point Light" />
-    <MenuItem type="threejs" num="02" title="Video Texture" />
-    <MenuItem type="threejs" num="03" title="Game of Life Texture" />
-    <MenuItem type="threejs" num="04" title="Winds Vizualization" />
-    <MenuItem type="threejs" num="05" title="Drawing Axes" />
-    <MenuItem type="threejs" num="06" title="Ray Marching" />
-    <MenuItem type="threejs" num="07" title="Fractals" />
-    <MenuItem type="threejs" num="08" title="Graphing" />
-    <MenuItem type="threejs" num="09" title="Oimo Physics" />
-    <MenuItem type="threejs" num="10" title="Ray Casting" />
-    <MenuItem type="threejs" num="11" title="Triangle Strip" />
-    <MenuItem type="threejs" num="12" title="FPS" />
-    <MenuItem type="threejs" num="13" title="DeviceOrientation" />
-    <MenuItem type="threejs" num="14" title="Metaballs and Marching Cubes" />
-    <MenuItem type="threejs" num="15" title="Smoothed-Particle Hydrodynamics" />
-    <MenuItem type="threejs" num="16" title="GPU Compute" />
-    <MenuItem type="threejs" num="17" title="Streaming Panorama" />
-    <MenuItem type="threejs" num="18" title="GPU Particles" />
+  .tag {
+    font-size: 0.65em;
+    color: #888;
+    background-color: #eee;
+    padding: 0px 5px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin-left: 1em;
+    cursor: pointer;
+  }
+  .tag.threejs {
+    background-color: #ddeeff;
+    border-color: #bbccff;
+  }
+  .tag.webvr {
+    background-color: #ffe6e6;
+    border-color: #ddc6c6;
+  }
+  .tag.gpgpu {
+    background-color: #e6ffe6;
+    border-color: #c6ddc6;
+  }
+`
 
-    <br />
-    <h3>Three.js WebVR</h3>
-    <MenuItem type="threejswebvr" num="00" title="Hello WebVR" />
-    <MenuItem type="threejswebvr" num="01" title="VR input" />
-    <MenuItem type="threejswebvr" num="02" title="Snek" />
-    <MenuItem type="threejswebvr" num="03" title="childWorker" />
-
-    <br />
-    <h3>Other Cool Stuff</h3>
-    <Link to="/editor">Editor</Link>
-
-    <br />
-    <li>Stencil Testing</li>
-    <li>Framebuffers</li>
-    <li>Cubemaps</li>
-    <li>Instancing</li>
-    <li>Deferred Shading</li>
-    <li>SSAO</li>
-    <li>Summed-Area Variance Shadow Maps</li>
-    <li>Motion Blur</li>
-    <li>Fluid Simulation</li>
-    <li>Matrix Multiplication</li>
-    <li>Particle Systems</li>
-    <li>Gravity</li>
-    <li>N-body Simulation</li>
-    <li>A material point method for snow simulation</li>
-    <li>Heat Equation</li>
-  </ul>
+const MenuItem = ({ title, to, tags, setFilter }) => (
+  <div className={`item ${menuItemStyle}`}>
+    <Link to={`/examples/${to}`}>{title}</Link>
+    <Tags tags={tags} setFilter={setFilter} />
+  </div>
 )
+MenuItem.propTypes = {
+  title: PT.string,
+  to: PT.string,
+  tags: PT.string,
+}
 
+const Menu = () => {
+  const [filter, setFilter] = React.useState('')
+
+  const examples = examplesIndex.filter(
+    (x) =>
+      x.title.toLowerCase().match(new RegExp(filter.toLowerCase())) ||
+      x.tags.toLowerCase().match(new RegExp(filter.toLowerCase()))
+  )
+
+  return (
+    <>
+      <div className="ui input fluid transparent small">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+        />
+      </div>
+      <div className="ui list">
+        {examples.map(({ title, slug, tags }) => {
+          return (
+            <MenuItem
+              key={slug}
+              title={title}
+              to={slug}
+              tags={tags}
+              setFilter={setFilter}
+            />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+// <br />
+// <h3>Other Cool Stuff</h3>
+// <Link to="/editor">Editor</Link>
+//
+// <br />
+// <li>Stencil Testing</li>
+// <li>Framebuffers</li>
+// <li>Cubemaps</li>
+// <li>Instancing</li>
+// <li>Deferred Shading</li>
+// <li>SSAO</li>
+// <li>Summed-Area Variance Shadow Maps</li>
+// <li>Motion Blur</li>
+// <li>Fluid Simulation</li>
+// <li>Matrix Multiplication</li>
+// <li>Particle Systems</li>
+// <li>Gravity</li>
+// <li>N-body Simulation</li>
+// <li>A material point method for snow simulation</li>
+// <li>Heat Equation</li>
+//
 export default React.memo(Menu)
