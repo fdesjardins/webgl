@@ -4,7 +4,11 @@ import PT from 'prop-types'
 const shapes = ['plane', 'sphere', 'cylinder', 'torus knot']
 
 export const ShapePicker = ({ shape, setShape }) => (
-  <select value={shape} className="ui dropdown" onChange={({ target }) => setShape(target.value)}>
+  <select
+    value={shape}
+    className="ui dropdown"
+    onChange={({ target }) => setShape(target.value)}
+  >
     {shapes.map((f) => (
       <option key={f} value={f}>
         {f}
@@ -14,7 +18,7 @@ export const ShapePicker = ({ shape, setShape }) => (
 )
 ShapePicker.propTypes = {
   shape: PT.array,
-  setShape: PT.func
+  setShape: PT.func,
 }
 
 export const ToggleGrid = ({ getShowGrid, setShowGrid }) => (
@@ -29,7 +33,7 @@ export const ToggleGrid = ({ getShowGrid, setShowGrid }) => (
 )
 ToggleGrid.propTypes = {
   getShowGrid: PT.func,
-  setShowGrid: PT.func
+  setShowGrid: PT.func,
 }
 
 export const ToggleSurface = ({ getShowSurface, setShowSurface }) => (
@@ -44,7 +48,7 @@ export const ToggleSurface = ({ getShowSurface, setShowSurface }) => (
 )
 ToggleSurface.propTypes = {
   getShowSurface: PT.func,
-  setShowSurface: PT.func
+  setShowSurface: PT.func,
 }
 
 export const ToggleParticles = ({ get, set }) => (
@@ -59,7 +63,7 @@ export const ToggleParticles = ({ get, set }) => (
 )
 ToggleParticles.propTypes = {
   get: PT.func,
-  set: PT.func
+  set: PT.func,
 }
 
 export const Viscosity = ({ get, set }) => (
@@ -77,7 +81,7 @@ export const Viscosity = ({ get, set }) => (
 )
 Viscosity.propTypes = {
   get: PT.func,
-  set: PT.func
+  set: PT.func,
 }
 
 export const TimeStep = ({ get, set }) => (
@@ -95,7 +99,7 @@ export const TimeStep = ({ get, set }) => (
 )
 TimeStep.propTypes = {
   get: PT.func,
-  set: PT.func
+  set: PT.func,
 }
 
 export const SurfaceResolution = ({ get, set }) => (
@@ -113,5 +117,5 @@ export const SurfaceResolution = ({ get, set }) => (
 )
 SurfaceResolution.propTypes = {
   get: PT.func,
-  set: PT.func
+  set: PT.func,
 }

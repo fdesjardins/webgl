@@ -9,11 +9,10 @@ const MenuItem = ({ type, num, title }) => (
     </Link>
   </li>
 )
-
 MenuItem.propTypes = {
   type: PT.string,
   num: PT.string,
-  title: PT.string
+  title: PT.string,
 }
 
 const Menu = () => (
@@ -44,6 +43,7 @@ const Menu = () => (
     <MenuItem type="threejs" num="15" title="Smoothed-Particle Hydrodynamics" />
     <MenuItem type="threejs" num="16" title="GPU Compute" />
     <MenuItem type="threejs" num="17" title="Streaming Panorama" />
+    <MenuItem type="threejs" num="18" title="GPU Particles" />
 
     <br />
     <h3>Three.js WebVR</h3>

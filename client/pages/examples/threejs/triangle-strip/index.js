@@ -72,17 +72,20 @@ const init = ({ canvas, container }) => {
     -5,
     5,
     0,
-    -5
+    -5,
   ])
   const stripGeometry = new THREE.BufferGeometry(stripVerts)
-  stripGeometry.setAttribute('position', new THREE.BufferAttribute(stripVerts, 3))
+  stripGeometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(stripVerts, 3)
+  )
   // BufferGeometryUtils.computeTangents(stripGeometry)
   stripGeometry.computeVertexNormals()
   stripGeometry.normalizeNormals()
   const stripMaterial = new THREE.MeshLambertMaterial({
     color: 0x999999,
     side: THREE.DoubleSide,
-    flatShading: true
+    flatShading: true,
   })
 
   const stripMesh = new THREE.Mesh(stripGeometry, stripMaterial)

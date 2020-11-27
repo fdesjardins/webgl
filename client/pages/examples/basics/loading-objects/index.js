@@ -30,8 +30,8 @@ const globals = {
     u_shininess: 100,
     u_specularFactor: 10,
     u_diffuse: null,
-    u_alpha: 0.7
-  }
+    u_alpha: 0.7,
+  },
 }
 
 const initGL = (canvas, config) => {
@@ -44,7 +44,7 @@ const initGL = (canvas, config) => {
     position: teapot.vertexPositions,
     normal: teapot.vertexNormals,
     texcoord: teapot.vertexTextureCoords,
-    indices: teapot.indices
+    indices: teapot.indices,
   })
 
   const sw45Mesh = new OBJ.Mesh(sw45)
@@ -52,50 +52,50 @@ const initGL = (canvas, config) => {
     position: sw45Mesh.vertices,
     normal: sw45Mesh.vertexNormals,
     texcoord: sw45Mesh.textures,
-    indices: sw45Mesh.indices
+    indices: sw45Mesh.indices,
   })
 
   const textures = twgl.createTextures(gl, {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST
+      min: gl.LINEAR_MIPMAP_NEAREST,
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     sw45: {
       src: sw45tex,
       mag: gl.NEAREST,
-      min: gl.LINEAR
-    }
+      min: gl.LINEAR,
+    },
   })
 
   return {
@@ -104,9 +104,9 @@ const initGL = (canvas, config) => {
     bufferInfo: {
       cube: cubeBufferInfo,
       teapot: teapotBufferInfo,
-      sw45: sw45BufferInfo
+      sw45: sw45BufferInfo,
     },
-    textures
+    textures,
   }
 }
 
@@ -131,7 +131,7 @@ const init = ({ canvas, uniforms, texture, model }) => {
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
   const render = (time) => {
@@ -171,7 +171,12 @@ const init = ({ canvas, uniforms, texture, model }) => {
     gl.useProgram(programInfo.program)
     twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo[model])
     twgl.setUniforms(programInfo, uniforms)
-    gl.drawElements(gl.TRIANGLES, bufferInfo[model].numElements, gl.UNSIGNED_SHORT, 0)
+    gl.drawElements(
+      gl.TRIANGLES,
+      bufferInfo[model].numElements,
+      gl.UNSIGNED_SHORT,
+      0
+    )
 
     animate()
     requestAnimationFrame(render)
@@ -184,9 +189,12 @@ const Obj = ({ color, model, texture, alpha }) => {
   React.useEffect(() => {
     return init({
       canvas: canvas.current,
-      uniforms: _.merge({}, globals.uniforms, { u_lightColor: color, u_alpha: alpha }),
+      uniforms: _.merge({}, globals.uniforms, {
+        u_lightColor: color,
+        u_alpha: alpha,
+      }),
       model,
-      texture
+      texture,
     })
   })
   return <canvas ref={canvas} />
@@ -195,11 +203,11 @@ Obj.propTypes = {
   color: PT.array,
   model: PT.string,
   texture: PT.string,
-  alpha: PT.number
+  alpha: PT.number,
 }
 
 const Default = () => (
-  <Example notes={notes} components={{ Obj }} init={() => () => {}}/>
+  <Example notes={notes} components={{ Obj }} init={() => () => {}} />
 )
 
 export default Default

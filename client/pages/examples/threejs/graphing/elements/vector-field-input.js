@@ -47,7 +47,7 @@ const init = ({ state }) => {
     const geometry = new THREE.SphereBufferGeometry(mass)
 
     const material = new THREE.MeshLambertMaterial({
-      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999
+      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999,
     })
     const object = new THREE.Mesh(geometry, material)
     object.mass = mass
@@ -121,7 +121,7 @@ const init = ({ state }) => {
     // }
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = xy.x / event.target.clientWidth
     const y = xy.y / event.target.clientHeight
@@ -134,7 +134,7 @@ const init = ({ state }) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
   canvas.onmouseleave = () => {
@@ -190,7 +190,8 @@ const init = ({ state }) => {
           Math.cos(object.position.y + nowSecs * 3) * 0.1 +
             ((lastMousePos.x * 2 - 1) * domain[1] - object.position.x) / 200,
           Math.sin(object.position.x + nowSecs) * 0.1 +
-            (-1 * (lastMousePos.y * 2 - 1) * domain[1] - object.position.y) / 200,
+            (-1 * (lastMousePos.y * 2 - 1) * domain[1] - object.position.y) /
+              200,
           0
         )
         object.position.x += dir.x / object.mass / 10

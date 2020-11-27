@@ -24,7 +24,7 @@ UpDownLeftRight.propTypes = {
   onLeft: PropTypes.func,
   onRight: PropTypes.func,
   onUp: PropTypes.func,
-  onDown: PropTypes.func
+  onDown: PropTypes.func,
 }
 
 export default UpDownLeftRight

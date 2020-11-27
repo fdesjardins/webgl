@@ -21,7 +21,7 @@ import image7 from './7.jpg'
 import Stats from 'stats.js'
 
 const globals = {
-  textureLoader: new THREE.TextureLoader()
+  textureLoader: new THREE.TextureLoader(),
 }
 
 const loadTexture = (url) => {
@@ -199,7 +199,12 @@ const init = ({ canvas, container }) => {
   stats.showPanel(0)
   canvas.appendChild(stats.dom)
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    2000
+  )
   camera.updateProjectionMatrix()
   camera.position.set(0.01, 0, 0)
 
@@ -244,7 +249,7 @@ const init = ({ canvas, container }) => {
     ...mkUniform('iChannel4', Image4),
     ...mkUniform('iChannel5', Image5),
     ...mkUniform('iChannel6', Image6),
-    ...mkUniform('iChannel7', Image7)
+    ...mkUniform('iChannel7', Image7),
   }
 
   let mesh
@@ -255,12 +260,12 @@ const init = ({ canvas, container }) => {
       fragmentShader: fs,
       vertexShader: vs,
       side: THREE.DoubleSide,
-      uniforms: { ...uniforms }
+      uniforms: { ...uniforms },
     })
     const materials = [
       material,
       new THREE.MeshBasicMaterial({ color: BLACK }),
-      new THREE.MeshBasicMaterial({ color: BLACK })
+      new THREE.MeshBasicMaterial({ color: BLACK }),
     ]
     mesh = new THREE.Mesh(geometry, materials)
     scene.add(mesh)

@@ -12,21 +12,25 @@ import remarkTableOfContents from 'remark-toc'
 
 import Icon from '-/components/icon'
 
-const LinkComponent = ({ children, context, ...rest }) => <Link {...rest}>{children}</Link>
+const LinkComponent = ({ children, context, ...rest }) => (
+  <Link {...rest}>{children}</Link>
+)
 LinkComponent.propTypes = {
   children: PropTypes.node,
-  context: PropTypes.object
+  context: PropTypes.object,
 }
 
-const IconComponent = ({ children, context, ...rest }) => <Icon {...rest}>{children}</Icon>
+const IconComponent = ({ children, context, ...rest }) => (
+  <Icon {...rest}>{children}</Icon>
+)
 IconComponent.propTypes = {
   children: PropTypes.object,
-  context: PropTypes.object
+  context: PropTypes.object,
 }
 
 const standardComponents = {
   Link: LinkComponent,
-  Icon: IconComponent
+  Icon: IconComponent,
 }
 
 const style = css`
@@ -47,14 +51,19 @@ const style = css`
     font-size: 80%;
   }
 
-  h1,h2,h3,h4,h5,h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     > a {
       color: #444;
     }
     ::before {
       pointer-events: none;
       display: block;
-      content: " ";
+      content: ' ';
       margin-top: -3.5em;
       height: 3.5em;
       visibility: hidden;
@@ -74,9 +83,9 @@ const Markdown = ({ text, components }) => {
             [
               remarkAutolinkHeadings,
               {
-                behavior: 'wrap'
-              }
-            ]
+                behavior: 'wrap',
+              },
+            ],
           ]}
           rehypePlugins={[rehypeKatex]}
         >
@@ -89,7 +98,7 @@ const Markdown = ({ text, components }) => {
 
 Markdown.propTypes = {
   text: PropTypes.string,
-  components: PropTypes.object
+  components: PropTypes.object,
 }
 
 export default Markdown

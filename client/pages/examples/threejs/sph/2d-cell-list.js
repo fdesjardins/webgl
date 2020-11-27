@@ -8,7 +8,10 @@ export const buildCells = ({ cellmin, cellmax, cellw }) => {
   return cells
 }
 
-export const buildCellNeighbors = (cells, { stride, cellmin, cellmax, cellw }) => {
+export const buildCellNeighbors = (
+  cells,
+  { stride, cellmin, cellmax, cellw }
+) => {
   return cells.map((cell, i) => {
     const nb = []
     if (cell[0] === cellmin && cell[1] === cellmin) {

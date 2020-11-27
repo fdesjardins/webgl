@@ -12,7 +12,9 @@ const ShadowProperties = ({ getShadows, setShadows }) => (
         defaultValue={getShadows().mapSize.width}
         min="0"
         max="64"
-        onChange={({ target }) => setShadows({ mapSize: { width: target.value } })}
+        onChange={({ target }) =>
+          setShadows({ mapSize: { width: target.value } })
+        }
       />
     </div>
   </div>

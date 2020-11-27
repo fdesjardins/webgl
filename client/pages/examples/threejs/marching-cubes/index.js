@@ -14,7 +14,12 @@ const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
   scene.background = new THREE.Color(BLACK)
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    2000
+  )
   camera.updateProjectionMatrix()
   camera.position.set(170, 0, 0)
 
@@ -49,7 +54,7 @@ const init = ({ canvas, container }) => {
     opacity: 0.85,
     transparent: true,
     refractionRatio: 0.85,
-    vertexColors: THREE.VertexColors
+    vertexColors: THREE.VertexColors,
   })
   const cubesInstance = new MarchingCubes(20, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)

@@ -2,4 +2,4 @@
 
 ---
 
-<WindsExample1 />
+<Winds />

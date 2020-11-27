@@ -237,7 +237,7 @@ const rtScene = () => {
     magFilter: THREE.NearestFilter,
     minFilter: THREE.NearestFilter,
     depthBuffer: false,
-    stencilBuffer: false
+    stencilBuffer: false,
   })
   // const camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000)
   const camera = new THREE.OrthographicCamera(
@@ -258,14 +258,19 @@ const rtScene = () => {
   return {
     renderTarget,
     scene,
-    camera
+    camera,
   }
 }
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.z = 500
 
   const OrbitControls = threeOrbitControls(THREE)
@@ -275,7 +280,7 @@ const init = ({ canvas, container }) => {
   let renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    premultipliedAlpha: false
+    premultipliedAlpha: false,
   })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -294,7 +299,7 @@ const init = ({ canvas, container }) => {
   const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
   const planeMaterial = new THREE.MeshPhongMaterial({
     color: 0xff0000,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
   })
   const plane = new THREE.Mesh(planeGeometry, planeMaterial)
   plane.rotation.x = -Math.PI / 2
@@ -310,12 +315,20 @@ const init = ({ canvas, container }) => {
     magFilter: THREE.NearestFilter,
     minFilter: THREE.NearestFilter,
     depthBuffer: false,
-    stencilBuffer: false
+    stencilBuffer: false,
   }
-  let currentTexture = new THREE.WebGLRenderTarget(width, height, textureOptions)
+  let currentTexture = new THREE.WebGLRenderTarget(
+    width,
+    height,
+    textureOptions
+  )
   let nextTexture = new THREE.WebGLRenderTarget(width, height, textureOptions)
 
-  const { renderTarget, scene: renderTargetScene, camera: renderTargetCamera } = rtScene()
+  const {
+    renderTarget,
+    scene: renderTargetScene,
+    camera: renderTargetCamera,
+  } = rtScene()
 
   // const tex1 = texture()
   // const tex2 = texture()
@@ -323,11 +336,11 @@ const init = ({ canvas, container }) => {
   const geometry = new THREE.PlaneBufferGeometry(width, height)
   const uTexture = {
     type: 't',
-    value: texture()
+    value: texture(),
   }
   const iTime = {
     type: 'f',
-    value: 1.5 * Math.PI
+    value: 1.5 * Math.PI,
   }
   const material = new THREE.ShaderMaterial({
     vertexShader: vs,
@@ -335,8 +348,8 @@ const init = ({ canvas, container }) => {
     side: THREE.DoubleSide,
     uniforms: {
       u_texture: uTexture,
-      iTime: iTime
-    }
+      iTime: iTime,
+    },
   })
   const object = new THREE.Mesh(geometry, material)
 

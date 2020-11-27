@@ -5,13 +5,26 @@ export const shouldUpdate = (lastProps, nextProps) => {
   return JSON.stringify(lastProps) !== JSON.stringify(nextProps)
 }
 
+export const onResize = ({ canvas, renderer, camera }) => {
+  camera.aspect = canvas.clientWidth / canvas.clientHeight
+  camera.updateProjectionMatrix()
+  if (renderer) {
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight)
+  }
+  renderer.setSize(canvas.clientWidth, canvas.clientWidth)
+}
+
 /**
  * Helper method for making Baobab selects easier
  */
 const splitBaobabQuery = (query) => query.split('.')
 export const sq = splitBaobabQuery
 
-export const wrapComponent = (Component, { ...first }) => ({ children, context, ...rest }) => (
+export const wrapComponent = (Component, { ...first }) => ({
+  children,
+  context,
+  ...rest
+}) => (
   <Component {...first} {...rest}>
     {children}
   </Component>

@@ -29,7 +29,7 @@ const init = ({ canvas }) => {
 
   const camera = setupPerspectiveCamera({
     width: canvas.width,
-    height: canvas.height
+    height: canvas.height,
   })
   scene.add(camera)
 
@@ -121,7 +121,7 @@ const E = () => (
   <Example
     notes={notes}
     components={{
-      Basic
+      Basic,
     }}
   />
 )

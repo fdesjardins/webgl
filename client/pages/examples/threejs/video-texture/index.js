@@ -24,7 +24,12 @@ const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
   const video = setupVideo()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.z = 0.001
 
   const OrbitControls = threeOrbitControls(THREE)
@@ -56,7 +61,7 @@ const init = ({ canvas, container }) => {
   const material = new THREE.MeshPhongMaterial({
     map: videoTexture,
     side: THREE.DoubleSide,
-    shadowSide: THREE.DoubleSide
+    shadowSide: THREE.DoubleSide,
   })
   material.map.minFilter = THREE.LinearFilter
   material.map.maxFilter = THREE.LinearFilter

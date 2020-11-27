@@ -3,7 +3,12 @@ import * as THREE from 'three'
 import { MarchingCubes } from 'three/examples/jsm/objects/MarchingCubes'
 import tinygradient from 'tinygradient'
 
-import { createAxes, addControls, createParticle, addAxesLabels } from '../graphing/utils'
+import {
+  createAxes,
+  addControls,
+  createParticle,
+  addAxesLabels,
+} from '../graphing/utils'
 
 // import { buildCells, buildCellNeighbors, assignToCell } from './2d-cell-list'
 import { buildCells, buildCellNeighbors, assignToCell } from './3d-cell-list'
@@ -42,7 +47,7 @@ const createParticles = ({ n, size, center }) => {
       size,
       color: 0x0000ff,
       transparent: true,
-      opacity: 0.65
+      opacity: 0.65,
     })
   const particles = []
   for (let i = 0; i < n; i += 1) {
@@ -56,7 +61,7 @@ const createParticles = ({ n, size, center }) => {
     particles.push(p)
   }
   return {
-    particles
+    particles,
   }
 }
 
@@ -72,7 +77,7 @@ const createBoundingCube = () => {
     color: 0xeeeeee,
     opacity: 0.25,
     transparent: true,
-    side: THREE.BackSide
+    side: THREE.BackSide,
   })
   const cube = new THREE.Mesh(cubeGeom, cubeMat)
   return cube
@@ -82,7 +87,7 @@ const mousePos = (event) => {
   const bounds = event.target.getBoundingClientRect()
   const xy = {
     x: event.clientX - bounds.left,
-    y: event.clientY - bounds.top
+    y: event.clientY - bounds.top,
   }
   const x = (xy.x / event.target.clientWidth) * 2 - 1
   const y = -((xy.y / event.target.clientHeight) * 2 - 1)
@@ -115,7 +120,8 @@ const poly6f = (r, h) => {
 
 const spikyf = (r, h) => 15 / (h ** 6 * Math.PI) / (h - r) ** 3
 
-const poly6fg = (r, h) => -1 * r * (945 / (32 * h ** 9 * Math.PI)) * (h ** 2 - r ** 2) ** 2
+const poly6fg = (r, h) =>
+  -1 * r * (945 / (32 * h ** 9 * Math.PI)) * (h ** 2 - r ** 2) ** 2
 
 const sqNorm = (v) => {
   return v.x ** 2 + v.y ** 2 + v.z ** 2
@@ -124,7 +130,11 @@ const norm = (v) => {
   return Math.sqrt(sqNorm(v))
 }
 
-const calcDensityPressure = (particles, neighbors, { h, gasConstant, restDensity, mass }) => {
+const calcDensityPressure = (
+  particles,
+  neighbors,
+  { h, gasConstant, restDensity, mass }
+) => {
   particles.map((pi, i) => {
     pi.density = 0
     neighbors[i].map((j) => {
@@ -160,7 +170,9 @@ const calcForces = (particles, neighbors, { h, viscosity, mass }) => {
         tempV
           .copy(pj.v)
           .sub(pi.v)
-          .multiplyScalar(((viscosity * mass) / pj.density) * visc(r, h) * (h - r))
+          .multiplyScalar(
+            ((viscosity * mass) / pj.density) * visc(r, h) * (h - r)
+          )
         F_viscosity.add(tempV)
       }
     })
@@ -181,20 +193,20 @@ const config = {
     gridSize: 1,
     // l,r,t,b
     margin: [4, 4, 4, 4],
-    surfaceResolution: 26
+    surfaceResolution: 26,
   },
   sim: {
     numParticles: 700,
     numToAdd: 8,
-    particleSize: 1
+    particleSize: 1,
   },
   sph: {
     h: 4,
     gasConstant: 100,
     mass: 5,
     restDensity: 1,
-    viscosity: 30
-  }
+    viscosity: 30,
+  },
 }
 
 const width = config.scene.domain[1] - config.scene.domain[0]
@@ -273,13 +285,13 @@ const init = ({ state }) => {
     new THREE.Vector3(15, 18, 15),
     new THREE.Vector3(-15, 18, 15),
     new THREE.Vector3(15, 18, -15),
-    new THREE.Vector3(-15, 18, -15)
+    new THREE.Vector3(-15, 18, -15),
   ]
   const interval = setInterval(() => {
     const { particles: newParticles } = createParticles({
       n: numToAdd,
       size: particleSize,
-      center
+      center,
     })
     newParticles.map((p, i) => {
       p.position.add(particleEmitters[i % 4])
@@ -320,7 +332,7 @@ const init = ({ state }) => {
     cellmin,
     cellmax,
     cellw,
-    stride
+    stride,
   })
 
   const cubesMaterial = new THREE.MeshPhongMaterial({
@@ -329,13 +341,20 @@ const init = ({ state }) => {
     transparent: true,
     refractionRatio: 0.5,
     vertexColors: THREE.VertexColors,
-    shininess: 60
+    shininess: 60,
   })
   let cubesInstance = new MarchingCubes(24, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
   cubesInstance.scale.set(40, 40, 40)
 
-  const carribean = ['#cbdcf2', '#91e1e9', '#00c0e3', '#0096cc', '#006fb6', '#044185']
+  const carribean = [
+    '#cbdcf2',
+    '#91e1e9',
+    '#00c0e3',
+    '#0096cc',
+    '#006fb6',
+    '#044185',
+  ]
   const lava = ['#fff1a1', '#d9a848', '#c93200', '#841800', '#3d0a03']
   const acid = ['#b0bf1a', '#3b8e22', '#1e4d2b', '#0d2b0f']
   const gradient = tinygradient(lava)
@@ -347,7 +366,9 @@ const init = ({ state }) => {
       gradient.rgbAt(i / gradientMax).toHexString()
     )
   }
-  const maxColor = new THREE.Color(lookUpTable[Object.keys(lookUpTable).length - 1])
+  const maxColor = new THREE.Color(
+    lookUpTable[Object.keys(lookUpTable).length - 1]
+  )
 
   const animate = (now) => {
     if (!renderer) {
@@ -540,7 +561,12 @@ const init = ({ state }) => {
     const surfaceResolution = state.get('surfaceResolution')
     if (config.scene.surfaceResolution !== surfaceResolution) {
       scene.remove(cubesInstance)
-      cubesInstance = new MarchingCubes(surfaceResolution, cubesMaterial, true, true)
+      cubesInstance = new MarchingCubes(
+        surfaceResolution,
+        cubesMaterial,
+        true,
+        true
+      )
       cubesInstance.position.set(0, 0, 0)
       cubesInstance.scale.set(40, 40, 40)
       config.scene.surfaceResolution = surfaceResolution

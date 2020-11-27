@@ -7,17 +7,17 @@ const defaultStyle = {
   width: '1.2em',
   height: '1.2em',
   lineHeight: '1.2em',
-  display: 'inline-block'
+  display: 'inline-block',
 }
 
 const defaultImgStyle = {
   width: '100%',
-  height: '100%'
+  height: '100%',
 }
 
 const decodeSrc = (name) =>
   ({
-    about: About
+    about: About,
   }[name] || '')
 
 const Icon = ({ name, className = '' }) => {
@@ -30,7 +30,7 @@ const Icon = ({ name, className = '' }) => {
 
 Icon.propTypes = {
   name: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 export default Icon

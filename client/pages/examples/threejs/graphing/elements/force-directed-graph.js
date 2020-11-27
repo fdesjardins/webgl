@@ -8,7 +8,7 @@ import {
   addControls,
   createPoint,
   addAxesLabels,
-  createConnectingLine
+  createConnectingLine,
 } from '../utils'
 
 const WHITE = 0xffffff
@@ -93,7 +93,7 @@ const init = ({ state }) => {
     const bounds = event.target.getBoundingClientRect()
     const xy = {
       x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top
+      y: event.clientY - bounds.top,
     }
     const x = (xy.x / event.target.clientWidth) * 2 - 1
     const y = -((xy.y / event.target.clientHeight) * 2 - 1)
@@ -103,7 +103,7 @@ const init = ({ state }) => {
     const [x, y] = mousePos(event)
     lastMousePos = {
       x,
-      y
+      y,
     }
   }
   let label
@@ -158,7 +158,7 @@ const init = ({ state }) => {
       points.map((p) =>
         createTween(p.position, {
           x: center + (Math.random() - 0.5) * domain[1],
-          y: center + (Math.random() - 0.5) * domain[1]
+          y: center + (Math.random() - 0.5) * domain[1],
         })
       )
     }
@@ -188,7 +188,7 @@ const init = ({ state }) => {
       label = createLabel({
         text: `(${pos.x.toFixed(2)}, ${pos.y.toFixed(2)})`,
         color: BLACK,
-        size: 0.5
+        size: 0.5,
       })
       label.position.set(
         target.object.position.x,

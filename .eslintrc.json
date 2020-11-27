@@ -4,12 +4,11 @@
     "standard",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "prettier",
-    "prettier/react"
+    "plugin:prettier/recommended",
+    "prettier/react",
+    "prettier/standard"
   ],
-  "plugins": [
-    "@emotion"
-  ],
+  "plugins": ["@emotion"],
   "settings": {
     "react": {
       "version": "detect"
@@ -19,12 +18,19 @@
     "browser": true
   },
   "rules": {
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["webpack.config.js"]
-    }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["webpack.config.js"]
+      }
+    ],
     "func-style": ["error", "expression"],
-    "prefer-arrow-callback": ["error", {
-      "allowNamedFunctions": false
-    }]
+    "prefer-arrow-callback": [
+      "error",
+      {
+        "allowNamedFunctions": false
+      }
+    ],
+    "prettier/prettier": "error"
   }
 }

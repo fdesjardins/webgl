@@ -19,8 +19,8 @@ const globals = {
     u_shininess: 100,
     u_specularFactor: 10,
     u_diffuse: null,
-    u_alpha: 0.7
-  }
+    u_alpha: 0.7,
+  },
 }
 
 const initGL = (canvas, config) => {
@@ -32,14 +32,14 @@ const initGL = (canvas, config) => {
   const tex = twgl.createTexture(gl, {
     min: gl.NEAREST,
     mag: gl.NEAREST,
-    src: cubeTex
+    src: cubeTex,
   })
 
   return {
     gl,
     programInfo,
     bufferInfo,
-    tex
+    tex,
   }
 }
 
@@ -66,7 +66,7 @@ const init = ({ canvas, uniforms }) => {
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
   const render = (time) => {
@@ -109,16 +109,19 @@ const init = ({ canvas, uniforms }) => {
 const Lighting = ({ color }) => {
   const canvas = React.useRef(null)
   React.useEffect(() => {
-    return init({ canvas: canvas.current, uniforms: _.merge({}, globals.uniforms, { u_lightColor: color }) })
+    return init({
+      canvas: canvas.current,
+      uniforms: _.merge({}, globals.uniforms, { u_lightColor: color }),
+    })
   })
   return <canvas ref={canvas} />
 }
 Lighting.propTypes = {
-  color: PT.array
+  color: PT.array,
 }
 
 const Default = () => (
-  <Example notes={notes} components={{ Lighting }} init={() => () => {}}/>
+  <Example notes={notes} components={{ Lighting }} init={() => () => {}} />
 )
 
 export default Default

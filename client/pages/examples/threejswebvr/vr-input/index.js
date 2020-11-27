@@ -65,7 +65,7 @@ const init = ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      flatShading: true
+      flatShading: true,
     })
   )
   // hand1mesh.scale.x = 0.1
@@ -132,7 +132,7 @@ const VRInput = ({ children }, { store }) => (
   </div>
 )
 VRInput.propTypes = {
-  children: PT.node
+  children: PT.node,
 }
 
 export default VRInput

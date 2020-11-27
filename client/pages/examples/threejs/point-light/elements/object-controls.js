@@ -74,12 +74,18 @@ export const ObjectProperties = ({ objectCursor }) => (
       setColor={(color) => objectCursor.set('color', color)}
     />
     <ObjectScale
-      getScale={(axis) => objectCursor.get(['scale', { x: 0, y: 1, z: 2 }[axis]])}
-      setScale={({ axis, scale }) => objectCursor.set(['scale', { x: 0, y: 1, z: 2 }[axis]], scale)}
+      getScale={(axis) =>
+        objectCursor.get(['scale', { x: 0, y: 1, z: 2 }[axis]])
+      }
+      setScale={({ axis, scale }) =>
+        objectCursor.set(['scale', { x: 0, y: 1, z: 2 }[axis]], scale)
+      }
     />
     <ObjectRotation
       getSpeed={(axis) => objectCursor.get(['rotationSpeed', axis])}
-      setSpeed={({ axis, speed }) => objectCursor.set(['rotationSpeed', axis], speed)}
+      setSpeed={({ axis, speed }) =>
+        objectCursor.set(['rotationSpeed', axis], speed)
+      }
     />
   </div>
 )

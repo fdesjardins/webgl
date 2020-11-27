@@ -13,14 +13,14 @@ import threeOrbitControls from 'three-orbit-controls'
 const globals = {
   stations: [],
   particles: {
-    vertices: []
+    vertices: [],
   },
   fontLoader: new THREE.FontLoader(),
   font: null,
   colors: {
     stations: 0x4466ff,
-    stationLabels: 0xffffff
-  }
+    stationLabels: 0xffffff,
+  },
 }
 
 /**
@@ -29,7 +29,7 @@ const globals = {
 const createStation = (station) => {
   const stationGeom = new THREE.IcosahedronBufferGeometry(0.35, 0)
   const stationMat = new THREE.MeshPhongMaterial({
-    color: globals.colors.stations
+    color: globals.colors.stations,
   })
   const polyhedron = new THREE.Mesh(stationGeom, stationMat)
   const pos = calcPosFromLatLonRad(station.latitude, station.longitude, 30)
@@ -42,18 +42,18 @@ const createStation = (station) => {
  */
 const createStationLabel = (station) => {
   const textMat = new THREE.MeshPhongMaterial({
-    color: globals.colors.stationLabels
+    color: globals.colors.stationLabels,
   })
   const defaultTextBufferGeomOpts = {
     size: 0.25,
     height: 0.25,
     curveSegments: 3,
-    bevelEnabled: false
+    bevelEnabled: false,
   }
   const textGeom = new THREE.TextBufferGeometry(
     station.stationName,
     Object.assign({}, defaultTextBufferGeomOpts, {
-      font: globals.font
+      font: globals.font,
     })
   )
   const text = new THREE.Mesh(textGeom, textMat)
@@ -77,7 +77,7 @@ const loadStations = async (scene) => {
     globals.stations.push(station)
   })
   Promise.map(loadStations, (x) => Promise.resolve(x()).delay(100), {
-    concurrency: 25
+    concurrency: 25,
   })
 }
 
@@ -86,7 +86,7 @@ const loadParticles = async (scene) => {
   const particleGeom = new THREE.Geometry()
   const particleMat = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 0.5
+    size: 0.5,
   })
 
   Array.from(new Array(particleCount).keys()).forEach(() => {
@@ -105,19 +105,17 @@ const loadParticles = async (scene) => {
 /**
  * didMount()
  */
-const didMount = async () => {
-  const canvas = document.querySelector('#container canvas')
-  const container = document.querySelector('#container')
-
+const init = ({ canvas }) => {
+  console.log(canvas)
   // Create the scene and renderer
   const scene = new THREE.Scene()
   const renderer = new THREE.WebGLRenderer({ canvas })
-  renderer.setSize(container.clientWidth, container.clientHeight)
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
   // Add the camera
   const camera = new THREE.PerspectiveCamera(
     75,
-    container.clientWidth / container.clientHeight,
+    canvas.clientWidth / canvas.clientHeight,
     1,
     100000
   )
@@ -155,13 +153,18 @@ const didMount = async () => {
 
   loadStations(scene)
   loadParticles(scene)
+
+  return () => {
+    scene.dispose()
+    renderer.dispose()
+  }
 }
 
 const updateParticlePosition = (pos, frame) => {
   const [x, y, z] = [
     pos.x + (Math.random() - 0.5) * 0.2,
     pos.y + (Math.random() - 0.5) * 0.2,
-    pos.z
+    pos.z,
   ]
   return new THREE.Vector3(x, y, z)
 }
@@ -192,34 +195,23 @@ const calcPosFromLatLonRad = (lat, lon, radius) => {
   return [x, y, 0]
 }
 
-const WindsExample1 = ({ color, id }) => {
-  return <canvas id={id} />
+const Winds = ({ color, id }) => {
+  const canvas = React.useRef(null)
+  console.log('effect')
+  React.useEffect(() => {
+    return init({ canvas: canvas.current })
+  })
+  return <canvas ref={canvas} />
 }
-WindsExample1.propTypes = {
+Winds.propTypes = {
   color: PT.string,
-  id: PT.string
+  id: PT.string,
 }
 
-/**
- * Main Threejs example component
- */
-const WindsExample = ({ children }, { store }) => {
-  const Wrapper = ({ color, id }) => <WindsExample1 color={color} id={id} />
-  Wrapper.propTypes = {
-    color: PT.string,
-    id: PT.string
-  }
-  const components = {
-    WindsExample1: Wrapper
-  }
-  return (
-    <div id="container">
-      <Example notes={notes} components={components} didMount={didMount} didUpdate={didMount} />
-    </div>
-  )
-}
-WindsExample.propTypes = {
-  children: PT.array
-}
+const E = () => (
+  <div id="container">
+    <Example notes={notes} components={{ Winds }} init={() => () => {}} />
+  </div>
+)
 
-export default WindsExample
+export default E

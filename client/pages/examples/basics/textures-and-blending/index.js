@@ -26,8 +26,8 @@ const globals = {
     u_shininess: 100,
     u_specularFactor: 10,
     u_diffuse: null,
-    u_alpha: 0.7
-  }
+    u_alpha: 0.7,
+  },
 }
 
 const initGL = (canvas, config) => {
@@ -40,7 +40,7 @@ const initGL = (canvas, config) => {
   return {
     gl,
     programInfo,
-    bufferInfo
+    bufferInfo,
   }
 }
 
@@ -65,38 +65,38 @@ const init = ({ canvas, register, uniforms, texture }) => {
     stainedGlass: {
       src: stainedGlassTexture,
       mag: gl.LINEAR,
-      min: gl.LINEAR_MIPMAP_NEAREST
+      min: gl.LINEAR_MIPMAP_NEAREST,
     },
     companion: {
       src: companionCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     mario: {
       src: marioCubeTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     stone: {
       src: stoneTileTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     carbonFiber: {
       src: carbonFiberTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     amberGlass: {
       src: amberGlassTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
+      min: gl.LINEAR,
     },
     infinity: {
       src: infinityTexture,
       mag: gl.NEAREST,
-      min: gl.LINEAR
-    }
+      min: gl.LINEAR,
+    },
   })
 
   uniforms = _.merge({}, uniforms)
@@ -106,7 +106,7 @@ const init = ({ canvas, register, uniforms, texture }) => {
   const animate = animateScene([
     (time) => {
       worldRotationY += time * 0.001
-    }
+    },
   ])
 
   const render = (time) => {
@@ -160,7 +160,7 @@ const Tex = ({ color, model, texture, alpha }) => {
       canvas: canvas.current,
       uniforms: { ...globals.uniforms, u_lightColor: color, u_alpha: alpha },
       model,
-      texture
+      texture,
     })
   })
   return <canvas ref={canvas} />
@@ -169,11 +169,11 @@ Tex.propTypes = {
   color: PT.array,
   model: PT.string,
   texture: PT.string,
-  alpha: PT.number
+  alpha: PT.number,
 }
 
 const Default = () => (
-  <Example notes={notes} components={{ Tex }} init={() => () => {}}/>
+  <Example notes={notes} components={{ Tex }} init={() => () => {}} />
 )
 
 export default Default

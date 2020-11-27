@@ -129,7 +129,7 @@ const init = ({ state }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z
+        z: object.rotation.z,
       })
 
       // axes.children.map(child => child.lookAt(camera.position))
@@ -158,7 +158,7 @@ const BasicsOrtho = ({ state, labels }) => {
 }
 BasicsOrtho.propTypes = {
   state: PT.object,
-  labels: PT.array
+  labels: PT.array,
 }
 
 export { init }

@@ -19,9 +19,9 @@ const state = new Baobab({
       dispose: false,
       mapSize: {
         width: 1024,
-        height: 1024
-      }
-    }
+        height: 1024,
+      },
+    },
   },
   object: {
     color: 'ffffff',
@@ -29,19 +29,19 @@ const state = new Baobab({
     rotationSpeed: {
       x: 0.0,
       y: 0.5,
-      z: 0.5
+      z: 0.5,
     },
     position: {
       x: 0,
       y: 0,
-      z: 0
+      z: 0,
     },
     rotation: {
       x: 0,
       y: 0,
-      z: 0
-    }
-  }
+      z: 0,
+    },
+  },
 })
 
 const createAxes = ({ size, fontSize = 3 }) => {
@@ -54,7 +54,7 @@ const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
@@ -66,7 +66,7 @@ const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
@@ -78,7 +78,7 @@ const createAxes = ({ size, fontSize = 3 }) => {
       size: fontSize,
       height: fontSize * 0.1,
       font,
-      curveSegments: 3
+      curveSegments: 3,
     }),
     new THREE.MeshBasicMaterial({ color: 0x000000 })
   )
@@ -91,7 +91,12 @@ const createAxes = ({ size, fontSize = 3 }) => {
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.x = 45
   camera.position.y = 45
   camera.position.z = 90
@@ -151,7 +156,7 @@ const init = ({ canvas, container }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z
+        z: object.rotation.z,
       })
 
       axes.children.map((child) => child.lookAt(camera.position))
@@ -183,11 +188,11 @@ const PointLightExample = () => (
     components={{
       Stats: wrap(Stats, {
         getPosition: () => state.get(['object', 'position']),
-        getRotation: () => state.get(['object', 'rotation'])
+        getRotation: () => state.get(['object', 'rotation']),
       }),
       ObjectProperties: wrap(ObjectProperties, {
-        objectCursor: state.select('object')
-      })
+        objectCursor: state.select('object'),
+      }),
     }}
     init={init}
   />

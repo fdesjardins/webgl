@@ -13,14 +13,20 @@ const state = new Baobab({
   pos: { x: 0, y: 0 },
   width: 50,
   height: 50,
-  color: [Math.random(), Math.random(), Math.random(), 1]
+  color: [Math.random(), Math.random(), Math.random(), 1],
 })
 
 const init = ({ canvas, container }) => {
   const gl = canvas.getContext('webgl2')
-  const program = webglUtils.createProgramFromSources(gl, [vtxShader, fragShader])
+  const program = webglUtils.createProgramFromSources(gl, [
+    vtxShader,
+    fragShader,
+  ])
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
-  const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution')
+  const resolutionUniformLocation = gl.getUniformLocation(
+    program,
+    'u_resolution'
+  )
   const colorLocation = gl.getUniformLocation(program, 'u_color')
   const positionBuffer = gl.createBuffer()
   const vao = gl.createVertexArray()
@@ -65,7 +71,7 @@ const HelloWorld = () => {
     />
   )
   const components = {
-    Controls
+    Controls,
   }
   return (
     <div className="basics02">

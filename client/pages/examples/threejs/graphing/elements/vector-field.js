@@ -47,7 +47,7 @@ const init = ({ state }) => {
     const geometry = new THREE.SphereBufferGeometry(mass)
 
     const material = new THREE.MeshLambertMaterial({
-      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999
+      color: mass < 0.15 ? 0x333333 : mass < 0.2 ? 0x555555 : 0x999999,
     })
     const object = new THREE.Mesh(geometry, material)
     object.mass = mass

@@ -4,7 +4,7 @@ onmessage = function (e) {
   const result = [
     (0.5 - Math.random()) * workerSpeed,
     (0.5 - Math.random()) * workerSpeed,
-    (0.5 - Math.random()) * workerSpeed
+    (0.5 - Math.random()) * workerSpeed,
   ]
   const workerResult = result
   postMessage(workerResult)

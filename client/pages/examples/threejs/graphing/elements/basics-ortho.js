@@ -128,7 +128,7 @@ const init = ({ state }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z
+        z: object.rotation.z,
       })
 
       // axes.children.map(child => child.lookAt(camera.position))

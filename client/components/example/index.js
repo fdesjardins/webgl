@@ -20,7 +20,9 @@ const style = css`
 
 const Example = ({ notes, components, init, state = {}, id }) => {
   React.useEffect(() => {
-    const canvas = id ? document.getElementById(id) : document.querySelector('canvas')
+    const canvas = id
+      ? document.getElementById(id)
+      : document.querySelector('canvas')
     const container = document.querySelector('.example-container')
     if (init) {
       const dispose = init({ canvas, container, state })
@@ -45,7 +47,7 @@ Example.propTypes = {
   components: PropTypes.object,
   init: PropTypes.func,
   state: PropTypes.object,
-  id: PropTypes.string
+  id: PropTypes.string,
 }
 
 export default Example

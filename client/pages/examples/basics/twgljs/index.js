@@ -11,14 +11,14 @@ const initGL = (canvas, config) => {
   const programInfo = twgl.createProgramInfo(gl, [vtxShader, fragShader])
 
   const arrays = {
-    position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
+    position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0],
   }
   const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays)
 
   return {
     gl,
     programInfo,
-    bufferInfo
+    bufferInfo,
   }
 }
 
@@ -31,7 +31,7 @@ const init = ({ canvas }) => {
 
     const uniforms = {
       time: time * 0.001,
-      resolution: [gl.canvas.width, gl.canvas.height]
+      resolution: [gl.canvas.width, gl.canvas.height],
     }
 
     gl.useProgram(programInfo.program)
@@ -43,8 +43,6 @@ const init = ({ canvas }) => {
   requestAnimationFrame(render)
 }
 
-const E = () => (
-  <Example notes={notes} init={init} />
-)
+const E = () => <Example notes={notes} init={init} />
 
 export default E

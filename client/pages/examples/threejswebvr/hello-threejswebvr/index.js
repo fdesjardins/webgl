@@ -84,7 +84,7 @@ const HelloWebVr = ({ children }, { store }) => (
   </div>
 )
 HelloWebVr.propTypes = {
-  children: PT.node
+  children: PT.node,
 }
 
 export default HelloWebVr

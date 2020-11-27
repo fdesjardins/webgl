@@ -12,15 +12,20 @@ import Worker from './basic.worker.js'
 const state = {
   user: {
     alive: true,
-    velocity: 1 / 10
+    velocity: 1 / 10,
   },
-  minWorkers: 50
+  minWorkers: 50,
 }
 
 const init = async ({ canvas, container }) => {
   let scene = new THREE.Scene()
   const user = new THREE.Group()
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  )
 
   camera.position.x = 0
   camera.position.y = 1
@@ -77,7 +82,7 @@ const init = async ({ canvas, container }) => {
     hand,
     new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      flatShading: true
+      flatShading: true,
     })
   )
   hand2mesh.position.x = hand2.position.x
@@ -91,7 +96,14 @@ const init = async ({ canvas, container }) => {
 
   const roomsize = 50
   const room = new THREE.LineSegments(
-    new BoxLineGeometry(roomsize, roomsize, roomsize, roomsize, roomsize, roomsize),
+    new BoxLineGeometry(
+      roomsize,
+      roomsize,
+      roomsize,
+      roomsize,
+      roomsize,
+      roomsize
+    ),
     new THREE.LineBasicMaterial({ color: 0x0080f0 })
   )
   room.geometry.translate(0, roomsize / 2, 0)
@@ -148,7 +160,7 @@ const init = async ({ canvas, container }) => {
     const workerMaterial = new THREE.MeshPhongMaterial({
       color: Math.random() * 0xffffff,
       opacity: 1,
-      transparent: true
+      transparent: true,
     })
     const workerMesh = new THREE.Mesh(workerBlock, workerMaterial)
     newChildWorker.workerMesh = workerMesh
@@ -174,9 +186,12 @@ const init = async ({ canvas, container }) => {
 
         sweatShop.splice(sweatShop.indexOf(newChildWorker), 1)
 
-        newChildWorker.workerMesh.material.color.r = newChildWorker.workerMesh.material.color.r / 2
-        newChildWorker.workerMesh.material.color.g = newChildWorker.workerMesh.material.color.g / 2
-        newChildWorker.workerMesh.material.color.b = newChildWorker.workerMesh.material.color.b / 2
+        newChildWorker.workerMesh.material.color.r =
+          newChildWorker.workerMesh.material.color.r / 2
+        newChildWorker.workerMesh.material.color.g =
+          newChildWorker.workerMesh.material.color.g / 2
+        newChildWorker.workerMesh.material.color.b =
+          newChildWorker.workerMesh.material.color.b / 2
         newChildWorker.workerMesh.material.opacity = 0.5
 
         // console.log(newChildWorker.workerMesh.material)
@@ -260,7 +275,7 @@ const ChildWorker = ({ children }, { store }) => (
   </div>
 )
 ChildWorker.propTypes = {
-  children: PT.node
+  children: PT.node,
 }
 
 const style = css`

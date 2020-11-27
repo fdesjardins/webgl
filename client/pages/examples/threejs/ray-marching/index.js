@@ -58,31 +58,36 @@ const createUniforms = (canvas) => {
   return {
     iTime: {
       type: 'f',
-      value: 100.0
+      value: 100.0,
     },
     iResolution: {
       type: 'vec2',
-      value: new THREE.Vector2(canvas.width, canvas.height)
+      value: new THREE.Vector2(canvas.width, canvas.height),
     },
     cameraPos: {
       type: 'vec3',
-      value: new THREE.Vector3()
+      value: new THREE.Vector3(),
     },
     cameraDir: {
       type: 'vec3',
-      value: new THREE.Vector3()
+      value: new THREE.Vector3(),
     },
     iChannel0: {
       type: 'sampler2D',
-      value: rustyMetal
-    }
+      value: rustyMetal,
+    },
   }
 }
 
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.position.set(2, 5, 8)
   camera.lookAt(0, 0, 0)
 
@@ -103,12 +108,19 @@ const init = ({ canvas, container }) => {
     fragmentShader: fs,
     vertexShader: vs,
     side: THREE.DoubleSide,
-    uniforms
+    uniforms,
   })
   const object = new THREE.Mesh(geometry, material)
   scene.add(object)
 
-  scene.add(new THREE.GridHelper(100, 60, new THREE.Color(0x666666), new THREE.Color(0x222222)))
+  scene.add(
+    new THREE.GridHelper(
+      100,
+      60,
+      new THREE.Color(0x666666),
+      new THREE.Color(0x222222)
+    )
+  )
   const camDirection = new THREE.Vector3()
 
   const clock = new THREE.Clock()
@@ -119,7 +131,9 @@ const init = ({ canvas, container }) => {
 
     camera.getWorldDirection(camDirection)
     camDirection.normalize()
-    object.position.copy(camera.position.clone().add(camDirection.multiplyScalar(13)))
+    object.position.copy(
+      camera.position.clone().add(camDirection.multiplyScalar(13))
+    )
     object.lookAt(camera.position.clone())
     // object.rotation.set(camera.rotation)
 

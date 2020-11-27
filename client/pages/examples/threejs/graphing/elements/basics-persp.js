@@ -10,7 +10,12 @@ const init = ({ state }) => {
 
   let scene = new THREE.Scene()
 
-  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 1000)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.clientWidth / canvas.clientWidth,
+    0.1,
+    1000
+  )
   camera.updateProjectionMatrix()
   camera.position.z = 65
   camera.position.x = 7
@@ -118,7 +123,7 @@ const init = ({ state }) => {
       objectState.set('rotation', {
         x: object.rotation.x,
         y: object.rotation.y,
-        z: object.rotation.z
+        z: object.rotation.z,
       })
 
       // axes.children.map(child => child.lookAt(camera.position))

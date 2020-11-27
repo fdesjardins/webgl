@@ -40,7 +40,7 @@ const Layout = ({ children }) => (
 )
 
 Layout.propTypes = {
-  children: PropTypes.array
+  children: PropTypes.array,
 }
 
 export default root(state, Routes(Layout))
