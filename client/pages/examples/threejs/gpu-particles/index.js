@@ -8,30 +8,12 @@ import Example from '-/components/example'
 import { onResize } from '-/utils'
 import notes from './readme.md'
 import { initParticles } from './particles'
+import { vs, fs } from './shaders'
 
 const BLACK = 0x000000
 
 const WIDTH = 64
 const HEIGHT = 64
-
-const vs = `
-varying vec2 texCoord;
-varying vec2 vUv;
-void main(){
-  vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
-  texCoord = vec2(gl_Position.x, gl_Position.y);
-}`
-
-const fs = `
-varying vec2 texCoord;
-uniform float iTime;
-uniform sampler2D u_texture;
-varying vec2 vUv;
-
-void main(){
-  gl_FragColor = texture2D(u_texture, vUv);
-}`
 
 const state = {
   numParticles: 0,
@@ -112,7 +94,7 @@ const init = ({ canvas, container }) => {
   light.shadow.camera.far = 500
   scene.add(light)
 
-  const dataTex = initParticles({ width: WIDTH, height: HEIGHT })
+  const dataTextures = initParticles({ width: WIDTH, height: HEIGHT })
   const textureOptions = {
     format: THREE.RGBAFormat,
     type: THREE.UnsignedByteType,
@@ -135,10 +117,11 @@ const init = ({ canvas, container }) => {
   } = rtScene()
 
   const geometry = new THREE.PlaneBufferGeometry(WIDTH, HEIGHT)
-  const uTexture = {
-    type: 't',
-    value: dataTex,
+
+  const uniforms = {
+    u_texture: { type: 't', value: dataTextures.position },
   }
+
   const iTime = {
     type: 'f',
     value: 1.5 * Math.PI,
@@ -147,10 +130,7 @@ const init = ({ canvas, container }) => {
     vertexShader: vs,
     fragmentShader: fs,
     side: THREE.DoubleSide,
-    uniforms: {
-      u_texture: uTexture,
-      iTime: iTime,
-    },
+    uniforms,
   })
   const object = new THREE.Mesh(geometry, material)
 
@@ -176,7 +156,7 @@ const init = ({ canvas, container }) => {
       if (counter++ % 1 === 0) {
         const temp = currentTexture
         currentTexture = nextTexture
-        uTexture.value = currentTexture.texture
+        uniforms.u_texture.value = currentTexture.texture
         nextTexture = temp
       }
 
