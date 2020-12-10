@@ -1,5 +1,1 @@
-# GPU Particles
-
----
-
 <canvas/>

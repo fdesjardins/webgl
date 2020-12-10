@@ -2,15 +2,17 @@
 
 Examples, tutorials, mini-projects, ...
 
+https://webgl-exp.herokuapp.com/
+
 <img src=".github/point-light.gif" width="100%">
 
 Built with
 
-- React + Recompose + Baobab
+- WebGL2
+- Three.js
+- React
 - Express
 - Webpack
-- WebGL2
-- SCSS
 
 ## Usage
 

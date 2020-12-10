@@ -1,55 +1,38 @@
 import React from 'react'
-// import PT from 'prop-types'
 import * as THREE from 'three'
 import Stats from 'stats.js'
 import threeOrbitControls from 'three-orbit-controls'
+import { css } from 'emotion'
 
 import Example from '-/components/example'
 import { onResize } from '-/utils'
 import notes from './readme.md'
-import { initParticles } from './particles'
-import { vs, fs } from './shaders'
+import {
+  createTextures,
+  fillTextures,
+  createRenderTarget,
+  createSceneAndCamera,
+  createParticles,
+} from './particles'
+import { vs, updatePos, updateVel } from './shaders'
 
-const BLACK = 0x000000
+const WIDTH = 1000
+const HEIGHT = 1000
+const PARTICLES = WIDTH * WIDTH
 
-const WIDTH = 64
-const HEIGHT = 64
-
-const state = {
-  numParticles: 0,
-  maxParticles: 500,
-  gravityGs: 1,
-  particleLifeSec: 5,
-}
-
-const rtScene = () => {
-  const renderTarget = new THREE.WebGLRenderTarget(WIDTH, HEIGHT, {
-    magFilter: THREE.NearestFilter,
-    minFilter: THREE.NearestFilter,
-    depthBuffer: false,
-    stencilBuffer: false,
-  })
-  // const camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000)
-  const camera = new THREE.OrthographicCamera(
-    -WIDTH / 2,
-    HEIGHT / 2,
-    WIDTH / 2,
-    -HEIGHT / 2,
-    0.1,
-    10
-  )
-  camera.position.z = 1
-  camera.updateProjectionMatrix()
-  const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xffff00)
-  const ambientLight = new THREE.AmbientLight(0xffffff)
-  scene.add(ambientLight)
-
-  return {
-    renderTarget,
-    scene,
-    camera,
+const checkCapabilities = (renderer) => {
+  if (
+    renderer.capabilities.isWebGL2 === false &&
+    renderer.extensions.has('OES_texture_float') === false
+  ) {
+    console.error('No OES_texture_float support for float textures.')
+    return 0
   }
+  if (renderer.capabilities.maxVertexTextures === 0) {
+    console.error('No support for vertex shader textures')
+    return 0
+  }
+  return 1
 }
 
 const init = ({ canvas, container }) => {
@@ -58,7 +41,7 @@ const init = ({ canvas, container }) => {
 
   const stats = new Stats()
   stats.showPanel(0)
-  canvas.appendChild(stats.dom)
+  document.body.appendChild(stats.dom)
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -67,10 +50,13 @@ const init = ({ canvas, container }) => {
     2000
   )
   camera.updateProjectionMatrix()
-  camera.position.z = 50
+  camera.position.set(3, 3, 3)
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
+  if (!checkCapabilities(renderer)) {
+    return
+  }
 
   window.addEventListener(
     'resize',
@@ -85,83 +71,78 @@ const init = ({ canvas, container }) => {
   const controls = new OrbitControls(camera)
   controls.update()
 
-  const light = new THREE.PointLight(0x00ff00, 2, 100)
-  light.position.set(0, 20, 30)
-  light.castShadow = true
-  light.shadow.mapSize.width = 1024
-  light.shadow.mapSize.height = 1024
-  light.shadow.camera.near = 0.5
-  light.shadow.camera.far = 500
-  scene.add(light)
+  const dataTextures = createTextures({ width: WIDTH, height: HEIGHT })
+  fillTextures(dataTextures.position, dataTextures.velocity)
+  let currentPosTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
+  let nextPosTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
+  let currentVelTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
+  let nextVelTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
+  const { scene: rtScene, camera: rtCamera } = createSceneAndCamera({
+    w: WIDTH,
+    h: HEIGHT,
+  })
 
-  const dataTextures = initParticles({ width: WIDTH, height: HEIGHT })
-  const textureOptions = {
-    format: THREE.RGBAFormat,
-    type: THREE.UnsignedByteType,
-    magFilter: THREE.NearestFilter,
-    minFilter: THREE.NearestFilter,
-    depthBuffer: false,
-    stencilBuffer: false,
-  }
-  let currentTexture = new THREE.WebGLRenderTarget(
-    WIDTH,
-    HEIGHT,
-    textureOptions
-  )
-  let nextTexture = new THREE.WebGLRenderTarget(WIDTH, HEIGHT, textureOptions)
-
-  const {
-    renderTarget,
-    scene: renderTargetScene,
-    camera: renderTargetCamera,
-  } = rtScene()
-
-  const geometry = new THREE.PlaneBufferGeometry(WIDTH, HEIGHT)
-
+  // Set up particle uniforms, textures, etc.
   const uniforms = {
-    u_texture: { type: 't', value: dataTextures.position },
+    u_position: { value: dataTextures.position },
+    u_velocity: { value: dataTextures.velocity },
+    u_resolution: { value: new THREE.Vector2(WIDTH, WIDTH) },
+    u_time: { type: 'f', value: 0 },
+    u_delta: { type: 'f', value: 0 },
   }
-
-  const iTime = {
-    type: 'f',
-    value: 1.5 * Math.PI,
-  }
-  const material = new THREE.ShaderMaterial({
+  const posMaterial = new THREE.ShaderMaterial({
     vertexShader: vs,
-    fragmentShader: fs,
-    side: THREE.DoubleSide,
+    fragmentShader: updatePos,
     uniforms,
   })
-  const object = new THREE.Mesh(geometry, material)
+  const velMaterial = new THREE.ShaderMaterial({
+    vertexShader: vs,
+    fragmentShader: updateVel,
+    uniforms,
+  })
+  const geometry = new THREE.PlaneBufferGeometry(WIDTH, HEIGHT)
+  const object = new THREE.Mesh(geometry, posMaterial)
+  rtScene.add(object)
 
-  renderTargetScene.add(object)
+  // Add the actual particles instance to the scene
+  const particles = createParticles(PARTICLES, WIDTH, uniforms)
+  scene.add(particles)
 
-  // const sphere = new THREE.SphereBufferGeometry(256, 32, 32)
-  const targetMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(WIDTH, HEIGHT),
-    material
-  )
-  scene.add(targetMesh)
-
-  let counter = 1
-
+  const clock = new THREE.Clock()
   const animate = () => {
     if (renderer) {
       stats.begin()
       requestAnimationFrame(animate)
 
-      renderer.setRenderTarget(nextTexture)
-      renderer.render(renderTargetScene, renderTargetCamera)
+      // Update positions
+      object.material = posMaterial
+      renderer.setRenderTarget(nextPosTexture)
+      renderer.render(rtScene, rtCamera)
 
-      if (counter++ % 1 === 0) {
-        const temp = currentTexture
-        currentTexture = nextTexture
-        uniforms.u_texture.value = currentTexture.texture
-        nextTexture = temp
-      }
+      // Swap position textures
+      let temp = currentPosTexture
+      currentPosTexture = nextPosTexture
+      uniforms.u_position.value = currentPosTexture.texture
+      nextPosTexture = temp
 
+      // Update velocities
+      object.material = velMaterial
+      renderer.setRenderTarget(nextVelTexture)
+      renderer.render(rtScene, rtCamera)
+
+      // Swap velocity textures
+      temp = currentVelTexture
+      currentVelTexture = nextVelTexture
+      uniforms.u_velocity.value = currentVelTexture.texture
+      nextVelTexture = temp
+
+      // Render the scene
       renderer.setRenderTarget(null)
       renderer.render(scene, camera)
+
+      // Update the clock
+      uniforms.u_delta.value = clock.getDelta()
+      uniforms.u_time.value = clock.elapsedTime
 
       stats.end()
     }
@@ -171,10 +152,26 @@ const init = ({ canvas, container }) => {
   return () => {
     renderer.dispose()
     stats.scene = null
+    document.body.removeChild(stats.dom)
     renderer = null
   }
 }
 
-const E = () => <Example notes={notes} init={init} />
+const style = css`
+  canvas {
+    position: fixed;
+    top: 68px;
+    left: 0px;
+    width: 100vw;
+    height: calc(100vh - 68px) !important;
+    background-color: black;
+  }
+`
+
+const E = () => (
+  <div className={style}>
+    <Example notes={notes} init={init} />
+  </div>
+)
 
 export default E

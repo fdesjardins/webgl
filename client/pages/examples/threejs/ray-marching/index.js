@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 // import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls'
+import { css } from 'emotion'
+import Stats from 'stats.js'
 
 import Example from '-/components/example'
 import notes from './readme.md'
@@ -82,6 +84,10 @@ const createUniforms = (canvas) => {
 const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
+  const stats = new Stats()
+  stats.showPanel(0)
+  canvas.appendChild(stats.dom)
+
   const camera = new THREE.PerspectiveCamera(
     75,
     canvas.clientWidth / canvas.clientWidth,
@@ -91,7 +97,7 @@ const init = ({ canvas, container }) => {
   camera.position.set(2, 5, 8)
   camera.lookAt(0, 0, 0)
 
-  let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  let renderer = new THREE.WebGLRenderer({ canvas, antialias: false })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -107,7 +113,6 @@ const init = ({ canvas, container }) => {
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
     vertexShader: vs,
-    side: THREE.DoubleSide,
     uniforms,
   })
   const object = new THREE.Mesh(geometry, material)
@@ -126,6 +131,7 @@ const init = ({ canvas, container }) => {
   const clock = new THREE.Clock()
 
   const animate = (now) => {
+    stats.begin()
     const delta = clock.getDelta()
     controls.update(delta)
 
@@ -145,6 +151,7 @@ const init = ({ canvas, container }) => {
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
     }
+    stats.end()
   }
   animate()
 
@@ -155,9 +162,19 @@ const init = ({ canvas, container }) => {
   }
 }
 
+const style = css`
+  canvas {
+    position: fixed;
+    top: 68px;
+    left: 0px;
+    width: 100vw;
+    height: calc(100vh - 68px) !important;
+  }
+`
+
 const ExampleContainer = () => {
   return (
-    <div id="container">
+    <div id="container" className={style}>
       <Example notes={notes} init={init} />
     </div>
   )

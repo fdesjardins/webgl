@@ -7,8 +7,8 @@
     "url": "github.com/fdesjardins"
   },
   "dependencies": {
-    "@mdx-js/react": "^1.6.21",
-    "@mdx-js/runtime": "^1.6.21",
+    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/runtime": "^1.6.22",
     "@tweenjs/tween.js": "^18.6.4",
     "baobab": "^2.6.0",
     "baobab-react": "^4.0.2",
@@ -45,37 +45,36 @@
     "webgl-obj-loader": "^2.0.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
+    "@babel/core": "^7.12.9",
     "@babel/plugin-transform-react-jsx-source": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
     "@emotion/eslint-plugin": "^11.0.0",
     "@hot-loader/react-dom": "^16.13.0",
-    "babel-loader": "^8.2.1",
+    "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.1",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-compat": "^3.8.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-prettier": "^3.2.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-standard": "^4.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
-    "prettier": "^2.2.0",
+    "prettier": "^2.2.1",
     "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
-    "worker-loader": "^3.0.5"
+    "worker-loader": "^3.0.6"
   },
   "engines": {
     "node": ">=12.x"
