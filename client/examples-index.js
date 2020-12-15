@@ -167,6 +167,18 @@ const examples = [
     slug: 'child-worker',
     component: import('-/pages/examples/threejswebvr/worker'),
   },
+  {
+    tags: 'threejs',
+    title: 'Pendulum',
+    slug: 'pendulum',
+    component: import('-/pages/examples/threejs/pendulum'),
+  },
+  {
+    tags: 'threejs,gpgpu',
+    title: 'GPU SPH',
+    slug: 'gpu-sph',
+    component: import('-/pages/examples/threejs/gpu-sph'),
+  },
 ]
 
 export default examples
