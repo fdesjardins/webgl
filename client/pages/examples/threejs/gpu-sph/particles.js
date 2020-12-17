@@ -4,16 +4,32 @@ import { drawVs, drawFs } from './shaders'
 export const createTextures = ({ width, height }) => {
   const posData = new Float32Array(4 * width * height)
   const velData = new Float32Array(4 * width * height)
+  const fData = new Float32Array(4 * width * height)
+  const dpData = new Float32Array(4 * width * height)
 
-  const position = new THREE.DataTexture(
+  const pos = new THREE.DataTexture(
     posData,
     width,
     height,
     THREE.RGBAFormat,
     THREE.FloatType
   )
-  const velocity = new THREE.DataTexture(
+  const vel = new THREE.DataTexture(
     velData,
+    width,
+    height,
+    THREE.RGBAFormat,
+    THREE.FloatType
+  )
+  const f = new THREE.DataTexture(
+    fData,
+    width,
+    height,
+    THREE.RGBAFormat,
+    THREE.FloatType
+  )
+  const dp = new THREE.DataTexture(
+    dpData,
     width,
     height,
     THREE.RGBAFormat,
@@ -21,26 +37,44 @@ export const createTextures = ({ width, height }) => {
   )
 
   return {
-    position,
-    velocity,
+    pos,
+    vel,
+    f,
+    dp,
   }
 }
 
-export const fillTextures = (position, velocity) => {
-  const posData = position.image.data
+export const fillTextures = ({ pos, vel, f, dp }) => {
+  const posData = pos.image.data
   for (let i = 0; i < posData.length; i += 4) {
-    posData[i] = Math.random() - 0.5
-    posData[i + 1] = Math.random() - 0.5
-    posData[i + 2] = Math.random() - 0.5
+    posData[i] = (Math.random() - 0.5) * 8
+    posData[i + 1] = (Math.random() - 0.5) * 0.5
+    posData[i + 2] = (Math.random() - 0.5) * 0.5
     posData[i + 3] = 0
   }
 
-  const velData = velocity.image.data
+  const velData = vel.image.data
   for (let i = 0; i < velData.length; i += 4) {
     velData[i] = Math.random() * 2.0 - 1.0
     velData[i + 1] = Math.random() * 2.0 - 1.0
     velData[i + 2] = Math.random() * 2.0 - 1.0
     velData[i + 3] = 0
+  }
+
+  const fData = f.image.data
+  for (let i = 0; i < fData.length; i += 4) {
+    f[i] = 0
+    f[i + 1] = 0
+    f[i + 2] = 0
+    f[i + 3] = 0
+  }
+
+  const dpData = dp.image.data
+  for (let i = 0; i < dpData.length; i += 4) {
+    dp[i] = 0
+    dp[i + 1] = 0
+    dp[i + 2] = 0
+    dp[i + 3] = 0
   }
 }
 

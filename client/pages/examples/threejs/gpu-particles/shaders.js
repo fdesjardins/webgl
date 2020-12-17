@@ -74,6 +74,7 @@ export const drawVs = `
 uniform sampler2D u_position;
 uniform vec2 u_statesize;
 uniform vec2 u_scale;
+uniform float u_time;
 uniform vec2 u_world_size;
 
 varying vec2 vUv;
@@ -82,12 +83,23 @@ void main(){
   vUv = uv;
   vec4 pos = texture2D(u_position, uv);
   gl_Position = projectionMatrix * modelViewMatrix * vec4( pos.xyz, 1.0);
-  gl_PointSize = uv.x * 2.0;
+  gl_PointSize = uv.x * 8.0 + uv.y * 8.0;
 }`
 
 export const drawFs = `
+uniform float u_time;
 varying vec2 vUv;
 void main(){
-  gl_FragColor = vec4(1.0 - vUv.x, 1.0 - vUv.y, 1.0, 1.0);
+  float distance = length(2.0 * gl_PointCoord - 1.0);
+  if (distance > 1.0) {
+    discard;
+  }
+  float t = u_time/2.0;
+  vec4 color = vec4(
+    abs(sin(t)) * (1.0 - vUv.x),
+    abs(cos(t)) * (1.0 - vUv.y),
+    abs(sin(t/3.0)),
+    1.0);
+  gl_FragColor = color;
 }
 `

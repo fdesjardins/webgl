@@ -14,10 +14,10 @@ import {
   createSceneAndCamera,
   createParticles,
 } from './particles'
-import { vs, updatePos, updateVel } from './shaders'
+import { vs, updatePos, updateVel, updateF, updateDP } from './shaders'
 
-const WIDTH = 1000
-const HEIGHT = 1000
+const WIDTH = 100
+const HEIGHT = 100
 const PARTICLES = WIDTH * WIDTH
 
 const checkCapabilities = (renderer) => {
@@ -50,7 +50,7 @@ const init = ({ canvas, container }) => {
     2000
   )
   camera.updateProjectionMatrix()
-  camera.position.set(3, 3, 3)
+  camera.position.set(0, 0, 7)
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -72,11 +72,18 @@ const init = ({ canvas, container }) => {
   controls.update()
 
   const dataTextures = createTextures({ width: WIDTH, height: HEIGHT })
-  fillTextures(dataTextures.position, dataTextures.velocity)
-  let currentPosTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
-  let nextPosTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
-  let currentVelTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
-  let nextVelTexture = createRenderTarget({ width: WIDTH, height: HEIGHT })
+  fillTextures(dataTextures)
+
+  const rts = () => [
+    createRenderTarget({ width: WIDTH, height: HEIGHT }),
+    createRenderTarget({ width: WIDTH, height: HEIGHT }),
+  ]
+  const textures = {
+    pos: rts(),
+    vel: rts(),
+    f: rts(),
+    dp: rts(),
+  }
   const { scene: rtScene, camera: rtCamera } = createSceneAndCamera({
     w: WIDTH,
     h: HEIGHT,
@@ -84,29 +91,48 @@ const init = ({ canvas, container }) => {
 
   // Set up particle uniforms, textures, etc.
   const uniforms = {
-    u_position: { value: dataTextures.position },
-    u_velocity: { value: dataTextures.velocity },
+    u_position: { value: dataTextures.pos },
+    u_last_position: { value: dataTextures.pos },
+    u_velocity: { value: dataTextures.vel },
+    u_force: { value: dataTextures.f },
+    u_density_pressure: { value: dataTextures.dp },
     u_resolution: { value: new THREE.Vector2(WIDTH, WIDTH) },
     u_time: { type: 'f', value: 0 },
     u_delta: { type: 'f', value: 0 },
   }
-  const posMaterial = new THREE.ShaderMaterial({
-    vertexShader: vs,
-    fragmentShader: updatePos,
-    uniforms,
-  })
-  const velMaterial = new THREE.ShaderMaterial({
-    vertexShader: vs,
-    fragmentShader: updateVel,
-    uniforms,
-  })
+
+  const mat = (fs) =>
+    new THREE.ShaderMaterial({
+      vertexShader: vs,
+      fragmentShader: fs,
+      uniforms,
+    })
+  const materials = {
+    pos: mat(updatePos),
+    vel: mat(updateVel),
+    f: mat(updateF),
+    dp: mat(updateDP),
+  }
+
   const geometry = new THREE.PlaneBufferGeometry(WIDTH, HEIGHT)
-  const object = new THREE.Mesh(geometry, posMaterial)
+  const object = new THREE.Mesh(geometry, materials.pos)
   rtScene.add(object)
 
   // Add the actual particles instance to the scene
   const particles = createParticles(PARTICLES, WIDTH, uniforms)
   scene.add(particles)
+
+  const compute = (ukey, key) => {
+    // Compute/render
+    object.material = materials[key]
+    renderer.setRenderTarget(textures[key][1])
+    renderer.render(rtScene, rtCamera)
+    // Swap textures
+    const temp = textures[key][0]
+    textures[key][0] = textures[key][1]
+    uniforms[ukey].value = textures[key][0].texture
+    textures[key][1] = temp
+  }
 
   const clock = new THREE.Clock()
   const animate = () => {
@@ -114,35 +140,20 @@ const init = ({ canvas, container }) => {
       stats.begin()
       requestAnimationFrame(animate)
 
-      // Update positions
-      object.material = posMaterial
-      renderer.setRenderTarget(nextPosTexture)
-      renderer.render(rtScene, rtCamera)
-
-      // Swap position textures
-      let temp = currentPosTexture
-      currentPosTexture = nextPosTexture
-      uniforms.u_position.value = currentPosTexture.texture
-      nextPosTexture = temp
-
-      // Update velocities
-      object.material = velMaterial
-      renderer.setRenderTarget(nextVelTexture)
-      renderer.render(rtScene, rtCamera)
-
-      // Swap velocity textures
-      temp = currentVelTexture
-      currentVelTexture = nextVelTexture
-      uniforms.u_velocity.value = currentVelTexture.texture
-      nextVelTexture = temp
+      compute('u_density_pressure', 'dp')
+      compute('u_force', 'f')
+      const temp = textures.pos[0].texture.clone()
+      compute('u_position', 'pos')
+      uniforms.u_last_position.value = temp
+      compute('u_velocity', 'vel')
 
       // Render the scene
       renderer.setRenderTarget(null)
       renderer.render(scene, camera)
 
       // Update the clock
-      uniforms.u_delta.value = clock.getDelta()
-      uniforms.u_time.value = clock.elapsedTime
+      uniforms.u_delta.value = clock.getDelta() / 6.0
+      uniforms.u_time.value = clock.elapsedTime / 6.0
 
       stats.end()
     }

@@ -16,8 +16,8 @@ import {
 } from './particles'
 import { vs, updatePos, updateVel } from './shaders'
 
-const WIDTH = 1000
-const HEIGHT = 1000
+const WIDTH = 300
+const HEIGHT = 300
 const PARTICLES = WIDTH * WIDTH
 
 const checkCapabilities = (renderer) => {
