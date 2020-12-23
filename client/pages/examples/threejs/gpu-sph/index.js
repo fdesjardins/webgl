@@ -14,7 +14,14 @@ import {
   createSceneAndCamera,
   createParticles,
 } from './particles'
-import { vs, updatePos, updateVel, updateF, updateDP } from './shaders'
+import {
+  vs,
+  updatePos,
+  updateVel,
+  updateF,
+  updateDensity,
+  updatePressure,
+} from './shaders'
 
 const WIDTH = 100
 const HEIGHT = 100
@@ -50,13 +57,19 @@ const init = ({ canvas, container }) => {
     2000
   )
   camera.updateProjectionMatrix()
-  camera.position.set(0, 0, 7)
+  camera.position.set(0, 5, 10)
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
   if (!checkCapabilities(renderer)) {
     return
   }
+
+  const ambientLight = new THREE.AmbientLight(0x707070)
+  scene.add(ambientLight)
+  const pointLight = new THREE.PointLight(0xffffff)
+  pointLight.position.set(5, 5, 0)
+  scene.add(pointLight)
 
   window.addEventListener(
     'resize',
@@ -82,7 +95,8 @@ const init = ({ canvas, container }) => {
     pos: rts(),
     vel: rts(),
     f: rts(),
-    dp: rts(),
+    d: rts(),
+    p: rts(),
   }
   const { scene: rtScene, camera: rtCamera } = createSceneAndCamera({
     w: WIDTH,
@@ -111,7 +125,8 @@ const init = ({ canvas, container }) => {
     pos: mat(updatePos),
     vel: mat(updateVel),
     f: mat(updateF),
-    dp: mat(updateDP),
+    d: mat(updateDensity),
+    p: mat(updatePressure),
   }
 
   const geometry = new THREE.PlaneBufferGeometry(WIDTH, HEIGHT)
@@ -122,16 +137,16 @@ const init = ({ canvas, container }) => {
   const particles = createParticles(PARTICLES, WIDTH, uniforms)
   scene.add(particles)
 
-  const compute = (ukey, key) => {
+  const compute = (ukey, texkey, matkey) => {
     // Compute/render
-    object.material = materials[key]
-    renderer.setRenderTarget(textures[key][1])
+    object.material = materials[matkey]
+    renderer.setRenderTarget(textures[texkey][1])
     renderer.render(rtScene, rtCamera)
     // Swap textures
-    const temp = textures[key][0]
-    textures[key][0] = textures[key][1]
-    uniforms[ukey].value = textures[key][0].texture
-    textures[key][1] = temp
+    const temp = textures[texkey][0]
+    textures[texkey][0] = textures[texkey][1]
+    uniforms[ukey].value = textures[texkey][0].texture
+    textures[texkey][1] = temp
   }
 
   const clock = new THREE.Clock()
@@ -140,20 +155,28 @@ const init = ({ canvas, container }) => {
       stats.begin()
       requestAnimationFrame(animate)
 
-      compute('u_density_pressure', 'dp')
-      compute('u_force', 'f')
-      const temp = textures.pos[0].texture.clone()
-      compute('u_position', 'pos')
-      uniforms.u_last_position.value = temp
-      compute('u_velocity', 'vel')
+      compute('u_density_pressure', 'd', 'd')
+      // compute('u_density_pressure', 'p', 'p')
+      compute('u_force', 'f', 'f')
+      // const temp = textures.pos[0].texture.clone()
+      compute('u_position', 'pos', 'pos')
+      // uniforms.u_last_position.value = temp
+      compute('u_velocity', 'vel', 'vel')
 
       // Render the scene
       renderer.setRenderTarget(null)
       renderer.render(scene, camera)
 
       // Update the clock
-      uniforms.u_delta.value = clock.getDelta() / 6.0
-      uniforms.u_time.value = clock.elapsedTime / 6.0
+      uniforms.u_delta.value = clock.getDelta() / 1.5
+      uniforms.u_time.value = clock.elapsedTime / 1.5
+
+      // camera.position.set(
+      //   Math.sin(uniforms.u_time.value / 3) * 7,
+      //   3,
+      //   Math.cos(uniforms.u_time.value / 3) * 7
+      // )
+      // camera.lookAt(0, 0, 0)
 
       stats.end()
     }

@@ -48,8 +48,8 @@ export const fillTextures = ({ pos, vel, f, dp }) => {
   const posData = pos.image.data
   for (let i = 0; i < posData.length; i += 4) {
     posData[i] = (Math.random() - 0.5) * 8
-    posData[i + 1] = (Math.random() - 0.5) * 0.5
-    posData[i + 2] = (Math.random() - 0.5) * 0.5
+    posData[i + 1] = (Math.random() - 0.5) * 2.5
+    posData[i + 2] = (Math.random() - 0.5) * 2.5
     posData[i + 3] = 0
   }
 
@@ -97,6 +97,7 @@ export const createParticles = (count, width, uniforms) => {
     uniforms,
     vertexShader: drawVs,
     fragmentShader: drawFs,
+    transparent: true,
   })
   material.extensions.drawBuffers = true
 
