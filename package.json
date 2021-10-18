@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "flat-color-icons": "^1.1.0",
     "history": "^4.10.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mousetrap": "^1.6.5",
     "oimo": "^1.0.9",
     "prop-types": "^15.7.2",
