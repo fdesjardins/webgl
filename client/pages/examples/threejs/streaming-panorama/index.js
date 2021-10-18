@@ -3,20 +3,28 @@ import { css } from 'emotion'
 import * as THREE from 'three'
 import threeOrbitControls from 'three-orbit-controls'
 
+import droidSans from '-/assets/fonts/helvetiker_bold.typeface.json'
+
 import Example from '-/components/example'
 import notes from './readme.md'
+import shader from './shader.glsl'
 
-import image0 from './0.jpg'
-import image11 from './1-1.jpg'
-import image12 from './1-2.jpg'
-import image13 from './1-3.jpg'
-import image14 from './1-4.jpg'
-import image2 from './2.jpg'
-import image3 from './3.jpg'
-import image4 from './4.jpg'
-import image5 from './5.jpg'
-import image6 from './6.jpg'
-import image7 from './7.jpg'
+import image00 from './images/0-0.jpg'
+import image01 from './images/0-1.jpg'
+import image10 from './images/1-0.jpg'
+import image11 from './images/1-1.jpg'
+// import image0 from './0.jpg'
+// import image11 from './1-1.jpg'
+// import image12 from './1-2.jpg'
+// import image13 from './1-3.jpg'
+// import image14 from './1-4.jpg'
+// import image2 from './2.jpg'
+// import image3 from './3.jpg'
+// import image4 from './4.jpg'
+// import image5 from './5-crop.jpg'
+// import image6 from './6.jpg'
+// import image7 from './7.jpg'
+// import pano from './panorama.jpg'
 
 import Stats from 'stats.js'
 
@@ -33,26 +41,36 @@ const loadTexture = (url) => {
   })
 }
 
-let Image0 = new THREE.TextureLoader().load(image0)
+const Image00 = new THREE.TextureLoader().load(image00)
+const Image01 = new THREE.TextureLoader().load(image01)
+const Image10 = new THREE.TextureLoader().load(image10)
 const Image11 = new THREE.TextureLoader().load(image11)
-const Image12 = new THREE.TextureLoader().load(image12)
-const Image13 = new THREE.TextureLoader().load(image13)
-const Image14 = new THREE.TextureLoader().load(image14)
-const Image2 = new THREE.TextureLoader().load(image2)
-const Image3 = new THREE.TextureLoader().load(image3)
-const Image4 = new THREE.TextureLoader().load(image4)
-const Image5 = new THREE.TextureLoader().load(image5)
-const Image6 = new THREE.TextureLoader().load(image6)
-const Image7 = new THREE.TextureLoader().load(image7)
+// let Image0 = new THREE.TextureLoader().load(image0)
+// const Image11 = new THREE.TextureLoader().load(image11)
+// const Image12 = new THREE.TextureLoader().load(image12)
+// const Image13 = new THREE.TextureLoader().load(image13)
+// const Image14 = new THREE.TextureLoader().load(image14)
+// const Image2 = new THREE.TextureLoader().load(image2)
+// const Image3 = new THREE.TextureLoader().load(image3)
+// const Image4 = new THREE.TextureLoader().load(image4)
+// const Image5 = new THREE.TextureLoader().load(image5)
+// const Image6 = new THREE.TextureLoader().load(image6)
+// const Image7 = new THREE.TextureLoader().load(image7)
+// const Pano = new THREE.TextureLoader().load(pano)
 
-Image0.minFilter = THREE.LinearFilter
+Image00.minFilter = THREE.LinearFilter
+Image01.minFilter = THREE.LinearFilter
+Image10.minFilter = THREE.LinearFilter
 Image11.minFilter = THREE.LinearFilter
-Image2.minFilter = THREE.LinearFilter
-Image3.minFilter = THREE.LinearFilter
-Image4.minFilter = THREE.LinearFilter
-Image5.minFilter = THREE.LinearFilter
-Image6.minFilter = THREE.LinearFilter
-Image7.minFilter = THREE.LinearFilter
+// Image0.minFilter = THREE.LinearFilter
+// Image11.minFilter = THREE.LinearFilter
+// Image2.minFilter = THREE.LinearFilter
+// Image3.minFilter = THREE.LinearFilter
+// Image4.minFilter = THREE.LinearFilter
+// Image5.minFilter = THREE.LinearFilter
+// Image6.minFilter = THREE.LinearFilter
+// Image7.minFilter = THREE.LinearFilter
+// Pano.minFilter = THREE.LinearFilter
 
 const BLACK = 0x000000
 
@@ -75,121 +93,15 @@ void main(){
   texCoord = vec2(gl_Position.x, gl_Position.y);
 }`
 
-const fs = `
-varying vec2 texCoord;
-varying vec2 vUv;
+const fs = shader
 
-uniform sampler2D iChannel0;
-uniform sampler2D iChannel1;
-uniform sampler2D iChannel2;
-uniform sampler2D iChannel3;
-uniform sampler2D iChannel4;
-uniform sampler2D iChannel5;
-uniform sampler2D iChannel6;
-uniform sampler2D iChannel7;
+const deg2rad = (deg) => (deg * Math.PI) / 180
 
-mat2 rotate2d(float theta){
-  return mat2(cos(theta), -sin(theta),
-              sin(theta),  cos(theta));
+const faceImage = (camera, imageNum) => {
+  const x = 0.1 * Math.cos(deg2rad(-45 * (imageNum + 1))) * -1
+  const z = 0.1 * Math.sin(deg2rad(-45 * (imageNum + 1)))
+  camera.position.set(x, 0, z)
 }
-
-mat2 scale(float sx, float sy){
-  return mat2(1.0/sx, 0.0,
-              0.0,    1.0/sy);
-}
-
-vec4 map(int channel, vec2 uv){
-  vec4 res = vec4(0.0);
-  switch (channel) {
-  case 0: res = texture(iChannel0, uv); break;
-  case 1: res = texture(iChannel1, uv); break;
-  case 2: res = texture(iChannel2, uv); break;
-  case 3: res = texture(iChannel3, uv); break;
-  case 4: res = texture(iChannel4, uv); break;
-  case 5: res = texture(iChannel5, uv); break;
-  case 6: res = texture(iChannel6, uv); break;
-  case 7: res = texture(iChannel7, uv); break;
-  }
-  return res;
-}
-
-void main(){
-  float vfov = 0.75;
-  vec2 uv = vUv;
-  int channel;
-  float lighten = 1.0;
-
-  if (vUv.x <= 0.125) {
-    channel = 0;
-    uv.x = 1.0 - uv.x * 8.0;
-    lighten = 1.3;
-    uv *= rotate2d(-0.01);
-    uv *= scale(1.35, 1.0);
-    uv.x += 0.09;
-  } else if (vUv.x <= 0.25) {
-    channel = 7;
-    uv.x = 1.0 - (uv.x - 0.125) * 8.0;
-    uv *= rotate2d(0.017);
-    uv *= scale(1.29, 1.0);
-    uv.x += 0.125;
-  } else if (vUv.x <= 0.375) {
-    channel = 6;
-    uv.x = 1.0 - (uv.x - 0.25) * 8.0;
-    uv *= rotate2d(0.015);
-    uv *= scale(1.28, 1.0);
-    uv.y += 0.03;
-    uv.x += 0.12;
-  } else if (vUv.x <= 0.5) {
-    channel = 5;
-    uv.x = 1.0 - (uv.x - 0.375) * 8.0;
-    uv *= rotate2d(0.013);
-    uv *= scale(1.35, 1.0);
-    uv.x += 0.09;
-    uv.y += 0.01;
-  } else if (vUv.x <= 0.625) {
-    channel = 4;
-    uv.x = 1.0 - (uv.x - 0.5) * 8.0;
-    uv *= rotate2d(0.005);
-    uv *= scale(1.38, 1.0);
-    uv.x += 0.08;
-  } else if (vUv.x <= 0.75) {
-    channel = 3;
-    uv.x = 1.0 - (uv.x - 0.625) * 8.0;
-    uv *= scale(1.35, 1.0);
-    uv *= rotate2d(0.0);
-    uv.x += 0.1;
-    lighten *= 1.2;
-  } else if (vUv.x <= 0.875) {
-    channel = 2;
-    uv.x = 1.0 - (uv.x - 0.75) * 8.0;
-    uv *= rotate2d(0.01);
-    uv *= scale(1.35, 1.0);
-    uv.x += 0.095;
-    uv.y += 0.012;
-    lighten *= 1.2;
-  } else {
-    channel = 1;
-    uv.x = 1.0 - (uv.x - 0.875) * 8.0;
-    uv *= rotate2d(-0.005);
-    uv *= scale(1.35, 1.0);
-    uv.x += 0.09;
-    uv.y += 0.01;
-    lighten = 1.1;
-  }
-
-  // Set the color to black instead of allowing the texture to repeat
-  if (uv.y < 0.0 || uv.y > 1.0 || uv.x < 0.0 || uv.x > 1.0) {
-    gl_FragColor = vec4(0.0);
-  } else {
-    gl_FragColor = map(channel, uv) * lighten;
-  }
-
-  // Chop a little off the top and bottom for a clean edge
-  if (vUv.y < 0.025 || vUv.y > 0.96) {
-    gl_FragColor = vec4(0.0);
-  }
-}
-`
 
 const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
@@ -206,7 +118,22 @@ const init = ({ canvas, container }) => {
     2000
   )
   camera.updateProjectionMatrix()
-  camera.position.set(0.01, 0, 0)
+
+  const lookAtImage = 0
+  switch (lookAtImage) {
+    case 0:
+      camera.position.set(-0.1, 0, -0.1)
+      break
+    case 1:
+      camera.position.set(-0.1, 0, 0.1)
+      break
+    case 2:
+      camera.position.set(0.1, 0, 0.1)
+      break
+    case 3:
+      camera.position.set(0.1, 0, -0.1)
+      break
+  }
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -242,62 +169,128 @@ const init = ({ canvas, container }) => {
 
   const mkUniform = (name, value) => ({ [name]: { type: 'sampler2D', value } })
   const uniforms = {
-    ...mkUniform('iChannel0', Image0),
-    ...mkUniform('iChannel1', Image11),
-    ...mkUniform('iChannel2', Image2),
-    ...mkUniform('iChannel3', Image3),
-    ...mkUniform('iChannel4', Image4),
-    ...mkUniform('iChannel5', Image5),
-    ...mkUniform('iChannel6', Image6),
-    ...mkUniform('iChannel7', Image7),
+    ...mkUniform('iChannel0', Image00),
+    ...mkUniform('iChannel1', Image01),
+    ...mkUniform('iChannel2', Image10),
+    ...mkUniform('iChannel3', Image11),
+    // ...mkUniform('iChannel4', Image4),
+    // ...mkUniform('iChannel5', Image5),
+    // ...mkUniform('iChannel6', Image6),
+    // ...mkUniform('iChannel7', Image7),
+    // ...mkUniform('iChannel8', Pano),
   }
-
-  let mesh
-  const geometry = new THREE.CylinderBufferGeometry(25, 25, 23, 64)
-  loadTexture(image0).then((tex) => {
-    Image0 = tex
+  const mkImageNum = (value) => ({ imageNum: { type: 'int', value } })
+  const mkObject = (imageNum) => {
     const material = new THREE.ShaderMaterial({
       fragmentShader: fs,
       vertexShader: vs,
       side: THREE.DoubleSide,
-      uniforms: { ...uniforms },
+      uniforms: { ...uniforms, ...mkImageNum(imageNum) },
+      transparent: true,
     })
     const materials = [
       material,
-      new THREE.MeshBasicMaterial({ color: BLACK }),
-      new THREE.MeshBasicMaterial({ color: BLACK }),
+      new THREE.MeshBasicMaterial({ color: BLACK, transparent: true }),
+      new THREE.MeshBasicMaterial({ color: BLACK, transparent: true }),
     ]
-    mesh = new THREE.Mesh(geometry, materials)
-    scene.add(mesh)
+    const geometry = new THREE.CylinderBufferGeometry(25, 25, 23, 64)
+    return new THREE.Mesh(geometry, materials)
+  }
+
+  // let mesh, mesh2, mesh7, mesh6, mesh5
+  loadTexture(image00).then((tex) => {
+    // Image0 = tex
+    scene.add(mkObject(0))
+    scene.add(mkObject(1))
+    scene.add(mkObject(2))
+    scene.add(mkObject(3))
+    // scene.add(mkObject(4))
+    // scene.add(mkObject(5))
+    // scene.add(mkObject(6))
+    // scene.add(mkObject(7))
   })
 
+  const fontLoader = new THREE.FontLoader()
+  const font = fontLoader.parse(droidSans)
+  const fontSize = 0.15
+  const lazyMountain = new THREE.Mesh(
+    new THREE.TextGeometry('Lazy Mountain\n     7.8 km', {
+      size: fontSize,
+      height: fontSize * 0.1,
+      font,
+      curveSegments: 3,
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  )
+  lazyMountain.position.set(4.2, 2.5, -10)
+  scene.add(lazyMountain)
+
+  const matanuskaPeak = new THREE.Mesh(
+    new THREE.TextGeometry('Matanuska Peak\n        11 km', {
+      size: fontSize,
+      height: fontSize * 0.1,
+      font,
+      curveSegments: 3,
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  )
+  matanuskaPeak.position.set(9.25, 3.3, -10)
+  scene.add(matanuskaPeak)
+
+  const pioneerPeak = new THREE.Mesh(
+    new THREE.TextGeometry('Pioneer Peak\n      13 km', {
+      size: fontSize,
+      height: fontSize * 0.1,
+      font,
+      curveSegments: 3,
+    }),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  )
+  pioneerPeak.position.set(8, 2.5, 7.25)
+  scene.add(pioneerPeak)
+
+  const directionText = new THREE.Mesh(
+    new THREE.TextGeometry('Direction', {
+      size: fontSize,
+      height: fontSize * 0.1,
+      font,
+      curveSegments: 3,
+    }),
+    new THREE.MeshBasicMaterial({ color: 0x000000 })
+  )
+  // scene.add(directionText)
+  directionText.position.set(0, 0, -1)
+
   // Rotate through the sample images if we're pointed at the last octant
-  const images = [image11, image12, image13, image14]
-  let imageIndex = 1
-  const raycaster = new THREE.Raycaster()
-  setInterval(() => {
-    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera)
-    const intersections = raycaster.intersectObjects([mesh])
-    if (!intersections || intersections.length === 0) {
-      return
-    }
-    if (intersections[0].uv.x >= 0.875 && intersections[0].uv.x <= 1.0) {
-      loadTexture(images[imageIndex++]).then((texture) => {
-        const oldTexture = uniforms.iChannel1.value
-        uniforms.iChannel1.value = texture
-        oldTexture.dispose()
-      })
-      if (imageIndex === 4) {
-        imageIndex = 0
-      }
-    }
-  }, 2000)
+  // const images = [image11, image12, image13, image14]
+  // let imageIndex = 1
+  // const raycaster = new THREE.Raycaster()
+  // setInterval(() => {
+  //   raycaster.setFromCamera(new THREE.Vector2(0, 0), camera)
+  //   const intersections = raycaster.intersectObjects([mesh])
+  //   if (!intersections || intersections.length === 0) {
+  //     return
+  //   }
+  //   if (intersections[0].uv.x >= 0.875 && intersections[0].uv.x <= 1.0) {
+  //     loadTexture(images[imageIndex++]).then((texture) => {
+  //       const oldTexture = uniforms.iChannel1.value
+  //       uniforms.iChannel1.value = texture
+  //       oldTexture.dispose()
+  //     })
+  //     if (imageIndex === 4) {
+  //       imageIndex = 0
+  //     }
+  //   }
+  // }, 2000)
 
   const animate = () => {
     if (renderer) {
       stats.begin()
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
+      lazyMountain.lookAt(camera.position)
+      matanuskaPeak.lookAt(camera.position)
+      pioneerPeak.lookAt(camera.position)
       stats.end()
     }
   }

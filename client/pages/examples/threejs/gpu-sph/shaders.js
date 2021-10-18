@@ -51,6 +51,13 @@ float poly6(float r, float h){
   return 0.0;
 }
 
+float gradientPoly6(float r, float h){
+  if (r > 0.0 && r <= h) {
+    return -(945.0 / (32.0 * PI * pow(h, 9.0)) ) *
+      r * pow((pow(h, 2.0) - pow(r, 2.0)), 2.0);
+  }
+}
+
 void main(){
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   vec4 pos = texture2D(u_position, uv);
@@ -91,13 +98,14 @@ void main(){
   //     float dist = distance(pos2, pos);
   //     if (dist < H && dist > 0.0) {
   //       vec4 dp_j = texture2D(u_density_pressure, vec2(x,y)/u_resolution.xy);
-  //       pressure += (dp.y + dp_j.y)/(2.0 * dp_j.x) * spiky(dist, H);
+  //       pressure += (dp.y + dp_j.y)/(2.0 * dp_j.x) * gradientSpiky(dist, H);
   //     }
   //   }
   // }
 
   // gl_FragColor = vec4(dp.x, -0.5 * dp.x, 0.0, 0.0);
   gl_FragColor = vec4(dp.x, dp.y, 0.0, 0.0);
+  // gl_FragColor = vec4(dp.x, pressure, 0.0, 0.0);
 }`
 
 export const updateF = `
@@ -123,11 +131,20 @@ float spiky(float r, float h){
   return 0.0;
 }
 
+float gradientSpiky(float r, float h){
+    if (r >= 0.0 && r <= h) {
+      return -45.0 * pow(h-r, 2.0) /
+        PI * pow(h, 6.0);
+    }
+    return 0.0;
+}
+
 void main(){
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   vec4 pos = texture2D(u_position, uv);
   vec4 vel = texture2D(u_velocity, uv);
   vec4 dp = texture2D(u_density_pressure, uv);
+
   vec3 pressure = vec3(0.0);
   vec3 viscosity = vec3(0.0);
   for (float x = 0.0; x < u_resolution.x; x += 1.0) {
@@ -138,14 +155,16 @@ void main(){
         vec4 dp2 = texture2D(u_density_pressure, vec2(x,y)/u_resolution.xy);
         vec4 vel2 = texture2D(u_velocity, vec2(x,y)/u_resolution.xy);
         pressure += normalize(pos2.xyz - pos.xyz) * (-1.0 * (dp.x + dp2.x)) / 2.0 * spiky(dist, H);
-        // pressure += normalize(pos2.xyz - pos.xyz) / (2.0 * dp2.y) * spiky(dist, H);
-        // pressure += MASS * (dp.y + dp2.y) / (2.0 * dp2.x) * spiky(dist, H);
+        // pressure += MASS * normalize(pos2.xyz - pos.xyz) / (2.0 * dp2.y) * spiky(dist, H);
+        // pressure += MASS * (dp.y + dp2.y) / (2.0 * dp2.x) * gradientSpiky(dist, H);
+        // pressure += MASS * dp2.y / dp2.x * gradientSpiky(dist, H);
         viscosity += (vel2.xyz - vel.xyz) * ((VISCOSITY * MASS) / dp2.y) * visc2(dist, H) * (H - dist);
       }
     }
   }
   // pressure *= -1.0;
   gl_FragColor = vec4(G + pressure + viscosity, 0.0);
+  // gl_FragColor = vec4(G, 0.0);
 }`
 
 export const updatePos = `
@@ -159,9 +178,9 @@ ${rotate2d}
 void main(){
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   vec4 pos = texture2D(u_position, uv);
-  // vec4 lastpos = texture2D(u_last_position, uv);
+  vec4 lastpos = texture2D(u_last_position, uv);
   vec4 vel = texture2D(u_velocity, uv);
-  // vec4 f = texture2D(u_force, uv);
+  vec4 f = texture2D(u_force, uv);
 
   // Euler method
   pos += vel * u_delta;
@@ -195,7 +214,7 @@ ${rotate2d}
 void main(){
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
   vec4 pos = texture2D(u_position, uv);
-  // vec4 lastpos = texture2D(u_last_position, uv);
+  vec4 lastpos = texture2D(u_last_position, uv);
   vec4 vel = texture2D(u_velocity, uv);
   vec4 f = texture2D(u_force, uv);
 
@@ -215,6 +234,10 @@ void main(){
   // Euler method
   vel += f * u_delta;
 
+  // Implicit Euler
+  // vel +=
+
+  // Verlet method
   // vel += (pos - lastpos) / (2.0 * u_delta);
 
   gl_FragColor = vel;

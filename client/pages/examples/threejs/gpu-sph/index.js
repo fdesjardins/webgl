@@ -93,6 +93,7 @@ const init = ({ canvas, container }) => {
   ]
   const textures = {
     pos: rts(),
+    lastpos: rts(),
     vel: rts(),
     f: rts(),
     d: rts(),
@@ -158,18 +159,18 @@ const init = ({ canvas, container }) => {
       compute('u_density_pressure', 'd', 'd')
       // compute('u_density_pressure', 'p', 'p')
       compute('u_force', 'f', 'f')
-      // const temp = textures.pos[0].texture.clone()
+      // const temp = textures.pos[0]
       compute('u_position', 'pos', 'pos')
-      // uniforms.u_last_position.value = temp
       compute('u_velocity', 'vel', 'vel')
+      // uniforms.u_last_position.value = temp
 
       // Render the scene
       renderer.setRenderTarget(null)
       renderer.render(scene, camera)
 
       // Update the clock
-      uniforms.u_delta.value = clock.getDelta() / 1.5
-      uniforms.u_time.value = clock.elapsedTime / 1.5
+      uniforms.u_delta.value = clock.getDelta() / 2
+      uniforms.u_time.value = clock.elapsedTime / 2
 
       // camera.position.set(
       //   Math.sin(uniforms.u_time.value / 3) * 7,
