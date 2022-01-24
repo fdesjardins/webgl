@@ -1,0 +1,18 @@
+:root {
+  --main-bg-color: #1d252c;
+  --font-color: #b7c5d3;
+  --font-color-light: #fafcfe;
+  --font-color-dark: #394c63;
+  --font-color-vdark: #212d3a;
+  --header-bg-color: #171d23;
+  --header-height: 40px;
+  --main-content-max-width: 1200px;
+  --green: #9ece5e;
+  --blue: #3c5397;
+  --red: #f7768e;
+  --orange: #e0af68;
+}
+
+body {
+  background-color: var(--main-bg-color);
+}
