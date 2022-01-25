@@ -2,8 +2,14 @@ import React, { Suspense } from 'react'
 import propTypes from 'prop-types'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+// eslint-disable-next-line import/no-unresolved
+import * as pages from './pages/*/index.js'
 import { Home } from './pages/home/Home'
-import pageIndex from './page-index'
+
+const pageIndex = Object.keys(pages)
+  .map((key) => pages[key].meta)
+  .filter((x) => !!x)
+  .sort((a, b) => a.title.localeCompare(b.title))
 
 const lazyPages = pageIndex.map(({ slug, component }) => ({
   slug,

@@ -7,7 +7,7 @@ const style = css`
   min-height: calc(100vh - var(--header-height));
   max-width: var(--main-content-max-width);
   width: 100%;
-  padding-top: 50px;
+  padding: 50px;
 `
 
 export function Home({ pageIndex }) {
