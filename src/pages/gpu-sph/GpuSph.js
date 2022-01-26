@@ -1,8 +1,6 @@
-import React from 'react'
 import * as THREE from 'three'
-// import Stats from 'stats.js'
+import Stats from 'stats.js'
 import threeOrbitControls from 'three-orbit-controls'
-import { css } from '@emotion/css'
 
 import {
   createTextures,
@@ -12,6 +10,7 @@ import {
   createParticles,
 } from './particles.js'
 import { vs, updatePos, updateVel, updateF, updateDensity, updatePressure } from './shaders.js'
+import { onResize } from '../../utils.js'
 
 const WIDTH = 100
 const HEIGHT = 100
@@ -32,13 +31,14 @@ const checkCapabilities = (renderer) => {
   return 1
 }
 
-const init = ({ canvas, container }) => {
+export const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(0x000000)
 
-  // const stats = new Stats()
-  // stats.showPanel(0)
-  // document.body.appendChild(stats.dom)
+  const stats = new Stats()
+  stats.showPanel(0)
+  container.appendChild(stats.dom)
+  stats.dom.className = 'stats'
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
   camera.updateProjectionMatrix()
@@ -56,14 +56,12 @@ const init = ({ canvas, container }) => {
   pointLight.position.set(5, 5, 0)
   scene.add(pointLight)
 
-  // window.addEventListener(
-  //   'resize',
-  //   (event) => {
-  //     event.preventDefault()
-  //     onResize({ canvas, camera, renderer })
-  //   },
-  //   false
-  // )
+  const handleResize = (event) => {
+    event.preventDefault()
+    onResize({ canvas, camera, renderer })
+  }
+  window.addEventListener('resize', handleResize, false)
+  onResize({ canvas, camera, renderer })
 
   const OrbitControls = threeOrbitControls(THREE)
   const controls = new OrbitControls(camera)
@@ -138,7 +136,7 @@ const init = ({ canvas, container }) => {
   const clock = new THREE.Clock()
   const animate = () => {
     if (renderer) {
-      // stats.begin()
+      stats.begin()
       requestAnimationFrame(animate)
 
       compute('u_density_pressure', 'd', 'd')
@@ -164,48 +162,16 @@ const init = ({ canvas, container }) => {
       // )
       // camera.lookAt(0, 0, 0)
 
-      // stats.end()
+      stats.end()
     }
   }
   animate()
 
   return () => {
     renderer.dispose()
-    // stats.scene = null
-    // document.body.removeChild(stats.dom)
+    stats.scene = null
+    container.removeChild(stats.dom)
     renderer = null
+    controls.dispose()
   }
 }
-
-const style = css`
-  canvas {
-    position: fixed;
-    top: 68px;
-    left: 0px;
-    width: 100vw;
-    height: calc(100vh - 68px) !important;
-    background-color: black;
-  }
-`
-
-const GpuSph = () => {
-  React.useEffect(() => {
-    const canvas = document.querySelector('canvas')
-    const container = document.querySelector('#container')
-    if (init) {
-      const dispose = init({ canvas, container })
-      return () => {
-        if (typeof dispose === 'function') {
-          dispose()
-        }
-      }
-    }
-  })
-  return (
-    <div id="container">
-      <canvas />
-    </div>
-  )
-}
-
-export default GpuSph

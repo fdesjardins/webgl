@@ -2,7 +2,7 @@ export const meta = {
   tags: 'threejs,gpgpu',
   title: 'GPU SPH',
   slug: 'gpu-sph',
-  component: import('./GpuSph'),
+  fullscreen: true,
 }
 
-export { default } from './GpuSph'
+export { init } from './GpuSph'

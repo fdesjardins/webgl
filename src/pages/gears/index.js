@@ -1,5 +1,5 @@
 export const meta = {
-  tags: 'threejs',
+  tags: 'threejs,ray marching',
   title: 'Ray Marching Gears',
   slug: 'gears',
 }

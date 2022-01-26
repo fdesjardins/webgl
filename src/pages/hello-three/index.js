@@ -5,4 +5,4 @@ export const meta = {
   component: import('./HelloThree'),
 }
 
-export { default } from './HelloThree'
+export { init } from './HelloThree'

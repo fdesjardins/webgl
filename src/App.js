@@ -22,19 +22,36 @@ const style = css`
   }
 
   #container {
-    min-height: calc(100vh - var(--header-height));
-    width: var(--main-content-max-width);
-    padding: 20px;
-    canvas {
-      width: 100%;
+    // height: calc(100vh - var(--header-height));
+    height: 100vh !important;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+
+    canvas.example {
+      width: 100% !important;
+      // height: calc(100vh - var(--header-height)) !important;
+      height: 100% !important;
+    }
+
+    .stats {
+      // top: var(--header-height) !important;
+      // top: auto !important;
+      // bottom: 0 !important;
+      right: 0 !important;
+      left: auto !important;
+      width: 100px;
+      height: 70px;
+      canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
     }
   }
 `
 
 export const App = () => (
   <div className={style}>
-    <Router>
-      <Header key="header" />
-    </Router>
+    <Router />
   </div>
 )

@@ -14,10 +14,10 @@ export function Home({ pageIndex }) {
   return (
     <main className={style}>
       <Menu
-        index={pageIndex.map((entry) => ({
-          slug: entry.slug,
-          tags: entry.tags,
-          title: entry.title,
+        index={pageIndex.map(({ meta }) => ({
+          slug: meta.slug,
+          tags: meta.tags,
+          title: meta.title,
         }))}
       />
     </main>

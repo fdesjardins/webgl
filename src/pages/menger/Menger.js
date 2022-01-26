@@ -13,21 +13,16 @@ export const init = ({ canvas, container }) => {
   container.appendChild(stats.dom)
   stats.dom.className = 'stats'
 
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvas.clientWidth / canvas.clientHeight,
-    0.1,
-    2000
-  )
+  const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
   camera.updateProjectionMatrix()
-  camera.position.set(2, 1, 2)
+  camera.position.set(3, 3, 3)
 
   const OrbitControls = threeOrbitControls(THREE)
   const controls = new OrbitControls(camera)
   controls.update()
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight)
+  renderer.setSize(canvas.clientWidth, canvas.clientWidth)
 
   const handleResize = (event) => {
     event.preventDefault()
@@ -51,7 +46,6 @@ export const init = ({ canvas, container }) => {
       stats.begin()
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
-      cube.rotateY(clock.getDelta() * 0.5)
       stats.end()
     }
   }

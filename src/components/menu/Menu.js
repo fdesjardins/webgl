@@ -76,12 +76,14 @@ MenuItem.propTypes = {
 }
 
 const menuStyle = css`
+  border-bottom: 1px solid var(--font-color-dark);
+  margin-bottom: 0.75em;
   input {
     width: 100%;
     background: none;
     border: none;
     color: var(--font-color-light);
-    margin-bottom: 1em;
+    margin-bottom: 0.25em;
     outline: none;
   }
 `
