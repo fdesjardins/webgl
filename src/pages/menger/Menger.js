@@ -3,6 +3,32 @@ import Stats from 'stats.js'
 import threeOrbitControls from 'three-orbit-controls'
 
 import { onResize } from '../../utils'
+import { vs, fs } from './shaders'
+
+const createUniforms = (canvas) => {
+  return {
+    iTime: {
+      type: 'f',
+      value: 100.0,
+    },
+    iResolution: {
+      type: 'vec2',
+      value: new THREE.Vector2(canvas.width, canvas.height),
+    },
+    cameraPos: {
+      type: 'vec3',
+      value: new THREE.Vector3(4, 10, 16),
+    },
+    cameraDir: {
+      type: 'vec3',
+      value: new THREE.Vector3(),
+    },
+    // iChannel0: {
+    //   type: 'sampler2D',
+    //   value: rustyMetal,
+    // },
+  }
+}
 
 export const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
@@ -24,27 +50,43 @@ export const init = ({ canvas, container }) => {
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
 
+  const uniforms = createUniforms(canvas)
+  const geometry = new THREE.PlaneBufferGeometry(40, 40, 2, 2)
+  const material = new THREE.ShaderMaterial({
+    fragmentShader: fs,
+    vertexShader: vs,
+    uniforms,
+  })
+  const object = new THREE.Mesh(geometry, material)
+  scene.add(object)
+
   const handleResize = (event) => {
     event.preventDefault()
     onResize({ canvas, camera, renderer })
+    uniforms.iResolution.value = new THREE.Vector2(canvas.clientWidth, canvas.clientHeight)
   }
   window.addEventListener('resize', handleResize, false)
   onResize({ canvas, camera, renderer })
-
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshLambertMaterial({ color: 0xaaff00 })
-  const cube = new THREE.Mesh(geometry, material)
-  scene.add(cube)
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(0, 3, 5)
   scene.add(light)
 
+  const camDirection = new THREE.Vector3()
+
   const clock = new THREE.Clock()
   const animate = () => {
     if (renderer) {
       stats.begin()
+      const delta = clock.getDelta()
+
+      camera.getWorldDirection(camDirection)
+      camDirection.normalize()
+      object.position.copy(camera.position.clone().add(camDirection.multiplyScalar(13)))
+      object.lookAt(camera.position.clone())
+
       requestAnimationFrame(animate)
+      uniforms.iTime.value += delta
       renderer.render(scene, camera)
       stats.end()
     }
