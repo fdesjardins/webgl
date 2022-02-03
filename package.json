@@ -5,12 +5,10 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "source": "src/index.html",
   "scripts": {
-    "start": "npx parcel"
+    "start": "parcel"
   },
   "license": "MIT",
   "devDependencies": {
-    "@parcel/resolver-glob": "^2.2.1",
-    "@parcel/transformer-glsl": "^2.2.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
@@ -18,10 +16,12 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.28.0",
-    "parcel": "^2.2.1",
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "@parcel/resolver-glob": "^2.2.1",
+    "@parcel/transformer-glsl": "^2.2.1",
+    "parcel": "^2.2.1",
     "@emotion/css": "^11.7.1",
     "baobab": "^2.6.1",
     "prop-types": "^15.8.1",
