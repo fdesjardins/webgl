@@ -1,4 +1,4 @@
-const vs = `
+export const vs = `
 varying vec2 texCoord;
 varying vec2 vUv;
 void main(){

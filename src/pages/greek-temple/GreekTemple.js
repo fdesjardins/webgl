@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
 
-import { fs } from './shaders'
+import { vs, fs } from './shaders'
 import { onResize } from '../../utils'
 
 export const vec3 = (x, y, z) => new THREE.Vector3(x, y, z)
