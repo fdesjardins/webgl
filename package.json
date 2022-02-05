@@ -19,11 +19,12 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "@emotion/css": "^11.7.1",
     "@parcel/resolver-glob": "^2.2.1",
     "@parcel/transformer-glsl": "^2.2.1",
-    "parcel": "^2.2.1",
-    "@emotion/css": "^11.7.1",
     "baobab": "^2.6.1",
+    "glslify": "^7.1.1",
+    "parcel": "^2.2.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

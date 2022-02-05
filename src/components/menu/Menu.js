@@ -1,8 +1,7 @@
 import React from 'react'
-import PT from 'prop-types'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/css'
-import propTypes from 'prop-types'
 
 const tagStyle = css`
   font-size: 0.75em;
@@ -52,8 +51,8 @@ const Tags = ({ tags, setFilter }) => {
 }
 
 Tags.propTypes = {
-  tags: PT.string,
-  setFilter: PT.func,
+  tags: PropTypes.string,
+  setFilter: PropTypes.func,
 }
 
 const menuItemStyle = css`
@@ -69,22 +68,27 @@ const MenuItem = ({ title, to, tags, setFilter }) => (
 )
 
 MenuItem.propTypes = {
-  title: PT.string,
-  to: PT.string,
-  tags: PT.string,
-  setFilter: PT.func,
+  title: PropTypes.string,
+  to: PropTypes.string,
+  tags: PropTypes.string,
+  setFilter: PropTypes.func,
 }
 
 const menuStyle = css`
   border-bottom: 1px solid var(--font-color-dark);
   margin-bottom: 0.75em;
+`
+
+const inputStyle = css`
   input {
-    width: 100%;
     background: none;
     border: none;
     color: var(--font-color-light);
     margin-bottom: 0.25em;
     outline: none;
+  }
+  span {
+    cursor: pointer;
   }
 `
 
@@ -100,12 +104,16 @@ const Menu = ({ index }) => {
   return (
     <>
       <div className={menuStyle}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={filter}
-          onChange={(event) => setFilter(event.target.value)}
-        />
+        <div className={inputStyle}>
+          <input
+            style={filter.length > 0 ? { width: `${20 + 9.25 * filter.length}px` } : {}}
+            type="text"
+            placeholder="Search..."
+            value={filter}
+            onChange={(event) => setFilter(event.target.value)}
+          />
+          {filter.length > 0 && <span onClick={() => setFilter('')}>✕</span>}
+        </div>
       </div>
       <div>
         {examples.map(({ title, slug, tags }) => {
@@ -117,7 +125,7 @@ const Menu = ({ index }) => {
 }
 
 Menu.propTypes = {
-  index: propTypes.arrayOf(propTypes.object),
+  index: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default React.memo(Menu)

@@ -1,19 +1,9 @@
-export const vs = `
-varying vec2 texCoord;
-varying vec2 vUv;
-void main(){
-  vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
-  texCoord = vec2(gl_Position.x, gl_Position.y);
-}`
-
-export const fs = `
 #define AA 1
 
 uniform float iTime;
 uniform vec2 iResolution;
-uniform vec3 cameraPos;
-uniform vec3 cameraDir;
+uniform vec3 iCameraPosition;
+uniform vec3 iCameraDirection;
 uniform sampler2D iChannel0;
 
 varying vec2 texCoord;
@@ -348,6 +338,8 @@ vec4 render(vec3 origin, vec3 dir) {
 }
 
 void main(){
+  vec3 cameraPos = iCameraPosition;
+  vec3 cameraDir = iCameraDirection;
   vec3 cameraTarget = cameraPos + vec3(cameraDir.x, cameraDir.y, cameraDir.z);
   // vec3 cameraTarget = vec3(0.0, 0.0, 0.0);
 
@@ -375,4 +367,4 @@ void main(){
 
   gl_FragDepth = total.x / 100.0;
   gl_FragColor = vec4(total.yzw, 1.0);
-}`
+}

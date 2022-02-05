@@ -36,7 +36,7 @@ export const init = ({ canvas, container }) => {
 }
 ```
 
-See [src/pages/hello-three]() for a basic template.
+See [src/pages/hello-three](src/pages/hello-three) for a basic template.
 
 ## License
 

@@ -1,13 +1,3 @@
-export const vs = `
-varying vec2 vUv;
-varying vec2 surfacePosition;
-void main(){
-  vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
-  surfacePosition = gl_Position.xz;
-}`
-
-export const fs = `
 precision highp float;
 
 uniform float iTime;
@@ -122,7 +112,7 @@ void main( void ) {
 	float dd, d;
 	int k;
 
-	for(int i = 0; i < 100; i++){
+	for (int i = 0; i < 100; i++) {
 		dd = map(cPos + d * rd);
 		if(dd < 0.001){
 			//color += 1.;
@@ -132,7 +122,7 @@ void main( void ) {
 		d += dd;
 	}
 
-	if(dd < 0.001){
+	if (dd < 0.001) {
 		vec3 ip = cPos + d * rd;
 		vec3 normal = genNormal(ip);
 
@@ -140,11 +130,9 @@ void main( void ) {
     // float occ = calcAO(p+normal*0.001, normal, iTime) * 1.0;
 
 		color += ao;
-	}else{
+	} else {
 		color = vec3(0., 0., 0.2);
 	}
 
-
-
 	gl_FragColor = vec4(color, 1.0 );
-}`
+}
