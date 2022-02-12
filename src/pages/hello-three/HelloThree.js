@@ -47,13 +47,14 @@ export const init = ({ canvas, container }) => {
 
   const clock = new THREE.Clock()
   const animate = () => {
-    if (renderer) {
-      stats.begin()
-      requestAnimationFrame(animate)
-      renderer.render(scene, camera)
-      cube.rotateY(clock.getDelta() * 0.5)
-      stats.end()
+    if (!renderer) {
+      return
     }
+    stats.begin()
+    requestAnimationFrame(animate)
+    renderer.render(scene, camera)
+    cube.rotateY(clock.getDelta() * 0.5)
+    stats.end()
   }
   animate()
 

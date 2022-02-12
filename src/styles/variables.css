@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: #1d252c;
+  --main-bg-color-dark: #181e24;
   --font-color: #b7c5d3;
   --font-color-light: #fafcfe;
   --font-color-dark: #394c63;
@@ -9,11 +10,6 @@
   --main-content-max-width: 1200px;
   --green: #9ece5e;
   --blue: #3c5397;
-  --red: #f7768e;
+  --red: #d35f6d;
   --orange: #e0af68;
-}
-
-body {
-  background-color: var(--main-bg-color);
-  font-size: 18px;
 }

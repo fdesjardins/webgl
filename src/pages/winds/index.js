@@ -3,3 +3,9 @@ export const meta = {
   title: 'Winds Vizualization',
   slug: 'winds',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

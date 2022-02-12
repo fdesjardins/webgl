@@ -18,6 +18,14 @@ export const options = {
   },
 }
 
-export const init = ({ scene }) => {
+export const init = ({ container, camera, scene }) => {
   scene.add(new THREE.GridHelper(100, 60, new THREE.Color(0x666666), new THREE.Color(0x222222)))
+  camera.position.set(26, 7.5, -36)
+  camera.lookAt(0, 0, 0)
+  const cameraPosInterval = setInterval(() => {
+    console.log(camera.position)
+  }, 2000)
+  return () => {
+    clearInterval(cameraPosInterval)
+  }
 }

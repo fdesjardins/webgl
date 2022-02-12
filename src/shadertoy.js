@@ -128,6 +128,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs }) => {
 
   return {
     scene,
+    camera,
     dispose: () => {
       renderer.dispose()
       stats.scene = null

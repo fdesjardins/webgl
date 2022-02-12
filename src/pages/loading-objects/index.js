@@ -3,3 +3,9 @@ export const meta = {
   title: 'Loading Objects',
   slug: 'loading-objects',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

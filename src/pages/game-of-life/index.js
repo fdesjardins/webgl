@@ -3,3 +3,9 @@ export const meta = {
   title: 'GPU Game of Life Texture',
   slug: 'game-of-life',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

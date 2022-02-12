@@ -28,6 +28,7 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-error-boundary": "^3.1.4",
     "react-router-dom": "^6.2.1",
     "stats.js": "^0.17.0",
     "three": "^0.136.0",

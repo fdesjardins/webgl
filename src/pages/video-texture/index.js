@@ -3,3 +3,9 @@ export const meta = {
   title: 'Video Texture',
   slug: 'video-texture',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

@@ -46,6 +46,10 @@ export const options = {
 }
 ```
 
+## Credits
+
+Many thanks to `iq` and `mrdoob`.
+
 ## License
 
 MIT © [Forrest Desjardins](https://github.com/fdesjardins)

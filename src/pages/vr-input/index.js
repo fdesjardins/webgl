@@ -3,3 +3,9 @@ export const meta = {
   title: 'VR Input',
   slug: 'vr-input',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

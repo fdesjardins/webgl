@@ -3,3 +3,9 @@ export const meta = {
   title: 'Oimo Physics',
   slug: 'oimophysics',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

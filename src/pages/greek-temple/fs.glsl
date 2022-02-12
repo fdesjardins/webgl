@@ -137,8 +137,10 @@ vec2 rot45(vec2 v) {
 vec4 sdScene(vec3 p) {
   float time = iTime;
 
+  p.y -= 6.5;
+
   // sphere in middle
-  vec4 d = vec4(sdSphere(p, 0.75), 0.7, 0.4, 0.2);
+  vec4 d = vec4(sdSphere(p, 0.75), 0.68, 0.63, 0.52);
 
   vec3 q = p;
   q.xz = opRepLim2(q.xz, 4.0, vec2(4.0, 2.0));
@@ -159,6 +161,23 @@ vec4 sdScene(vec3 p) {
   d.x = min(d.x, sdBox(qq, vec3(1.5, 0.2, 1.5)));
 
   d.x = max(d.x, -sdBox(p, vec3(14.0, 5.5, 5.6)));
+
+  // roof
+  d.x = min(d.x, sdBox(p-vec3(0.0, 5.7, 0.0), vec3(17.4, 0.5, 9.2)));
+  d.x = min(d.x, sdBox(p-vec3(0.0, 6.73, 0.0), vec3(17.4, 0.5, 9.2)));
+  d.x = min(d.x, sdBox(p-vec3(0.0, 7.46, 0.0), vec3(17.8, 0.2, 9.6)));
+
+  // floor
+  vec3 fp = p;
+  fp.xz = opRepLim2(fp.xz, 3.1, vec2(5.4, 2.75));
+  d.x = min(d.x, sdBox(fp+vec3(0.0, 5.45, 0.0), vec3(1.5, 0.2, 1.5)));
+
+  vec3 fp2 = p;
+  fp2.xz = opRepLim2(fp2.xz, 3.1, vec2(6.0, 3.0));
+  // fp2.x += 1.5;
+  d.x = min(d.x, sdBox(fp2+vec3(0.0, 5.95, 0.0), vec3(1.5, 0.2, 1.5)));
+
+  d.x = min(d.x, sdBox(p+vec3(0.0, 6.5, 15.0), vec3(1.0, 0.1, 1.0)));
 
   // vec3 qx = vec3(rot45(p.zy), p.x); if (abs(qx.x) > abs(qx.y)) qx = qx.zxy;
   // vec3 qy = vec3(rot45(p.xz), p.y); if (abs(qy.x) > abs(qy.y)) qy = qy.zxy;
@@ -299,7 +318,7 @@ vec4 render(vec3 origin, vec3 dir) {
 
   vec3 color;
   if (depth == MAX_DIST) {
-    color = BG_COLOR + (dir.y * 0.5);
+    color = BG_COLOR + (-1.0* dir.y * 0.5);
   } else {
     vec3 normal = estimateNormal(pos);
 

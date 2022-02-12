@@ -5,4 +5,8 @@ export const meta = {
   dynamic: import('./Lighting'),
 }
 
-export { default } from './Lighting'
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}

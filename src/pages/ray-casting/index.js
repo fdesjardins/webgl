@@ -3,3 +3,9 @@ export const meta = {
   title: 'Ray Casting',
   slug: 'ray-casting',
 }
+
+export const options = {
+  display: 'fullscreen',
+}
+
+export const init = ({ canvas, container }) => {}
