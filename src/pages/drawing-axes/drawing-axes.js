@@ -103,7 +103,6 @@ export const init = ({ canvas, container }) => {
   scene.background = new THREE.Color(0x000000)
 
   const controls = new OrbitControls(camera, renderer.domElement)
-  controls.enableDamping = true
   controls.update()
 
   const handleResize = (event) => {

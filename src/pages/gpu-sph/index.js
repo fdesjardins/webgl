@@ -5,4 +5,8 @@ export const meta = {
   fullscreen: true,
 }
 
+export const options = {
+  display: 'fullscreen',
+}
+
 export { init } from './GpuSph'

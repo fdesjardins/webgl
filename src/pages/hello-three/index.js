@@ -5,4 +5,8 @@ export const meta = {
   component: import('./HelloThree'),
 }
 
+export const options = {
+  display: 'fullscreen',
+}
+
 export { init } from './HelloThree'
