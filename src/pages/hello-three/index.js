@@ -1,5 +1,5 @@
 export const meta = {
-  tags: 'three',
+  tags: 'threejs',
   title: 'Hello Three.js',
   slug: 'hello-three',
   component: import('./HelloThree'),

@@ -1,11 +1,10 @@
 import vs from './vs.glsl'
 import fs from './fs.glsl'
-import texture from './rusty-metal-512x512.jpg'
 
 export const meta = {
   tags: 'threejs,ray marching',
-  title: 'Ray Marching Gears',
-  slug: 'gears',
+  title: 'Reflections',
+  slug: 'reflections',
 }
 
 export const options = {
@@ -14,11 +13,11 @@ export const options = {
   shadertoy: {
     vs,
     fs,
-    iChannel0: texture,
   },
 }
 
-export const init = ({ camera }) => {
-  camera.position.set(6, 6, 6)
-  camera.lookAt(0, 0, 0)
+export const init = ({ controls }) => {
+  // const i = setInterval(() => controls, 5e3)
+  controls.autoRotate = true
+  return () => {} // clearInterval(i)
 }

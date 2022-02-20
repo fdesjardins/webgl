@@ -86,6 +86,7 @@ vec4 gear(vec3 pos, float time, float offset) {
     vec3 q1 = pos;
     pos.y = abs(pos.y);
 
+    // controls the number of teeth on the gears
     float sectorSize = 6.283185/12.0;
 
     // rotate along the y axis
@@ -102,23 +103,29 @@ vec4 gear(vec3 pos, float time, float offset) {
     q.xz = mat2(cos(an2), -sin(an2),
                 sin(an2),  cos(an2)) * q.xz;
 
+    // controls height, width, length of gear teeth
     float d1 = sdBox2(q.xz - vec2(1.0, 0.0), 0.5*vec2(0.5, 0.225)) - 0.05;
+    // controls size and width of gear ring connecting the teeth
     float d2 = abs(length(pos.xz)-0.92) - 0.12;
 
+    // connect the gear teeth and ring
     d1 = min(d1,d2);
 
     // cross
     d2 = sdCross(pos - vec3(0.0,2.9,0.0), vec3(0.8, 0.04, 0.04)) - 0.03;
     d1 = min(d1,d2);
 
-    float r = length(pos);
+    float time2 = iTime;
+    // float time2 = -1.0;
+
+    float r = length(pos) + (1.0 + sin(time2));
     d1 = smax(d1, abs(r-3.0) - 0.165, 0.04);
 
     // axle
-    d2 = sdVStick(pos, 3.0) - 0.05;
+    d2 = sdVStick(pos, 3.0 - (1.0 + sin(time2))) - 0.05;
     d1 = min(d1,d2);
 
-    return vec4(d1, pos);
+    return vec4(d1, 0.1, 0.1, 0.1);
 }
 
 vec2 rot45(vec2 v) {
@@ -129,7 +136,7 @@ vec4 sdScene(vec3 p) {
   float time = iTime;
 
   // sphere in middle
-  vec4 d = vec4(sdSphere(p, 0.75), 0.0, 0.0, 0.0);
+  vec4 d = vec4(sdSphere(p, 0.75), 0.3, 0.2, 0.0);
 
   vec3 qx = vec3(rot45(p.zy), p.x); if (abs(qx.x) > abs(qx.y)) qx = qx.zxy;
   vec3 qy = vec3(rot45(p.xz), p.y); if (abs(qy.x) > abs(qy.y)) qy = qy.zxy;
@@ -264,29 +271,43 @@ vec3 phongIllumination(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 e
 }
 
 vec4 render(vec3 origin, vec3 dir) {
-  vec4 tuvw = castRay(origin, dir);
+
+  // Test intersection with sphere first
+  vec3 L = vec3(0.0) - origin;
+  float t_ca = dot(dir, L);
+  vec4 tuvw = vec4(0.0);
+  vec3 color;
+  float d = sqrt(dot(L, L) - dot(t_ca,t_ca));
+  if (d > 5.5) {
+    tuvw.x = MAX_DIST;
+  } else {
+    tuvw = castRay(origin, dir);
+  }
+
+  // vec4 tuvw = castRay(origin, dir);
   float depth = tuvw.x;
   vec3 pos = origin + depth * dir;
 
-  vec3 color;
+
   if (depth == MAX_DIST) {
     color = BG_COLOR + (dir.y * 0.5);
   } else {
     vec3 normal = estimateNormal(pos);
 
     // color = 0.5 + 0.5 * normal;
+    color = tuvw.yzw;
 
     vec4 te = 0.5 * texture(iChannel0, tuvw.yz * 2.0) +
               0.5 * texture(iChannel0, tuvw.yw * 2.0);
-    color = te.xyz * 0.25;
+    color += te.xyz / 3.0;
 
-    vec3 K_a = vec3(0.15, 0.15, 0.15);
-    vec3 K_d = vec3(0.4, 0.4, 0.4);
-    vec3 K_s = vec3(1.0, 1.0, 1.0);
+    vec3 K_a = vec3(0.1, 0.1, 0.1);
+    vec3 K_d = vec3(0.1, 0.1, 0.1);
+    vec3 K_s = vec3(0.7, 0.7, 0.7);
     float shininess = 10.0;
 
     color += phongIllumination(K_a, K_d, K_s, shininess, pos, origin);
-    // color = lambertIllumination(color, pos, origin);
+    // color += lambertIllumination(color, pos, origin);
 
     // if (pos.x > 2.0) {
     //   color = lambertIllumination(RED, pos, origin);
@@ -301,14 +322,15 @@ vec4 render(vec3 origin, vec3 dir) {
     float occ = calcAO(pos+normal*0.001, normal, iTime) * 1.0;
     color *= occ;
 
-    // color = applyFog(color, vec3(0.6, 0.6, 0.6), depth);
   }
+  // color = applyFog(color, color * 0.5, depth);
 
   return vec4(depth, color);
 }
 
 void main(){
   vec3 cameraPos = iCameraPosition;
+  // cameraPos = vec3(6.0);
   vec3 cameraDir = iCameraDirection;
   vec3 cameraTarget = cameraPos + vec3(cameraDir.x, cameraDir.y, cameraDir.z);
   // vec3 cameraTarget = vec3(0.0, 0.0, 0.0);
@@ -336,5 +358,7 @@ void main(){
   #endif
 
   gl_FragDepth = total.x / 100.0;
-  gl_FragColor = vec4(total.yzw, 1.0);
+  vec4 color = vec4(total.yzw, 1.0);
+  // gl_FragColor = pow(color, vec4(1.0/2.2));
+  gl_FragColor = color;
 }

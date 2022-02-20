@@ -22,6 +22,20 @@ const errorFallbackStyle = css`
     border-radius: 3px;
     color: var(--red);
     margin-bottom: 20%;
+    max-height: 50vh;
+    overflow: auto;
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--red);
+      border-radius: 3px;
+    }
   }
 `
 
@@ -71,7 +85,7 @@ const PageContent = ({ options, init }) => {
     const canvas = document.querySelector('canvas')
     const container = document.querySelector('#container')
     const dispose = []
-    let scene, camera
+    let scene, camera, controls
     if (options.type === 'shadertoy') {
       const shaderToy = shadertoyInit({
         canvas,
@@ -79,13 +93,15 @@ const PageContent = ({ options, init }) => {
         init,
         fs: options.shadertoy.fs,
         vs: options.shadertoy.vs,
+        iChannel0: options.shadertoy.iChannel0,
       })
       scene = shaderToy.scene
       camera = shaderToy.camera
+      controls = shaderToy.controls
       dispose.push(shaderToy.dispose)
     }
     if (init) {
-      dispose.push(init({ canvas, container, camera, scene }))
+      dispose.push(init({ canvas, container, camera, controls, scene }))
     }
     return () => {
       for (const d of dispose) {
