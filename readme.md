@@ -36,12 +36,16 @@ You can also supply an `options` export to customize the page. For example, you 
 ```js
 import fs from './fs.glsl'
 import vs from './vs.glsl'
+import texture from './rusty-metal-512x512.jpg'
+
 ...
 export const options = {
+  display: 'fullscreen',
   type: 'shadertoy',
   shadertoy: {
-    vs,
-    fs
+    vs, // optional; default is passthrough shader
+    fs,
+    iChannel0: texture // optional
   },
 }
 ```

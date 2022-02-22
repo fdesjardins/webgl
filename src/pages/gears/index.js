@@ -1,4 +1,3 @@
-import vs from './vs.glsl'
 import fs from './fs.glsl'
 import texture from './rusty-metal-512x512.jpg'
 
@@ -12,7 +11,6 @@ export const options = {
   display: 'fullscreen',
   type: 'shadertoy',
   shadertoy: {
-    vs,
     fs,
     iChannel0: texture,
   },

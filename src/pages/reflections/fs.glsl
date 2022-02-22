@@ -56,10 +56,18 @@ vec4 rotatingBox(vec3 pos) {
   return box;
 }
 
-vec4 spheres(vec3 pos) {
-  vec4 sphere = vec4(sphereSD(pos, 1.25), (RED+GREEN)*0.8);
-  vec4 sphere2 = vec4(sphereSD(pos + 4.0, 1.25), BLUE*0.3 + sin(iTime)*0.025);
+vec4 stars(vec3 pos) {
+  return vec4(sphereSD(pos - 20.0, 0.1), vec3(1.0));
+}
 
+vec4 sun(vec3 pos) {
+  float distort = 0.02;
+  float time = iTime * 15.0;
+  return vec4(sphereSD(pos, 1.25), (RED+GREEN)*0.9);
+}
+
+vec4 planets(vec3 pos) {
+  vec4 sphere2 = vec4(sphereSD(pos + 4.0, 1.25), BLUE*0.3 + sin(iTime)*0.025);
   vec3 sphere3Pos = vec3(pos.x - 4.0, pos.y + 3.0, pos.z + 4.0);
   float k = 0.009; // stretch factor
   vec3 ringsPos = sphere3Pos;
@@ -71,9 +79,9 @@ vec4 spheres(vec3 pos) {
   ringsPos.xz *= mat2(k, 0.0, 0.0, 1.0);
   ringsPos.zy *= mat2(k, 0.0, 0.0, 1.0);
   vec4 sphere3 = vec4(sphereSD(sphere3Pos, 1.0), (GREEN+BLUE) * 0.5 + 0.1*sin(sphere3Pos.y*5.0));
-  vec4 rings = vec4(sphereSD(ringsPos, 0.02), (RED+GREEN) * 0.2);
-  rings.x = max(rings.x, -sphereSD(sphere3Pos, 1.5));
-  rings.x = max(rings.x, sphereSD(sphere3Pos, 2.5));
+  vec4 rings = vec4(sphereSD(ringsPos, 0.02), (RED+GREEN) * 0.4);
+  rings.x = max(rings.x, -sphereSD(sphere3Pos, 1.6));
+  rings.x = max(rings.x, sphereSD(sphere3Pos, 2.4));
 
   vec3 sphere4Pos = vec3(pos.x - 4.0, pos.y, pos.z - 4.0);
   vec4 sphere4 = vec4(sphereSD(sphere4Pos, 0.75), RED+BLUE);
@@ -85,12 +93,22 @@ vec4 spheres(vec3 pos) {
   );
   vec4 sphere5 = vec4(sphereSD(sphere5Pos, 0.15), ORANGE);
 
-  vec4 result = sphere;
-  if (result.x > sphere2.x) { result = sphere2; }
+  vec4 result = sphere2;
   if (result.x > sphere3.x) { result = sphere3; }
   if (result.x > sphere4.x) { result = sphere4; }
   if (result.x > sphere5.x) { result = sphere5; }
   if (result.x > rings.x)   { result = rings; }
+  return result;
+}
+
+vec4 spheres(vec3 pos) {
+  vec4 sphere = sun(pos);
+  vec4 stars1 = stars(pos);
+  vec4 planets1 = planets(pos);
+
+  vec4 result = sphere;
+  if (result.x > stars1.x)  { result = stars1; }
+  if (result.x > planets1.x)  { result = planets1; }
   return result;
 }
 
@@ -99,7 +117,7 @@ vec4 scene(vec3 pos) {
   vec4 box = rotatingBox(pos);
   vec4 floor1 = vec4(
     flatPlaneSD(pos, -5.2),
-    vec3(0.05, 0.05, 0.1)
+    vec3(0.0, 0.0, 0.0)
   );
 
   vec4 result = spheres1;
@@ -113,7 +131,7 @@ vec4 scene(vec3 pos) {
 }
 
 vec3 fog(vec3 color, vec3 fogColor, float dist) {
-  float amount = 1.0 - exp(-dist / 10.0);
+  float amount = 1.0 - exp(-dist / 60.0);
   return mix(color, fogColor, amount);
 }
 
@@ -182,7 +200,7 @@ vec2 normalizeScreenCoords(vec2 fragCoord, vec2 resolution) {
 }
 
 vec3 calcPhong(vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye, vec3 lightPos, vec3 lightIntensity) {
-  vec3 N = estimateNormal(p);
+  vec3 N = estimateNormalFast(p);
   vec3 L = normalize(lightPos - p);
   vec3 V = normalize(eye - p);
   vec3 R = normalize(reflect(-L, N));
@@ -199,29 +217,24 @@ vec3 calcPhong(vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye, vec3 lightPos,
   return lightIntensity * (k_d * dotLN + k_s * pow(dotRV, alpha));
 }
 
-vec3 phongIllumination(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {
-  const vec3 ambientLight = 0.5 * vec3(1.0, 1.0, 1.0);
+vec3 phongIllumination(
+  vec3 k_a, vec3 k_d, vec3 k_s, float alpha,
+  vec3 pos, vec3 eyePos,
+  vec3 ambientLight, vec3 lightPos, vec3 lightIntensity
+) {
   vec3 color = ambientLight * k_a;
-  // vec3 lightPosition = vec3(4.0 * sin(iTime), 2.0, 4.0 * cos(iTime));
-  vec3 lightPosition = vec3(0.0);
-  vec3 lightIntensity = vec3(0.5, 0.5, 0.5);
-  color += calcPhong(k_d, k_s, alpha, p, eye, lightPosition, lightIntensity);
-  return color;
+  return color + calcPhong(k_d, k_s, alpha, pos, eyePos, lightPos, lightIntensity);
 }
 
-float Fresnel2(vec3 vNormal, vec3 vEyeDir) {
-	float fresnel = 0.1 - dot( vNormal, vEyeDir ) * 0.05;
-	return fresnel * fresnel;
-}
-
-float Fresnel(vec3 normal, vec3 camDir, vec3 ranges) {
-	float f = Fresnel2(normal, camDir);
+float fresnel(vec3 normal, vec3 camDir, vec3 ranges) {
+  float fresnel = 0.1 - dot(normal, camDir) * 0.05;
+	float f = fresnel * fresnel;
   float result;
-	if (f > 0.5)
-		result = mix( ranges.y, ranges.z, (2.0 * f)-1.0 );
-	else
-    result = mix( ranges.x, ranges.y, 2.0 * f);
-
+	if (f > 0.5) {
+		result = mix(ranges.y, ranges.z, (2.0 * f) - 1.0);
+  }	else {
+    result = mix(ranges.x, ranges.y, 2.0 * f);
+  }
 	return result;
 }
 
@@ -234,33 +247,70 @@ void main() {
   vec2 uv = normalizeScreenCoords(gl_FragCoord.xy, iResolution);
   vec3 rayDir = getRayDirection(uv, camPos, camTarget, camFov);
   vec4 result = trace(camPos, rayDir);
-
   vec3 color = result.yzw;
   vec3 origin = camPos;
+  vec3 hit = origin + rayDir * result.x;
+  vec3 hitNormal = estimateNormal(hit);
+
+  // Sky color
   if (result.x == MAX_DIST) {
-    color = vec3(0.1, 0.1, 0.2) * (rayDir.y * 0.5);
+    // color = vec3(0.1, 0.1, 0.2) * (rayDir.y * 0.5);
+    color = fract(sin(dot(result.xz, vec2(12.9898, 78.233))) * 43758.5453) > 0.22
+      ? vec3(1.0)
+      : vec3(0.0);
+    gl_FragColor = vec4(color, 1.0);
+    return;
   }
 
   // Illumination
-  vec3 K_a = vec3(0.1, 0.1, 0.1);
-  vec3 K_d = vec3(0.1, 0.1, 0.1);
-  vec3 K_s = vec3(0.8, 0.8, 0.8);
-  float shininess = 20.0;
-  vec3 hit = origin + rayDir * result.x;
-  color += phongIllumination(K_a, K_d, K_s, shininess, hit, origin);
-
-  if (result.x < MAX_DIST) {
-    vec3 hitNormal = estimateNormal(hit);
-    if (dot(rayDir, hitNormal) > -0.5) {
-      color = mix(color, vec3(0.75), 0.1);
-    }
+  vec3 lightPos = vec3(0.0);
+  {
+  // vec3 light1Col = vec3(1.0, 0.8, 0.3);
+  vec3 lightIntensity = vec3(1.0, 1.0, 0.4);
+  if (hit.y < -5.0) {
+    lightIntensity *= 0.4;
   }
-  color -= fog(color, vec3(0.15), result.x);
+  vec3 ambientLight = 0.0 * vec3(1.0, 1.0, 1.0);
+  vec3 K_a = vec3(0.0);
+  vec3 K_d = vec3(0.0);
+  vec3 K_s = vec3(1.0);
+  float shininess = 30.0;
+  color += phongIllumination(K_a, K_d, K_s, shininess, hit, origin, ambientLight, lightPos, lightIntensity);
+  }
+
+  {
+  // lightPos = vec3(0.0);
+  float time = iTime/2.0;
+  lightPos = vec3(
+    lightPos.x - 3.0 * sin(time),
+    lightPos.y - 3.0 * cos(time),
+    lightPos.z - 3.0 * sin(time * 1.5)
+  );
+  // vec3 light1Col = vec3(1.0, 0.8, 0.3);
+  vec3 lightIntensity = vec3(0.0, 1.0, 0.0);
+  if (hit.y < -5.0) {
+    lightIntensity *= 0.2;
+  }
+  vec3 ambientLight = 0.0 * vec3(1.0, 1.0, 1.0);
+  vec3 K_a = vec3(0.0);
+  vec3 K_d = vec3(0.0);
+  vec3 K_s = vec3(1.0);
+  float shininess = 30.0;
+  color += phongIllumination(K_a, K_d, K_s, shininess, hit, origin, ambientLight, lightPos, lightIntensity);
+  }
+
+  // if (result.x < MAX_DIST) {
+  // vec3 hitNormal = estimateNormal(hit);
+  // if (dot(rayDir, hitNormal) > -1.0) {
+  //   color = mix(color, vec3(0.75), 0.1);
+  // }
+  // // }
+  color = fog(color, vec3(0.0), result.x);
 
   // First reflection
   if (result.x < MAX_DIST) {
-    vec3 hit = origin + rayDir * result.x;
-    vec3 hitNormal = estimateNormal(hit);
+    hit = origin + rayDir * result.x;
+    hitNormal = estimateNormal(hit);
     vec3 hitRayDir = reflect(rayDir, hitNormal);
     result = trace(hit + 0.001 * hitNormal, hitRayDir);
     color += 0.2 * result.yzw;
@@ -275,10 +325,7 @@ void main() {
   //   color += 0.1 * result.yzw;
   // }
 
-
-
-
-  // color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
+  color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
 
   // TODO: figure out the depth diff
   gl_FragDepth = result.x / 5.3;

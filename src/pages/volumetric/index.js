@@ -2,8 +2,8 @@ import fs from './fs.glsl'
 
 export const meta = {
   tags: 'threejs,ray marching',
-  title: 'Reflections',
-  slug: 'reflections',
+  title: 'Volumetric Effects',
+  slug: 'volumetric',
 }
 
 export const options = {
@@ -15,7 +15,8 @@ export const options = {
 }
 
 export const init = ({ camera, controls }) => {
-  camera.position.set(10, 3, 10)
+  camera.position.set(4, 2, 4)
   controls.autoRotate = true
+  controls.autoRotateSpeed = 3.0
   return () => {}
 }

@@ -3,7 +3,6 @@ import Stats from 'stats.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { onResize } from './utils'
-import { Filter } from 'tone'
 
 // const fpsControls = (camera, domElement) => {
 //   const controls = new FirstPersonControls(camera, domElement)
@@ -28,6 +27,15 @@ import { Filter } from 'tone'
 //   controls.autoForward = false
 //   return controls
 // }
+
+const defaultVs = `
+varying vec2 texCoord;
+varying vec2 vUv;
+void main(){
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
+  texCoord = vec2(gl_Position.x, gl_Position.y);
+}`
 
 const loader = new THREE.TextureLoader()
 
@@ -62,7 +70,6 @@ const createUniforms = (canvas, iChannel0) => {
 }
 
 export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
-  console.log('shadertoy init')
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(0x000000)
 
@@ -86,7 +93,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
     antiAlias: true,
     powerPreference: 'high-performance',
     stencil: false,
-    depth: false,
+    // depth: false,
   })
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
@@ -97,7 +104,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
   const geometry = new THREE.PlaneBufferGeometry(40, 40, 2, 2)
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
-    vertexShader: vs,
+    vertexShader: vs || defaultVs,
     uniforms,
   })
   const object = new THREE.Mesh(geometry, material)

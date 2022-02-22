@@ -8,6 +8,7 @@ import { shadertoyInit } from '../../shadertoy.js'
 
 const errorFallbackStyle = css`
   min-height: 100vh;
+  max-width: 100%;
   padding: 1em;
   display: flex;
   flex-direction: column;
