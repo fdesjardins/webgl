@@ -6,7 +6,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import Stats from 'stats.js'
-import * as Tone from 'tone'
+// import * as Tone from 'tone'
 import {
   RenderPass,
   EffectComposer,
@@ -24,8 +24,8 @@ import nom from './nom.ogg'
 const globals = {
   fontLoader: new FontLoader(),
   font: null,
-  audioListener: new THREE.AudioListener(),
-  audioLoader: new THREE.AudioLoader(),
+  audioListener: null,
+  audioLoader: null,
 }
 
 const state = {
@@ -174,25 +174,32 @@ const createControls = (user, canvas) => {
   return controls
 }
 
+const options = {
+  useSound: false,
+}
+
 // to test localhost on a mobile device use :
 // adb reverse tcp:9090 tcp:9090
 export const init = ({ canvas, container }) => {
   const font = globals.fontLoader.parse(inconsolataFont)
   globals.font = font
 
-  const sound = new THREE.Audio(globals.audioListener)
-  globals.audioLoader.load(nom, (b) => {
-    sound.setBuffer(b)
-    sound.setVolume(0.5)
-  })
-
   let { renderer } = createContextAndRenderer(canvas)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  window.synth = new Tone.Synth().toDestination()
-  const distortion = new Tone.Distortion(0.4).toDestination()
-  window.synth.connect(distortion)
-  window.synth.triggerAttackRelease('C5', '8n')
+  if (options.useSound) {
+    globals.audioListener = new THREE.AudioListener()
+    globals.audioLoader = new THREE.AudioLoader()
+    const sound = new THREE.Audio(globals.audioListener)
+    globals.audioLoader.load(nom, (b) => {
+      sound.setBuffer(b)
+      sound.setVolume(0.5)
+    })
+    window.synth = new Tone.Synth().toDestination()
+    const distortion = new Tone.Distortion(0.4).toDestination()
+    window.synth.connect(distortion)
+    window.synth.triggerAttackRelease('C5', '8n')
+  }
 
   const camera = new THREE.PerspectiveCamera(
     75,
