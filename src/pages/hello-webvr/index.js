@@ -16,18 +16,16 @@ export const init = ({ canvas, container }) => {
   let scene = new THREE.Scene()
 
   const camera = new THREE.PerspectiveCamera(
-    75,
+    50,
     container.clientWidth / container.clientHeight,
     0.1,
     1000
   )
 
-  camera.position.set(0, 2, 0)
+  camera.position.set(0, 2, 2)
   camera.rotation.set(0, 0, 0)
 
-  const context = canvas.getContext('webgl2', { alpha: false })
-
-  let renderer = new THREE.WebGLRenderer({ canvas, context })
+  let renderer = new THREE.WebGLRenderer({ canvas })
   renderer.xr.enabled = true
 
   const button = VRButton.createButton(renderer)
@@ -58,13 +56,12 @@ export const init = ({ canvas, container }) => {
     if (!renderer) {
       return
     }
-    requestAnimationFrame(animate)
 
     renderer.render(scene, camera)
     cube.rotation.x += 0.01
     cube.rotation.y += 0.01
   }
-  animate()
+  renderer.setAnimationLoop(animate)
 
   return () => {
     renderer.dispose()
