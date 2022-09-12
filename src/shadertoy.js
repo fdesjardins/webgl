@@ -100,8 +100,15 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.update()
 
+  // Calculate the size of the full screen quad
+  const d2r = (d) => (d / 180) * Math.PI
+  const r2d = (r) => (180 * r) / Math.PI
+  const a = canvas.clientWidth / canvas.clientHeight
+  const v = Math.tan(d2r(45)) * 10
+  const w = v * a
+
   const uniforms = createUniforms(canvas, iChannel0)
-  const geometry = new THREE.PlaneBufferGeometry(40, 40, 2, 2)
+  const geometry = new THREE.PlaneGeometry(w, v, 2, 2)
   const material = new THREE.ShaderMaterial({
     fragmentShader: fs,
     vertexShader: vs || defaultVs,
@@ -116,6 +123,10 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
   const handleResize = (event) => {
     event.preventDefault()
     onResize({ canvas, camera, renderer })
+    const a = canvas.clientWidth / canvas.clientHeight
+    const v = Math.tan(d2r(45)) * 10
+    const w = v * a
+    object.geometry = new THREE.PlaneGeometry(w, v, 2, 2)
     uniforms.iResolution.value = new THREE.Vector2(canvas.clientWidth, canvas.clientHeight)
   }
   window.addEventListener('resize', handleResize, false)
@@ -157,7 +168,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
 
     camera.getWorldDirection(camDirection)
     camDirection.normalize()
-    object.position.copy(camera.position.clone().add(camDirection.multiplyScalar(13)))
+    object.position.copy(camera.position.clone().add(camDirection.multiplyScalar(5)))
     object.lookAt(camera.position.clone())
 
     uniforms.iTime.value += delta

@@ -10,6 +10,7 @@ const style = css`
   align-items: center;
   color: var(--font-color);
   min-height: var(--header-height);
+  overflow: hidden;
 
   a {
     color: var(--font-color);
