@@ -87,7 +87,7 @@ const PageContent = ({ options, init }) => {
     const container = document.querySelector('#container')
     const dispose = []
     let scene, camera, controls
-    if (options.type === 'shadertoy') {
+    if (options?.type === 'shadertoy') {
       const shaderToy = shadertoyInit({
         canvas,
         container,
@@ -116,7 +116,7 @@ const PageContent = ({ options, init }) => {
     <main className={pageContentStyle}>
       <div
         id="container"
-        className={options.display === 'fullscreen' ? fullscreenContainerStyle : ''}
+        className={options?.display === 'fullscreen' ? fullscreenContainerStyle : ''}
       >
         <canvas className="example" />
       </div>

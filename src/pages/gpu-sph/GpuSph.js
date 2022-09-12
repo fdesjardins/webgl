@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Stats from 'stats.js'
-import threeOrbitControls from 'three-orbit-controls'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import {
   createTextures,
@@ -63,8 +63,7 @@ export const init = ({ canvas, container }) => {
   window.addEventListener('resize', handleResize, false)
   onResize({ canvas, camera, renderer })
 
-  const OrbitControls = threeOrbitControls(THREE)
-  const controls = new OrbitControls(camera)
+  const controls = new OrbitControls(camera, canvas)
   controls.update()
 
   const dataTextures = createTextures({ width: WIDTH, height: HEIGHT })
