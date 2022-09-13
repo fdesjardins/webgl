@@ -6,7 +6,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import Stats from 'stats.js'
-// import * as Tone from 'tone'
+import * as Tone from 'tone'
 import {
   RenderPass,
   EffectComposer,
@@ -175,7 +175,7 @@ const createControls = (user, canvas) => {
 }
 
 const options = {
-  useSound: false,
+  useSound: true,
 }
 
 // to test localhost on a mobile device use :
@@ -190,15 +190,15 @@ export const init = ({ canvas, container }) => {
   if (options.useSound) {
     globals.audioListener = new THREE.AudioListener()
     globals.audioLoader = new THREE.AudioLoader()
-    const sound = new THREE.Audio(globals.audioListener)
+    globals.sound = new THREE.Audio(globals.audioListener)
     globals.audioLoader.load(nom, (b) => {
-      sound.setBuffer(b)
-      sound.setVolume(0.5)
+      globals.sound.setBuffer(b)
+      globals.sound.setVolume(0.5)
     })
-    window.synth = new Tone.Synth().toDestination()
+    globals.synth = new Tone.Synth().toDestination()
     const distortion = new Tone.Distortion(0.4).toDestination()
-    window.synth.connect(distortion)
-    window.synth.triggerAttackRelease('C5', '8n')
+    globals.synth.connect(distortion)
+    globals.synth.triggerAttackRelease('C5', '8n')
   }
 
   const camera = new THREE.PerspectiveCamera(
@@ -279,7 +279,9 @@ export const init = ({ canvas, container }) => {
     camControls.lookAt(0, 0, 0)
     // }
     camControls.lookSpeed = 0.01
-    window.synth.triggerAttackRelease('E5', '8n')
+    if(globals.useSound){
+      globals.synth.triggerAttackRelease('E5', '8n')
+    }
   }
   let mycamera = false
 
@@ -399,7 +401,7 @@ export const init = ({ canvas, container }) => {
     if (!renderer) {
       return
     }
-    requestAnimationFrame(animate)
+
 
     state.stats.begin()
 
@@ -493,7 +495,9 @@ export const init = ({ canvas, container }) => {
       }
       lastPathBlock.copy(user.position)
       try {
-        window.synth.triggerAttackRelease('E3', '.00001')
+        if(globals.useSound){
+          globals.synth.triggerAttackRelease('E3', '.00001')
+        }
       } catch {}
     }
 
@@ -516,7 +520,7 @@ export const init = ({ canvas, container }) => {
     for (const egg of raycaster.intersectObjects(eggs)) {
       if (egg.distance < state.user.velocity + 1) {
         scene.remove(egg.object)
-        sound.play()
+        if(globals.useSound){globals.sound.play()}
         eggs.splice(eggs.indexOf(egg.object), 1)
         state.blockCount += 1
         state.user.velocity += 0.03
@@ -532,7 +536,7 @@ export const init = ({ canvas, container }) => {
     state.stats.end()
   }
 
-  animate()
+  renderer.setAnimationLoop(animate)
 
   return () => {
     renderer.dispose()
