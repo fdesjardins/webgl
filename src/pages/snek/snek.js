@@ -433,7 +433,7 @@ const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
       } else {
         camControls.update(clock.getDelta())
       }
-    }
+    } 
 
     // Update user position
     mycamera.getWorldDirection(lookvector)
