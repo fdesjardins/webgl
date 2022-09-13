@@ -88,7 +88,7 @@ const createUiPlane = (canvas, camera, distance = 0.11) => {
   const vfov = (camera.fov * Math.PI) / 180
   const h = 2 * Math.tan(vfov / 2) * distance
   const w = h * aspect
-  const uiGeom = new THREE.PlaneBufferGeometry(w, h)
+  const uiGeom = new THREE.PlaneGeometry(w, h)
   const uiMat = new THREE.MeshBasicMaterial({
     color: 0xffaaaa,
     side: THREE.DoubleSide,
@@ -126,7 +126,7 @@ const createVRHands = (xr) => {
   // hand2.addEventListener( 'selectstart', onSelectStart );
   // hand2.addEventListener( 'selectend', onSelectEnd );
 
-  const handGeom = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  const handGeom = new THREE.IcosahedronGeometry(0.08, 1)
   handGeom.scale(0.2, 0.8, 1.5)
   const hand1Mat = new THREE.MeshLambertMaterial({
     color: Math.random() * 0xffffff,
@@ -239,7 +239,7 @@ export const init = ({ canvas, container }) => {
   const user = new THREE.Group()
 
   const userMesh = new THREE.Mesh(
-    new THREE.IcosahedronBufferGeometry(3),
+    new THREE.IcosahedronGeometry(3),
     new THREE.MeshBasicMaterial({ color: 0xffff00 })
   )
   user.add(userMesh)
@@ -312,7 +312,7 @@ export const init = ({ canvas, container }) => {
 
   const overheadRenderTarget = new THREE.WebGLRenderTarget(256, 256)
   const overheadViewMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(
+    new THREE.PlaneGeometry(
       (0.04 / 950) * canvas.clientWidth,
       (0.04 / 950) * canvas.clientWidth
     ),
@@ -358,7 +358,7 @@ export const init = ({ canvas, container }) => {
   //   scoreMesh.position.copy(scorePos)
   // })
 
-  const pathBlock = new THREE.BoxBufferGeometry(1, 3, 2.5)
+  const pathBlock = new THREE.BoxGeometry(1, 3, 2.5)
   const pathmaterial = new THREE.MeshPhongMaterial({
     color: 0x00ff00,
     opacity: 0.5,
@@ -389,8 +389,8 @@ export const init = ({ canvas, container }) => {
 
   const size = renderer.getDrawingBufferSize(new THREE.Vector2())
   console.log(size)
-  const renderTarget = new THREE.WebGLMultisampleRenderTarget(size.width, size.height)
-
+  //const renderTarget = new THREE.WebGLMultisampleRenderTarget(size.width, size.height)
+const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
   const composer = new EffectComposer(renderer, renderTarget)
   // const copyPass = new ShaderPass(CopyShader)
   composer.addPass(new RenderPass(scene, camera))
@@ -504,7 +504,7 @@ export const init = ({ canvas, container }) => {
     // Add a tasty egg to eat every now and then
     if (Math.random() < 0.005) {
       const egg = new THREE.Mesh(
-        new THREE.IcosahedronBufferGeometry(2),
+        new THREE.IcosahedronGeometry(2),
         new THREE.MeshLambertMaterial({ color: 0xff00ff })
       )
       egg.position.set(
