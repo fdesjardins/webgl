@@ -39,5 +39,8 @@
     "three": "^0.144.0",
     "three-orbit-controls": "^82.1.0",
     "tone": "^14.7.77"
+  },
+  "alias": {
+    "process": false
   }
 }
