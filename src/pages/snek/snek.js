@@ -6,7 +6,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 import Stats from 'stats.js'
-// import * as Tone from 'tone'
+import * as Tone from 'tone'
 import {
   RenderPass,
   EffectComposer,
@@ -88,7 +88,7 @@ const createUiPlane = (canvas, camera, distance = 0.11) => {
   const vfov = (camera.fov * Math.PI) / 180
   const h = 2 * Math.tan(vfov / 2) * distance
   const w = h * aspect
-  const uiGeom = new THREE.PlaneBufferGeometry(w, h)
+  const uiGeom = new THREE.PlaneGeometry(w, h)
   const uiMat = new THREE.MeshBasicMaterial({
     color: 0xffaaaa,
     side: THREE.DoubleSide,
@@ -126,7 +126,7 @@ const createVRHands = (xr) => {
   // hand2.addEventListener( 'selectstart', onSelectStart );
   // hand2.addEventListener( 'selectend', onSelectEnd );
 
-  const handGeom = new THREE.IcosahedronBufferGeometry(0.08, 1)
+  const handGeom = new THREE.IcosahedronGeometry(0.08, 1)
   handGeom.scale(0.2, 0.8, 1.5)
   const hand1Mat = new THREE.MeshLambertMaterial({
     color: Math.random() * 0xffffff,
@@ -175,7 +175,7 @@ const createControls = (user, canvas) => {
 }
 
 const options = {
-  useSound: false,
+  useSound: true,
 }
 
 // to test localhost on a mobile device use :
@@ -190,15 +190,15 @@ export const init = ({ canvas, container }) => {
   if (options.useSound) {
     globals.audioListener = new THREE.AudioListener()
     globals.audioLoader = new THREE.AudioLoader()
-    const sound = new THREE.Audio(globals.audioListener)
+    globals.sound = new THREE.Audio(globals.audioListener)
     globals.audioLoader.load(nom, (b) => {
-      sound.setBuffer(b)
-      sound.setVolume(0.5)
+      globals.sound.setBuffer(b)
+      globals.sound.setVolume(0.5)
     })
-    window.synth = new Tone.Synth().toDestination()
+    globals.synth = new Tone.Synth().toDestination()
     const distortion = new Tone.Distortion(0.4).toDestination()
-    window.synth.connect(distortion)
-    window.synth.triggerAttackRelease('C5', '8n')
+    globals.synth.connect(distortion)
+    globals.synth.triggerAttackRelease('C5', '8n')
   }
 
   const camera = new THREE.PerspectiveCamera(
@@ -239,7 +239,7 @@ export const init = ({ canvas, container }) => {
   const user = new THREE.Group()
 
   const userMesh = new THREE.Mesh(
-    new THREE.IcosahedronBufferGeometry(3),
+    new THREE.IcosahedronGeometry(3),
     new THREE.MeshBasicMaterial({ color: 0xffff00 })
   )
   user.add(userMesh)
@@ -279,7 +279,9 @@ export const init = ({ canvas, container }) => {
     camControls.lookAt(0, 0, 0)
     // }
     camControls.lookSpeed = 0.01
-    window.synth.triggerAttackRelease('E5', '8n')
+    if(globals.useSound){
+      globals.synth.triggerAttackRelease('E5', '8n')
+    }
   }
   let mycamera = false
 
@@ -310,7 +312,7 @@ export const init = ({ canvas, container }) => {
 
   const overheadRenderTarget = new THREE.WebGLRenderTarget(256, 256)
   const overheadViewMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(
+    new THREE.PlaneGeometry(
       (0.04 / 950) * canvas.clientWidth,
       (0.04 / 950) * canvas.clientWidth
     ),
@@ -356,7 +358,7 @@ export const init = ({ canvas, container }) => {
   //   scoreMesh.position.copy(scorePos)
   // })
 
-  const pathBlock = new THREE.BoxBufferGeometry(1, 3, 2.5)
+  const pathBlock = new THREE.BoxGeometry(1, 3, 2.5)
   const pathmaterial = new THREE.MeshPhongMaterial({
     color: 0x00ff00,
     opacity: 0.5,
@@ -387,8 +389,8 @@ export const init = ({ canvas, container }) => {
 
   const size = renderer.getDrawingBufferSize(new THREE.Vector2())
   console.log(size)
-  const renderTarget = new THREE.WebGLMultisampleRenderTarget(size.width, size.height)
-
+  //const renderTarget = new THREE.WebGLMultisampleRenderTarget(size.width, size.height)
+const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
   const composer = new EffectComposer(renderer, renderTarget)
   // const copyPass = new ShaderPass(CopyShader)
   composer.addPass(new RenderPass(scene, camera))
@@ -399,7 +401,7 @@ export const init = ({ canvas, container }) => {
     if (!renderer) {
       return
     }
-    requestAnimationFrame(animate)
+
 
     state.stats.begin()
 
@@ -431,7 +433,7 @@ export const init = ({ canvas, container }) => {
       } else {
         camControls.update(clock.getDelta())
       }
-    }
+    } 
 
     // Update user position
     mycamera.getWorldDirection(lookvector)
@@ -493,14 +495,16 @@ export const init = ({ canvas, container }) => {
       }
       lastPathBlock.copy(user.position)
       try {
-        window.synth.triggerAttackRelease('E3', '.00001')
+        if(globals.useSound){
+          globals.synth.triggerAttackRelease('E3', '.00001')
+        }
       } catch {}
     }
 
     // Add a tasty egg to eat every now and then
     if (Math.random() < 0.005) {
       const egg = new THREE.Mesh(
-        new THREE.IcosahedronBufferGeometry(2),
+        new THREE.IcosahedronGeometry(2),
         new THREE.MeshLambertMaterial({ color: 0xff00ff })
       )
       egg.position.set(
@@ -516,7 +520,7 @@ export const init = ({ canvas, container }) => {
     for (const egg of raycaster.intersectObjects(eggs)) {
       if (egg.distance < state.user.velocity + 1) {
         scene.remove(egg.object)
-        sound.play()
+        if(globals.useSound){globals.sound.play()}
         eggs.splice(eggs.indexOf(egg.object), 1)
         state.blockCount += 1
         state.user.velocity += 0.03
@@ -532,7 +536,7 @@ export const init = ({ canvas, container }) => {
     state.stats.end()
   }
 
-  animate()
+  renderer.setAnimationLoop(animate)
 
   return () => {
     renderer.dispose()
