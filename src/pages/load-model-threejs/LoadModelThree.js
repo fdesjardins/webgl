@@ -23,10 +23,13 @@ export const init = ({ canvas, container }) => {
   )
 
   camera.updateProjectionMatrix()
-  camera.position.set(2, 1, 2)
+  camera.position.set(8, 1, 8)
   const controls = new OrbitControls(camera, canvas)
   controls.update()
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
   const loader = new GLTFLoader();
 
@@ -34,7 +37,12 @@ export const init = ({ canvas, container }) => {
   loader.load( logo, function ( gltf ) {
     gltf.scene.name="swlogo"
     console.log(gltf)
-    swlogo = gltf
+    swlogo = gltf.scene.children[0]
+
+    gltf.scene.traverse( function( node ) {
+        if ( node.isMesh ) { node.castShadow = true; }
+    } );
+
     scene.add( gltf.scene );
   }, undefined, function ( error ) {
   	console.error( error );
@@ -47,13 +55,28 @@ export const init = ({ canvas, container }) => {
   }
   window.addEventListener('resize', handleResize, false)
   onResize({ canvas, camera, renderer })
+  const light1 = new THREE.PointLight(0xffffff, .5, 100)
+  light1.position.set(10, 5, 10)
 
-  const light = new THREE.PointLight(0xffffff, 1, 100)
-  light.position.set(10, 10, -10)
-  const light2 = new THREE.PointLight(0xff0000, 1, 100)
+  const light2 = new THREE.PointLight(0xff3300, 2, 100)
   light2.position.set(0, 0, 0)
-  scene.add(light)
+  light2.castShadow=true
+  light2.shadow.mapSize.width = 512; // default
+  light2.shadow.mapSize.height = 512; // default
+  light2.shadow.camera.near = 0.5; // default
+  light2.shadow.camera.far = 500; // default
+
+  scene.add(light1)
   scene.add(light2)
+
+const geometry = new THREE.BoxGeometry(30, 30, 30)
+const material = new THREE.MeshStandardMaterial({ color: 0x333333 })
+material.side=THREE.DoubleSide
+const cube = new THREE.Mesh(geometry, material)
+cube.position.set(0,0,0)
+cube.receiveShadow=true;
+scene.add(cube)
+
 
   const clock = new THREE.Clock()
   const animate = () => {
@@ -63,7 +86,19 @@ export const init = ({ canvas, container }) => {
     stats.begin()
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
-    swlogo.scene.rotateY(clock.getDelta() * 0.5)
+
+    //flicker the light
+    light2.intensity+=(.5-Math.random())/10
+    let randval =(.5-Math.random())/20
+    light2.position.set(randval,randval,randval)
+
+
+
+    if(swlogo){
+      swlogo.rotateY(clock.getDelta() * -0.3)
+      swlogo.rotateX(clock.getDelta() * -0.3)
+      swlogo.rotateZ(clock.getDelta() * -0.3)
+    }
     stats.end()
   }
   animate()
