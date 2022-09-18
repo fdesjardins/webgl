@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import Stats from 'stats.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { onResize } from '../../utils'
+import * as logo from './swcube3tex.gltf'
 
 export const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xFFFFFF)
+  scene.background = new THREE.Color(0x000000)
 
   const stats = new Stats()
   stats.showPanel(0)
@@ -19,6 +20,7 @@ export const init = ({ canvas, container }) => {
     0.1,
     2000
   )
+
   camera.updateProjectionMatrix()
   camera.position.set(2, 1, 2)
 
@@ -28,6 +30,18 @@ export const init = ({ canvas, container }) => {
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
+
+
+  const loader = new GLTFLoader();
+  let loadedlogo
+
+  loader.load( logo, function ( gltf ) {
+    let loadedlogo=gltf.scene
+    scene.add( gltf.scene );
+  }, undefined, function ( error ) {
+  	console.error( error );
+  } );
+  console.log(loadedlogo)
   const handleResize = (event) => {
     event.preventDefault()
     onResize({ canvas, camera, renderer })
@@ -35,14 +49,12 @@ export const init = ({ canvas, container }) => {
   window.addEventListener('resize', handleResize, false)
   onResize({ canvas, camera, renderer })
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshLambertMaterial({ color: 0xff0000 })
-  const cube = new THREE.Mesh(geometry, material)
-  scene.add(cube)
-
   const light = new THREE.PointLight(0xffffff, 1, 100)
-  light.position.set(0, 3, 5)
+  light.position.set(10, 10, -10)
+  const light2 = new THREE.PointLight(0xffffff, 1, 100)
+  light2.position.set(0, 0, 0)
   scene.add(light)
+  scene.add(light2)
 
   const clock = new THREE.Clock()
   const animate = () => {
@@ -52,7 +64,7 @@ export const init = ({ canvas, container }) => {
     stats.begin()
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
-    cube.rotateY(clock.getDelta() * 0.5)
+    //loadedlogo.rotateY(clock.getDelta() * 0.5)
     stats.end()
   }
   animate()
