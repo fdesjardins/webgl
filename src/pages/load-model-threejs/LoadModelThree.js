@@ -3,10 +3,11 @@ import Stats from 'stats.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { onResize } from '../../utils'
-import * as logo from './swcube3tex.gltf'
+import * as logo from './swcube2textured.gltf'
 
 export const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
+  let swlogo
   scene.background = new THREE.Color(0x000000)
 
   const stats = new Stats()
@@ -23,25 +24,22 @@ export const init = ({ canvas, container }) => {
 
   camera.updateProjectionMatrix()
   camera.position.set(2, 1, 2)
-
   const controls = new OrbitControls(camera, canvas)
   controls.update()
-
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
-
-
-
   const loader = new GLTFLoader();
-  let loadedlogo
 
   loader.load( logo, function ( gltf ) {
-    let loadedlogo=gltf.scene
+    gltf.scene.name="swlogo"
+    console.log(gltf)
+    swlogo = gltf
     scene.add( gltf.scene );
   }, undefined, function ( error ) {
   	console.error( error );
   } );
-  console.log(loadedlogo)
+  swlogo = scene.getObjectByName("swlogo")
+  console.log(swlogo)
   const handleResize = (event) => {
     event.preventDefault()
     onResize({ canvas, camera, renderer })
@@ -51,7 +49,7 @@ export const init = ({ canvas, container }) => {
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(10, 10, -10)
-  const light2 = new THREE.PointLight(0xffffff, 1, 100)
+  const light2 = new THREE.PointLight(0xff0000, 1, 100)
   light2.position.set(0, 0, 0)
   scene.add(light)
   scene.add(light2)
