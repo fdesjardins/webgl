@@ -7,7 +7,7 @@ import * as logo from './swcube2textured.gltf'
 
 export const init = ({ canvas, container }) => {
   const scene = new THREE.Scene()
-  let swlogo
+
   scene.background = new THREE.Color(0x000000)
 
   const stats = new Stats()
@@ -30,6 +30,7 @@ export const init = ({ canvas, container }) => {
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
   const loader = new GLTFLoader();
 
+  let swlogo
   loader.load( logo, function ( gltf ) {
     gltf.scene.name="swlogo"
     console.log(gltf)
@@ -38,8 +39,8 @@ export const init = ({ canvas, container }) => {
   }, undefined, function ( error ) {
   	console.error( error );
   } );
-  swlogo = scene.getObjectByName("swlogo")
   console.log(swlogo)
+
   const handleResize = (event) => {
     event.preventDefault()
     onResize({ canvas, camera, renderer })
@@ -62,7 +63,7 @@ export const init = ({ canvas, container }) => {
     stats.begin()
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
-    //loadedlogo.rotateY(clock.getDelta() * 0.5)
+    swlogo.scene.rotateY(clock.getDelta() * 0.5)
     stats.end()
   }
   animate()
