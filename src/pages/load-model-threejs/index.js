@@ -1,5 +1,5 @@
 export const meta = {
-  title: 'Load GLTF Three.js',
+  title: 'Shadows and GLTF Loading',
   tags: 'threejs',
   slug: 'load-model-three',
   component: import('./LoadModelThree'),
