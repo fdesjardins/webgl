@@ -23,7 +23,7 @@ export const init = ({ canvas, container }) => {
   )
 
   camera.updateProjectionMatrix()
-  camera.position.set(8, 1, 8)
+  camera.position.set(12, 0, 12)
   const controls = new OrbitControls(camera, canvas)
   controls.update()
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
@@ -88,8 +88,9 @@ scene.add(cube)
     renderer.render(scene, camera)
 
     //flicker the light
-    light2.intensity+=(.5-Math.random())/10
-    let randval =(.5-Math.random())/20
+    let randval =(.5-Math.random())
+    light2.intensity= 1+randval/10
+    randval=randval/60
     light2.position.set(randval,randval,randval)
 
 
