@@ -2,11 +2,12 @@ import * as THREE from 'three'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js'
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
+import { FontLoader,Font } from 'three/examples/jsm/loaders/FontLoader'
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
+import {isMobile, beep} from '../../utils.js'
 import Stats from 'stats.js'
-import * as Tone from 'tone'
+//import * as Tone from 'tone'
 import {
   RenderPass,
   EffectComposer,
@@ -19,13 +20,14 @@ import {
 
 import { DeviceOrientationControls } from './DeviceOrientationControls.js'
 import inconsolataFont from '../../fonts/Inconsolata/Inconsolata_Regular.json'
-import nom from './nom.ogg'
+//import nom from './nom.ogg'
 
 const globals = {
   fontLoader: new FontLoader(),
   font: null,
-  audioListener: null,
-  audioLoader: null,
+  useSound:true,
+  overheadMap:false
+
 }
 
 const state = {
@@ -49,8 +51,9 @@ const state = {
 const config = {
   roomSize: 300,
   roomColor: 0x0080f0,
-  isMobile: false,
+  isMobile: false
 }
+config.isMobile=isMobile()
 
 /**
  * Create the game score
@@ -159,7 +162,6 @@ const createControls = (user, canvas) => {
     controls.lat = 120
     return controls
   }
-  console.log('mouselook')
   const controls = new FirstPersonControls(user, canvas)
   controls.lookSpeed = 0.3
   controls.movementSpeed = 0
@@ -174,9 +176,7 @@ const createControls = (user, canvas) => {
   return controls
 }
 
-const options = {
-  useSound: true,
-}
+
 
 // to test localhost on a mobile device use :
 // adb reverse tcp:9090 tcp:9090
@@ -187,18 +187,19 @@ export const init = ({ canvas, container }) => {
   let { renderer } = createContextAndRenderer(canvas)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  if (options.useSound) {
-    globals.audioListener = new THREE.AudioListener()
-    globals.audioLoader = new THREE.AudioLoader()
-    globals.sound = new THREE.Audio(globals.audioListener)
-    globals.audioLoader.load(nom, (b) => {
-      globals.sound.setBuffer(b)
-      globals.sound.setVolume(0.5)
-    })
-    globals.synth = new Tone.Synth().toDestination()
-    const distortion = new Tone.Distortion(0.4).toDestination()
-    globals.synth.connect(distortion)
-    globals.synth.triggerAttackRelease('C5', '8n')
+  if (globals.useSound) {
+    globals.context=new AudioContext();
+    window.beep = beep
+    window.context=globals.context
+    setTimeout(function() {
+        beep(globals.context, 200,100,20)
+        setTimeout(function() {
+            beep(globals.context, 400,100,20)
+            setTimeout(function() {
+              beep(globals.context, 600,100,20)
+            }, 100)
+          }, 100)
+        }, 100)
   }
 
   const camera = new THREE.PerspectiveCamera(
@@ -233,8 +234,6 @@ export const init = ({ canvas, container }) => {
   const button = VRButton.createButton(renderer)
   container.appendChild(button)
   state.stats.showPanel(0)
-  // state.stats.showPanel(2)
-  // document.body.appendChild(state.stats.dom)
   let scene = new THREE.Scene()
   const user = new THREE.Group()
 
@@ -275,12 +274,12 @@ export const init = ({ canvas, container }) => {
     user.position.x = 0
     user.position.y = 299
     user.position.z = 0
-    // if (!config.isMobile) {
-    camControls.lookAt(0, 0, 0)
-    // }
+    if (!config.isMobile) {
+      camControls.lookAt(0, 0, 0)
+    }
     camControls.lookSpeed = 0.01
     if(globals.useSound){
-      globals.synth.triggerAttackRelease('E5', '8n')
+      beep(globals.context, 100,1000,20)
     }
   }
   let mycamera = false
@@ -309,9 +308,11 @@ export const init = ({ canvas, container }) => {
     state.score.value = score
     uiMesh.add(scoreMesh)
   }
-
-  const overheadRenderTarget = new THREE.WebGLRenderTarget(256, 256)
-  const overheadViewMesh = new THREE.Mesh(
+ const overheadRenderTarget = null
+ const overheadViewMesh = null
+if(globals.overheadMap){
+  overheadRenderTarget = new THREE.WebGLRenderTarget(256, 256)
+  overheadViewMesh = new THREE.Mesh(
     new THREE.PlaneGeometry(
       (0.04 / 950) * canvas.clientWidth,
       (0.04 / 950) * canvas.clientWidth
@@ -328,7 +329,7 @@ export const init = ({ canvas, container }) => {
   )
   uiMesh.add(overheadViewMesh)
   overheadViewMesh.position.copy(overheadViewPos)
-
+}
   const onWindowResize = () => {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
@@ -388,7 +389,6 @@ export const init = ({ canvas, container }) => {
   const eggs = []
 
   const size = renderer.getDrawingBufferSize(new THREE.Vector2())
-  console.log(size)
   //const renderTarget = new THREE.WebGLMultisampleRenderTarget(size.width, size.height)
 const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
   const composer = new EffectComposer(renderer, renderTarget)
@@ -405,11 +405,13 @@ const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
 
     state.stats.begin()
 
-    user.add(userMesh)
-    room.material.color.setHex(0x000000)
-    renderer.setRenderTarget(overheadRenderTarget)
-    renderer.render(scene, overheadCam)
-    user.remove(userMesh)
+    if(globals.overheadMap){
+      user.add(userMesh)
+      room.material.color.setHex(0x000000)
+      renderer.setRenderTarget(overheadRenderTarget)
+      renderer.render(scene, overheadCam)
+      user.remove(userMesh)
+    }
     room.material.color.setHex(config.roomColor)
     renderer.setRenderTarget(null)
     renderer.render(scene, camera)
@@ -433,7 +435,7 @@ const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
       } else {
         camControls.update(clock.getDelta())
       }
-    } 
+    }
 
     // Update user position
     mycamera.getWorldDirection(lookvector)
@@ -494,11 +496,11 @@ const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
         pathHolders.shift()
       }
       lastPathBlock.copy(user.position)
-      try {
+
         if(globals.useSound){
-          globals.synth.triggerAttackRelease('E3', '.00001')
+          beep(window.context, 100,5,10)
         }
-      } catch {}
+
     }
 
     // Add a tasty egg to eat every now and then
@@ -520,7 +522,9 @@ const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height)
     for (const egg of raycaster.intersectObjects(eggs)) {
       if (egg.distance < state.user.velocity + 1) {
         scene.remove(egg.object)
-        if(globals.useSound){globals.sound.play()}
+        if(globals.useSound){
+          beep(globals.context, 600,100,20)
+        }
         eggs.splice(eggs.indexOf(egg.object), 1)
         state.blockCount += 1
         state.user.velocity += 0.03
