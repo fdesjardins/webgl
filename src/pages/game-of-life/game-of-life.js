@@ -24,8 +24,8 @@ void main(){
   }
 }`
 
-const width = 4096
-const height = 4096
+const width = 1024
+const height = 1024
 
 const fs = `
 uniform float iTime;
@@ -130,6 +130,7 @@ const set = (data, i) => {
   data[i * 3] = 255
   data[i * 3 + 1] = 255
   data[i * 3 + 2] = 255
+  data[i * 3 + 3] = 255
 }
 
 const addGlider = (data, col, row) => {
@@ -186,12 +187,13 @@ const addAcorn = (data, col, row) => {
 }
 
 const texture = () => {
-  const data = new Uint8Array(3 * width * height)
-  for (let i = 0; i < width * height * 3; i++) {
-    const stride = i * 3
+  const data = new Uint8Array(4 * width * height)
+  for (let i = 0; i < width * height * 4; i++) {
+    const stride = i * 4
     data[stride] = 0
     data[stride + 1] = 0
     data[stride + 2] = 0
+    data[stride + 3] = 0
 
     // Random initialization
     if (Math.random() < 0.25) {
@@ -223,7 +225,7 @@ const texture = () => {
   // addRPentamino(data, 48, 48)
   // addRPentamino(data, 96, 96)
 
-  const tex = new THREE.DataTexture(data, width, height, THREE.RGBFormat)
+  const tex = new THREE.DataTexture(data, width, height, THREE.RGBAFormat)
   tex.needsUpdate = true
   return tex
 }
@@ -288,7 +290,7 @@ export const init = ({ canvas, container }) => {
   window.addEventListener('resize', handleResize, false)
   handleResize()
 
-  const planeGeometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200)
+  const planeGeometry = new THREE.PlaneGeometry(200, 200, 200, 200)
   const planeMaterial = new THREE.MeshPhongMaterial({
     color: 0xff0000,
     side: THREE.DoubleSide,
@@ -313,7 +315,7 @@ export const init = ({ canvas, container }) => {
 
   const { scene: renderTargetScene, camera: renderTargetCamera } = rtScene()
 
-  const geometry = new THREE.PlaneBufferGeometry(width, height)
+  const geometry = new THREE.PlaneGeometry(width, height)
   const uTexture = {
     type: 't',
     value: texture(),
@@ -328,14 +330,14 @@ export const init = ({ canvas, container }) => {
     side: THREE.DoubleSide,
     uniforms: {
       u_texture: uTexture,
-      iTime: iTime,
+      iTime,
     },
   })
   const object = new THREE.Mesh(geometry, material)
 
   renderTargetScene.add(object)
 
-  const sphere = new THREE.SphereBufferGeometry(256, 32, 32)
+  const sphere = new THREE.SphereGeometry(256, 32, 32)
   const sphereMesh = new THREE.Mesh(sphere, material)
   scene.add(sphereMesh)
 
