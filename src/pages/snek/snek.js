@@ -5,7 +5,7 @@ import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonCont
 import { FontLoader,Font } from 'three/examples/jsm/loaders/FontLoader'
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader'
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
-import {isMobile, beep} from '../../utils.js'
+import {isMobile, beep, onResize} from '../../utils.js'
 import Stats from 'stats.js'
 //import * as Tone from 'tone'
 import {
