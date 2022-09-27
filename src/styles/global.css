@@ -7,3 +7,12 @@ body {
 pre {
   font-family: Inconsolata, 'Courier New', monospace;
 }
+
+/* dat.gui */
+.dg.main.a {
+  top: 80px !important;
+  z-index: 99 !important;
+  position: fixed;
+  top: 80px;
+  right: 0;
+}

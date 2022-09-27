@@ -185,6 +185,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
     scene,
     camera,
     controls,
+    mesh: object,
     dispose: () => {
       renderer.dispose()
       stats.scene = null

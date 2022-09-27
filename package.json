@@ -30,6 +30,7 @@
     "@parcel/resolver-glob": "^2.7.0",
     "@parcel/transformer-glsl": "^2.7.0",
     "baobab": "^2.6.1",
+    "dat.gui": "^0.7.9",
     "glslify": "^7.1.1",
     "parcel": "^2.7.0",
     "postprocessing": "^6.28.7",
