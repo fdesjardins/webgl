@@ -5,7 +5,9 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "source": "src/index.html",
   "scripts": {
-    "start": "NODE_ENV=dev parcel"
+    "start": "NODE_ENV=dev parcel",
+    "build": "parcel build",
+    "push-gh-pages": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
   },
   "engines": {
     "node": "18.x"
@@ -20,7 +22,8 @@
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.8",
     "prettier": "^2.7.1",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "push-dir": "^0.4.1"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",
