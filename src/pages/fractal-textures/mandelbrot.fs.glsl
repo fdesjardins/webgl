@@ -31,7 +31,6 @@ const vec2 target = vec2(
 
 void main(){
   vec2 st = gl_FragCoord.xy / iResolution.xy;
-  st *= (1.0, iResolution.x/iResolution.y);
   float zoom = pow(mod(iTime, 60.0) / 2.0, 3.0);
   float xoff = ((st.x * 2.0 - 1.0) / zoom) + target.x;
   float yoff = ((st.y * 2.0 - 1.0) / zoom) + target.y;
