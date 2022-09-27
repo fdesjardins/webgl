@@ -14,6 +14,6 @@ jobs:
     - run: npm install
     - run: npm run build
     - run: |
-        git config --global user.name "Colin Schroeder"
-        git config --global user.email "collin.schroeder@gmail.com"
+        git config --global user.name "Forrest Desjardins"
+        git config --global user.email "desjardinsfg@gmail.com"
         npm run push-gh-pages
