@@ -50,7 +50,6 @@ export const init = ({ canvas, container }) => {
     opacity: 0.85,
     transparent: true,
     refractionRatio: 0.85,
-    vertexColors: THREE.VertexColors,
   })
   const cubesInstance = new MarchingCubes(42, cubesMaterial, true, true)
   cubesInstance.position.set(0, 0, 0)
