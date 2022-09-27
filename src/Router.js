@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 
 // eslint-disable-next-line import/no-unresolved
 import * as pages from './pages/*/index.js'
@@ -12,7 +12,7 @@ const pageIndex = Object.keys(pages)
   .sort((a, b) => a.meta.title.localeCompare(b.meta.title))
 
 export const Router = ({ children }) => (
-  <BrowserRouter>
+  <HashRouter>
     {children || null}
     <Routes>
       <Route path="/" element={<Home pageIndex={pageIndex} />} />
@@ -24,7 +24,7 @@ export const Router = ({ children }) => (
         />
       ))}
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 )
 
 Router.propTypes = {
