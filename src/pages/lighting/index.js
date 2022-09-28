@@ -1,8 +1,7 @@
 export const meta = {
   tags: 'basics',
-  title: 'Lighting',
-  slug: 'lighting',
-  dynamic: import('./Lighting'),
+  title: 'Twgl.js',
+  slug: 'twgljs',
 }
 
 export const options = {

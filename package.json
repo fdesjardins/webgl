@@ -42,7 +42,8 @@
     "stats.js": "^0.17.0",
     "three": "^0.144.0",
     "three-orbit-controls": "^82.1.0",
-    "tone": "^14.7.77"
+    "tone": "^14.7.77",
+    "twgl.js": "^5.0.1"
   },
   "alias": {
     "process": false

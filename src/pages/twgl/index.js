@@ -1,11 +1,11 @@
 export const meta = {
-  tags: 'basics',
+  tags: 'twgl,basics',
   title: 'Twgl.js',
-  slug: 'twgljs',
+  slug: 'twgl',
 }
 
 export const options = {
   display: 'fullscreen',
 }
 
-export const init = ({ canvas, container }) => {}
+export { init } from './twgl'
