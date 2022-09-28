@@ -8,4 +8,4 @@ export const options = {
   display: 'fullscreen',
 }
 
-export const init = ({ canvas, container }) => {}
+export { init } from './oimo'

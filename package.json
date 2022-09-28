@@ -32,6 +32,7 @@
     "baobab": "^2.6.1",
     "dat.gui": "^0.7.9",
     "glslify": "^7.1.1",
+    "oimo": "^1.0.9",
     "parcel": "^2.7.0",
     "postprocessing": "^6.28.7",
     "prop-types": "^15.8.1",
