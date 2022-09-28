@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import Stats from 'stats.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import helvetiker from 'three/examples/fonts/helvetiker_regular.typeface.json'
 import { onResize } from '../../utils'
 
@@ -40,23 +40,25 @@ export const init = ({ canvas, container }) => {
   const font = new Font(helvetiker)
   //  fontloader.load( helvetiker, function ( font ) {
 
-    const textgeometry = new TextGeometry( '3d text', {
-      font: font,
-      size: 1,
-      height: .2,
-      curveSegments: 12,
-      bevelEnabled: false
-    } );
-    const textmaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
-    const text = new THREE.Mesh(textgeometry, textmaterial)
-    text.position.set(-5,0,0)
-    text.rotateY(.78)
-    //secretText.rotateX(1.57)
-    //secretText.castShadow=true;
-    text.traverse( function( node ) {
-        if ( node.isMesh ) { node.castShadow = true; }
-    } );
-    scene.add(text)
+  const textgeometry = new TextGeometry('3d text', {
+    font,
+    size: 1,
+    height: 0.2,
+    curveSegments: 12,
+    bevelEnabled: false,
+  })
+  const textmaterial = new THREE.MeshPhongMaterial({ color: 0xffffff })
+  const text = new THREE.Mesh(textgeometry, textmaterial)
+  text.position.set(-5, 0, 0)
+  text.rotateY(0.78)
+  // secretText.rotateX(1.57)
+  // secretText.castShadow=true;
+  text.traverse(function (node) {
+    if (node.isMesh) {
+      node.castShadow = true
+    }
+  })
+  scene.add(text)
 
   const light = new THREE.PointLight(0xffffff, 1, 100)
   light.position.set(0, 3, 5)
