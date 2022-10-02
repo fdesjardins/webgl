@@ -59,7 +59,9 @@ float fbm(vec2 p) {
   f += 0.03125 * noise(p); p *= m;
   f += 0.015625 * noise(p); p *= m;
   f += 0.0078125 * noise(p); p *= m;
-  // 0.015625
+  f += 0.00390625 * noise(p); p *= m;
+  f += 0.00390625/2.0 * noise(p); p *= m;
+
   return f;
 }
 
@@ -274,7 +276,7 @@ void main() {
   // sky color
   if (result.x == MAX_DIST) {
     float cloud = 0.5*fbm(vec2(rayDir.x+iTime/64.0, rayDir.y)*4.0);
-    color = vec3((EARTH+WATER)/2.0 + (-1.0 * rayDir.y));
+    color = vec3((WATER)/1.5 + (-1.0 * rayDir.y));
     color += cloud;
   }
 
