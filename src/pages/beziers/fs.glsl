@@ -114,8 +114,7 @@ vec2 cBezier(float t, vec2 p0, vec2 p1, vec2 p2, vec2 p3, vec2 p4, vec2 p5, vec2
   return (1.0 - t)*cBezier(t, p0, p1, p2, p3, p4, p5) + t*cBezier(t, p1, p2, p3, p4, p5, p6);
 }
 
-void main() {
-  vec2 p = normalizeCoords();
+vec3 draw(vec2 p) {
   vec3 color = BLACK;
 
   vec2 points[3];
@@ -248,6 +247,19 @@ void main() {
   color += RB * drawPoint(p, b2-0.5);
   }
 
-  gl_FragColor = vec4(color, 1.0);
+  return color;
+}
+
+void main() {
+  vec2 p = normalizeCoords();
+
+  vec3 color = vec3(0.0);
+  for (int i=0; i<=1; i++) {
+    for (int j=0; j<=1; j++) {
+      color += draw(p + (0.0025 - 0.0025 * vec2(i,j)));
+    }
+  }
+
+  gl_FragColor = vec4(color/4.0, 1.0);
 }
 
