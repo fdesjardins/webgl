@@ -15,6 +15,6 @@ export const options = {
 }
 
 export const init = ({ camera, controls }) => {
-  camera.position.set(5, 5, 10)
+  camera.position.set(-9, 1.5, 5)
   return () => {}
 }

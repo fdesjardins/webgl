@@ -15,37 +15,79 @@ float sphereSD(vec3 pos, float rad) {
   return length(pos) - rad;
 }
 
-float surfaceSD(vec3 pos) {
-  return pos.y - cos(pos.x) - sin(pos.z);
-}
-
 float planeSD(vec3 pos, float y) {
   return pos.y - y;
 }
 
-const vec3 EARTH = vec3(0.5, 0.3, 0.0);
+// http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+highp float rand(vec2 co)
+{
+  highp float a = 12.9898;
+  highp float b = 78.233;
+  highp float c = 43758.5453;
+  highp float dt= dot(co.xy ,vec2(a,b));
+  highp float sn= mod(dt,3.14);
+  return fract(sin(sn) * c);
+}
+
+float noise(vec2 p) {
+  vec2 s = floor(p);
+  vec2 t = fract(p);
+  vec2 u = t * t * (3.0 - 2.0*t);
+  return mix(
+    mix(rand(s + vec2(0.0, 0.0)),
+        rand(s + vec2(1.0, 0.0)),
+        u.x),
+    mix(rand(s + vec2(0.0, 1.0)),
+        rand(s + vec2(1.0, 1.0)),
+        u.x),
+    u.y);
+}
+
+const vec3 EARTH = vec3(0.4, 0.2, 0.0);
 const vec3 WATER = vec3(0.5, 0.6, 1.0);
 
+float fbm(vec2 p) {
+  float f = 0.0;
+  // Here we construct a rotation matrix using Pythagorean
+  // triples to avoid using sin and cos
+  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+  f = 0.5     * noise(p); p *= m;
+  f += 0.25   * noise(p); p *= m;
+  f += 0.125  * noise(p); p *= m;
+  f += 0.0625 * noise(p); p *= m;
+  f += 0.03125 * noise(p); p *= m;
+  f += 0.015625 * noise(p); p *= m;
+  f += 0.0078125 * noise(p); p *= m;
+  // 0.015625
+  return f;
+}
+
+vec3 lightPos() {
+  return vec3(8.0 * sin(iTime/2.0), 4.0, 8.0 * cos(iTime/2.0));
+}
+
 vec4 scene(vec3 pos) {
-  if (abs(pos.x) > 20.0 || abs(pos.z) > 20.0) {
+  if (abs(pos.x) > 25.0 || abs(pos.z) > 25.0 || abs(pos.y) > 7.0) {
     return vec4(MAX_DIST);
   }
   vec3 col = EARTH;
   float d = MAX_DIST;
 
-  d = sphereSD(
-    vec3(
-      pos.x + sin(iTime),
-      pos.y - 1.0 + sin(iTime),
-      pos.z + cos(iTime)), 0.5);
+  d = sphereSD(pos + lightPos(), 0.5);
+    // vec3(
+    //   pos.x + sin(iTime),
+    //   pos.y - 1.0 + sin(iTime),
+    //   pos.z + cos(iTime)), 0.5);
 
   // mountains
+  float n = (10.0 * fbm(pos.xz / 7.5));
   d = min(d, planeSD(
     vec3(
       pos.x,
-      pos.y + sin(pos.x + iTime) + sin(pos.z) + cos(pos.z*2.0),
+      pos.y + 1.75,// + sin(pos.x + iTime) + sin(pos.z) + cos(pos.z*2.0),
       pos.z
-    ),
+    ) - n,
     -2.0
   ));
 
@@ -53,16 +95,24 @@ vec4 scene(vec3 pos) {
   float d2 = planeSD(
     vec3(
       pos.x,
-      pos.y + sin(pos.x*16.0)/32.0 + cos(pos.z*16.0)/32.0,
+      //pos.y,// + (sin((pos.x - sin(pos.z))*24.0) + cos(pos.x*13.0+iTime))/128.0 - n/8.0,
+      pos.y - 0.1 - n/8.0 - 0.025 * sin(iTime * 0.75 + pos.x),
       pos.z
-    ), -2.5);
+    ), -1.5);
+
   if (d2 < d) {
     return vec4(d2, WATER);
   }
+
   // snow caps
-  if (pos.y + sin(pos.z * 18.0)*0.2 > -1.0) {
-    col = vec3(1.0 - (-pos.y/2.0));
-  }
+  // if (pos.y + sin(pos.z * 18.0)*0.2 > 1.0 && pos.y + cos(pos.x * 18.0)*0.3 > 1.0) {
+    // if (n > 5.0) {
+    // col = vec3(0.75 - (-pos.y/3.0));
+    // col = vec3(n);
+    col += vec3(max(0.2, (n-3.75)));
+  // }
+  // col -= 0.25 * vec3(noise(pos.xz * 6.0));
+  col -= 0.1 * vec3(n);
   return vec4(d, col);
 }
 
@@ -120,10 +170,6 @@ vec3 calcPhong(vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye, vec3 lightPos,
     return lightIntensity * (k_d * dotLN);
   }
   return lightIntensity * (k_d * dotLN + k_s * pow(dotRV, alpha));
-}
-
-vec3 lightPos() {
-  return vec3(8.0 * sin(iTime/2.0), 4.0, 8.0 * cos(iTime/2.0));
 }
 
 vec3 phongIllumination(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {
@@ -203,15 +249,15 @@ void main() {
     // color = result.yzw * lambert(vec3(1.0), camPos + rayDir * result.x, camPos);
     if (result.yzw == WATER) {
       color = result.yzw * phongIllumination(
-          vec3(0.6),
-          vec3(0.8),
+          vec3(0.7),
+          vec3(0.85),
           vec3(1.0),
           1.0,
           camPos + rayDir * result.x,
           camPos
       );
     } else {
-      color = result.yzw * lambert(vec3(1.0), camPos + rayDir * result.x, camPos);
+      color = result.yzw * lambert(vec3(0.75), camPos + rayDir * result.x, camPos);
     }
   }
 
@@ -222,12 +268,14 @@ void main() {
 
   // fog
   vec3 surfacePos = camPos + rayDir * result.x;
-  if (surfacePos.y < 1.0) {
-    color += vec3(0.1, 0.15, 0.18) * vec3(0.005) * pow(result.x, 2.0);
+  if (surfacePos.y < 0.15) {
+    color = mix(color, vec3(0.15, 0.15, 0.18) * vec3(0.02) * pow(result.x, 2.0), (-surfacePos.y - 0.35)*1.0);
   }
-
+  // sky color
   if (result.x == MAX_DIST) {
-    color = vec3(0.0);
+    float cloud = 0.5*fbm(vec2(rayDir.x+iTime/64.0, rayDir.y)*4.0);
+    color = vec3((EARTH+WATER)/2.0 + (-1.0 * rayDir.y));
+    color += cloud;
   }
 
    // gamma correction
