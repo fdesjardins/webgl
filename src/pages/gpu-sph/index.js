@@ -1,5 +1,5 @@
 export const meta = {
-  tags: 'threejs,gpgpu',
+  tags: 'threejs,physics,gpgpu',
   title: 'GPU SPH',
   slug: 'gpu-sph',
   fullscreen: true,

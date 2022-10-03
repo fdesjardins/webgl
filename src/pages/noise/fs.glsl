@@ -68,13 +68,11 @@ void main() {
   p += iCameraPosition.xy * vec2(-1.0, 1.0);
   vec2 uv = p * vec2(iResolution.x/iResolution.y, 1.0);
 
-  // uv = rot2d(uv, deg2rad(16.0 * sin(iTime))) + iTime / 8.0;
-
-  // float f = noise(32.0 * uv);
-
   float f = 0.0;
-  // uv *= iCameraPosition.z;
-  uv *= 32.0;
+
+  uv.x += 3.0 * sin(iTime / 8.0);
+  uv.y += 3.0 * cos(iTime / 8.0);
+  uv *= 24.0 + 10.0 * sin(iTime / 3.0);
 
   // f(p_xz) = N(p_xz)
   // 1/2 * N(2 * M * p_xz)
@@ -82,16 +80,13 @@ void main() {
   // Here we construct a rotation matrix using Pythagorean
   // triples to avoid using sin and cos
   mat2 m = mat2(1.6, 1.2, -1.2, 1.6); // 3,4,5
-  // mat2 m = mat2(
-  //   2.0*(12.0/13.0), 2.0*(5.0/13.0),
-  //  -2.0*(5.0/13.0),  2.0*(12.0/13.0)
-  // );
+
   f = 0.5     * noise(uv); uv *= m;
   f += 0.25   * noise(uv); uv *= m;
   f += 0.125  * noise(uv); uv *= m;
   f += 0.0625 * noise(uv); uv *= m;
 
-  f = 0.5 * (1.0 + f);
+  f = 0.5 * (0.5 + f);
 
   gl_FragColor = vec4(vec3(f), 1.0);
 }

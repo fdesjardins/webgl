@@ -1,5 +1,5 @@
 export const meta = {
-  tags: 'threejs',
+  tags: 'threejs,physics',
   title: 'Pendulum',
   slug: 'pendulum',
 }

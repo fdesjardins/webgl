@@ -1,8 +1,7 @@
 export const meta = {
-  title: '3d Text',
+  title: '3D Text',
   tags: 'threejs',
-  slug: '3d-text',
-  component: import('./3d-text'),
+  slug: '3D-text',
 }
 
 export const options = {

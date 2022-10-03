@@ -1,7 +1,7 @@
 import fs from './fs.glsl'
 
 export const meta = {
-  tags: 'math',
+  tags: 'threejs,math',
   title: 'Bezier Curves',
   slug: 'beziers',
 }

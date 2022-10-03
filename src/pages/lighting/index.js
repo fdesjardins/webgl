@@ -1,7 +1,7 @@
 export const meta = {
-  tags: 'basics',
-  title: 'Twgl.js',
-  slug: 'twgljs',
+  tags: 'twgl,basics',
+  title: 'Lighting',
+  slug: 'lighting',
 }
 
 export const options = {

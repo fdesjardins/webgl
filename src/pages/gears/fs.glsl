@@ -115,14 +115,14 @@ vec4 gear(vec3 pos, float time, float offset) {
     d2 = sdCross(pos - vec3(0.0,2.9,0.0), vec3(0.8, 0.04, 0.04)) - 0.03;
     d1 = min(d1,d2);
 
-    float time2 = iTime;
+    float time2 = -2.0*3.1415;
     // float time2 = -1.0;
 
-    float r = length(pos) + (1.0 + sin(time2));
+    float r = length(pos);// + (1.0 + sin(time2));
     d1 = smax(d1, abs(r-3.0) - 0.165, 0.04);
 
     // axle
-    d2 = sdVStick(pos, 3.0 - (1.0 + sin(time2))) - 0.05;
+    d2 = sdVStick(pos, 3.0)-0.05;// - (1.0 + sin(time2))) - 0.05;
     d1 = min(d1,d2);
 
     return vec4(d1, 0.1, 0.1, 0.1);

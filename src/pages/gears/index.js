@@ -3,7 +3,7 @@ import texture from './rusty-metal-512x512.jpg'
 
 export const meta = {
   tags: 'threejs,ray marching',
-  title: 'Ray Marching Gears',
+  title: 'Raymarched Gears',
   slug: 'gears',
 }
 
