@@ -2,8 +2,8 @@ import fs from './fs.glsl'
 
 export const meta = {
   tags: 'threejs,ray marching',
-  title: 'Landscape',
-  slug: 'landscape',
+  title: 'Raymarched Terrain',
+  slug: 'terrain',
 }
 
 export const options = {
@@ -14,7 +14,7 @@ export const options = {
   },
 }
 
-export const init = ({ camera, controls }) => {
-  camera.position.set(-9, 1.5, 5)
+export const init = ({ camera }) => {
+  camera.position.set(-8, 0.75, 6)
   return () => {}
 }

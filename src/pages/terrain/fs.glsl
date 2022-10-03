@@ -8,8 +8,8 @@ uniform float iCameraFov;
 
 const int MAX_MARCHING_STEPS = 300;
 const float MIN_DIST = 0.0;
-const float MAX_DIST = 1000.0;
-const float EPSILON = 0.01;
+const float MAX_DIST = 100.0;
+const float EPSILON = 0.1;
 
 float sphereSD(vec3 pos, float rad) {
   return length(pos) - rad;
@@ -44,24 +44,20 @@ float noise(vec2 p) {
     u.y);
 }
 
-const vec3 EARTH = vec3(0.4, 0.2, 0.0);
+const vec3 EARTH = vec3(0.03, 0.01, 0.01);
 const vec3 WATER = vec3(0.5, 0.6, 1.0);
 
-float fbm(vec2 p) {
-  float f = 0.0;
+float fbm(vec2 p, int levels) {
   // Here we construct a rotation matrix using Pythagorean
   // triples to avoid using sin and cos
   mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
-  f = 0.5     * noise(p); p *= m;
-  f += 0.25   * noise(p); p *= m;
-  f += 0.125  * noise(p); p *= m;
-  f += 0.0625 * noise(p); p *= m;
-  f += 0.03125 * noise(p); p *= m;
-  f += 0.015625 * noise(p); p *= m;
-  f += 0.0078125 * noise(p); p *= m;
-  f += 0.00390625 * noise(p); p *= m;
-  f += 0.00390625/2.0 * noise(p); p *= m;
-
+  float f = 0.0;//5 * noise(p);
+  float d = 2.0;
+  for (int i=0; i<levels; i++) {
+    f += 1.0/d * noise(p);
+    p *= m;
+    d *= 2.0;
+  }
   return f;
 }
 
@@ -70,24 +66,18 @@ vec3 lightPos() {
 }
 
 vec4 scene(vec3 pos) {
-  if (abs(pos.x) > 25.0 || abs(pos.z) > 25.0 || abs(pos.y) > 7.0) {
-    return vec4(MAX_DIST);
-  }
+
   vec3 col = EARTH;
   float d = MAX_DIST;
 
-  d = sphereSD(pos + lightPos(), 0.5);
-    // vec3(
-    //   pos.x + sin(iTime),
-    //   pos.y - 1.0 + sin(iTime),
-    //   pos.z + cos(iTime)), 0.5);
+  d = sphereSD(pos - lightPos(), 0.25);
 
   // mountains
-  float n = (10.0 * fbm(pos.xz / 7.5));
+  float n = (9.0 * fbm(pos.xz / 7.5, 8));
   d = min(d, planeSD(
     vec3(
       pos.x,
-      pos.y + 1.75,// + sin(pos.x + iTime) + sin(pos.z) + cos(pos.z*2.0),
+      pos.y + 1.85,// + sin(pos.x + iTime) + sin(pos.z) + cos(pos.z*2.0),
       pos.z
     ) - n,
     -2.0
@@ -107,14 +97,10 @@ vec4 scene(vec3 pos) {
   }
 
   // snow caps
-  // if (pos.y + sin(pos.z * 18.0)*0.2 > 1.0 && pos.y + cos(pos.x * 18.0)*0.3 > 1.0) {
-    // if (n > 5.0) {
-    // col = vec3(0.75 - (-pos.y/3.0));
-    // col = vec3(n);
-    col += vec3(max(0.2, (n-3.75)));
-  // }
-  // col -= 0.25 * vec3(noise(pos.xz * 6.0));
-  col -= 0.1 * vec3(n);
+  // col -= 0.15 * vec3(pow(n,0.5)-2.5) * fbm(pos.xz/8.0, 3);
+  col += vec3(pow(n-3.0,2.0));
+  col -= max(0.0,n-4.5) * (3.5*fbm(pos.xz/32.0, 3));
+
   return vec4(d, col);
 }
 
@@ -242,9 +228,7 @@ void main() {
   vec2 uv = normalizeScreenCoords(gl_FragCoord.xy, iResolution);
   vec3 rayDir = getRayDirection(uv, camPos, camTarget, camFov);
 
-  // sky color
   vec3 color = vec3(0.0);
-  // color += vec3(0.5, 0.7, 1.0) * (-rayDir.y*2.0);
 
   vec4 result = trace(camPos, rayDir);
   if (result.x < MAX_DIST) {
@@ -269,19 +253,17 @@ void main() {
   // }
 
   // fog
-  vec3 surfacePos = camPos + rayDir * result.x;
-  if (surfacePos.y < 0.15) {
-    color = mix(color, vec3(0.15, 0.15, 0.18) * vec3(0.02) * pow(result.x, 2.0), (-surfacePos.y - 0.35)*1.0);
-  }
+  color = mix(color, vec3(0.15, 0.15, 0.28), smoothstep(0.0, MAX_DIST/2.0, result.x));
+
   // sky color
   if (result.x == MAX_DIST) {
-    float cloud = 0.5*fbm(vec2(rayDir.x+iTime/64.0, rayDir.y)*4.0);
-    color = vec3((WATER)/1.5 + (-1.0 * rayDir.y));
+    float cloud = 0.75*fbm(vec2(rayDir.z+iTime/64.0, rayDir.y)*4.0, 7);
+    color = vec3((WATER)/2.0 + (-1.0 * rayDir.y));
     color += cloud;
   }
 
    // gamma correction
-  // color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
+  color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
 
   gl_FragColor = vec4(color, 1.0);
 }
