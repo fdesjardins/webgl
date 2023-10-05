@@ -2,8 +2,8 @@ import fs from './fs.glsl'
 
 export const meta = {
   tags: 'noise,math',
-  title: 'Noise',
-  slug: 'noise',
+  title: 'Value Noise',
+  slug: 'value-noise',
 }
 
 export const options = {

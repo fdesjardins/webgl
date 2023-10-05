@@ -70,9 +70,9 @@ void main() {
 
   float f = 0.0;
 
-  uv.x += 3.0 * sin(iTime / 8.0);
-  uv.y += 3.0 * cos(iTime / 8.0);
-  uv *= 24.0 + 10.0 * sin(iTime / 3.0);
+  uv.x += 3.0 * sin(iTime / 24.0);
+  uv.y += 3.0 * cos(iTime / 24.0);
+  uv *= 24.0 + 10.0 * sin(iTime / 8.0);
 
   // f(p_xz) = N(p_xz)
   // 1/2 * N(2 * M * p_xz)
@@ -81,10 +81,10 @@ void main() {
   // triples to avoid using sin and cos
   mat2 m = mat2(1.6, 1.2, -1.2, 1.6); // 3,4,5
 
-  f = 0.5     * noise(uv); uv *= m;
-  f += 0.25   * noise(uv); uv *= m;
-  f += 0.125  * noise(uv); uv *= m;
-  f += 0.0625 * noise(uv); uv *= m;
+  f = 0.5      * noise(uv); uv *= m;
+  f += 0.25    * noise(uv); uv *= m;
+  f += 0.125   * noise(uv); uv *= m;
+  f += 0.0625  * noise(uv); uv *= m;
 
   f = 0.5 * (0.5 + f);
 
