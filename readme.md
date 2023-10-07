@@ -18,7 +18,6 @@ npm start
 export const meta = {
   title: 'My Experiment',
   tags: 'threejs,gpgpu',
-  slug: 'my-experiment',
 }
 
 export const init = ({ canvas, container }) => {

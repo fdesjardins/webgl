@@ -4,5 +4,3 @@ export const meta = {
   slug: 'hello-world',
   component: import('./HelloWorld'),
 }
-
-export { default } from './HelloWorld'

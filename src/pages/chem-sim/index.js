@@ -48,7 +48,7 @@ const createRenderTarget = (width, height) => {
   return new THREE.WebGLRenderTarget(width, height, options)
 }
 
-export const drawVs = `
+const drawVs = `
 uniform sampler2D u_position;
 
 varying vec2 vUv;
@@ -59,7 +59,7 @@ void main(){
   gl_Position = projectionMatrix * modelViewMatrix * vec4( pos.xyz, 1.0);
 }`
 
-export const drawFs = `
+const drawFs = `
 varying vec2 vUv;
 
 void main(){

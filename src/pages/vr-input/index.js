@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PT from 'prop-types'
 import * as THREE from 'three'
@@ -126,14 +125,11 @@ export const init = ({ canvas, container }) => {
 const VRInput = ({ children }, { store }) => (
   <div id="threejsvr01">
     <span id="webvr-button" />
-
   </div>
 )
 VRInput.propTypes = {
   children: PT.node,
 }
-
-export default VRInput
 
 export const options = {
   display: 'fullscreen',
