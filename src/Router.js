@@ -12,6 +12,12 @@ import { ErrorBoundaryFallback } from './components/error-boundary-fallback/Erro
 const pageIndex = Object.keys(pages)
   .map((key) => ({ key, ...pages[key] }))
   .filter((x) => !!x.meta)
+  .map((x) => {
+    if (!x.meta.slug) {
+      x.meta.slug = x.key
+    }
+    return x
+  })
   .sort((a, b) => a.meta.title.localeCompare(b.meta.title))
 
 const PageIndex = ss.array(
@@ -44,8 +50,8 @@ const Router = ({ children }) => {
         <Route path="/" element={<Home pageIndex={pageIndex} />} />
         {pageIndex.map(({ key, meta, options, init }) => (
           <Route
-            key={meta.slug ?? key}
-            path={meta.slug ?? key}
+            key={meta.slug || key}
+            path={meta.slug || key}
             element={<Page meta={meta} options={options} init={init} />}
           />
         ))}
