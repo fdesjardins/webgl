@@ -41,6 +41,7 @@
     "react-error-boundary": "^3.1.4",
     "react-router-dom": "^6.3.0",
     "stats.js": "^0.17.0",
+    "superstruct": "^1.0.3",
     "three": "^0.144.0",
     "three-orbit-controls": "^82.1.0",
     "tone": "^14.7.77",
