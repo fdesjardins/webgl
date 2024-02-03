@@ -116,7 +116,7 @@ const Menu = ({ index }) => {
         </div>
       </div>
       <div>
-        {examples.map(({ title, slug, tags }) => {
+        {examples.map(({ key, title, slug, tags }) => {
           return <MenuItem key={slug} title={title} to={slug} tags={tags} setFilter={setFilter} />
         })}
       </div>
