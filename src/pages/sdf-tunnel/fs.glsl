@@ -3,23 +3,26 @@ uniform vec3 iCameraPosition;
 uniform float iTime;
 
 float map(vec3 p){
-  p.x += sin(iTime/3.+p.z/4.)*.9;
-  p.y += cos(iTime/3.+p.z/4.)*.5;
-  p.xy -= vec2(sin(p.z*9.),cos(p.z*9.))*.15;
-  p.x += .15*sin(p.y*4.-p.z);
-  p.y += .15*cos(p.x*3.+p.z);
-  return 1.-length(p.xy)*.3;
+  // sdf for a sphere
+  return length(p)-0.1;
 }
 
+// march from the ro=ray origin in the rd=ray direction until distance
+// is less than some really small number ("epsilon", 2e-3 below)
 vec4 render(vec3 ro, vec3 rd){
+  // dp is where we accumulate distance during each step
   float dp = 0.;
+  // march up to 200 steps
   for (int i=0; i<200; i+=1){
+    // get the distance to the nearest object in the scene
     float d = map(ro+rd*dp);
+    // if d less than our epsilon, return dp (total distance)
     if (d < 2e-3) {
       return vec4(dp);
     }
     dp+=d;
   }
+  // if the ray never hits anything, return 0 for distance
   return vec4(0.);
 }
 
@@ -34,29 +37,32 @@ vec3 normal(vec3 pos) {
 }
 
 void main(){
-  // vec2 uv = gl_FragCoord.xy/iResolution.xy; //0-1
   vec2 uv2 = (gl_FragCoord.xy - iResolution.xy*0.5)/iResolution.y; //-1-1
-  // vec3 ro = vec3(0.);
+
+  // ray origin
   vec3 ro = iCameraPosition;
   vec3 target = normalize(vec3(0.,0.,-1.));
+  // up vector
   vec3 up = vec3(0.,1.,0.);
+  // right vector
   vec3 right = normalize(cross(target,up));
+  // ray direction
   vec3 rd = normalize((right*uv2.x + up*uv2.y)-target);
 
-  float time = iTime/1.5;
-  ro.z += time*4.0;
-  rd.x += sin(time)*.02;
-  rd.y += cos(time)*.05;
+  // d = distance
   float d = render(ro,rd).x;
 
+  // if d = 0 (we never hit anything) return black
   if (d == 0.){
     gl_FragColor = vec4(0.,0.,0.,1.);
     return;
   }
 
-  float d2 = d/50.;
-  vec4 col = vec4(.5-d2, .5-d2+.2*cos(time/2.), .5-d2+.2*sin(time/2.), 1.);
-  vec3 lpos = vec3(-rd.x,-rd.y,0.);
+  vec4 col = vec4(1.0);
+  // light position
+  vec3 lpos = vec3(0.0, 1.0, -1.);
+  // adjust color based on light pos and estimated normal
   col.xyz *= dot(lpos,normal(ro+rd*d))*4.;
+
   gl_FragColor = col;
 }
