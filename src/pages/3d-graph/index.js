@@ -14,7 +14,9 @@ export const options = {
   },
 }
 
-export const init = ({ camera }) => {
-  camera.position.set(0, 0, -1)
+export const init = ({ camera, controls }) => {
+  camera.position.set(0, 0.8, 2)
   camera.lookAt(0, 0, 0)
+  controls.autoRotate = true
+  controls.autoRotateSpeed = 0.75
 }
