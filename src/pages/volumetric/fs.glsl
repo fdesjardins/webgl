@@ -131,7 +131,7 @@ void main() {
   vec3 color = result.yzw;
 
   if (result.x == MAX_DIST) {
-    color = vec3(0.0);
+    gl_FragColor = vec4(0.,0.,0.,1.);
     return;
   }
 

@@ -1,0 +1,233 @@
+uniform vec2 iResolution;
+uniform float iTime;
+varying vec2 texCoord;
+varying vec2 vUv; // [0:1]
+uniform sampler2D iChannel0;
+uniform bool iSphere;
+uniform float iOffsetX;
+uniform float iRotation;
+uniform float iVb;
+uniform float iVc;
+uniform float iVd;
+uniform float iEV;
+
+float R = 100.0;
+
+// Distortion coefficients
+
+// vec2 uvStretched = (vUv * 2.0) - 0.5;
+// float a = -0.12;
+// float b = -0.168;
+// float c = 0.0635;
+// float d = -0.00;
+// float e = -0.00079;
+
+float a = -0.12;
+float b = -0.2;
+float c = 0.086;
+float d = -0.00;
+float e = -0.0017;
+
+// float a = -0.32;
+// float b = -0.45;
+// float c = 0.33;
+// float d = -0.00;
+// float e = -0.02;
+
+float focalLength = 3.0;
+float vfov = 58.0;
+float hfov = 108.0;
+
+float width = 1920.0;
+float height = 1080.0;
+
+vec2 brownConrady(vec2 xy, float a, float b, float c, float d)
+{
+    vec2 uv = xy * 2.0 - 1.0;	// brown conrady takes [-1:1]
+
+    // uv.y /= width/height;
+    // uv *= 1.;
+    uv.y /= width/height;
+    // uv *= 2.5;
+    // uv.y /= vfov/hfov;
+    // uv.y /= 1.;
+    // uv *= 1.5;
+    // uv.y /= 2.5;
+    // uv.x /= 1.25;
+
+    // Positive values of a,b,c,d give barrel distortion, negative give pincushion
+    float r = sqrt(uv.x*uv.x + uv.y*uv.y);
+    float r2 = pow(r, 2.0);
+    float r3 = pow(r, 3.0);
+    float r4 = pow(r, 4.0);
+    float r6 = pow(r, 6.0);
+    uv.x *= 1.00 + a * r + b * r2 + c * r3 + d * r4 + e*r6;
+    uv.y *= 1.00 + a * r + b * r2 + c * r3 + d * r4 + e*r6;
+
+    uv.y *= width/height;
+    // uv -= 0.5*uv*r;
+    // Tangential distortion (due to off center lens elements)
+    // is not modeled in this function, but if it was, the terms would go here
+
+    // uv *= 1.;
+    uv = (uv * .5 + .5);	// restore -> [0:1]
+    return uv;
+}
+
+vec2 scaleWarped(vec2 uv, vec2 factor) {
+  vec2 xy = (uv - .5) * 2.0;
+  // factor = brownConrady(factor, a, b, c, d);
+  xy.x *= factor.x;
+  xy.y *= factor.y;
+  return xy / 2.0 + 0.5;
+}
+
+vec2 scale2(vec2 uv, vec2 factor) {
+  vec2 xy = uv;
+  uv.x *= 2.0;
+  return uv;
+}
+
+// vec2 simple(vec2 uv, float focalLength) {
+//   uv = uv * 2.0 - 1.0; //[-1:1]
+//   float r = sqrt(uv.x*uv.x + uv.y*uv.y);
+//   uv *= 2.0 * r / focalLength;
+//   uv = (uv * .5 + .5);	// restore -> [0:1]
+//   return uv;
+// }
+
+vec2 sphericalWarp(vec2 uv, float z) {
+  vec2 xy = (uv - .5) * 2.0;
+  xy = vec2(xy.x/z, xy.y/z);
+  return xy / 2.0 + 0.5;
+}
+
+mat2 rotate2d(float theta){
+  return mat2(cos(theta), -sin(theta),
+              sin(theta),  cos(theta));
+}
+
+vec2 rotate(vec2 uv, float theta) {
+  vec2 xy = (uv - .5) * 2.0;
+  xy *= rotate2d(theta);
+  return xy / 2.0 + 0.5;
+}
+
+float correctVignette(vec2 uv, float b, float c, float d) {
+  vec2 xy = (uv - .5) * 2.0;
+  float r = sqrt(uv.x*uv.x + uv.y*uv.y);
+  float r2 = pow(r, 2.0);
+  float r4 = pow(r, 4.0);
+  float r6 = pow(r, 6.0);
+  float correction = 0.0 + b*r2 + c*r4 + d*r6;
+  return correction;
+}
+
+void main() {
+  float overlapDegrees = (hfov - 90.0) / 2.0;
+
+  vec2 uvStretched;
+  // vec2 uvStretched = vUv;
+
+  if (iSphere) {
+    // uvStretched.x += iOffsetX;
+    // uvStretched = scaleWarped(vUv, vec2(4.6, 5));
+    uvStretched = scaleWarped(vUv, vec2(.339,.25));
+  } else {
+    // Without spherical warp
+    uvStretched = scaleWarped(vUv, vec2(4.55, 5));
+  }
+  // uvStretched = rotate(uvStretched, iRotation);
+
+  vec2 uvDewarped;
+  uvDewarped = brownConrady(
+    uvStretched,
+    a,
+    b,
+    c,
+    d
+  );
+
+  vec3 vigCorr = vec3(0.) + correctVignette(uvDewarped, iVb, iVc, iVd);
+
+  if (iSphere) {
+    uvDewarped = sphericalWarp(uvDewarped, 0.1);
+  }
+
+  uvDewarped = rotate(uvDewarped, iRotation);
+
+  // uvDewarped.x += -0.5;
+
+  // Scale to vertical and horizontal fov
+  // uvDewarped = scaleWarped(uvDewarped, vec2(1.28, 1.125));
+  // uvDewarped = scaleWarped(uvDewarped, vec2(2., 2.));
+
+
+  // Sample texture
+  uvDewarped.x *= -1.; // Flip horizontally
+  uvDewarped.x += 1.;  // Re-align
+  gl_FragColor = vec4(texture(iChannel0, uvDewarped).rgb, 1.0);
+
+  // Vignette correction
+
+  gl_FragColor.rgb -= vigCorr;
+  gl_FragColor.rgb += gl_FragColor.rgb * iEV/2.;
+
+  // Overlap area
+  float overlap = .3;
+  float aMult = 4.;
+
+  if (uvDewarped.x > 0.0 && uvDewarped.x < overlap) {
+    // float alpha = uvDewarped.x / (overlapDegrees/360.0);
+    // gl_FragColor.rgb += vec3(0.1, 0.0, alpha);
+    // gl_FragColor.r += 0.1;
+    gl_FragColor.a = uvDewarped.x / overlap;
+    gl_FragColor.a *= aMult;
+  }
+  if (uvDewarped.x < 1.0 && uvDewarped.x > 1.0 - overlap) {
+    // float alpha = uvDewarped.x / (overlapDegrees/360.0);
+    // gl_FragColor.rgb += vec3(0.1, 0.0, alpha);
+    // gl_FragColor.r += 0.1;
+    gl_FragColor.a = (1.0 - uvDewarped.x) / overlap;
+    gl_FragColor.a *= aMult;
+  }
+
+  // gl_FragColor.a = 0.75;
+
+  // Black outside image area
+  if (uvDewarped.x < 0.0 || uvDewarped.x > 1.0 || uvDewarped.y < 0.0 || uvDewarped.y > 1.0) {
+    gl_FragColor = vec4(vec3(0.0), 0.0);
+  }
+
+  // Draw equatorial line
+  // if (vUv.y > .5 - 1e-4 && vUv.y < .5 + 4e-4) {
+  //   gl_FragColor = vec4(1.0, 0., 0., 1.);
+  // }
+
+
+  // Show one 'quadrant' width
+  if (iSphere) {
+    // if (vUv.x > 0.375 && vUv.x <= 0.625) {
+    //   gl_FragColor += 0.1;
+    // }
+    // if (vUv.x <= 0.375 && vUv.x > 0.35) {
+    //   gl_FragColor.r += 0.1;
+    // }
+
+    // Chop off area where texture gets mirrored
+    if (vUv.x < 0.28) {
+      gl_FragColor = vec4(0.0);
+    }
+    if (vUv.x > 0.72) {
+      gl_FragColor = vec4(0.0);
+    }
+  }
+
+  // Cut off top and bottom
+  // if (vUv.y < .345) {
+  //   gl_FragColor = vec4(0.0);
+  // }
+  // if (vUv.y > .665) {
+  //   gl_FragColor = vec4(0.0);
+  // }
+}

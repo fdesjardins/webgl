@@ -2,8 +2,7 @@ import fs from './fs.glsl'
 
 export const meta = {
   tags: 'ray marching',
-  title: 'SDF Tunnel',
-  // slug: 'sdf-tunnel',
+  title: 'Beholder',
 }
 
 export const options = {
@@ -16,6 +15,6 @@ export const options = {
 
 export const init = ({ camera, controls }) => {
   camera.position.set(0, 0, -1)
-  controls.enableRotate = false
-  return () => {}
+  // controls.enableRotate = false
+  return () => { }
 }

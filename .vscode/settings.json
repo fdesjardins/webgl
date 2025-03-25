@@ -1,6 +1,8 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.addMissingImports.ts": "explicit"
   },
   "cSpell.words": [
     "glsl",

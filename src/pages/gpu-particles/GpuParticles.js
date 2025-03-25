@@ -12,8 +12,8 @@ import {
 import { vs, updatePos, updateVel } from './shaders'
 import { onResize } from '../../utils'
 
-const WIDTH = 300
-const HEIGHT = 300
+const WIDTH = 400
+const HEIGHT = 400
 const PARTICLES = WIDTH * WIDTH
 
 const checkCapabilities = (renderer) => {

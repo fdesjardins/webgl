@@ -24,8 +24,8 @@ void main(){
   }
 }`
 
-const width = 1024
-const height = 1024
+const width = 2048
+const height = 2048
 
 const fs = `
 uniform float iTime;

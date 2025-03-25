@@ -36,7 +36,7 @@ const PageContent = ({ options, init }) => {
     const canvas = document.querySelector('canvas')
     const container = document.querySelector('#container')
     const dispose = []
-    let scene, camera, controls, mesh
+    let scene, camera, controls, mesh, uniforms
     if (options?.type === 'shadertoy') {
       const shaderToy = shadertoyInit({
         canvas,
@@ -50,10 +50,11 @@ const PageContent = ({ options, init }) => {
       camera = shaderToy.camera
       controls = shaderToy.controls
       mesh = shaderToy.mesh
+      uniforms = shaderToy.uniforms
       dispose.push(shaderToy.dispose)
     }
     if (init) {
-      dispose.push(init({ canvas, container, camera, controls, scene, mesh }))
+      dispose.push(init({ canvas, container, camera, controls, scene, mesh, uniforms }))
     }
     return () => {
       for (const d of dispose) {

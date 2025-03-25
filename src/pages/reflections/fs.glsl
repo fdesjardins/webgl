@@ -17,6 +17,44 @@ const vec3 GREEN = vec3(0.0, 1.0, 0.0);
 const vec3 BLUE = vec3(0.0, 0.0, 1.0);
 const vec3 ORANGE = vec3(0.8, 0.5, 0.0);
 
+
+// http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+highp float rand(vec3 co)
+{
+  highp float a = 12.9898;
+  highp float b = 78.233;
+  highp float c = 400.23;
+  highp float d = 43758.5453;
+  highp float dt= dot(co.xyz ,vec3(a,b,c));
+  highp float sn= mod(dt,3.14);
+  return fract(sin(sn) * c);
+}
+
+float noise(vec3 p) {
+  vec3 s = floor(p);
+  vec3 t = fract(p);
+  vec3 u = smoothstep(0.0, 1.0, t);
+
+  return mix(
+    mix(
+      mix(rand(s + vec3(0.0, 0.0, 0.0)),
+          rand(s + vec3(1.0, 0.0, 0.0)),
+          u.x),
+      mix(rand(s + vec3(0.0, 1.0, 0.0)),
+          rand(s + vec3(1.0, 1.0, 0.0)),
+          u.x),
+      u.y),
+    mix(
+      mix(rand(s + vec3(0.0, 0.0, 1.0)),
+          rand(s + vec3(1.0, 0.0, 1.0)),
+          u.x),
+      mix(rand(s + vec3(0.0, 1.0, 1.0)),
+          rand(s + vec3(1.0, 1.0, 1.0)),
+          u.x),
+      u.y),
+    u.z);
+}
+
 float sphereSD(vec3 pos, float rad) {
   return length(pos) - rad;
 }
@@ -67,7 +105,7 @@ vec4 sun(vec3 pos) {
 }
 
 vec4 planets(vec3 pos) {
-  vec4 sphere2 = vec4(sphereSD(pos + 4.0, 1.25), BLUE*0.3 + sin(iTime)*0.025);
+  vec4 sphere2 = vec4(sphereSD(pos + 3.5, 1.25), BLUE*0.3 + sin(iTime)*0.025);
   vec3 sphere3Pos = vec3(pos.x - 4.0, pos.y + 3.0, pos.z + 4.0);
   float k = 0.009; // stretch factor
   vec3 ringsPos = sphere3Pos;
@@ -119,6 +157,8 @@ vec4 scene(vec3 pos) {
     flatPlaneSD(pos, -5.2),
     vec3(0.0, 0.0, 0.0)
   );
+  floor1.x = max(floor1.x, abs(pos.x)-10.);
+  floor1.x = max(floor1.x, abs(pos.z)-10.);
 
   vec4 result = spheres1;
   if (result.x > box.x) {
@@ -252,12 +292,12 @@ void main() {
   vec3 hit = origin + rayDir * result.x;
   vec3 hitNormal = estimateNormal(hit);
 
-  // Sky color
   if (result.x == MAX_DIST) {
-    // color = vec3(0.1, 0.1, 0.2) * (rayDir.y * 0.5);
-    color = fract(sin(dot(result.xz, vec2(12.9898, 78.233))) * 43758.5453) > 0.22
-      ? vec3(1.0)
-      : vec3(0.0);
+    // Sky color
+    if (rand(uv.xyy) > .9996) {
+      color = vec3(1.0)*rand(uv.xyy*2.0);
+      color += 0.3*rand(uv.xyy+iTime);
+    }
     gl_FragColor = vec4(color, 1.0);
     return;
   }
@@ -317,13 +357,13 @@ void main() {
     origin = hit;
   }
   // Second reflection
-  // if (result.x < MAX_DIST) {
-  //   vec3 hit = origin + rayDir * result.x;
-  //   vec3 hitNormal = estimateNormal(hit);
-  //   vec3 hitRayDir = reflect(rayDir, hitNormal);
-  //   result = trace(hit + 0.001 * hitNormal, hitRayDir);
-  //   color += 0.1 * result.yzw;
-  // }
+  if (result.x < MAX_DIST) {
+    vec3 hit = origin + rayDir * result.x;
+    vec3 hitNormal = estimateNormal(hit);
+    vec3 hitRayDir = reflect(rayDir, hitNormal);
+    result = trace(hit + 0.001 * hitNormal, hitRayDir);
+    color += 0.1 * result.yzw;
+  }
 
   color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
 

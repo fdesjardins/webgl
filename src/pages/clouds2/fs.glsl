@@ -10,7 +10,7 @@ varying vec2 vUv;
 const int MAX_MARCHING_STEPS = 250;
 const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
-const float EPSILON = 0.1;
+const float EPSILON = 0.0001;
 
 const vec3 RED = vec3(1.0, 0.0, 0.0);
 const vec3 GREEN = vec3(0.0, 1.0, 0.0);
@@ -79,7 +79,7 @@ float fbm(vec3 pos) {
   f += 0.125     * noise(pos); pos *= m;
   // float f1 = f;
   f += 0.0625    * noise(pos); pos *= m;
-  // f += 0.03125   * noise(pos); pos *= m;
+  f += 0.03125   * noise(pos); pos *= m;
   // f += 0.015625  * noise(pos); pos *= m;
   // f += 0.0078125 * noise(pos); pos *= m;
 
@@ -91,65 +91,40 @@ float fbm(vec3 pos) {
   return f;
 }
 
-// https://iquilezles.org/articles/distfunctions/
-float smoothUnion(float d1, float d2, float k) {
-  float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );
-  return mix( d2, d1, h ) - k*h*(1.0-h);
+
+vec3 lightPos() {
+  return vec3(0.0,25.0,0.0);
 }
+
+// https://iquilezles.org/articles/distfunctions/
+// float smoothUnion(float d1, float d2, float k) {
+//   float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );
+//   return mix( d2, d1, h ) - k*h*(1.0-h);
+// }
 
 vec4 scene(vec3 pos) {
   vec3 bpos = pos;
-  bpos.z += 1.0;
-  vec4 box = vec4(
-    boxSD(bpos, vec3(0.2)),
-    vec3(1.0, 1.0, 0.0)
-  );
-
-  float f = fbm(pos*6.0 + iTime/2.0);
-  // float f = fbm(pos+iTime);
-  vec3 cloudpos = vec3(
-    pos.x+sin(iTime),
-    pos.y+cos(iTime/2.),
-    pos.z+cos(iTime));
-  cloudpos.y += .2 * pos.z * sin(iTime);
-  vec4 cloud = vec4(
-      sphereSD(cloudpos, 0.35),
-      vec3(0.25, 0.75, 1.) * f
-  );
-
-  vec4 cloud2 = vec4(
-    sphereSD(pos, 0.75),
-    vec3(0., sin(iTime/8.), 0.35) * f
-  );
-  vec4 cloud3 = vec4(
-    sphereSD(vec3(
-    pos.x+cos(iTime),
-    pos.y+sin(iTime/2.),
-    pos.z+sin(iTime)), 0.5+(.2*sin(iTime))),
-    vec3(.75,.25, 0.5) * f
-  );
-
-  vec4 res = cloud3;
-
-  if (res.x > cloud.x) { res = cloud; }
-  if (res.x > cloud2.x) { res = cloud2; }
-  res.x = smoothUnion(res.x, cloud.x, 0.35);
-  res.x = smoothUnion(res.x, cloud2.x, 0.25);
-  return res;
+  // return vec4(sphereSD(pos, 1.0), vec3(1.0));
+  vec4 clouds = vec4(boxSD(pos, vec3(10.0,2.,10.)), vec3(1.0));
+  vec4 light = vec4(sphereSD(pos-lightPos(), 0.3), vec3(1.0));
+  if (light.x < clouds.x) {
+    return light;
+  }
+  return clouds;
 }
 
-// float calcAO(vec3 pos, vec3 normal) {
-// 	float occ = 0.0;
-//   float sca = 1.0;
-//   for( int i=0; i<5; i++ )
-//   {
-//     float h = 0.01 + 0.12*float(i)/4.0;
-//     float d = scene(pos + h*normal).x;
-//     occ += (h-d)*sca;
-//     sca *= 0.95;
-//   }
-//   return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
-// }
+float calcAO(vec3 pos, vec3 normal) {
+	float occ = 0.0;
+  float sca = 1.0;
+  for( int i=0; i<5; i++ )
+  {
+    float h = 0.01 + 0.12*float(i)/4.0;
+    float d = scene(pos + h*normal).x;
+    occ += (h-d)*sca;
+    sca *= 0.95;
+  }
+  return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
+}
 
 vec3 estimateNormalFast(vec3 pos) {
   vec4 drgb = scene(pos);
@@ -177,23 +152,60 @@ vec4 trace(vec3 origin, vec3 dir) {
   return vec4(MAX_DIST, vec3(0.0));
 }
 
+
 vec4 through(vec3 origin, vec3 dir) {
   float depth = MIN_DIST;
-  vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
+  // vec4 color = vec4(1.0, 1.0, 1.0, 0.0);
+  vec4 color = vec4(0.0);
   vec3 n = estimateNormalFast(origin);
   for (int i=0; i < MAX_MARCHING_STEPS; i+=1) {
-    if (color.a > 0.99) {
-      break;
-    }
+    // if (color.a > 0.99) {
+    //   break;
+    // }
     vec4 drgb = scene(origin + depth * dir);
-    float density = fbm((origin + depth * dir)*6.0 + iTime/2.0);
+    vec3 pos = origin+dir*depth;
+    vec3 fbmPos = pos/4. + vec3(0.5, -0.3, 0.0)*iTime/3.0;
+    float density = fbm(fbmPos);
+    // float density = 1.0;
+    // pos.x *= 20.0;
+    density += sin(iTime*0.1)*0.01;
     float dist = drgb.x;
-    depth += 0.01;
+    depth += 0.075;
     // color += vec3(density);
     if (dist < EPSILON) {
-      color = mix(color, vec4(drgb.yzw,density/32.0), density/128.0);
-      // color += vec4(0.1*drgb.yzw, density/32.0);
-      // color = vec4(1.0);
+      if (density >.75) {
+        color.rgb += 0.01*density;
+        // color.rgb -= density * 0.05;
+        // color.rgb -= 0.02 * density / (distance(pos, lightPos()/1.)/4.0);
+
+        // color.rgb += -0.02 * density;
+        color.rgb += 0.01*density / pow(distance(pos,lightPos())/2.0, 2.0);
+
+        // darken bottom
+        // if (dot(pos/4.))
+
+        // self-occlusion to light
+        vec3 toLight = normalize(lightPos() - pos);
+        float density2 = fbm(fbmPos + toLight*0.02);
+        if (density2 >= .8) {
+          color.rgb += vec3(1.0)*min(0.0, 0.15*density2);
+          // color.rgb = vec3(0.);
+        }
+
+        color.rgb -= 0.01*dot(pos, vec3(0.0,-1.0,0.0));
+        // color.rg += 0.025*dot(pos, vec3(0.0,1.0,0.0));
+        // color.rgb += 0.5*calcAO(fbmPos, normalize(lightPos() - pos));
+
+        // color.rgb -= 0.1*density * abs(dot(pos,lightPos())) / (distance(pos, lightPos())/1.0);
+        // color.a += 0.001;
+        // color.a = 0.2;
+        // color += 0.01*mix(color, vec4(drgb.yzw,density/2.0), density/12.0);
+        // color *= 1.0-dot(origin+depth, lightPos());
+        // color += .1*dot(origin + depth, lightPos())/distance(origin + depth, lightPos());
+      } else {
+        // color = vec4(1.0,1.0,1.0,0.0);
+        // color = behind;
+      }
 
       continue;
     }
@@ -204,13 +216,15 @@ vec4 through(vec3 origin, vec3 dir) {
 
     vec4 behind = trace(posteriorPos, dir);
     if (behind.x >= MAX_DIST) {
-      color = mix(color, vec4(0.,0.,0.,1.), 0.2);
+      color = mix(color, vec4(0.,0.,0.,0.), 0.0);
     }
 
     // vec3 c = mix(color, behind.yzw - color, 0.1);
+    // color.a = 1.0;
     return color;
   }
-  return vec4(MAX_DIST, vec3(0.0));
+  // return vec4(MAX_DIST, vec3(0.0));
+  return vec4(0.0);
 }
 
 vec3 getRayDirection(vec2 uv, vec3 origin, vec3 target, float fov) {
@@ -237,11 +251,11 @@ void main() {
   vec4 result = trace(camPos, rayDir);
   vec3 color = result.yzw;
 
-  if (result.x >= MAX_DIST) {
-    gl_FragColor = vec4(0.,0.,0.,1.);
-    gl_FragColor.b += rayDir.y/2.;
-    return;
-  }
+  // if (result.x >= MAX_DIST) {
+  //   gl_FragColor = vec4(0.,0.,0.,1.);
+  //   gl_FragColor.b += rayDir.y/2.;
+    // return;
+  // }
 
   vec3 origin = camPos + result.x * rayDir + rayDir * (EPSILON + 0.01);
   vec4 otherSide = through(origin, rayDir);
@@ -260,7 +274,17 @@ void main() {
   // gamma correction
   color.xyz = pow(vec4(color, 1.0), vec4(1.0/2.2)).xyz;
 
-  // gl_FragColor = vec4(color, 1.0);
-  gl_FragColor = otherSide;
+  gl_FragColor = vec4(color, 1.0);
+  gl_FragColor = vec4(0.7,0.75,0.95,1.);
+  // gl_FragColor.b += rayDir.y/2.;
+  // gl_FragColor.b = 0.;
+  // if (otherSide.b > 0.0) {
+    gl_FragColor = mix(gl_FragColor, vec4(otherSide.rgb,1.0), .4);
+    // gl_FragColor -= 0.01*dot(
+    //   estimateNormalFast(origin+rayDir*result.x),
+    //   lightPos()
+    // );
+    // gl_FragColor -= vec4(otherSide.rgb, 1.0);
+  // }
   // gl_FragColor = mix(vec4(color, 0.5), otherSide, 0.75);
 }

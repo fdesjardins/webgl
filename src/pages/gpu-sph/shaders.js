@@ -18,16 +18,16 @@ mat2 scale(float sx, float sy){
 }`
 
 const constants = `
-float H = 3.0;
+float H = 2.5;
 float PI = 3.14159265359;
 float GAS_CONST = 100.0;
-float REST_DENSITY = 200.0;
-float VISCOSITY = 100.0;
+float REST_DENSITY = 80.0;
+float VISCOSITY = 50.0;
 vec3 G = vec3(0.0, -9.8, 0.0);
 float MASS = 0.025;
-float PARTICLE_SIZE = 0.1;
-float WORLD_SIZE = 6.0;
-vec3 SPAWN_POS = vec3(0.0, 1.0, 0.0);`
+float PARTICLE_SIZE = 5.0;
+float WORLD_SIZE = 4.0;
+vec3 SPAWN_POS = vec3(0.0, 1.5, 0.0);`
 
 const uniforms = `
 uniform sampler2D u_position;
@@ -191,11 +191,11 @@ void main(){
   // Boundary conditions
   float bound = WORLD_SIZE / 2.0;
   if (pos.x >  bound) { pos.x =  bound; }
-  if (pos.x < -bound) { pos.x = -bound; }
+  else if (pos.x < -bound) { pos.x = -bound; }
   if (pos.y >  3.0*bound) { pos.y =  3.0*bound; }
-  if (pos.y < -bound) { pos.y = -bound; }
+  else if (pos.y < -bound) { pos.y = -bound; }
   if (pos.z >  bound) { pos.z =  bound; }
-  if (pos.z < -bound) { pos.z = -bound; }
+  else if (pos.z < -bound) { pos.z = -bound; }
 
   float t = sin(u_time + 3.0 * uv.x + 2.0 * uv.y);
   if (u_time > 3.0 && abs(t) > 0.999995 && pos.y < -bound + 0.01) {
@@ -254,7 +254,7 @@ void main(){
   vec4 pos = texture2D(u_position, uv);
   vec4 dp = texture2D(u_density_pressure, uv);
   gl_Position = projectionMatrix * modelViewMatrix * vec4( pos.xyz, 1.0);
-  gl_PointSize = PARTICLE_SIZE + dp.x * 40.0;
+  gl_PointSize = PARTICLE_SIZE + dp.x * 30.0;
 }`
 
 export const drawFs = `
@@ -266,6 +266,7 @@ void main(){
   float distance = length(2.0 * gl_PointCoord - 1.0);
   if (distance > 1.0) {
     discard;
+    return;
   }
   vec4 dp = texture2D(u_density_pressure, vUv);
   vec4 vel = texture2D(u_velocity, vUv);

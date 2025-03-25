@@ -1,9 +1,9 @@
 import fs from './fs.glsl'
 
 export const meta = {
-  tags: 'ray marching',
-  title: 'SDF Tunnel',
-  // slug: 'sdf-tunnel',
+  tags: 'noise,math',
+  title: 'Perlin Noise',
+  slug: 'perlin-noise',
 }
 
 export const options = {

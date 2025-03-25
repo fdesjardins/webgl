@@ -42,7 +42,7 @@ export const init = ({ canvas, container }) => {
 
   const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientWidth, 0.1, 2000)
   camera.updateProjectionMatrix()
-  camera.position.set(0, 5, 10)
+  camera.position.set(0, 5, 7)
 
   let renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
   renderer.setSize(canvas.clientWidth, canvas.clientWidth)
@@ -64,6 +64,8 @@ export const init = ({ canvas, container }) => {
   onResize({ canvas, camera, renderer })
 
   const controls = new OrbitControls(camera, canvas)
+  controls.autoRotate = true
+  controls.autoRotateSpeed = 3.0
   controls.update()
 
   const dataTextures = createTextures({ width: WIDTH, height: HEIGHT })
@@ -151,8 +153,8 @@ export const init = ({ canvas, container }) => {
       renderer.render(scene, camera)
 
       // Update the clock
-      uniforms.u_delta.value = clock.getDelta() / 2
-      uniforms.u_time.value = clock.elapsedTime / 2
+      uniforms.u_delta.value = clock.getDelta()
+      uniforms.u_time.value = clock.elapsedTime
 
       // camera.position.set(
       //   Math.sin(uniforms.u_time.value / 3) * 7,
@@ -162,15 +164,19 @@ export const init = ({ canvas, container }) => {
       // camera.lookAt(0, 0, 0)
 
       stats.end()
+
+      controls.update(clock.getDelta())
     }
   }
   animate()
 
   return () => {
-    renderer.dispose()
-    stats.scene = null
-    container.removeChild(stats.dom)
-    renderer = null
-    controls.dispose()
+    try {
+      renderer.dispose()
+      stats.scene = null
+      container.removeChild(stats.dom)
+      renderer = null
+      controls.dispose()
+    } catch {}
   }
 }

@@ -1,9 +1,9 @@
 import fs from './fs.glsl'
 
 export const meta = {
-  tags: 'ray marching',
-  title: 'SDF Tunnel',
-  // slug: 'sdf-tunnel',
+  tags: 'math',
+  title: 'Mandelbulb',
+  slug: 'mandelbulb',
 }
 
 export const options = {
@@ -15,7 +15,7 @@ export const options = {
 }
 
 export const init = ({ camera, controls }) => {
-  camera.position.set(0, 0, -1)
-  controls.enableRotate = false
+  camera.position.set(0, 0, 3)
+  // controls.autoRotate = true
   return () => {}
 }

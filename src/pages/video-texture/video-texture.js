@@ -2,7 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const setupVideo = () => {
-  const url = 'https://storage.googleapis.com/avcp-camera-images/447B.mp4'
+  // const url = 'https://storage.googleapis.com/avcp-camera-images/447B.mp4'
+  const url = 'https://aeralta.tech/23.30.12.mp4'
 
   const video = document.createElement('video')
   video.autoplay = true

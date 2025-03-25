@@ -82,7 +82,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
     90,
     canvas.clientWidth / canvas.clientHeight,
     0.1,
-    2000
+    2000,
   )
   camera.updateProjectionMatrix()
   camera.position.set(-17, 0, 0)
@@ -186,6 +186,7 @@ export const shadertoyInit = ({ canvas, container, vs, fs, iChannel0 }) => {
     camera,
     controls,
     mesh: object,
+    uniforms,
     dispose: () => {
       renderer.dispose()
       stats.scene = null
