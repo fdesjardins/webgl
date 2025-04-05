@@ -10,6 +10,8 @@ uniform float iVb;
 uniform float iVc;
 uniform float iVd;
 uniform float iEV;
+uniform float iEr;
+uniform float iEb;
 
 float R = 100.0;
 
@@ -22,11 +24,18 @@ float R = 100.0;
 // float d = -0.00;
 // float e = -0.00079;
 
-float a = -0.12;
-float b = -0.2;
-float c = 0.086;
-float d = -0.00;
-float e = -0.0017;
+// Rampart
+// float a = -0.12;
+// float b = -0.2;
+// float c = 0.086;
+// float d = -0.00;
+// float e = -0.0017;
+
+float a = -0.1;
+float b = -0.4;
+float c = 0.1;
+float d = -0.2;
+float e = -0.5;
 
 // float a = -0.32;
 // float b = -0.45;
@@ -98,7 +107,7 @@ vec2 scale2(vec2 uv, vec2 factor) {
 
 vec2 sphericalWarp(vec2 uv, float z) {
   vec2 xy = (uv - .5) * 2.0;
-  xy = vec2(xy.x/z, xy.y/z);
+  xy = vec2(xy.x/z, xy.y/6./z);
   return xy / 2.0 + 0.5;
 }
 
@@ -129,15 +138,16 @@ void main() {
   vec2 uvStretched;
   // vec2 uvStretched = vUv;
 
+  vec3 vigCorr;
   if (iSphere) {
     // uvStretched.x += iOffsetX;
     // uvStretched = scaleWarped(vUv, vec2(4.6, 5));
-    uvStretched = scaleWarped(vUv, vec2(.339,.25));
+    uvStretched = scaleWarped(vUv, vec2(.339,1.));
+    uvStretched = scaleWarped(uvStretched, vec2(1.,1.5));
   } else {
     // Without spherical warp
     uvStretched = scaleWarped(vUv, vec2(4.55, 5));
   }
-  // uvStretched = rotate(uvStretched, iRotation);
 
   vec2 uvDewarped;
   uvDewarped = brownConrady(
@@ -148,13 +158,14 @@ void main() {
     d
   );
 
-  vec3 vigCorr = vec3(0.) + correctVignette(uvDewarped, iVb, iVc, iVd);
+  vigCorr = vec3(0.) + correctVignette(uvDewarped, iVb, iVc, iVd);
 
   if (iSphere) {
     uvDewarped = sphericalWarp(uvDewarped, 0.1);
   }
+  // uvDewarped = rotate(uvDewarped, iRotation);
 
-  uvDewarped = rotate(uvDewarped, iRotation);
+
 
   // uvDewarped.x += -0.5;
 
@@ -166,16 +177,19 @@ void main() {
   // Sample texture
   uvDewarped.x *= -1.; // Flip horizontally
   uvDewarped.x += 1.;  // Re-align
+  uvDewarped = rotate(uvDewarped, iRotation);
   gl_FragColor = vec4(texture(iChannel0, uvDewarped).rgb, 1.0);
 
   // Vignette correction
 
-  gl_FragColor.rgb -= vigCorr;
+  gl_FragColor.rgb -= vigCorr*1.;
   gl_FragColor.rgb += gl_FragColor.rgb * iEV/2.;
+  // gl_FragColor.r *= (1.-iEr)*.25+1.;
+  // gl_FragColor.b *= (1.-iEb)*.25+1.;
 
   // Overlap area
-  float overlap = .3;
-  float aMult = 4.;
+  float overlap = .35;
+  float aMult = 3.75;
 
   if (uvDewarped.x > 0.0 && uvDewarped.x < overlap) {
     // float alpha = uvDewarped.x / (overlapDegrees/360.0);
@@ -200,9 +214,9 @@ void main() {
   }
 
   // Draw equatorial line
-  // if (vUv.y > .5 - 1e-4 && vUv.y < .5 + 4e-4) {
-  //   gl_FragColor = vec4(1.0, 0., 0., 1.);
-  // }
+  if (vUv.y > .5 - 1e-3 && vUv.y < .5 + 4e-4) {
+    gl_FragColor = vec4(1.0, 0., 0., 1.);
+  }
 
 
   // Show one 'quadrant' width
@@ -224,10 +238,10 @@ void main() {
   }
 
   // Cut off top and bottom
-  // if (vUv.y < .345) {
+  // if (vUv.y < .3) {
   //   gl_FragColor = vec4(0.0);
   // }
-  // if (vUv.y > .665) {
+  // if (vUv.y > .7) {
   //   gl_FragColor = vec4(0.0);
   // }
 }

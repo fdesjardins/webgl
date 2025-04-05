@@ -1,13 +1,14 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
-import { ErrorBoundary } from 'react-error-boundary'
 import propTypes from 'prop-types'
+import { ErrorBoundary } from 'react-error-boundary'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import * as ss from 'superstruct'
+import { ErrorBoundaryFallback } from './components/error-boundary-fallback/ErrorBoundaryFallback'
+import { Page } from './components/page/Page'
+import { Home } from './pages/home/Home'
 
 // eslint-disable-next-line import/no-unresolved
-import * as pages from './pages/*/index.js'
-import { Home } from './pages/home/Home'
-import { Page } from './components/page/Page'
-import { ErrorBoundaryFallback } from './components/error-boundary-fallback/ErrorBoundaryFallback'
+// import * as pages from './pages/*/index.js'
+const pages = import.meta.glob('./pages/*/index.js', { eager: true })
 
 const pageIndex = Object.keys(pages)
   .map((key) => ({ key, ...pages[key] }))
@@ -35,10 +36,10 @@ const PageIndex = ss.array(
         display: ss.string(),
         type: ss.optional(ss.string()),
         shadertoy: ss.optional(ss.object()),
-      })
+      }),
     ),
     init: ss.optional(ss.func()),
-  })
+  }),
 )
 
 const Router = ({ children }) => {
