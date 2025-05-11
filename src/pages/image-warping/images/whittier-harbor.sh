@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BASE="https://whittier-harbor/pano"
-ARGS="avifenc_max=0&avifenc_min=0&avifenc_speed=5"
+ARGS="avifenc_max=0&avifenc_min=0&avifenc_speed=5&resolution=1920x1440"
 
 # wget "$BASE/1?$ARGS" --output-document=1.avif --no-check-certificate
 # wget "$BASE/2?$ARGS" --output-document=2.avif --no-check-certificate

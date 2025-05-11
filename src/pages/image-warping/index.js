@@ -175,10 +175,10 @@ export const init = ({ camera, canvas, scene, uniforms, controls, mesh }) => {
 
   // Whittier
   let meshes = [
-    add(scene, textureN, uniforms, 0, -0.015, 0, 0.024, vCoeffs, 0, 1, 1),
-    add(scene, textureE, uniforms, -90, -0.02, 0, 0.0, vCoeffs, 0.1, 1.05, 0.96),
+    add(scene, textureN, uniforms, 0, -0.02, 0, 0.025, vCoeffs, 0, 1, 1),
+    add(scene, textureE, uniforms, -90, -0.01, 0, 0.008, vCoeffs, 0.1, 1.05, 0.96),
     add(scene, textureS, uniforms, -180, 0.015, 0, 0.0, vCoeffs, -0.2, 0.95, 1.1),
-    add(scene, textureW, uniforms, -270, 0.018, 0.0, 0.022, vCoeffs, -0.1, 0.98, 1.1),
+    add(scene, textureW, uniforms, -270, 0.0125, 0.0, 0.015, vCoeffs, -0.1, 0.98, 1.1),
   ]
 
   // Hugin calibration outputs for exposures and vignette constants

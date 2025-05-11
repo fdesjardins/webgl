@@ -42,9 +42,9 @@ float R = 100.0;
 // Whittier
 float a = -0.;
 float b = -0.7;
-float c = 0.;
-float d = 1.6;
-float e = 9.;
+float c = 2.;
+float d = -18.8;
+float e = 105.;
 
 
 // float a = -0.32;
@@ -135,11 +135,11 @@ float correctVignette(vec2 uv, float b, float c, float d) {
 
 void main() {
     // Cut off top and bottom
-  if (vUv.y < .323) {
+  if (vUv.y < .365) {
     gl_FragColor = vec4(vec3(0.0), 1.0);
     return;
   }
-  if (vUv.y > .66) {
+  if (vUv.y > .685) {
     gl_FragColor = vec4(vec3(0.0), 1.0);
     return;
   }
@@ -205,18 +205,18 @@ void main() {
   // Vignette correction
 
   gl_FragColor.rgb -= vigCorr*1.;
-  gl_FragColor.rgb += gl_FragColor.rgb * iEV/7.;
+  gl_FragColor.rgb += gl_FragColor.rgb * iEV/16.;
   // gl_FragColor.r *= (1.-iEr)*.25+1.;
   // gl_FragColor.b *= (1.-iEb)*.25+1.;
 
   // Overlap area
   // Rampart
   // float overlap = .35;
-  float overlap = 0.22;
+  float overlap = 0.125;
   // if (vUv.y > 0.65) {
   //   overlap = 0.35;
   // }
-  float aMult = 9.75;
+  float aMult = 5.75;
 
   if (uvDewarped.x > 0.0 && uvDewarped.x < overlap) {
     // float alpha = uvDewarped.x / (overlapDegrees/360.0);
@@ -242,7 +242,7 @@ void main() {
 
   // Draw equatorial line
   if (vUv.y > .5 - 2e-4 && vUv.y < .5 + 1e-4) {
-    gl_FragColor = vec4(1.0, 0., 0., 1.);
+    // gl_FragColor = vec4(1.0, 0., 0., 1.);
   }
   // Draw vertical alignment lines
   // int nLines=36;
