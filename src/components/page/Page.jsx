@@ -1,11 +1,11 @@
 import { css } from '@emotion/css'
+import PropTypes from 'prop-types'
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import PropTypes from 'prop-types'
 
-import { Header } from '../header/Header.js'
 import { shadertoyInit } from '../../shadertoy.js'
 import { ErrorBoundaryFallback } from '../error-boundary-fallback/ErrorBoundaryFallback'
+import { Header } from '../header/Header'
 
 const pageContentStyle = css`
   width: 100%;
