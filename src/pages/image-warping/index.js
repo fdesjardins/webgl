@@ -166,20 +166,20 @@ export const init = ({ camera, canvas, scene, uniforms, controls, mesh }) => {
   // ]
 
   // Thompson Pass
-  // let meshes = [
-  //   add(scene, textureN, uniforms, 0, -0.0, 0, 0.015, vCoeffs, 0, 1, 1),
-  //   add(scene, textureE, uniforms, -90, 0.1, 0, 0.0, vCoeffs, 0.1, 1.05, 0.96),
-  //   add(scene, textureS, uniforms, -180, 0.1, 0, 0.01, vCoeffs, -0.2, 0.95, 1.1),
-  //   add(scene, textureW, uniforms, -270, 0.05, 0, 0.0, vCoeffs, -0.1, 0.98, 1.1),
-  // ]
+  let meshes = [
+    add(scene, textureN, uniforms, 0, -0.017, 0, 0.026, vCoeffs, 0, 1, 1),
+    add(scene, textureE, uniforms, -90, 0.08, 0, 0.0, vCoeffs, 0.1, 1.05, 0.96),
+    add(scene, textureS, uniforms, -180, 0.075, 0, -0.005, vCoeffs, -0.2, 0.95, 1.1),
+    add(scene, textureW, uniforms, -270, 0., 0, 0.0, vCoeffs, -0.1, 0.98, 1.1),
+  ]
 
   // Whittier
-  let meshes = [
-    add(scene, textureN, uniforms, 0, -0.02, 0, 0.025, vCoeffs, 0, 1, 1),
-    add(scene, textureE, uniforms, -90, -0.01, 0, 0.008, vCoeffs, 0.1, 1.05, 0.96),
-    add(scene, textureS, uniforms, -180, 0.015, 0, 0.0, vCoeffs, -0.2, 0.95, 1.1),
-    add(scene, textureW, uniforms, -270, 0.0125, 0.0, 0.015, vCoeffs, -0.1, 0.98, 1.1),
-  ]
+  // let meshes = [
+  //   add(scene, textureN, uniforms, 0, -0.02, 0, 0.025, vCoeffs, 0, 1, 1),
+  //   add(scene, textureE, uniforms, -90, -0.01, 0, 0.008, vCoeffs, 0.1, 1.05, 0.96),
+  //   add(scene, textureS, uniforms, -180, 0.015, 0, 0.0, vCoeffs, -0.2, 0.95, 1.1),
+  //   add(scene, textureW, uniforms, -270, 0.0125, 0.0, 0.015, vCoeffs, -0.1, 0.98, 1.1),
+  // ]
 
   // Hugin calibration outputs for exposures and vignette constants
   // N: EV0    Er1    Eb1    Vb-0.134 Vc-0.083 Vd0.046

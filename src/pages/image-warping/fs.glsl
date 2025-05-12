@@ -33,18 +33,18 @@ float R = 100.0;
 // float e = -0.0017;
 
 // Thompson Pass (good)
-// float a = -0.1;
-// float b = -0.5;
-// float c = 0.4;
-// float d = 0.5;
-// float e = -3.5;
+float a = -0.0;
+float b = -1.6;
+float c = 0.5;
+float d = 1.7;
+float e = 2.0;
 
-// Whittier
-float a = -0.;
-float b = -0.7;
-float c = 2.;
-float d = -18.8;
-float e = 105.;
+// Whittier - good
+// float a = -0.;
+// float b = -0.7;
+// float c = 2.;
+// float d = -18.8;
+// float e = 105.;
 
 
 // float a = -0.32;
@@ -135,20 +135,15 @@ float correctVignette(vec2 uv, float b, float c, float d) {
 
 void main() {
     // Cut off top and bottom
-  if (vUv.y < .365) {
+  if (vUv.y < .38) {
     gl_FragColor = vec4(vec3(0.0), 1.0);
     return;
   }
-  if (vUv.y > .685) {
+  if (vUv.y > .7) {
     gl_FragColor = vec4(vec3(0.0), 1.0);
     return;
   }
 
-  // vUv.y += iOffsetY/1000.;
-
-  // float overlapDegrees = (hfov - 90.0) / 2.0;
-
-  // vec2 uvStretched;
   vec2 uvStretched = vUv;
 
   vec3 vigCorr;
@@ -212,11 +207,11 @@ void main() {
   // Overlap area
   // Rampart
   // float overlap = .35;
-  float overlap = 0.125;
+  float overlap = 0.5;
   // if (vUv.y > 0.65) {
   //   overlap = 0.35;
   // }
-  float aMult = 5.75;
+  float aMult = 20.;
 
   if (uvDewarped.x > 0.0 && uvDewarped.x < overlap) {
     // float alpha = uvDewarped.x / (overlapDegrees/360.0);
@@ -237,7 +232,7 @@ void main() {
 
   // Black outside image area
   if (uvDewarped.x < 0.0 || uvDewarped.x > 1.0 || uvDewarped.y < 0.0 || uvDewarped.y > 1.0) {
-    gl_FragColor = vec4(vec3(0.0), 0.0);
+    // gl_FragColor = vec4(vec3(0.0), 0.0);
   }
 
   // Draw equatorial line
